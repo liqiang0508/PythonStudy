@@ -10,7 +10,7 @@ def Upload(url,file,data):
 
 download_url = "http://music.163.com/song/media/outer/url?id=29732222.mp3"
 
-def downSond(Url,SaveName):
+def downFile(Url,SaveName):
     with open(SaveName,"wb") as f:
         f.write(requests.get(Url, headers=headers).content)
         print "Save Success---"+Url
