@@ -1,4 +1,4 @@
-#!/usr/bin/python
+﻿#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import requests
 import re 
@@ -30,6 +30,7 @@ def GetWeatherByCode(code):
     return resultStr
 
 def GetCityCode(CityName):
+    print "http://toy1.weather.com.cn/search?cityname="+CityName
     r = requests.get("http://toy1.weather.com.cn/search?cityname="+CityName,headers=headers)
     r.encoding='utf-8'   #编码
     datas = r.text
@@ -42,9 +43,17 @@ def GetCityCode(CityName):
     # print "GetCityCode",rr.findall(b)
     return  rr.findall(b)[0]
 
-print GetWeatherByCode(GetCityCode("荣昌"))
 
 
+if __name__ == '__main__':
+    argvs = len(sys.argv)
+    if argvs == 2:
+        city = sys.argv[1]
+        city = city.decode('gb2312')
+        print GetWeatherByCode(GetCityCode(str(city)))
+    else:
+        print "city is null"
+    
 
-os.system('pause')
+os.system("pause")
 

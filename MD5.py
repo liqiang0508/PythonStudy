@@ -1,6 +1,6 @@
 import hashlib
 import sys
-
+import os
 if __name__ == '__main__':
     if len(sys.argv)!= 2:
         sys.exit('argv error!')
@@ -15,3 +15,6 @@ if __name__ == '__main__':
         else:
             break
     print(m.hexdigest())
+
+
+os.system("pause")
