@@ -23,9 +23,9 @@ def downFile(Url,SaveName):
             responce.close()
             s = requests.session()
             s.keep_alive = False
-            print "Save Success---"+Url
+            print ("Save Success---"+Url)
         except Exception as e:
-            print "downFile error",Url
+            print ("downFile error",Url)
             time.sleep(1)
             downFile(Url,SaveName)
         

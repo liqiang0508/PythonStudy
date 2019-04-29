@@ -61,15 +61,15 @@ def GetCityCode(CityName):
 
 
 
-if __name__ == '__main__':
-    argvs = len(sys.argv)
-    if argvs == 2:
-        city = sys.argv[1]
-        # city = city.decode('gb2312')
-        print (GetWeatherByCode(GetCityCode(str(city))))
-    else:
-        print ("city is null")
-        print (GetWeatherByCode(GetCityCode(str("成都"))))
+# if __name__ == '__main__':
+#     argvs = len(sys.argv)
+#     if argvs == 2:
+#         city = sys.argv[1]
+#         # city = city.decode('gb2312')
+#         print (GetWeatherByCode(GetCityCode(str(city))))
+#     else:
+#         print ("city is null")
+#         print (GetWeatherByCode(GetCityCode(str("成都"))))
     
 
 # os.system("pause")

@@ -17,7 +17,7 @@ co_content8 = selector.xpath('//div[@class = "co_content8"]')
 
 tables = co_content8[0].xpath('ul/table/tr')
 print len(tables)
-# print co_content8[0].xpath("string(.)")
+
 
 if os.path.exists("movie.txt"):
   os.remove("movie.txt")
@@ -27,5 +27,11 @@ for tr in tables:
   with open("movie.txt","a+") as f:
     f.write(name.encode('gb2312')+'\n')
  
+
+# url = "https://www.csis.org/events/role-center-state-relations-achieving-indias-renewable-energy-target"
+# htmldata = RequestsManager.getHtmlData(url)
+# selector = etree.HTML(htmldata.text)
+# data = selector.xpath('//article[@role = "article"]')
+# print data[0].xpath("string(.)").replace("\r\n","")
 
 os.system("pause")
