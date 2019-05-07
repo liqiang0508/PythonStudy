@@ -11,7 +11,8 @@ async def _():
 	now = datetime.now(pytz.timezone('Asia/Shanghai'))
 	try:
 		message = getCityWeater.GetWeatherByCode(getCityWeater.GetCityCode(str("成都")))
-		await bot.send_group_msg(group_id = 876746591,message = message)
+		await bot.send_group_msg(group_id = 876746591,message = message)#973201419
+		# await bot.send_group_msg(group_id = 973201419,message = message)
 		await bot.send_private_msg(user_id = 497232807, message= message)
 	except CQHttpError:
 		pass
