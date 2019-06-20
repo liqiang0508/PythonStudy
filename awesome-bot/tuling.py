@@ -21,7 +21,7 @@ EXPR_DONT_UNDERSTAND = (
 async def tuling(session: CommandSession):
     # 获取可选参数，这里如果没有 message 参数，命令不会被中断，message 变量会是 None
     message = session.state.get('message')
-
+    
     # 通过封装的函数获取图灵机器人的回复
     reply = await call_tuling_api(session, message)
     if reply:

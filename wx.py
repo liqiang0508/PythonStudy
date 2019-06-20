@@ -1,38 +1,22 @@
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
+# #!/usr/bin/python
+# # -*- coding: UTF-8 -*-
     
+
 from cqhttp import CQHttp, Error
-import getCityWeater
-import TuLinAI
 
-
-
-
-bot = CQHttp(api_root='http://127.0.0.1:5700/',
-             access_token='123',
-             secret='123')
+bot = CQHttp(api_root='http://127.0.0.1:8080/')
 
 
 @bot.on_message()
 def handle_msg(context):
-
+    print("handle_msg=",context)
     # 下面这句等价于 bot.send_private_msg(user_id=context['user_id'], message='你好呀，下面一条是你刚刚发的：')
-    print("handle_msg",context)
-    if "group_id" in context and context["group_id"] != 876746591:
-    	return
-
-    message = context['message']
-    if message.find("天气：")!=-1:
-    	message= message.split("：")[1]
-    	code = getCityWeater.GetCityCode(message)
-    	if code!=None:
-            bot.send(context, (getCityWeater.GetWeatherByCode(code)))
-    	else:
-            bot.send(context, "我没找到~~~~所查询的城市")
-    else:
-    	# print("AI--",TuLinAI.GetAIResponce(message))
-    	bot.send(context, TuLinAI.GetAIResponce(message))
-
+    try:
+        bot.send(context, '你好呀，下面一条是你刚刚发的：')
+    except Error:
+        pass
+    return {'reply':context['message'],
+            'at_sender': False}  # 返回给 HTTP API 插件，走快速回复途径
 
 
 @bot.on_notice('group_increase')  # 如果插件版本是 3.x，这里需要使用 @bot.on_event
@@ -52,20 +36,5 @@ def handle_group_request(context):
         return {'approve': False, 'reason': '你填写的验证信息有误'}
     return {'approve': True}
 
-def Sendweater():
-	code = getCityWeater.GetCityCode("成都")
-	if code!=None:
-		bot.send_group_msg(group_id = 876746591,message = getCityWeater.GetWeatherByCode(code))
-
-def sendMessageToUser(user_id,message):
-	bot.send_private_msg(user_id=user_id, message=message)
-
-def sendMessageToGroup(group_id,message):
-	bot.send_group_msg(group_id = group_id,message = message)
-
-
-# sendMessageToUser(user_id=497232807, message='你好～')
-# sendMessageToGroup(group_id = 876746591,message = "****")
 
 bot.run(host='127.0.0.1', port=8080)
-
