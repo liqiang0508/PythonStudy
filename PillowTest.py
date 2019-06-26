@@ -41,10 +41,6 @@ print(im.size, width, height)
 dst_image = im.filter(ImageFilter.BLUR)
 dst_image.save("p1.png")
 
-# for i  in range(width):
-# 	for j in range(height):
-# 		r,g,b = im.getpixel((i, j))
-# 		im.putpixel((i, j), (0,g,b))
-# im.save("p11.png")
+
 
 os.system("pause")

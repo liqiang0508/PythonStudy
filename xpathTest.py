@@ -12,7 +12,6 @@ selector = etree.HTML(htmldata.text)
 title = selector.xpath("//title/text()")
 print "title-",title[0].encode('gb2312')
 
-
 co_content8 = selector.xpath('//div[@class = "co_content8"]')
 
 tables = co_content8[0].xpath('ul/table/tr')
