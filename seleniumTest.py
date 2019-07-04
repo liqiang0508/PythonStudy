@@ -15,7 +15,7 @@ title = selector.xpath("//title/text()")
 print title[0]
 
 content = browser.find_element_by_id("kw")
-content.send_keys("LOL")
+content.send_keys("selenium")
 btnSearch = browser.find_element_by_id("su")
 btnSearch.send_keys(Keys.ENTER)
 
