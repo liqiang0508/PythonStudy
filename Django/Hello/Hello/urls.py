@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', view.hello),
     url(r'^testdb$', testdb.testdb),
-    url(r'^RexTest/(?P<ID>\d+)$', testdb.RexTest),#参数匹配
+    url(r'^RexTest/(?P<ID>\d+)$', testdb.RexTest),
     url(r'^upload/$', testdb.upload),
     url(r'TestModel/', include('TestModel.urls')),
     url(r'Message/', include('Message.urls'),name='message1'),

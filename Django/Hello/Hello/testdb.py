@@ -7,7 +7,10 @@ import json
 import os
 #url 参数匹配
 def RexTest(request,ID):
-    return HttpResponse("<p>Lest ==" + ID + "</p>")
+    # return HttpResponse("<p>Lest ==" + ID + "</p>")
+    resp = {'errorcode': ID, 'detail': 'Get success'}
+    resp["name"] = "lee"
+    return HttpResponse(json.dumps(resp), content_type="application/json")
 # 文件上传
 def upload(request):
     # context = {}
