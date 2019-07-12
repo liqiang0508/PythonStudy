@@ -1,40 +1,34 @@
-# #!/usr/bin/python
-# # -*- coding: UTF-8 -*-
-    
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+# 导入模块
+from wxpy import *
+# 初始化机器人，扫码登陆
+bot = Bot(cache_path = True)
 
-from cqhttp import CQHttp, Error
+# 搜索名称含有 "游否" 的男性深圳好友
+my_friend = bot.friends().search(u'思凡')[0]
+print (my_friend)
+# 发送文本给好友
 
-bot = CQHttp(api_root='http://127.0.0.1:8080/')
+# my_friend.send(u'秃秃!')
 
+# 打印来自其他好友、群聊和公众号的消息
+@bot.register()
+def print_others(msg):
+    print(msg)
 
-@bot.on_message()
-def handle_msg(context):
-    print("handle_msg=",context)
-    # 下面这句等价于 bot.send_private_msg(user_id=context['user_id'], message='你好呀，下面一条是你刚刚发的：')
-    try:
-        bot.send(context, '你好呀，下面一条是你刚刚发的：')
-    except Error:
-        pass
-    return {'reply':context['message'],
-            'at_sender': False}  # 返回给 HTTP API 插件，走快速回复途径
+# 回复 my_friend 的消息 (优先匹配后注册的函数!)
+@bot.register(my_friend)
+def reply_my_friend(msg):
+    return 'received: {} ({})'.format(msg.text, msg.type)
 
+# 自动接受新的好友请求
+@bot.register(msg_types=FRIENDS)
+def auto_accept_friends(msg):
+	pass
+    # 接受好友请求
+    # new_friend = msg.card.accept()
+    # # 向新的好友发送消息
+    # new_friend.send('哈哈，我自动接受了你的好友请求')
 
-@bot.on_notice('group_increase')  # 如果插件版本是 3.x，这里需要使用 @bot.on_event
-def handle_group_increase(context):
-    info = bot.get_group_member_info(group_id=context.group_id,
-                                     user_id=context.user_id)
-    nickname = info['nickname']
-    name = nickname if nickname else '新人'
-    bot.send(context, message='欢迎{}～'.format(name))
-
-
-@bot.on_request('group')
-def handle_group_request(context):
-    if context['comment'] != 'some-secret':
-        # 如果插件版本是 3.x，这里需要使用 context.message
-        # 验证信息不符，拒绝
-        return {'approve': False, 'reason': '你填写的验证信息有误'}
-    return {'approve': True}
-
-
-bot.run(host='127.0.0.1', port=8080)
+embed() # 进入 Python 命令行

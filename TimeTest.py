@@ -5,3 +5,4 @@ localtime = time.localtime(time.time())
 print "本地时间为 :", localtime
 
 print os.path.join("an/","2")
+print os.getcwd()
