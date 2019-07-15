@@ -13,9 +13,12 @@ async def weather(session: CommandSession):
     city = session.get('city', prompt='你想查询哪个城市的天气呢？')
     # 获取城市的天气预报
     weather_report = await get_weather_of_city(city)
-    # 向用户发送天气预报
+    print("weather_report----------",weather_report)
+    print("session====",session.ctx)#一些数据  {'anonymous': None, 'font': 6654392, 'group_id': 876746591, 'message': [{'type': 'text', 'data': {'text': '天气 香港'}}], 'message_id': 474, 'message_type': 'group', 'post_type': 'message', 'raw_message': '小明 天气 香港', 'self_id': 1247508756, 'sender': {'age': 27, 'area': '成都', 'card': '', 'level': '冒泡', 'nickname': '断了的弦的小童鞋', 'role': 'owner', 'sex': 'male', 'title': '', 'user_id': 497232807}, 'sub_type': 'normal', 'time': 1563174973, 'user_id': 497232807, 'to_me': True}
+    # 向其他用户发送天气预报
     # bot = session.bot
-    # info = await bot.get_group_member_list(group_id = 876746591) 
+    # await bot.send_group_msg(group_id = 876746591,message = weather_report)
+    #向发送的地方发送
     await session.send(weather_report)
 
 

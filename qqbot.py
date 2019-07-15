@@ -4,7 +4,7 @@
 
 from cqhttp import CQHttp, Error
 
-bot = CQHttp(api_root='http://127.0.0.1:8080/')
+bot = CQHttp(api_root='http://127.0.0.1:8081/')
 
 
 @bot.on_message()
@@ -37,4 +37,4 @@ def handle_group_request(context):
     return {'approve': True}
 
 
-bot.run(host='127.0.0.1', port=8080)
+bot.run(host='127.0.0.1', port=8081)
