@@ -14,3 +14,5 @@ print os.getcwd()
 url = "http://honour-texaspoker.com/cslmanager/serverstate"
 responce = requests.get(url)
 print responce,base64.b64decode(responce.text)
+
+print("*"*22)
