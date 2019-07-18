@@ -3,17 +3,77 @@
 <head>
 	<!-- 新 Bootstrap4 核心 CSS 文件 -->
 	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
-
 	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 	<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-
 	<!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
 	<script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
-
 	<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+
+	
+
+	<!-- slider -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/bootstrap-slider.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/css/bootstrap-slider.min.css">
+
 	<meta charset="utf-8"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script src = myjequrey.js></script>
+	<script>
+
+		String.prototype.format = function(args) {
+			var result = this;
+			if (arguments.length > 0) {
+				if (arguments.length == 1 && typeof (args) == "object") {
+					for (var key in args) {
+						if(args[key]!==undefined){
+							var reg = new RegExp("({" + key + "})", "g");
+							result = result.replace(reg, args[key]);
+						}
+					}
+				}
+				else {
+					for (var i = 0; i < arguments.length; i++) {
+						if (arguments[i] !== undefined) {
+		                     //var reg = new RegExp("({[" + i + "]})", "g");//这个在索引大于9时会有问题
+		                     　　　　　　　　　　　　var reg2= new RegExp("({)" + i + "(})", "g");
+		                     result = result.replace(reg2, arguments[i]);
+		                 }
+		             }
+		         }
+		     }
+		     return result;
+		 };
+
+
+		$(function(){
+			console.log(add(100,2),$("#1"))
+			BtnAddClick($(".btn"),function(sender){
+				console.log(sender,sender.target.textContent);
+				alert(sender.target.textContent)
+			})
+
+			$('#ex1').slider({
+				formatter: function(value) {
+					console.log('Current value: ' + value);
+					$(".progress-bar").css("width",parseInt(value/100*100)+"%");
+					return 'Current value: ' + value;
+				}
+
+			})
+			
+
+			
+		});
+
+
+	</script>
+	<style type="text/css">
+		#ex1Slider .slider-selection {
+			background: #BABABA;
+		}
+	</style>
 </head>
 <body>
 	<div class="container">
@@ -83,7 +143,7 @@
 
 		<div class="row  ">
 			<div class="col-12  text-center " style="max-width: 100%">
-				<button type="button" class="btn">基本按钮</button>
+				<button type="button" id = "1" class="btn">基本按钮</button>
 				<button type="button" class="btn btn-primary">主要按钮</button>
 				<button type="button" class="btn btn-secondary">次要按钮</button>
 				<button type="button" class="btn btn-success">成功</button>
@@ -103,6 +163,9 @@
 				</div>
 			</div>
 		</div>
+
+		<input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="14"  style="width: 100%" />
+
 		
 	</body>
 	</html>

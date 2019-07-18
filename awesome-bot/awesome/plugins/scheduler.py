@@ -29,3 +29,14 @@ async def A():
 		await bot.send_group_msg(group_id = 876746591,message = message)
 	except CQHttpError:
 		pass
+
+@nonebot.scheduler.scheduled_job('cron', hour='22',minute = "30")
+async def B():
+	bot = nonebot.get_bot()
+	now = datetime.now(pytz.timezone('Asia/Shanghai'))
+	try:
+		message = "现在是"+str(time.localtime().tm_hour)+":"+str(time.localtime().tm_min)+"-----"+"该睡觉了"
+		
+		await bot.send_group_msg(group_id = 876746591,message = message)
+	except CQHttpError:
+		pass
