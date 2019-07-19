@@ -73,6 +73,17 @@
 		#ex1Slider .slider-selection {
 			background: #BABABA;
 		}
+		.slider.slider-horizontal:hover .tooltip.tooltip-main.top .tooltip-arrow:after,
+		.slider.slider-vertical:hover .tooltip.tooltip-main.top .tooltip-arrow:after {
+			content: '';
+			width: 0;
+			height: 0;
+			position: absolute;
+			left: 40%;
+			bottom: -10px;
+			border: transparent 5px solid;
+			border-top: #000 5px solid;
+		}
 	</style>
 </head>
 <body>
