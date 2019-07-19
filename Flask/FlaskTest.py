@@ -35,12 +35,15 @@ def success(name):
 
 @app.route('/login',methods = ['POST', 'GET'])
 def login():
-   if request.method == 'POST':
-      user = request.form['nm']
-      return redirect(url_for('success',name = user))
+   
+
+   if request.method == 'GET':
+      return render_template('login.html')
    else:
-      user = request.args.get('nm')
-      return redirect(url_for('success',name = user))
+      email = request.form.get('email')
+      pwd = request.form.get('pwd')
+      print("pwd===",email,pwd)
+      return redirect(url_for('success',name = email))
 
 if __name__ == '__main__':
     app.run(debug = True)
