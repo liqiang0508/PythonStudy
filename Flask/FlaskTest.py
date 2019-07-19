@@ -1,8 +1,8 @@
-from flask import Flask, redirect, url_for,request
+from flask import Flask, redirect, url_for,request,session
 from flask import render_template
 from flask import jsonify
 app = Flask(__name__)
-
+app.secret_key='123456789'
 @app.route('/')
 def hello_world():
     return 'Hello World!'
@@ -31,19 +31,32 @@ def Jsontest():
 
 @app.route('/success/<name>')
 def success(name):
+ 
    return 'welcome %s' % name
+  
+@app.route('/logout',methods = ['POST', 'GET'])
+def logout():
+  session.pop("email",None);
+  session.pop("pwd",None);
+  return redirect(url_for('login'))
+
+@app.route('/logined',methods = ['POST', 'GET'])
+def logined():
+  email =  session["emil"]
+  pwd =  session["pwd"]
+  return render_template('logined.html',email = email,pwd = pwd)
 
 @app.route('/login',methods = ['POST', 'GET'])
 def login():
-   
-
    if request.method == 'GET':
       return render_template('login.html')
    else:
       email = request.form.get('email')
       pwd = request.form.get('pwd')
+      session["emil"] = email
+      session["pwd"] = pwd
       print("pwd===",email,pwd)
-      return redirect(url_for('success',name = email))
-
+      # return render_template('logined.html',email = email,pwd = pwd)
+      return redirect(url_for("logined"))
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(host='0.0.0.0',debug = True)
