@@ -10,7 +10,8 @@
 	<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
-
+	<!-- vue -->
+	<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
 	
 
 	<!-- slider -->
@@ -47,25 +48,26 @@
 		 };
 
 
-		$(function(){
-			console.log(add(100,2),$("#1"))
-			BtnAddClick($(".btn"),function(sender){
-				console.log(sender,sender.target.textContent);
-				alert(sender.target.textContent)
-			})
 
-			$('#ex1').slider({
-				formatter: function(value) {
-					console.log('Current value: ' + value);
-					$(".progress-bar").css("width",parseInt(value/100*100)+"%");
-					return 'Current value: ' + value;
-				}
+		// $(function(){
+		// 	console.log(add(100,2),$("#1"))
+		// 	BtnAddClick($(".btn"),function(sender){
+		// 		console.log(sender,sender.target.textContent);
+		// 		alert(sender.target.textContent)
+		// 	})
 
-			})
+		// 	$('#ex1').slider({
+		// 		formatter: function(value) {
+		// 			console.log('Current value: ' + value);
+		// 			$(".progress-bar").css("width",parseInt(value/100*100)+"%");
+		// 			return 'Current value: ' + value;
+		// 		}
+
+		// 	})
 			
 
 			
-		});
+		// });
 
 
 	</script>
@@ -87,7 +89,7 @@
 	</style>
 </head>
 <body>
-	<div class="container">
+	<div class="container ">
 		<div class="row">
 			<div class="col-4 ">
 				<h4 class="text-center text-justify ">我的第一个 Bootstrap 页面</h4>
@@ -151,10 +153,9 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="row  ">
 			<div class="col-12  text-center " style="max-width: 100%">
-				<button type="button" id = "1" class="btn">基本按钮</button>
+				<button type="button" id = "1" class="btn" >基本按钮</button>
 				<button type="button" class="btn btn-primary">主要按钮</button>
 				<button type="button" class="btn btn-secondary">次要按钮</button>
 				<button type="button" class="btn btn-success">成功</button>
@@ -177,6 +178,11 @@
 
 		<input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="14"  style="width: 100%" />
 
-		
+		<div id="app">
+  <p>{{ message }}</p>
+</div>
+
+
+<script src="vue.js"></script>
 	</body>
 	</html>

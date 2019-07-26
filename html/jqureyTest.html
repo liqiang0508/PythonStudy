@@ -9,7 +9,7 @@
 	$(function(){
 		$("button").click(function(){
 
-			$.get("http://127.0.0.1:5000/hello/",function(data,status){
+			$.get("http://127.0.0.1:5000/hello",function(data,status){
 				alert("数据: " + data + "\n状态: " + status);
 			});
 			console.log("click")

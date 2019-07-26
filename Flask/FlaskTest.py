@@ -6,7 +6,7 @@ app.secret_key='123456789'
 @app.route('/')
 def hello_world():
     return 'Hello World!'
-@app.route('/hello/')
+@app.route('/hello')
 def hello():
     return 'Hello '
 
@@ -42,8 +42,13 @@ def logout():
 
 @app.route('/logined',methods = ['POST', 'GET'])
 def logined():
-  email =  session["emil"]
-  pwd =  session["pwd"]
+  try:
+    email =  session["email"]
+    pwd =  session["pwd"]
+  except Exception as e:
+    return render_template('login.html')
+
+  
   return render_template('logined.html',email = email,pwd = pwd)
 
 @app.route('/login',methods = ['POST', 'GET'])
@@ -53,7 +58,7 @@ def login():
    else:
       email = request.form.get('email')
       pwd = request.form.get('pwd')
-      session["emil"] = email
+      session["email"] = email
       session["pwd"] = pwd
       print("pwd===",email,pwd)
       # return render_template('logined.html',email = email,pwd = pwd)
