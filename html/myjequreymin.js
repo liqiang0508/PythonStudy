@@ -1,0 +1,1 @@
+function n(n,c){return n+c}function c(n,c){n.click(c)}
