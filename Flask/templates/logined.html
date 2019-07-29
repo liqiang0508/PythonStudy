@@ -1,4 +1,8 @@
 <!doctype html>
+
+<html>
+
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,9 +28,17 @@
 </head>
 
 <title>Logined</title>
-<h1>email {{ email }}!</h1>
-<h1>pwd {{ pwd }}!</h1>
-<!-- <button href = "/logout">log out</button> -->
-<a href="/logout">
-	<button type="button" class="btn btn-lg  btn-primary">log out</button>
-</a>
+<body>
+	<h1 class="text-center">Welcome</h1>
+	<h1 class="text-center">email {{ email }}!</h1>
+	<h1 class="text-center">pwd {{ pwd }}!</h1>
+	<div style="position: relative;top:20%; width: 100%;padding: 15px" >
+		<a href="/logout" style="display: block">
+			<button  style=" display: block; margin: 0px auto" type="button" class=" btn btn-lg btn-primary ">log out</button>
+		</a>
+
+	</div>
+	
+</body>
+</html>
+

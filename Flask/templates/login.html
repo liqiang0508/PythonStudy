@@ -27,11 +27,25 @@
   <script type="text/javascript">
     $(function() {
       // body...
+      // body...
       console.log("loaded---")
       $(".Commit").click(function(sender){
         console.log("click---",$("#inputEmailInput")[0].value)
       })
-    })
+
+
+      //  $('.form-signin').hide()
+      // $('.form-signin').css({ 
+      //   position:'relative', 
+
+      //   top: ($(window).height() - $('.form-signin').outerHeight())/2-50, 
+      // }); 
+      // $('.form-signin').show()
+    }); 
+
+
+
+
 
   </script>
 
@@ -40,30 +54,51 @@
       height: 100%;
     }
     .container{
+      width: 100%;
+      height:100%;
+    }
 
-                height:100%;
-            }
- 
   </style>
 </head>
 
-  <body>
+<body>
   <div class="container"   >
-     
-    <form class="form-signin" action="/login" method = "POST" style="position: relative;top: 25%">
-      <h2 class="form-signin-heading">Please sign in</h2>
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="email" name = "email" id="inputEmailInput" class="form-control" placeholder="Email address" required autofocus>
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" name = "pwd" id="inputPasswordInput" class="form-control" placeholder="Password" required>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-      </div>
-      <button class="btn Commit btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    </form>
 
-  </div> <!-- /container -->
-</body>
-</html>
+    <!-- {% if errmsg %} -->
+
+    <!-- {% else %}
+      {% endif %} -->
+
+      <form class="form-signin" action="/login" method = "POST" style="position: relative;top:20%">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" name = "email" id="inputEmailInput" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name = "pwd" id="inputPasswordInput" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn Commit btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+      </form>
+
+      <div class="form-signin" style="position: relative;top: 18%">
+        <a href="/register"><button class="btn  register btn-lg btn-primary btn-block" >Sign up</button></a>
+      </div>
+
+      {% if errmsg %}
+      <div class=" alert alert-danger " style="position: relative;top: 18%; max-width: 330px;padding: 15px;margin:auto" >
+        <h5 style="margin-bottom:0rem">{{errmsg}}</h5>
+      </div>
+      {% else %}
+      {% endif %}
+
+
+      
+
+
+      </div> 
+  </body>
+  </html>
