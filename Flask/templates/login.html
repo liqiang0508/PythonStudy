@@ -33,20 +33,7 @@
         console.log("click---",$("#inputEmailInput")[0].value)
       })
 
-
-      //  $('.form-signin').hide()
-      // $('.form-signin').css({ 
-      //   position:'relative', 
-
-      //   top: ($(window).height() - $('.form-signin').outerHeight())/2-50, 
-      // }); 
-      // $('.form-signin').show()
     }); 
-
-
-
-
-
   </script>
 
   <style type="text/css">
@@ -62,13 +49,7 @@
 </head>
 
 <body>
-  <div class="container"   >
-
-    <!-- {% if errmsg %} -->
-
-    <!-- {% else %}
-      {% endif %} -->
-
+  <div class="container-fluid "   >
       <form class="form-signin" action="/login" method = "POST" style="position: relative;top:20%">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
@@ -87,6 +68,7 @@
       <div class="form-signin" style="position: relative;top: 18%">
         <a href="/register"><button class="btn  register btn-lg btn-primary btn-block" >Sign up</button></a>
       </div>
+      
 
       {% if errmsg %}
       <div class=" alert alert-danger " style="position: relative;top: 18%; max-width: 330px;padding: 15px;margin:auto" >
@@ -94,11 +76,6 @@
       </div>
       {% else %}
       {% endif %}
-
-
-      
-
-
-      </div> 
+      </div>
   </body>
   </html>
