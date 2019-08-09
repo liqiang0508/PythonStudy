@@ -4,20 +4,36 @@
 <script >
 	$(function(){
 		$("button").click(function(){
-			$.get("http://127.0.0.1:5000/hello/",function(data,status){
-				alert("数据: " + data + "\n状态: " + status);
-			});
-			console.log("click")
+			// $.get("http://127.0.0.1:5000/hello/",function(data,status){
+			// 	alert("数据: " + data + "\n状态: " + status);
+			// });
+			// console.log("click")
+			var fileInput = $('#upfile').get(0).files[0];
+			console.info(fileInput)
+			
+		})
+
+		$("#upfilebtn").click(function(){
+			console.info("upfilebtn")
+			var fileInput = $('#upfile').get(0).files[0];
+			if (fileInput==undefined)
+			{
+				alert('file is null')
+			}
+			else
+			{
+				$("#upfilebtn").parent().submit()
+			}
 		})
 	});
 </script>
 <body>
 	
-	<form action = "http://localhost:5000/uploader" method = "POST" 
-	enctype = "multipart/form-data">
-	<input type = "file" name = "file" />
-	<input type = "submit"/>
-</form>
+	<form action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data">
+		<input type = "file" name = "file" id = "upfile" />
+		<input type = "button" value="提交"  id = "upfilebtn" />
+	</form>
+
 <button>点我</button>
 </body>
 </html>

@@ -8,7 +8,7 @@ if not os.path.exists(UPLOAD_FOLDER):
 	os.makedirs(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@app.route('/hello2')
+@app.route('/hello/')
 def hello_world():
     return 'Hello World!'
 
@@ -20,6 +20,7 @@ def upload():
 def upload_file():
    if request.method == 'POST':
       f = request.files['file']
+      app.logger.info("upload_file--"+f.filename)
       filename = secure_filename(f.filename)
       f.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
       return 'file uploaded successfully'

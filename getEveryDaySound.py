@@ -2,16 +2,20 @@
 # -*- coding: UTF-8 -*-
 # 获取妹子图片
 import requests
-import RequestsManager
+# import RequestsManager
 from lxml import etree
 import os
 import re
 import time
 
+
 HomeDir = "ScrapyGirls"
 headers = {'User-Agent':'Mozilla/6.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6','Connection': 'close'} 
 
 
+def getHtmlData(url):
+    responce = requests.get(url,headers=headers,timeout = 500)
+    return responce
 
 def downFile(Url,SaveName):
     # Url = Url.replace("https","http")
@@ -23,9 +27,9 @@ def downFile(Url,SaveName):
             responce.close()
             s = requests.session()
             s.keep_alive = False
-            print ("Save Success---"+Url)
+            print "Save Success---"+Url
         except Exception as e:
-            print ("downFile error",Url)
+            print "downFile error",Url
             time.sleep(1)
             downFile(Url,SaveName)
         
@@ -42,7 +46,7 @@ url = "https://www.keke234.com/gaoqing/cn/YouWu/2019/0312/31881.html"
 def getOnePageImage(url):
     # print "getOnePageImage",url
     try:
-        htmldata = RequestsManager.getHtmlData(url)
+        htmldata = getHtmlData(url)
         htmldata.encoding = "gb2312"
         selector = etree.HTML(htmldata.text)
         title = selector.xpath("//title/text()")
@@ -62,17 +66,26 @@ def getOnePageImage(url):
             if not os.path.exists(dirName+"/"+fileName):#不存在
                 downFile(src,dirName+"/"+fileName)
             else:#存在
-                pass
+                if get_FileSize(dirName+"/"+fileName)==0:
+                    os.remove(dirName+"/"+fileName)
+                    downFile(src,dirName+"/"+fileName)
+                
         htmldata.close()
     except Exception as e:
         print "getOnePageImage error",url
         getOnePageImage(url)
    
    
+'''获取文件的大小,结果保留两位小数，单位为MB'''
+def get_FileSize(filePath):
+    filePath = unicode(filePath,'utf8')
+    fsize = os.path.getsize(filePath)
+    fsize = fsize/float(1024*1024)
+    return round(fsize,2)
 
 def getPages(url):
     try:
-        htmldata = RequestsManager.getHtmlData(url)
+        htmldata = getHtmlData(url)
         htmldata.encoding = "gb2312"
         selector = etree.HTML(htmldata.text)
         title = selector.xpath("//title/text()")
@@ -111,11 +124,11 @@ def Getmain(startindex,endindex):
     for i in range(startindex,endindex):
         url = "https://www.keke234.com/gaoqing/list_5_"+str(i)+".html"
         print url
-        with open("CurPage","w") as f:
-            f.write(url)
+        # with open("CurPage","w") as f:
+        #     f.write(url)
         HomeUrl = url
         try:
-            htmldata = RequestsManager.getHtmlData(HomeUrl)
+            htmldata = getHtmlData(HomeUrl)
             htmldata.encoding = "gb2312"
             selector = etree.HTML(htmldata.text)
             girls = selector.xpath('//div[@class ="t"]')
@@ -130,9 +143,10 @@ def Getmain(startindex,endindex):
             print "get HomeUrl error",HomeUrl
            
            
+           
 # 5-233
 url = "https://www.keke234.com/gaoqing/list_5_1.html"
-htmldata = RequestsManager.getHtmlData(url)
+htmldata = getHtmlData(url)
 htmldata.encoding = "gb2312"
 selector = etree.HTML(htmldata.text)
 pagesNum = selector.xpath('//span[@class ="pageinfo"]/strong')
