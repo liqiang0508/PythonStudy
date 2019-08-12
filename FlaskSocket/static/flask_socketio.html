@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>flask socket io</title>
+</head>
+
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    console.log("222",'http://' + document.domain + ':' + location.port);
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    socket.on('connect', function() {
+        console.log("connect--");
+        socket.emit('my event', {data: 'I\'m connected!\n'});
+        socket.emit('my event', "hello\n");
+    });
+
+    $(function(){
+        $("button").click(function(){
+
+             socket.emit('btn', "btnclick");
+        })
+    });
+</script>>
+<body>
+    <button>点我</button>
+</body>
+</html>

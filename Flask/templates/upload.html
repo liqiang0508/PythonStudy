@@ -1,39 +1,86 @@
 <html>
-<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
-</script>
-<script >
-	$(function(){
-		$("button").click(function(){
+<head>
+	<title>uploadTest</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1.0/">
+	<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<!-- <link rel="icon" href="../../favicon.ico"> -->
+
+	<title>Flask Bs</title>
+	<!-- Custom styles for this template -->
+	<link href="static/signin.css" rel="stylesheet">
+	<link href="static/Alert.css" rel="stylesheet">
+
+
+	<!-- 新 Bootstrap4 核心 CSS 文件 -->
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+	<!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+	<script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+	<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+	<script src="static/Alert.js"></script>
+
+	<style type="text/css">
+		
+		.container{
+			width: 100%;
+			height:100%;
+		}
+		
+
+	</style>
+	<script >
+
+
+		$(function(){
+			$("button").click(function(){
 			// $.get("http://127.0.0.1:5000/hello/",function(data,status){
 			// 	alert("数据: " + data + "\n状态: " + status);
 			// });
 			// console.log("click")
 			var fileInput = $('#upfile').get(0).files[0];
 			console.info(fileInput)
+
+			showConfirm("","提示内容",{1:{}},function(index){
+				console.log("index==",index)
+			})
+
 			
 		})
 
-		$("#upfilebtn").click(function(){
-			console.info("upfilebtn")
-			var fileInput = $('#upfile').get(0).files[0];
-			if (fileInput==undefined)
-			{
-				alert('file is null')
-			}
-			else
-			{
-				$("#upfilebtn").parent().submit()
-			}
-		})
-	});
-</script>
-<body>
-	
-	<form action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data">
-		<input type = "file" name = "file" id = "upfile" />
-		<input type = "button" value="提交"  id = "upfilebtn" />
-	</form>
+			$("#upfilebtn").click(function(){
+				console.info("upfilebtn")
+				var fileInput = $('#upfile').get(0).files[0];
+				if (fileInput==undefined)
+				{
+					showConfirm("","请选择上传文件",{1:{}})
+				}
+				else
+				{
+					$("#upfilebtn").parent().submit()
+				}
+			})
+		});
+	</script>
 
-<button>点我</button>
+</head>
+
+<body>
+	<div class="container">
+		<form action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data">
+			<input type = "file" name = "file" id = "upfile" />
+			<input type = "button" value="提交"  id = "upfilebtn" />
+		</form>
+
+		<button>点我</button>
+
+	</div>
+
 </body>
 </html>
