@@ -18,12 +18,15 @@ def upload():
 	
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
-   if request.method == 'POST':
+    if request.method == 'POST':
       f = request.files['file']
       app.logger.info("upload_file--"+f.filename)
       filename = secure_filename(f.filename)
       f.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
       return 'file uploaded successfully'
-		
+    else:
+      return render_template('upload.html')
+
+
 if __name__ == '__main__':
    app.run(debug = True)
