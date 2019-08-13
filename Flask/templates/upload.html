@@ -39,18 +39,23 @@
 
 
 		$(function(){
-			$("button").click(function(){
-			// $.get("http://127.0.0.1:5000/hello/",function(data,status){
-			// 	alert("数据: " + data + "\n状态: " + status);
-			// });
-			// console.log("click")
-			var fileInput = $('#upfile').get(0).files[0];
-			console.info(fileInput)
+			$("#alert").click(function(){
+				// $.get("http://127.0.0.1:5000/hello/",function(data,status){
+				// 	alert("数据: " + data + "\n状态: " + status);
+				// });
+				// console.log("click")
+				var fileInput = $('#upfile').get(0).files[0];
+				console.info(fileInput)
 
-			showConfirm("","提示内容",{1:{}},function(index){
-				console.log("index==",index)
+				showAlert("","我是Alert提示内容",undefined,function(index){
+					console.log("Alert index==",index)
+				})
 			})
 
+			$("#confirm").click(function(){
+				showConfirm("","我是Confirm提示内容",{1:{},0:{}},function(index){
+					console.log("Confirm index==",index)
+				})
 			
 		})
 
@@ -75,10 +80,11 @@
 	<div class="container">
 		<form action = "http://localhost:5000/uploader" method = "POST" enctype = "multipart/form-data">
 			<input type = "file" name = "file" id = "upfile" />
-			<input type = "button" value="提交"  id = "upfilebtn" />
+			<input  type = "button" value="提交"  id = "upfilebtn" />
 		</form>
 
-		<button>点我</button>
+		<button id = "alert">Alert</button>
+		<button id = "confirm">Confirm</button>
 
 	</div>
 
