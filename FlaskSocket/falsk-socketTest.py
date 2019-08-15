@@ -14,7 +14,7 @@ def index():
 @socketio.on('connect')
 def test_connect():
 	sid =  request.sid
-	print('-------test_connect'+sid)
+	print('-------test_connect------'+sid)
     # emit('my response', {'data': 'Connected'})
 
 @socketio.on('disconnect')
@@ -28,7 +28,7 @@ def handle_message(message):
 @socketio.on('btn')
 def handle_btn(message):
 	sid = request.sid
-	print('------handle_btn:'+ message+":"+sid)
+	print('------handle_btn:'+ message+":")
 
 @socketio.on('json')
 def handle_json(json):
@@ -37,7 +37,7 @@ def handle_json(json):
 @socketio.on('my event')
 def handle_my_custom_event(json):
 	sid =  request.sid
-	print('----handle_my_custom_event-------: ' + str(json)+sid)
+	print('----handle_my_custom_event-------: ' + str(json))
 
 if __name__ == '__main__':
     socketio.run(app)

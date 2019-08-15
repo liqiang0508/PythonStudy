@@ -44,10 +44,14 @@ def ZipExtral(targetzip,destpath):
 		azip.extract(file,destpath)
 	
 
-# ZipInit("tes1t.zip")
-# AddFile("en.js")
-# AddFile("ch.js")
+# ZipInit("test.zip")
+# AddFile("movie.txt")
+# # AddFile("ch.js")
 # ZipEnd()
+
+# ZipExtral("test.zip","extract")
+
+
 
 
 
