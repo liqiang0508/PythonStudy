@@ -11,7 +11,8 @@ print os.path.join("an/","2")
 print os.getcwd()
 import sqlite3
 
-
+# from module import moduleA, moduleB
+from module import *
 
 # url = "http://honour-texaspoker.com/cslmanager/serverstate"
 # responce = requests.get(url)
@@ -30,3 +31,7 @@ pattern = re.compile(r'\d+')
 print pattern.findall(a)
 print re.search("\d+",a).group()
 print("{0} {1} {0}".format("hello","or"))
+print int("13")
+
+moduleA.SayHello()
+moduleB.SayHello()

@@ -1,0 +1,13 @@
+<!doctype html>
+<title>Flask-wtf</title>
+<div class="container">
+    <div class="page-header">
+        <h1>Hello, {{ name }}!</h1>                            
+    </div>
+    <form method="post">                                        
+        {{ form.hidden_tag() }}                                
+        {{ form.name.label }}{{ form.name(size = 20) }}                 
+        {{ form.submit() }}
+    </form>
+</div>
+

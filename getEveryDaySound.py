@@ -14,7 +14,7 @@ headers = {'User-Agent':'Mozilla/6.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9
 
 
 def getHtmlData(url):
-    responce = requests.get(url,headers=headers,timeout = 500)
+    responce = requests.get(url,headers=headers,timeout = 5)
     return responce
 
 def downFile(Url,SaveName):
@@ -22,7 +22,7 @@ def downFile(Url,SaveName):
     print("downFile",Url)
     with open(SaveName,"wb") as f:
         try:
-            responce = requests.get(Url, headers=headers,timeout = 500)
+            responce = requests.get(Url, headers=headers,timeout = 5)
             f.write(responce.content)
             responce.close()
             s = requests.session()

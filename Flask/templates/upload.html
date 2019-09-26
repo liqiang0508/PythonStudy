@@ -77,14 +77,17 @@
 </head>
 
 <body>
+	{% for message in get_flashed_messages()%}
+	<div >{{ message }}</div>
+	{% endfor %}
 	<div class="container">
 		<form action = "/uploader" method = "POST" enctype = "multipart/form-data">
 			<input type = "file" name = "file" id = "upfile" />
 			<input  type = "button" value="提交"  id = "upfilebtn" />
 		</form>
 
-		<button id = "alert">Alert</button>
-		<button id = "confirm">Confirm</button>
+		<button  id = "alert">Alert</button>
+		<button  id = "confirm">Confirm</button>
 
 	</div>
 
