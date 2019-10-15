@@ -4,6 +4,7 @@ import os
 import base64
 import requests
 import re
+import sys
 localtime = time.localtime(time.time())
 print "本地时间为 :", localtime
 
@@ -35,3 +36,7 @@ print int("13")
 
 moduleA.SayHello()
 moduleB.SayHello()
+for i in range(1,2):
+	print i
+print sys.maxsize
+print sys.maxint

@@ -77,7 +77,7 @@ def getsign():
         f.write(tac)
         f.close()
         responce.close()
-        drive.get("file:///C:/Users/Administrator/Downloads/douyin_signature-master/get_sign.html")
+        drive.get("file:///E:/github/PythonStudy/douyin/get_sign.html")
         sign = drive.find_element_by_xpath("/html/body").text
         return sign
     except Exception as e:
@@ -211,11 +211,21 @@ else:
     if int(sys.argv[2]) == 1:#post
         dirname = "post"
         print("getPost")
-        getPost(0,None)
+        start = 0
+        path = uid+"post_max_cursor"
+        if os.path.exists(path):
+            with open(path,"r") as f:
+                start = f.read()
+        getPost(start,None)
     else:
         dirname = "like"
         print("getlike")
-        getLike(0,None)
+        start = 0
+        path = uid+"like_max_cursor"
+        if os.path.exists(path):
+            with open(path,"r") as f:
+                start = f.read()
+        getLike(start,None)
 
     
 

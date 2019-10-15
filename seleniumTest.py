@@ -8,16 +8,18 @@ from lxml import etree
 
 browser = webdriver.Chrome()
 
-browser.get('https://www.baidu.com/')
-data = browser.page_source
-selector = etree.HTML(data)
-title = selector.xpath("//title/text()")
-print title[0]
+browser.get('https://www.iesdouyin.com/share/user/86044891889')
+print("cookies",browser.get_cookies())
+# browser.get('https://www.baidu.com/')
+# data = browser.page_source
+# selector = etree.HTML(data)
+# title = selector.xpath("//title/text()")
+# print title[0]
 
-content = browser.find_element_by_id("kw")
-content.send_keys("selenium")
-btnSearch = browser.find_element_by_id("su")
-btnSearch.send_keys(Keys.ENTER)
+# content = browser.find_element_by_id("kw")
+# content.send_keys("selenium")
+# btnSearch = browser.find_element_by_id("su")
+# btnSearch.send_keys(Keys.ENTER)
 
 
 #qq mial login

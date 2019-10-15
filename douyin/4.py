@@ -8,6 +8,10 @@ import time
 from selenium import webdriver
 import random
 from prt_cmd_color import *
+import sys
+
+sys.setrecursionlimit(sys.maxint) #设置为一百万
+
 
 headers1 = {'User-Agent':'Mozilla/6.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6','Connection': 'close'} 
 
@@ -33,6 +37,8 @@ headers = {
     'user-agent': getheaders()
 }
 
+
+
 params = {
     'user_id':'86044891889',
     'sec_uid': '',
@@ -42,7 +48,6 @@ params = {
     '_signature': '0M2EpxASjXXZgf6yrkCKktDNhL',
     'dytk':'3905df2f69a6a6561a9da86e08b69e20'
 }
-
 opt = webdriver.ChromeOptions()
 opt.headless = True
 drive = webdriver.Chrome(options=opt)
@@ -53,17 +58,22 @@ uri = "https://www.iesdouyin.com/share/user/"+uid
 
     
 def getsign():
-    dy_src = requests.get(uri, headers=headers).text
-    tac_start = dy_src.find("tac=")
-    tac_end = dy_src.find("</script>", tac_start)
-    tac = dy_src[tac_start:tac_end]
-        #print("获取到的tac:", tac)
-    f = open("./tac.js", "w")
-    f.write(tac)
-    f.close()
-    drive.get("file:///C:/Users/Administrator/Downloads/douyin_signature-master/get_sign.html")
-    sign = drive.find_element_by_xpath("/html/body").text
-    return sign
+    try:
+        responce =  requests.get(uri, headers=headers,timeout = 5)
+        dy_src =responce.text
+        tac_start = dy_src.find("tac=")
+        tac_end = dy_src.find("</script>", tac_start)
+        tac = dy_src[tac_start:tac_end]
+            #print("获取到的tac:", tac)
+        f = open("./tac.js", "w")
+        f.write(tac)
+        f.close()
+        responce.close()
+        drive.get("file:///C:/Users/Administrator/Downloads/douyin_signature-master/get_sign.html")
+        sign = drive.find_element_by_xpath("/html/body").text
+        return sign
+    except Exception as e:
+        return None
 
 def downFileFromDic(data,index):
 
@@ -75,6 +85,7 @@ def downFileFromDic(data,index):
     if os.path.exists(name):
         printYellow("exists---"+url)
         return
+    print("StartDown--",url)
     with open(name,"wb") as f:
         try:
             # print("Start down===",url)
@@ -94,11 +105,20 @@ def downFileFromDic(data,index):
 
 
 def getLike(max_cursor,sign):
+    with open("max_cursor","w") as f:
+        f.write(str(max_cursor))
+        f.close()
     params["max_cursor"] = max_cursor
     if sign==None:
-        params["_signature"] = getsign()
-    print("getLike--",sign)
-    response = requests.get('https://www.iesdouyin.com/web/api/v2/aweme/like/', headers=headers, params=params)
+        tempsign = getsign()
+        if tempsign!=None:
+            params["_signature"] = tempsign
+    # print("getLike--",sign)
+    try:
+        response = requests.get('https://www.iesdouyin.com/web/api/v2/aweme/like/',timeout = 5, headers=headers, params=params)
+    except Exception as e:
+        getLike(max_cursor,None)
+        return 
     # print("response===",response.text)
     jsonData = json.loads(response.text)
     Data = json.loads(response.text)
@@ -132,7 +152,7 @@ def getLike(max_cursor,sign):
         getLike(Data["max_cursor"],sign)
 
 
-getLike(0,None)
+getLike(1567489461000,None)
 os.system("pause")
 #NB. Original query string below. It seems impossible to parse and
 #reproduce query strings 100% accurately so the one below is given
