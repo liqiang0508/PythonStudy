@@ -1,0 +1,59 @@
+{
+  
+  "openUIDs": [
+    "-----------",
+    "all-1",
+    "770x",
+    "-----------"
+  ],
+
+
+  "scriptVersion": 1,
+  "baseUrl": "http://192.168.64.164:8080/static/script_%s/",
+  "configFile": "appinfoiii.json",
+
+  "debugScriptVersion": 6,
+  "debugBaseUrl": "http://192.168.64.164:8080/static/script_%s/",
+  "debugConfigFile": "appinfoiii.json",
+  "debugUIDs": [
+    "-----------",
+    "975780",
+    "930912",
+    "724001",
+    "264138",
+    "-----------"
+  ],
+
+
+  "channels": [
+    "-----------",
+    "1",
+    "2",
+    "3",
+    "-----------"
+  ],
+
+
+  "supportBinarys": [
+    "-----------",
+    "x.x.x",
+    "1.0.6",
+    "1.0.8",
+    "1.0.9",
+    "1.1.0",
+    "1.2.0",
+    "1.3.0",
+    "-----------"
+  ],
+
+
+  "forcedBinaryVersions": [
+    "-----------",
+    "x.x.x",
+    "-----------"
+  ],
+  "binaryUrl": "",
+
+
+  "MarkLast":""
+}
