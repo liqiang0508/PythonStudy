@@ -31,12 +31,16 @@
 </style>
 <script>
 	$(function(){
+		console.log("22222")
 		$(".click").click(function(){
 
-			$.get("http://127.0.0.1:5000/",function(data,status){
-				alert("数据: " + data + "\n状态: " + status);
-			});
-			console.log("click")
+			// $.get("http://127.0.0.1:5000/",function(data,status){
+			// 	alert("数据: " + data + "\n状态: " + status);
+			// });
+			console.log("click"+$(".input").val("222"))
+			// alert($(".input").val())
+			console.log(this.innerText)
+			console.log($(this).text())
 		})
 
 		$(".add").click(function(){
@@ -53,6 +57,7 @@
 			},
 			0);
 		})
+		console.log("2222233")
 	});
 
 
@@ -73,13 +78,13 @@
 		</div>
 	</div>
 	<h2 id="myDiv">这是一个标题</h2>
-	<p>这是一个段落。</p>
-	<p>这是另一个段落。</p>
+	<p value = "hhh">这是一个段落。</p>
+	<!-- <p>这是另一个段落。</p> -->
 	<button class="click">点我</button>
+	<input class="input" type="text" value="999"></input>
 
-
-		<div class="container text-center  d-flex flex-column ">
-				<button  class="btn  bgn-lg btn-primary " type="submit">Sign up</button>
+	<div class="container text-center  d-flex flex-column ">
+		<button  class="btn  bgn-lg btn-primary " type="submit">Sign up</button>
 
 		<div class="table-responsive">
 			<table  class="table  table-bordered table-hover table-striped table-sm">
@@ -110,7 +115,7 @@
 			</table>
 
 		</div>
-		</div>
+	</div>
 
-	</body>
-	</html>
+</body>
+</html>

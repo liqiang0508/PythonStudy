@@ -1,0 +1,109 @@
+<html>
+	<head>
+		<title>级联选项</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<select id="province">
+
+		</select>
+
+		<select id="city">
+
+		</select>
+		<div class="div">1</div>
+		<div class="div">2</div>
+	</body>
+</html>
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script>
+	var provinces = [ //数组对象不能用$
+		{
+			id: '001',
+			name: '北京',
+			children: [{
+				id: '001001',
+				name: '北京'
+			}]
+		},
+		{
+			id: '002',
+			name: '四川省',
+			children: [{
+				id: '002001',
+				name: '成都'
+			}, {
+				id: '002002',
+				name: '绵阳'
+			}]
+		},
+		{
+			id: '003',
+			name: '浙江省',
+			children: [{
+				id: '003001',
+				name: '杭州'
+			}, {
+				id: '003002',
+				name: '温州'
+			}]
+		}
+	];
+	// provinces.each(function(i,n){
+
+
+	// })
+	// provinces.forEach(function(e){
+
+	// 	console.log(e)
+	// })
+
+
+	$(function() {
+		//遍历选取的div数组
+		var div = $("div")
+		div.each(function(i, n) //jqurey选取的元素数组这样遍历
+			{
+				console.log("each----" + n.innerText)
+			})
+		//数组自带遍历
+		provinces.forEach(function(e) //js的数组遍历
+			{
+				console.log(e)
+			})
+		//jqurey的数组遍历
+		$.each(provinces, function(i, n) { //js的数组用jqurey的遍历
+
+			console.log(n)
+		})
+
+		//初始化把第一个省份数据弄进去
+		var province = $("#province");
+		var provinces1 = "";
+		$.each(provinces, function(i, n) {
+			provinces1 = provinces1 + "<option value='" + n.id + "'>" + n.name + "</option>";
+		})
+		province.append(provinces1)
+	})
+
+	$(function() {
+
+		var province = $("#province");
+		var city = $("#city")
+		var cityData = "";
+
+		province.change(function() { //当省份控件修改的时候
+			$.each(provinces, function(i, n) { //循环数组里面的数据
+				if (province.val() == n.id) //当省份的值等于遍历的值
+				{
+					$.each(n.children, function(i, n) { //把对应city数据弄进city控件
+						cityData = cityData + "<option value='" + n.id + "'>" + n.name + "</option>";
+					})
+					city.append(cityData)
+				}
+			})
+
+		})
+
+	})
+</script>
