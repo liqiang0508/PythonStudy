@@ -5,9 +5,9 @@ print("build Start**************")
 
 projectPath = os.getcwd()
 key = "e2ededca-352b-49"
-os.system("CocosCreator.exe  --build platform=android;debug=false;xxteaKey="+key+" --path "+projectPath)
+os.system("CocosCreator.exe  --build platform=ios;debug=false;xxteaKey="+key+" --path "+projectPath)
 
 
 
-print("build End**************")
+print("build End****************")
 os.system("pause")

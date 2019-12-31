@@ -80,6 +80,16 @@ def walk(path):
 			
 			data["files"].append(filedata)
 
+def BuildRes():
+	print("BuildRes Start**************")
+	projectPath = os.getcwd()
+	key = "e2ededca-352b-49"
+	os.system("CocosCreator.exe  --build platform=ios;debug=false;xxteaKey="+key+" --path "+projectPath)
+	print("BuildRes end**************")
+
+
+
+
 scriptVersion = 0
 if os.path.exists("appinfoiii.json"):
 	with open("appinfoiii.json","r") as f:
@@ -88,7 +98,7 @@ if os.path.exists("appinfoiii.json"):
 		scriptVersion = jsondata['scriptVersion']
 		print scriptVersion
 	
-
+BuildRes()
 data = OrderedDict()
 scriptVersion = scriptVersion+1
 data["scriptVersion"] = scriptVersion
@@ -102,7 +112,7 @@ with open("appinfoiii.json","w") as f:
 	f.write(json.dumps(data,indent=4))
 
 copyFile("appinfoiii.json","assets/resources/appinfoiii.json")
-
+copyFile("main.js","build/jsb-default/main.js")
 copyFileTree("build/jsb-default/src","hotupversion/Script_"+str(scriptVersion)+"/src")
 copyFileTree("build/jsb-default/res","hotupversion/Script_"+str(scriptVersion)+"/res")
 
@@ -131,5 +141,7 @@ ziputils.ZipEnd()
 # move
 moveFile("Script_"+str(scriptVersion)+".zip","../Script_"+str(scriptVersion)+".zip")
 
-print("generateLocalConfig End==========================")
+os.chdir("../../")
+BuildRes()
+print("generateLocalConfig  Script_"+str(scriptVersion)+"/res+   End==========================")
 os.system('pause')
