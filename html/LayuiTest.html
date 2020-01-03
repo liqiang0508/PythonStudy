@@ -5,16 +5,59 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<title>LayuiTest</title>
 		<link rel="stylesheet" href="layui-v2.5.5/layui/css/layui.css">
+
 	</head>
 	<body>
-		<div class="layui-row">
-			<div class="layui-col-xs6 layui-col-lg6" style="background-color: #FFB800;text-align: center;">
-				<button class="layui-btn layui-btn-primary" data-type="123" id="369">测试按钮</button>
+		<div class="layui-container">
+			<div class="layui-row">
+				<div class="layui-col-xs6 layui-col-lg6" style="background-color: #FFB800;text-align: center;">
+					<button class="layui-btn layui-btn-primary test" data-type="123" id="369">测试按钮</button>
+				</div>
+				<div class="layui-col-xs6 layui-col-lg6" style="background-color: #009688;text-align: center;">
+					<button class="layui-btn layui-btn-primary test" id="3690">测试按钮3</button>
+				</div>
 			</div>
-			<div class="layui-col-xs6 layui-col-lg6" style="background-color: #009688;text-align: center;">
-				<button class="layui-anim layui-anim-up  layui-btn layui-btn-primary " id="3690">测试按钮3</button>
+
+			<div class="layui-upload">
+				<button type="button" class="layui-btn" id="test1">上传图片</button>
+				<div class="layui-upload-list">
+					<img class="layui-upload-img" id="demo1">
+					<p id="demoText"></p>
+				</div>
 			</div>
+			<fieldset class="layui-elem-field">
+				<legend>字段集区块 - 默认风格</legend>
+				<div class="layui-field-box">
+					内容区域
+				</div>
+			</fieldset>
+
+			<fieldset class="layui-elem-field layui-field-title">
+				<legend>字段集区块 - 横线风格</legend>
+				<div class="layui-field-title">
+					内容区域
+				</div>
+			</fieldset>
+			<div>
+				<i class="layui-icon layui-icon-friends" style="font-size: 50px; color: #1E9FFF;"></i>
+			</div>
+
+			<div id="rateTest"></div>
+			
+			<table class="layui-hide" id="tabletest" lay-filter="tabletest"></table>
+			<!-- <div class="layui-carousel" id="test10">
+			  <div carousel-item="">
+			    <div><img src="http://h.hiphotos.baidu.com/zhidao/pic/item/30adcbef76094b36bbc7755aa0cc7cd98d109d2b.jpg"></div>
+			    <div><img src="http://attach.bbs.miui.com/forum/201304/25/195151szk8umd8or8fmfa5.jpg"></div>
+			    <div><img src="http://gss0.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/9d82d158ccbf6c816c6ea481bd3eb13533fa407a.jpg"></div>
+			    <div><img src="http://i0.hdslb.com/bfs/article/328dc32635fe6434806d1a98b6ff305c9dec80fd.jpg"></div>
+			    <div><img src="http://gss0.baidu.com/7Po3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/37d3d539b6003af38dd54dad342ac65c1138b694.jpg"></div>
+			    <div><img src="http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1211/27/c9/16142347_1354014176593.jpg"></div>
+			    <div><img src="http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1308/17/c3/24561315_1376700305963.jpg"></div>
+			  </div>
+			</div> -->
 		</div>
+
 	</body>
 
 	<script src="layui-v2.5.5/layui/layui.all.js"></script>

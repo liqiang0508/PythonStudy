@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request,redirect,url_for,send_from_directory
 from werkzeug import secure_filename
 import os
+import ziputils
 app = Flask(__name__)
 
 UPLOAD_FOLDER = os.getcwd()+"/uploadfiles"
@@ -26,8 +27,12 @@ def upload_file():
       f = request.files['file']
       app.logger.info("upload_file--"+f.filename)
       filename = secure_filename(f.filename)
-      f.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
+      saveFilePath = os.path.join(app.config['UPLOAD_FOLDER'],filename)
+      f.save(saveFilePath)
       # session['filenames'] = [filename]
+      houzuiName = os.path.splitext(f.filename)[1]
+      if houzuiName== ".zip":
+        ziputils.ZipExtral(app.config['UPLOAD_FOLDER']+"/"+f.filename,app.config['UPLOAD_FOLDER']) 
       return redirect(url_for('uploaded',filename = filename))
     else:
       return render_template('upload.html')

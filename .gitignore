@@ -1,3 +1,16 @@
 *.pyc
 CurPage
 movie.txt
+test.js
+/ScrapyGirls
+/dist
+/awesome-bot
+/build
+a.png
+getEveryDaySound.spec
+pyinstallTest.spec
+test.db
+testmin.js
+/node_modules
+/douyin/video
+Flask/static

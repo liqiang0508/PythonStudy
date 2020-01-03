@@ -9,6 +9,7 @@ from selenium import webdriver
 import random
 from prt_cmd_color import *
 import sys
+import argparse
 
 sys.setrecursionlimit(sys.maxint) #设置为一百万
 
@@ -37,19 +38,10 @@ headers = {
     'user-agent': getheaders()
 }
 
-params = {
-    'user_id':'86044891889',
-    'sec_uid': '',
-    'count':'21',
-    'max_cursor': 0,
-    'aid':'1128',
-    '_signature': '0M2EpxASjXXZgf6yrkCKktDNhL',
-    'dytk':'3905df2f69a6a6561a9da86e08b69e20'
-}
 
 opt = webdriver.ChromeOptions()
 opt.headless = True
-drive = webdriver.Chrome(options=opt)
+driver = webdriver.Chrome(options=opt)
 # 86044891889
 # 60144115810 me
 uid = "86044891889"
@@ -63,10 +55,35 @@ params = {
     'aid':'1128',
     '_signature': '0M2EpxASjXXZgf6yrkCKktDNhL',
     'dytk':'3905df2f69a6a6561a9da86e08b69e20'
-} 
+}
+if not os.path.exists("video"):
+    os.makedirs("video")
+
+'''获取文件的大小,结果保留两位小数，单位为MB'''
+def get_FileSize(filePath):
+    # filePath = unicode(filePath,'utf8')
+    fsize = os.path.getsize(filePath)
+    fsize = fsize/float(1024*1024)
+    return round(fsize,2)
+
+
+def get_dytk():
+    responce =  requests.get(uri, headers=headers,timeout = 5)
+    data =responce.text
+    dytkstart = data.find("dytk:")
+    dytkend = data.find("\n", dytkstart)
+    dytk = data[dytkstart:dytkend]
+    # print("dytk=",dytk)
+    dytks = dytk.split(":")
+    print ("dytk===",dytks[1])
+    params["dytk"] = dytks[1]
+    
+
+    
 def getsign():
     try:
 
+        
         responce =  requests.get(uri, headers=headers,timeout = 5)
         dy_src =responce.text
         tac_start = dy_src.find("tac=")
@@ -77,21 +94,40 @@ def getsign():
         f.write(tac)
         f.close()
         responce.close()
-        drive.get("file:///E:/github/PythonStudy/douyin/get_sign.html")
-        sign = drive.find_element_by_xpath("/html/body").text
+        # opt = webdriver.ChromeOptions()
+        # opt.headless = True
+        # driver = webdriver.Chrome(options=opt)
+        driver.get("file:///"+os.path.abspath('get_sign.html'))#.get_sign.html")
+        sign = driver.find_element_by_xpath("/html/body").text
+        # driver.quit()
         return sign
     except Exception as e:
         return None
+
+def downFile(Url,SaveName):
+    if os.path.exists(SaveName) and get_FileSize(SaveName)!=0:
+        printYellow("exists---"+Url)
+        return
+    with open(SaveName,"wb") as f:
+        responce = requests.get(Url, headers=headers)
+        f.write(responce.content)
+        responce.close()
+        printGreen("Save Success---"+Url)
 
 def downFileFromDic(data,index):
 
     if index>len(data)-1:
         return 
-
+    # print("downFileFromDic",data[index])
     name = data[index]["name"]
     url = data[index]["url"]
-    if os.path.exists(name):
-        printYellow("exists---"+url)
+    aweme_id = data[index]["aweme_id"]
+    name = name.replace("\n", "")
+    # print("name=",name)
+    if os.path.exists(name) and get_FileSize(name)!=0:
+        printYellow("exists---"+aweme_id)
+        index = index+1
+        downFileFromDic(data,index)
         return
     print("StartDown--",url)
     with open(name,"wb") as f:
@@ -140,7 +176,7 @@ def getPost(max_cursor,sign):
         desc = data["desc"]
         Id = data["aweme_id"]
         desc = re.sub('[\/:*?"<>|]','-',desc)#去掉非法字符   #只要字符串中的中文，字母，数字
-       
+        # print("id==",Id)
         path = "video/"+uid+"/"+dirname
         if not os.path.exists(path):
             os.makedirs(path)
@@ -148,12 +184,34 @@ def getPost(max_cursor,sign):
         downurl = data["video"]["download_addr"]["url_list"][0]
         downurl = downurl.replace("play","playwm")
 
-        DownDic.append({"name":name,"url":downurl})
+        DownDic.append({"name":name,"url":downurl,"aweme_id":Id})
 
     downFileFromDic(DownDic,0)
+    print("has_more==",has_more)
     if has_more==True:
         time.sleep(0.5)
         getPost(Data["max_cursor"],sign)
+    else:
+        return
+
+def getShortVideo(url):#获取短地址的视频
+
+    opt = webdriver.ChromeOptions()
+    opt.headless = True
+    driver = webdriver.Chrome(options=opt)
+
+    data = driver.get(url)
+    
+    playbtn = driver.find_element_by_class_name("play-btn")
+    playbtn.click()
+    video = driver.find_element_by_class_name("player")
+    usertitle = driver.find_element_by_class_name("desc").text
+    src = video.get_attribute("src")
+    path = "video/shorturl"
+    if not os.path.exists(path):
+            os.makedirs(path)
+    downFile(src,path+"/"+usertitle+".mp4")
+    driver.quit()
 
 def getLike(max_cursor,sign):
     with open(uid+"like_max_cursor","w") as f:
@@ -176,11 +234,12 @@ def getLike(max_cursor,sign):
     DownDic = []
     aweme_list = Data["aweme_list"]
     has_more = Data["has_more"]
-    
+    # print("aweme_list-----",len(aweme_list))
     if len(aweme_list)==0:
         getLike(max_cursor,getsign())
         return
     for data in aweme_list:
+        # print("data-----",data)
         desc = data["desc"]
         Id = data["aweme_id"]
         desc = re.sub('[\/:*?"<>|]','-',desc)#去掉非法字符   #只要字符串中的中文，字母，数字
@@ -192,32 +251,35 @@ def getLike(max_cursor,sign):
         name = path+"/"+Id+desc+".mp4"#data["desc"]
         downurl = data["video"]["download_addr"]["url_list"][0]
         downurl = downurl.replace("play","playwm")
-        DownDic.append({"name":name,"url":downurl})
-
+        DownDic.append({"name":name,"url":downurl,"aweme_id":Id})
+        
     downFileFromDic(DownDic,0)
+    print("has_more==",has_more)
     if has_more==True:
         time.sleep(0.5)
         getLike(Data["max_cursor"],sign)
-
-if len(sys.argv)==1:
-    print("input douyin id")
-else:
-    uid = sys.argv[1]
-    print("get douyin=="+uid)
-    params["user_id"] = uid
-    uri = "https://www.iesdouyin.com/share/user/"+uid
-    # print uri
-    # print sys.argv[2],type(sys.argv[2])
-    if int(sys.argv[2]) == 1:#post
-        dirname = "post"
-        print("getPost")
-        start = 0
-        path = uid+"post_max_cursor"
-        if os.path.exists(path):
-            with open(path,"r") as f:
-                start = f.read()
-        getPost(start,None)
     else:
+        getLike(Data["max_cursor"],None)
+        return
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-i',help = "douyin player ID")
+parser.add_argument('-s',help = "short url")
+parser.add_argument('-l',help = "get player like video")
+parser.add_argument('-p',help = "get player post video")
+parser.add_argument('-v', action='version', version='%(prog)s 1.0')
+args = parser.parse_args()
+print args
+playerID = args.i
+shortUrl = args.s
+playerLike = args.l
+get_dytk()
+if playerID:
+    uid = playerID
+    params["user_id"] = playerID
+    uri = "https://www.iesdouyin.com/share/user/"+playerID
+    # print uri
+    if playerLike:#getlike
         dirname = "like"
         print("getlike")
         start = 0
@@ -226,7 +288,53 @@ else:
             with open(path,"r") as f:
                 start = f.read()
         getLike(start,None)
+    else:#get post
+        dirname = "post"
+        print("getPost")
+        start = 0
+        path = uid+"post_max_cursor"
+        if os.path.exists(path):
+            with open(path,"r") as f:
+                start = f.read()
+        getPost(start,None)
+else:
+    if shortUrl:
+        getShortVideo(shortUrl)
+    else:
+        print("input error")    
 
+
+# if 
+# '''
+# get_dytk()
+# if len(sys.argv)==1:
+#     print("input douyin id")
+# else:
+#     uid = sys.argv[1]
+#     print("get douyin=="+uid)
+#     params["user_id"] = uid
+#     uri = "https://www.iesdouyin.com/share/user/"+uid
+#     # print uri
+#     # print sys.argv[2],type(sys.argv[2])
+#     if int(sys.argv[2]) == 1:#post
+#         dirname = "post"
+#         print("getPost")
+#         start = 0
+#         path = uid+"post_max_cursor"
+#         if os.path.exists(path):
+#             with open(path,"r") as f:
+#                 start = f.read()
+#         getPost(start,None)
+#     else:
+#         dirname = "like"
+#         print("getlike")
+#         start = 0
+#         path = uid+"like_max_cursor"
+#         if os.path.exists(path):
+#             with open(path,"r") as f:
+#                 start = f.read()
+#         getLike(start,None)
+# '''
     
 
 

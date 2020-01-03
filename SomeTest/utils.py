@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 import urllib
 import socket
-
+import hashlib
 # 获取网络上的文件
 def GetNetFile(url,savename,callback):
     if callback:
@@ -61,3 +61,4 @@ def isJson(jsonstr):
     except ValueError, e:
         return False
     return True
+print getStrMd5("2")
