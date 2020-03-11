@@ -1,0 +1,10 @@
+1 下载自己google浏览器对应的版本的chromedriver.exe。下载地址：https://chromedriver.storage.googleapis.com/index.html
+下载完成后把chromedriver.exe 放在python安装目录下面。比如python2.x版本放在C:\Python27下面
+
+2 设置单元格格式 里面设置数字的分类为文本,避免身份证显示科学计数法
+
+
+3 按照demon表格表头格式输入学生基本信息，表头不能修改。每一个sheet为同一个专业的学生，多个专业请创建多个sheet。联系方式后面为要查询的专业课程，依次往后面加（课程名必须和网站查询的课程名一致）
+
+
+4 把xlsx文件放在文件夹下面,运行exe

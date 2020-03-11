@@ -16,7 +16,7 @@ print os.getcwd()
 import sqlite3
 
 # from module import moduleA, moduleB
-from module import *
+# from module import *
 
 # url = "http://honour-texaspoker.com/cslmanager/serverstate"
 # responce = requests.get(url)
@@ -50,8 +50,8 @@ def ranstr(num):
 		result = result+salt 
 	return result
 
-moduleA.SayHello()
-moduleB.SayHello()
+# moduleA.SayHello()
+# moduleB.SayHello()
 for i in range(1,2):
 	print i
 # print sys.maxsize
@@ -67,6 +67,11 @@ print path,houzui
 a = "ada\
 wa"
 print a
+
+b =[1,4,96]
+print 1 in b,b.index(4)
+
+print 
 # os.system('explorer E:\github')
 # os.system("explorer "+ "../")
 # timestamp = time.time()
