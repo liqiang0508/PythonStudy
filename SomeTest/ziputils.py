@@ -48,8 +48,8 @@ def ZipExtral(targetzip,destpath):
 		azip.extract(file,destpath)
 	
 
-ZipInit("test.zip")
-AddFile("../html/easyui")
+# ZipInit("test.zip")
+# AddFile("../html/easyui")
 # AddFile("ch.js")
 ZipEnd()
 
