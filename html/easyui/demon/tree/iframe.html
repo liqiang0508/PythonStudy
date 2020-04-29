@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="../../jquery.min.js"></script>
+		<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+		<title>iframe</title>
+	</head>
+	<body>
+		<p>iframe</p>
+		<button id="post"> post</button>
+	</body>
+	<script>
+		$(function() {
+
+			$("#post").click(function() {
+				console.log("post")
+				$('#parent_p', window.parent.document).text("iframe里面修改了我") //方法1 找到父节点的parent_p 修改文字
+				// console.log(parent)
+				window.parent.refreshTree() //方法2 调用父节点的刷新tree方法， 在refreshTree调用父节点tree的刷新
+			})
+		})
+	</script>
+</html>

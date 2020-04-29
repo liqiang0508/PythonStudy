@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Tree Test</title>
+		<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+		<link rel="stylesheet" type="text/css" href="../demo.css">
+		<script type="text/javascript" src="../../jquery.min.js"></script>
+		<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+	</head>
+	<body>
+
+		<div class="easyui-panel" style="padding:5px">
+			<ul id="tt" class="easyui-tree" data-options="animate:true"></ul>
+		</div>
+		<p id="parent_p" class="parent">我是父节点测试</p>
+		<iframe id="i_frame" src="iframe.html">
+
+		</iframe>
+
+		<div id="win"></div>
+		<!-- <div id="win" class="easyui-window" title="My Window" style="width:400px;height:200px"
+    data-options="model:true,iconCls:'icon-save',modal:true,closed:true,collapsible:false,minimizable:false,maximizable:false">
+        <div style="text-align:center;margin-top:25px">
+            <label for="name">Name:</label>
+            <input class="easyui-validatebox" type="text" name="name"  />
+        </div>
+        <div style="text-align:center;margin-top:25px">
+            <label for="email">Email:</label>
+            <input class="easyui-validatebox" type="text" name="email"  />
+        </div>
+		<div style="text-align:right;position:absolute;bottom:15px;right: 15px;">
+			<button onclick="submit()">确定</button>
+			<button onclick="close()">取消</button>
+		</div>
+        
+    </div> -->
+		<script type="text/javascript">
+			function refreshTree() {
+				console.log("refreshTree")
+
+				var data = [{
+					"id": 1,
+					"text": "后台管理",
+					"checked": false,
+					"attributes": {
+						"url": null
+					},
+					"state": "closed",
+					"children": [{
+							id: 11,
+							text: 'Item1'
+						},
+						{
+							id: 12,
+							text: 'Item2'
+						},
+						{
+							id: 13,
+							text: 'Item3'
+						}
+					],
+				}]
+
+				$('#tt').tree('loadData', data)
+			}
+
+			function ShowPopWindow(id, call) //弹出弹框
+			{
+
+				var elem =
+					'<div style="text-align:center;margin-top:25px">\
+		         <label for="name">Name:</label>\
+		         <input class="easyui-validatebox" type="text" name="name"  />\
+		     </div>\
+		     <div style="text-align:center;margin-top:25px">\
+		         <label for="email">Email:</label>\
+		         <input class="easyui-validatebox" type="text" name="email"  />\
+		     </div>\
+				<div style="text-align:right;position:absolute;bottom:15px;right: 15px;">\
+					<button class = "ok_window" >确定</button>\
+					<button class = "no_window" >取消</button>\
+				</div>'
+
+
+				$('#win').window({
+					width: 400,
+					height: 200,
+					modal: true,
+					content: elem
+				});
+
+				$(".ok_window").click(function() {
+
+					call(1)
+				})
+				$(".no_window").click(function() {
+					call(0)
+
+				})
+			}
+
+			$(function() {
+				// $("#i_frame").hide()
+				// 开始写 jQuery 代码...
+				console.log("start***")
+
+				$('#tt').tree({
+
+					data: [{
+							"id": 1,
+							"text": "后台管理",
+							"checked": false,
+							"attributes": {
+								"url": null
+							},
+							"state": "closed",
+							"children": [{
+									id: 11,
+									text: 'Item1'
+								},
+								{
+									id: 12,
+									text: 'Item2'
+								},
+								{
+									id: 13,
+									text: 'Item3'
+								}
+							],
+						},
+						{
+							"id": 2,
+							"text": "资源管理",
+							"checked": false,
+							"attributes": {
+								"url": null
+							},
+							"state": "closed",
+							"children": [{
+									id: 21,
+									text: 'Item1'
+								},
+								{
+									id: 22,
+									text: 'Item2'
+								},
+								{
+									id: 23,
+									text: 'Item3'
+								}
+							],
+						}
+
+					],
+					onClick: function(node) { // 每个item的点击事件
+						if (node.id) //判断有id的
+						{
+							ShowPopWindow(node.id, function(index) {
+
+								if (index == 1) {
+									console.log("提交数据")
+									var str = "id=== " + node.id + "\n" + "name = " + $("input[name='name']").val() + "\n" + "email=== " +
+										$("input[name='email']").val()
+									console.log(str);
+									//知道了id 和对应数据 就可以提交数据啦 可以用jequrey ajax post上传表单数据 或者 在ShowPopWindow方法里面 var elem这个元素最外层用<form>包裹，提交的时候在表单数据里面追加id字段   然后在调用jqurey的表单提交方法$("xx").subnit ，这个可以百度下方法
+								}
+								$('#win').window("close")
+							});
+						}
+
+
+					},
+					onContextMenu: function(e, node) { //右键事件
+						e.preventDefault();
+						alert(node.id)
+
+					},
+					formatter: function(node) {
+						return node.text;
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

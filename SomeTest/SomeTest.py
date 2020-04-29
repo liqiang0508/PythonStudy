@@ -64,8 +64,7 @@ filename = "adwda/p/a.zip"
 path = os.path.splitext(filename)[0]
 houzui =os.path.splitext(filename)[1]
 print path,houzui
-a = "ada\
-wa"
+a = "ada\wa"
 print a
 
 b =[1,4,96]

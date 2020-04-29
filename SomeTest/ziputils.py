@@ -9,7 +9,8 @@ global azip
 # 初始化一个zip文件
 def ZipInit(targetzip):
 	global azip
-	azip = zipfile.ZipFile(targetzip, 'w')
+	azip = zipfile.ZipFile(targetzip, 'w', zipfile.ZIP_DEFLATED)
+	
 	
 	
 	# 添加文件
@@ -26,6 +27,9 @@ def AddFile(srcfile):
 					# print "file-",file
 					# print 
 					azip.write(os.path.join(dirpath, file))
+
+
+
 	
 
 # 压缩完毕
@@ -44,10 +48,10 @@ def ZipExtral(targetzip,destpath):
 		azip.extract(file,destpath)
 	
 
-# ZipInit("test.zip")
-# AddFile("movie.txt")
-# # AddFile("ch.js")
-# ZipEnd()
+ZipInit("test.zip")
+AddFile("../html/easyui")
+# AddFile("ch.js")
+ZipEnd()
 
 # ZipExtral("test.zip","extract")
 

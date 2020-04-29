@@ -181,7 +181,7 @@ def getPage(index):
     else:
         print "page data error=",index
    
-for i in xrange(30):
+for i in xrange(5):
      getPage(i)   
 
 
