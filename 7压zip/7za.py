@@ -14,7 +14,9 @@ def zipFolder(savefile,zipFolder,pwd):#压缩文件
 def extralFolder(zippath,savefoler,pwd):#解压zip
 	
 	# savefoler = os.path.join( os.getcwd(),savefoler)
-	
+	if not os.path.exists(savefoler):
+		os.makedirs(savefoler)
+
 	cmd = "7za.exe x -o"+savefoler+" "+zippath
 
 	if pwd:
@@ -27,6 +29,6 @@ def extralFolder(zippath,savefoler,pwd):#解压zip
 # zipFolder("test8.7z","Script_8","123")
 # zipFolder("test7.zip","*.png","123")
 
-path1 = "test7.zip"
+path1 = "test7.7z"
 
 extralFolder(path1,"abc","123")
