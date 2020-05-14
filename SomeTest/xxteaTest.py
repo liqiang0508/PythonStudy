@@ -8,20 +8,20 @@ text = "Hello World! 你好，中国！"
 key = "1234567890"
 encrypt_data = xxtea.encrypt(text, key)
 decrypt_data = xxtea.decrypt(encrypt_data, key)
-print(encrypt_data);
-print(decrypt_data);
-with open("HelloWorld.png","rb") as f:
-	data = f.read()
-	print data
+# print(encrypt_data);
+# print(decrypt_data);
+# with open("HelloWorld.png","rb") as f:
+# 	data = f.read()
+# 	print data
 
-	dataen =  xxtea.encrypt(data, key)#加密
-	with open("HelloWorldEN.png","wb") as f1:
-		f1.write(dataen)
+# 	dataen =  xxtea.encrypt(data, key)#加密
+# 	with open("HelloWorldEN.png","wb") as f1:
+# 		f1.write(dataen)
 
 
-	datade = xxtea.decrypt(dataen, key)#解密
-	with open("HelloWorldDE.png","wb") as f2:
-		f2.write(datade)
+# 	datade = xxtea.decrypt(dataen, key)#解密
+# 	with open("HelloWorldDE.png","wb") as f2:
+# 		f2.write(datade)
 
 def encryptPic(pathname,encrykey):#加密目录下的图片
 	for dirpath,dirnames,filenames in os.walk(pathname):#压缩目录下的所有文件
@@ -117,21 +117,40 @@ def encryptPicII(pathname,encrykey):#加密目录下的图片
                     		with open(filePath,"wb") as f1:
                     			f1.write(dataEncrypt)
                     			f1.close()
+# 测试图片加解密
+# with open("HelloWorld.png","rb") as f:
+# 	data = f.read()
+# 	f.close()
+# 	enCryptata = encrypt(data,"test123")
+# 	with open("HelloWorld1.png","wb") as f1:
+# 		f1.write(enCryptata)
+# 		f1.close()
+# 	deCrypyData = decrypt(enCryptata,"test123")
+# 	with open("HelloWorld2.png","wb") as f2:
+# 		f2.write(deCrypyData)
+# 		f2.close()
 
-with open("HelloWorld.png","rb") as f:
+
+
+# 测试lua脚本解密
+luafile = 'main.luac'
+with open(luafile,"rb+") as f:
 	data = f.read()
-	f.close()
-	enCryptata = encrypt(data,"test123")
-	with open("HelloWorld1.png","wb") as f1:
-		f1.write(enCryptata)
-		f1.close()
-	deCrypyData = decrypt(enCryptata,"test123")
-	with open("HelloWorld2.png","wb") as f2:
-		f2.write(deCrypyData)
-		f2.close()
+	print data
+	data = data.replace("Awdada96jYgjkjd","")
+	data = decrypt(data,"Awdada96jYgjkjd")
+	# print data
+	# data = data.replace("Awdada96jYgjkjd","")
+	# print data
+	# deCryptData = decrypt(data,"SYSTEM_EVENT_EVT_USER_LOGIN")
+	# print deCryptData
+	# with open("main1.lua","wb+") as f1:
+	# 	f1.write(data)
+	# 	f1.close()
 
 
 
 
 
-
+a = "adadaww"
+# print a.replace("ww","ee")
