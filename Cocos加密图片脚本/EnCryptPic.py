@@ -1,41 +1,11 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import xxtea
+#根据cocos lua脚本加密的规则 ，把图片资源加密，使用时再解密 需要修改CCImage源码
+
 import os
-
 import struct 
-text = "Hello World! 你好，中国！"
-key = "1234567890"
-encrypt_data = xxtea.encrypt(text, key)
-decrypt_data = xxtea.decrypt(encrypt_data, key)
-print(encrypt_data);
-print(decrypt_data);
-with open("HelloWorld.png","rb") as f:
-	data = f.read()
-	print data
-
-	dataen =  xxtea.encrypt(data, key)#加密
-	with open("HelloWorldEN.png","wb") as f1:
-		f1.write(dataen)
 
 
-	datade = xxtea.decrypt(dataen, key)#解密
-	with open("HelloWorldDE.png","wb") as f2:
-		f2.write(datade)
-
-def encryptPic(pathname,encrykey):#加密目录下的图片
-	for dirpath,dirnames,filenames in os.walk(pathname):#压缩目录下的所有文件
-            for files in filenames:
-                    if files.endswith("png") or files.endswith("jpg")  :
-                    	filePath = os.path.join(dirpath, files)
-                    	print filePath
-                    	with open(filePath,"rb") as f:
-                    		data = f.read()
-                    		dataEncrypt =  xxtea.encrypt(data, encrykey)#加密
-                    		f.close()
-                    		with open(filePath,"wb") as f1:
-                    			f1.write(dataEncrypt)
-                    			f1.close()
 
 _DELTA = 0x9E3779B9  
 
@@ -97,11 +67,7 @@ def decrypt(str, key):
         v[0] = (v[0] - ((z >> 5 ^ y << 2) + (y >> 3 ^ z << 4) ^ (sum ^ y) + (k[0 & 3 ^ e] ^ z))) & 0xffffffff  
         y = v[0]  
         sum = (sum - _DELTA) & 0xffffffff  
-    return _long2str(v, True)  
-
-# print(text == decrypt_data);
-targetFolder = "enceyptPic"#目标目录
-# encryptPic(targetFolder,"test123")
+    return _long2str(v, True) 
 
 
 def encryptPicII(pathname,encrykey):#加密目录下的图片
@@ -109,29 +75,15 @@ def encryptPicII(pathname,encrykey):#加密目录下的图片
             for files in filenames:
                     if files.endswith("png") or files.endswith("jpg")  :
                     	filePath = os.path.join(dirpath, files)
-                    	print filePath
+                    	print "encryptPicII==="+filePath
                     	with open(filePath,"rb") as f:
                     		data = f.read()
                     		dataEncrypt =  encrypt(data, encrykey)#加密
                     		f.close()
                     		with open(filePath,"wb") as f1:
                     			f1.write(dataEncrypt)
-                    			f1.close()
-
-with open("HelloWorld.png","rb") as f:
-	data = f.read()
-	f.close()
-	enCryptata = encrypt(data,"test123")
-	with open("HelloWorld1.png","wb") as f1:
-		f1.write(enCryptata)
-		f1.close()
-	deCrypyData = decrypt(enCryptata,"test123")
-	with open("HelloWorld2.png","wb") as f2:
-		f2.write(deCrypyData)
-		f2.close()
+                    			f1.close() 
 
 
 
-
-
-
+encryptPicII("enceyptPic","test123")
