@@ -33,25 +33,32 @@
 			<hr />
 
 			<p>{{ inputtext|uperStr }}</p>
-			<input v-model="inputtext">
+			<input v-model.lazy="inputtext">
 			<hr />
 
 			<button v-on:click="Click">点击</button>
 			<hr>
-			
+
 			<label>v-show</label> <input type="checkbox" v-model="show">
 			<p v-show="show">show me</p>
-			
-			<hr >
+
+			<hr>
 			<ol>
-			    <li v-for="site in sites">
-			      {{ site.name }}
-			    </li>
-			  </ol>
+				<li v-for="site in sites">
+					{{ site.name }}
+				</li>
+			</ol>
+			<hr >
+			<runoob message = "LOL"> </runoob>
 		</div>
 	</body>
 
 	<script>
+		Vue.component('runoob', {//自定义组件
+			props:["message"],
+			template: '<h1>{{ message }}</h1>'
+		})
+
 		var p = new Vue({
 			el: "#app",
 			data: {
@@ -61,9 +68,15 @@
 				id: 99, //v-bind 绑定属性值
 				seen: false, // if判断
 				href: "https://www.baidu.com/", //v-bind 绑定属性值
-				inputtext: "数据绑定" ,//v-model 数据绑定
-				show:false,//v-show 是否展示
-				sites:[{"name":"site1"},{"name":"site2"},{"name":"site3"}]//v-for循环
+				inputtext: "数据绑定", //v-model 数据绑定
+				show: false, //v-show 是否展示
+				sites: [{
+					"name": "site1"
+				}, {
+					"name": "site2"
+				}, {
+					"name": "site3"
+				}] //v-for循环
 			},
 			methods: {
 				Click: function() { //v-on  监听事件
@@ -72,14 +85,13 @@
 			},
 			filters: { //过滤变成大写字母
 				uperStr: function(str) {
-					
+
 					return str.toUpperCase()
 				}
 			},
-			watch:{//监听改变
-				inputtext:function(nval, oval)
-				{
-					alert(oval+"=变成=="+nval)
+			watch: { //监听改变
+				inputtext: function(nval, oval) {
+					alert(oval + "=变成==" + nval)
 				}
 			}
 
