@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request,redirect,url_for,send_from_directory
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
+
+
 import os
 import ziputils
 app = Flask(__name__)
@@ -8,6 +10,11 @@ UPLOAD_FOLDER = os.getcwd()+"/uploadfiles"
 if not os.path.exists(UPLOAD_FOLDER):
 	os.makedirs(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+@app.route('/')
+def Home():
+    return 'upload file!'
 
 @app.route('/hello/')
 def hello_world():
