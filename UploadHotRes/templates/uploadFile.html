@@ -39,26 +39,40 @@
 		{
 			$("#upfilebtn").click(function(){
 				var fileInput = $('#upfile').get(0).files[0];
+				var filekey = $('#filekey')
 				if (fileInput==undefined)
 				{
 					showConfirm("","请选择上传文件",{1:{}})
+					return
 				}
-				else
+	
+				if(filekey == "")
 				{
-					$("#upfilebtn").parent().submit()
+					showConfirm("","请输入上传密钥",{1:{}})
+					return
+					
 				}
+				
+				$("#upfilebtn").parent().submit()
+				
 			})
 			
 			$("#upfilecfg").click(function(){
 				var fileInput = $('#upconfig').get(0).files[0];
+				var cfgkey = $('#cfgkey')
 				if (fileInput==undefined)
 				{
 					showConfirm("","请选择上传配置文件",{1:{}})
+					return	
 				}
-				else
+				if(cfgkey == "")
 				{
-					$("#upfilecfg").parent().submit()
+					
+						showConfirm("","请输入上传密钥",{1:{}})
+						return
+					
 				}
+				$("#upfilecfg").parent().submit()
 			})
 		});
 
@@ -71,21 +85,21 @@
 			<div class="row">
 				<div class="col-12" align="center">
 					<hr class="btn-primary">
-					
+
 					<p>选择热更新zip包</p>
 					<form action="/uploaderFile" method="POST" enctype="multipart/form-data">
-						
+
 						<input type="file" name="file" id="upfile" />
-						<input type="password" name="filekey" id="filekey" placeholder="请输入上传密钥"/>
+						<input type="password" name="filekey" id="filekey" placeholder="请输入上传密钥" />
 						<input type="button" value="提交" id="upfilebtn"></input>
 					</form>
-					
+
 					<hr class="btn-primary">
-					
+
 					<p>选择热更新配置</p>
 					<form action="/uploaderConfig" method="POST" enctype="multipart/form-data">
 						<input type="file" name="file" id="upconfig" />
-						<input type="password" name="cfgkey" id="cfgkey" placeholder="请输入上传密钥"/>
+						<input type="password" name="cfgkey" id="cfgkey" placeholder="请输入上传密钥" />
 						<input type="button" value="提交" id="upfilecfg"></input>
 					</form>
 					<hr class="btn-primary">
