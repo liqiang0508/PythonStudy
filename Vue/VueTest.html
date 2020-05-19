@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Vue Study</title>
+		<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+	</head>
+	<style>
+		.class1{
+			color: red;
+		}
+		
+	</style>
+	<body>
+		<div id="app">
+			<p>{{ message }}</p>
+			<hr />
+			<div v-html="v_html"></div>
+			<hr />
+			<label for="r1">修改颜色</label> <input type="checkbox" v-model="use">
+			<div v-bind:class="{class1:use}">
+				<p>我的颜色根据use的状态变化</p>
+			</div>
+			<hr />
+			<div v-bind:id="'list-' + id">菜鸟教程</div>
+			<hr />
+			
+			<label>显示文字</label> <input type="checkbox" v-model="seen">
+			<p v-if="seen">现在你看到我了</p>
+			<hr />
+			<a v-bind:href="href">link</a>
+			<hr />
+			
+			 <p>{{ inputtext }}</p>
+			 <input v-model="inputtext">
+		</div>
+	</body>
+
+	<script>
+		var p = new Vue({
+			el: "#app",
+			data: {
+				message: "我是message文字", //直接插值
+				v_html: "<h1>我是html代码<h1>", //v-html 绑定的是html的代码
+				use: false,   //v-model 数据绑定
+				id: 99,
+				seen: false,
+				href: "https://www.baidu.com/",
+				inputtext:"数据绑定" //v-model 数据绑定
+			}
+
+		})
+		// p.message = "lol"
+	</script>
+</html>
