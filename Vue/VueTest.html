@@ -24,15 +24,30 @@
 			<hr />
 			<div v-bind:id="'list-' + id">菜鸟教程</div>
 			<hr />
-			
+
 			<label>显示文字</label> <input type="checkbox" v-model="seen">
 			<p v-if="seen">现在你看到我了</p>
+			<P v-else> 没看见我</p>
 			<hr />
 			<a v-bind:href="href">link</a>
 			<hr />
+
+			<p>{{ inputtext|uperStr }}</p>
+			<input v-model="inputtext">
+			<hr />
+
+			<button v-on:click="Click">点击</button>
+			<hr>
 			
-			 <p>{{ inputtext }}</p>
-			 <input v-model="inputtext">
+			<label>v-show</label> <input type="checkbox" v-model="show">
+			<p v-show="show">show me</p>
+			
+			<hr >
+			<ol>
+			    <li v-for="site in sites">
+			      {{ site.name }}
+			    </li>
+			  </ol>
 		</div>
 	</body>
 
@@ -42,11 +57,30 @@
 			data: {
 				message: "我是message文字", //直接插值
 				v_html: "<h1>我是html代码<h1>", //v-html 绑定的是html的代码
-				use: false,   //v-model 数据绑定
-				id: 99,
-				seen: false,
-				href: "https://www.baidu.com/",
-				inputtext:"数据绑定" //v-model 数据绑定
+				use: false, //v-model 数据绑定
+				id: 99, //v-bind 绑定属性值
+				seen: false, // if判断
+				href: "https://www.baidu.com/", //v-bind 绑定属性值
+				inputtext: "数据绑定" ,//v-model 数据绑定
+				show:false,//v-show 是否展示
+				sites:[{"name":"site1"},{"name":"site2"},{"name":"site3"}]//v-for循环
+			},
+			methods: {
+				Click: function() { //v-on  监听事件
+					alert("clicked")
+				}
+			},
+			filters: { //过滤变成大写字母
+				uperStr: function(str) {
+					
+					return str.toUpperCase()
+				}
+			},
+			watch:{//监听改变
+				inputtext:function(nval, oval)
+				{
+					alert(oval+"=变成=="+nval)
+				}
 			}
 
 		})
