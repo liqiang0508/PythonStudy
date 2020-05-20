@@ -39,7 +39,7 @@
 		{
 			$("#upfilebtn").click(function(){
 				var fileInput = $('#upfile').get(0).files[0];
-				var filekey = $('#filekey')
+				var filekey = $('#filekey').val()
 				if (fileInput==undefined)
 				{
 					showConfirm("","请选择上传文件",{1:{}})
@@ -59,7 +59,7 @@
 			
 			$("#upfilecfg").click(function(){
 				var fileInput = $('#upconfig').get(0).files[0];
-				var cfgkey = $('#cfgkey')
+				var cfgkey = $('#cfgkey').val()
 				if (fileInput==undefined)
 				{
 					showConfirm("","请选择上传配置文件",{1:{}})
