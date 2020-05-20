@@ -41,7 +41,7 @@ def upload_file():
       
       filekey =  request.form['filekey']
       if filekey!="Casino888":
-		return redirect(url_for('error'))
+        return redirect(url_for('error'))
 
       app.logger.info("filekey--"+filekey)
       app.logger.info("upload_file--"+f.filename)
@@ -64,7 +64,7 @@ def upload_cfg():
       f = request.files['file']
       cfgkey =  request.form['cfgkey']
       if cfgkey!="Casino888":
-		return redirect(url_for('error'))
+		    return redirect(url_for('error'))
       app.logger.info("upload_file--"+f.filename)
       filename = secure_filename(f.filename)
       saveFilePath = os.path.join(app.config['UPLOAD_FOLDER'],filename)
@@ -78,4 +78,4 @@ def get_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == '__main__':
-   app.run(host='0.0.0.0',debug = True)
+   app.run(host='0.0.0.0',debug = False)
