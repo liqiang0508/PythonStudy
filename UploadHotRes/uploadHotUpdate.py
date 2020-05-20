@@ -6,7 +6,7 @@
 from flask import Flask, render_template, request,redirect,url_for,send_from_directory
 from werkzeug.utils import secure_filename
 
-
+import logging
 import os
 import ziputils
 app = Flask(__name__)
@@ -19,6 +19,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def Home():
+    app.logger.info('info log')
+    app.logger.warning('warning log')
     return render_template('uploadFile.html')
 
 @app.route('/error')
@@ -78,4 +80,7 @@ def get_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == '__main__':
+   app.debug = True
+   handler = logging.FileHandler('flask.log')
+   app.logger.addHandler(handler)
    app.run(host='0.0.0.0',debug = False)
