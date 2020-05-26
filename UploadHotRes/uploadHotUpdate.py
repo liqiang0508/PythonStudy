@@ -17,6 +17,10 @@ if not os.path.exists(UPLOAD_FOLDER):
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
+@app.route('/ip')
+def getip():
+    return request.remote_addr
+
 @app.route('/')
 def Home():
     app.logger.info('info log')

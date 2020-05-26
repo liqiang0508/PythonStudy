@@ -1,0 +1,6 @@
+Fb 获取密钥 
+keytool -exportcert -alias androiddebugkey -keystore C:\Users\Administrator\.android\debug.keystore | openssl sha1 -binary | openssl base64
+Q31jP4jTdvBvOpDQoOIvUJ8JzkA= 本地debug离散密钥  （注意：生成的和代码生成的可能不一样）
+
+获取打包密钥信息
+keytool -list -v -keystore %HOMEPATH%\.android\debug.keystore -alias androiddebugkey

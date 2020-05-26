@@ -42,6 +42,7 @@ def ZipExtral(targetzip,destpath):
 	azip = zipfile.ZipFile(targetzip)
 	for file in azip.namelist():
 		azip.extract(file,destpath)
+	azip.close()
 	
 
 # ZipInit("test.zip")

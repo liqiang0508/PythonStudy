@@ -38,7 +38,7 @@ def downFile(Url,SaveName):
 def getNameFromUrl(url):
     return os.path.basename(url)
 
-url = "https://www.keke234.com/gaoqing/cn/YouWu/2019/0312/31881.html"
+# url = "https://www.keke2345.com/gaoqing/cn/YouWu/2019/0312/31881.html"
 
 
 
@@ -122,7 +122,7 @@ def getPages(url):
 # https://www.keke234.com/gaoqing/list_5_52.html
 def Getmain(startindex,endindex):
     for i in range(startindex,endindex):
-        url = "https://www.keke234.com/gaoqing/list_5_"+str(i)+".html"
+        url = "https://www.keke2345.com/gaoqing/list_5_"+str(i)+".html"
         print url
         # with open("CurPage","w") as f:
         #     f.write(url)
@@ -145,7 +145,7 @@ def Getmain(startindex,endindex):
            
            
 # 5-233
-url = "https://www.keke234.com/gaoqing/list_5_1.html"
+url = "https://www.keke2345.com/gaoqing/list_5_1.html"
 htmldata = getHtmlData(url)
 htmldata.encoding = "gb2312"
 selector = etree.HTML(htmldata.text)
