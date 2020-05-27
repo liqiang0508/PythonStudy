@@ -40,8 +40,31 @@ def MySqlSelectOne(sql):
 	conn.close()
 	return data
 
+def MySqlInsert(sql):
+	conn = pool.connection() #以后每次需要数据库连接就是用connection（）函数获取连接就好了
+	cursor=conn.cursor()
+	b = True#是否插入成功
+	try:
+	# 执行sql语句
+		cursor.execute(sql)
+	# 提交到数据库执行
+		conn.commit()
+	except:
+		# Rollback in case there is any error
+		conn.rollback()
+		b = False
+
+	cursor.close()
+	conn.close()
+	return b
 
 
-print MySqlSelectOne("select * from userinfo")
+
 print MySqlSelectOne("SELECT VERSION()")
 
+b = MySqlInsert("insert into userinfo(name,age) values ('liqiang',29)")
+if b:
+	print "插入ok"
+
+
+print MySqlSelectAll("select name from userinfo")
