@@ -23,8 +23,8 @@ def getip():
 
 @app.route('/')
 def Home():
-    app.logger.info('info log')
-    app.logger.warning('warning log')
+    # app.logger.info('info log')
+    # app.logger.warning('warning log')
     return render_template('uploadFile.html')
 
 @app.route('/error')
@@ -49,7 +49,6 @@ def upload_file():
       if filekey!="Casino888":
         return redirect(url_for('error'))
 
-      app.logger.info("filekey--"+filekey)
       app.logger.info("upload_file--"+f.filename)
       filename = secure_filename(f.filename)
       saveFilePath = os.path.join(app.config['UPLOAD_FOLDER'],filename)
@@ -71,7 +70,8 @@ def upload_cfg():
       cfgkey =  request.form['cfgkey']
       if cfgkey!="Casino888":
 		    return redirect(url_for('error'))
-      app.logger.info("upload_file--"+f.filename)
+        
+      app.logger.info("upload_cfg--"+f.filename)
       filename = secure_filename(f.filename)
       saveFilePath = os.path.join(app.config['UPLOAD_FOLDER'],filename)
       f.save(saveFilePath)
@@ -86,5 +86,9 @@ def get_file(filename):
 if __name__ == '__main__':
    app.debug = True
    handler = logging.FileHandler('flask.log')
+
+   logging_format = logging.Formatter('%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)s - %(message)s')
+
+   handler.setFormatter(logging_format)
    app.logger.addHandler(handler)
    app.run(host='0.0.0.0',debug = False)
