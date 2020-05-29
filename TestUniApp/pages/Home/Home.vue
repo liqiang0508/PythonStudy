@@ -11,6 +11,9 @@
 		</view>
 		<view style="text-align: center;">
 			<text>Hello World</text>
+			<!-- <view ref="input" class="input"> -->
+
+			</view>
 		</view>
 
 		<!-- </scroll-view> -->
@@ -22,6 +25,18 @@
 	import helper from "../../common/helper.js"
 	import HttpHelper from "../../common/HttpHelper.js"
 	export default {
+		mounted() {
+			// 创建附件上传
+			// var _self = this;
+			// var input = document.createElement('input'); //创建元素
+			// input.type = 'file' //添加file类型
+			// input.onchange = (event) => {
+			// 	// _self.upFile(input, event)
+			// 	console.log(input.files[0])
+			// }
+			// this.$refs.input.$el.appendChild(input)
+			console.log("mounted")
+		},
 		data() {
 			return {
 
@@ -42,28 +57,31 @@
 				console.log("H5")
 				//  #endif
 			},
-
+			upFile(input, event) {
+				var _self = this;
+				uni.uploadFile({
+					url: url,
+					files: [{
+						file: input.files[0],
+						uri: event.srcElement.value
+					}],
+					success: (uploadFileRes) => {
+						console.log(uploadFileRes)
+					},
+					fail: (err) => {
+						console.log(err)
+					}
+				});
+			},
 			HttpGet: function() {
-				// uni.request({
-				//     url: 'http://pokerofroyal.com:8080/a/thaitexashotupiii/configrelease', //仅为示例，并非真实接口地址。
-				   
-				//     success: (res) => {
-				       
-				// 		console.log("scriptVersion=="+res.data["scriptVersion"])
-				        
-				//     },
-				// 	fail: () => {
-						
-				// 	}
-				// });
+
 				var url = "http://pokerofroyal.com:8080/a/thaitexashotupiii/configrelease"
-				HttpHelper.HttpGet(url,(data)=>{
-					if(data)
-					{
-						console.log("scriptVersion=="+data["scriptVersion"])
+				HttpHelper.HttpGet(url, (data) => {
+					if (data) {
+						console.log("scriptVersion==" + data["scriptVersion"])
 					}
 				})
-	
+
 			}
 
 		}

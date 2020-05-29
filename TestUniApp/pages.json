@@ -6,18 +6,37 @@
 				// "navigationBarTitleText": "Index", //设置页面标题文字
 				"enablePullDownRefresh": true //开启下拉刷新
 			}
+		}, {
+			"path": "pages/Home/Home",
+			"style": {}
 		}
-	    ,{
-            "path" : "pages/Home/Home",
-            "style" : {}
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		// "navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"navigationStyle":"custom",//去掉顶部的标题栏
+		"navigationStyle": "custom", //去掉顶部的标题栏
 		"backgroundColor": "#f82929"
-		
+
+	},
+
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#3cc51f",
+		"borderStyle": "black",
+		"height":"60",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/logo.png",
+			"selectedIconPath": "static/logo.png",
+			"text": "Index"
+		}, {
+			"pagePath": "pages/Home/Home",
+			"iconPath": "static/logo.png",
+			"selectedIconPath": "static/logo.png",
+			"text": "Home"
+		}]
 	}
+
 }
