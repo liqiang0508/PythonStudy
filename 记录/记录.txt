@@ -4,3 +4,6 @@ Q31jP4jTdvBvOpDQoOIvUJ8JzkA= 本地debug离散密钥  （注意：生成的和�
 
 获取打包密钥信息
 keytool -list -v -keystore %HOMEPATH%\.android\debug.keystore -alias androiddebugkey
+
+
+数据库设置自增主键 起始值 ALTER TABLE userinfo AUTO_INCREMENT = 30000

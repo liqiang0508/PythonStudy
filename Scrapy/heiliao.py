@@ -47,7 +47,7 @@ def getVideo(url):
 
 		video_src= videos[i].get("src")
 		print title[0],video_src
-		#downFile(video_src,title[0]+str(i)+".mp4")
+		downFile(video_src,title[0]+str(i)+".mp4")
 
 def GetOnePage(pageindex):
 	url = "https://zzzttt.me/page/"+str(pageindex)+"/"
@@ -71,6 +71,6 @@ def GetOnePage(pageindex):
 # driver.implicitly_wait(5)
 # driver.get("https://www.baidu.com/")
 
-for i in range(80,110):
+for i in range(30):
 	GetOnePage(i)
 # getVideo("https://zzzttt.me/archives/6.html")
