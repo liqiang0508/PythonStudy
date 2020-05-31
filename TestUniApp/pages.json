@@ -3,19 +3,25 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				// "navigationBarTitleText": "Index", //设置页面标题文字
+				"navigationBarTitleText": "Index", //设置页面标题文字
 				"enablePullDownRefresh": true //开启下拉刷新
 			}
 		}, {
 			"path": "pages/Home/Home",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "Home"//设置页面标题文字
+				// "enablePullDownRefresh": true //开启下拉刷新
+			}
 		}
-	],
+	    
+       
+       
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		// "navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
-		"navigationStyle": "custom", //去掉顶部的标题栏
+		"navigationStyle": "default", //去掉顶部的标题栏
 		"backgroundColor": "#f82929"
 
 	},
@@ -24,7 +30,7 @@
 		"color": "#7A7E83",
 		"selectedColor": "#3cc51f",
 		"borderStyle": "black",
-		"height":"60",
+		"height": "60",
 		"backgroundColor": "#ffffff",
 		"list": [{
 			"pagePath": "pages/index/index",

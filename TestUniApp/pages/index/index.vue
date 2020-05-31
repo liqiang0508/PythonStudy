@@ -4,15 +4,20 @@
 		<text class="title">{{title}}</text>
 
 		<button @click="btnClick" type="primary" plain="true">button</button>
-
+		<Test1 :name = "name" v-on:BtnClick="changeType"></Test1>
 	</view>
 </template>
 
 <script>
+	import Test1 from  '@/components/Test1/Test1.vue'
 	export default {
+		comments:{
+			Test1
+		},
 		data() {
 			return {
-				title: 'Index'
+				title: 'Index',
+				name:"963"
 			}
 		},
 		onLoad() {
@@ -26,6 +31,10 @@
 			}, 1000);
 		},
 		methods: {
+			changeType:function(type)
+			{
+				console.log("父节点点击",type)
+			},
 			btnClick: function() {
 				console.log("按钮点击了")
 				// uni.showModal({
