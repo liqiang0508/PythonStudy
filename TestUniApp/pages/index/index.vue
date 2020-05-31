@@ -5,6 +5,10 @@
 
 		<button @click="btnClick" type="primary" plain="true">button</button>
 		<Test1 :name = "name" v-on:BtnClick="changeType"></Test1>
+		
+		<view v-for="(item,index) in dataList" :key="index">
+			<text>{{item.name}}</text>
+		</view>
 	</view>
 </template>
 
@@ -17,7 +21,8 @@
 		data() {
 			return {
 				title: 'Index',
-				name:"963"
+				name:"963",
+				dataList:[]
 			}
 		},
 		onLoad() {
@@ -34,6 +39,12 @@
 			changeType:function(type)
 			{
 				console.log("父节点点击",type)
+				// document.body.style.backgroundColor = "yellow";
+				var obj = {name:Math.floor(Math.random()*90)}
+				this.dataList.push(obj)
+				console.log(this.dataList)
+			    
+				
 			},
 			btnClick: function() {
 				console.log("按钮点击了")
