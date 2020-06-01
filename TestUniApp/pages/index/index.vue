@@ -24,27 +24,31 @@
 		<hr style=" margin-top: 10rpx" />
 
 		<!-- 种类 -->
-		
-		<view class="kinds" >
+
+		<view class="kinds">
 			<view class="kind_item" @tap="KindsTap(index)" v-for="(item,index) in kindsData" :key="index">
 				<image class="kind_img" src="../../static/logo.png"></image>
 				<text class="kind_txt">{{item.name}}</text>
 			</view>
-			
+
 		</view>
 
-		<hr/>
-		
+		<hr />
+
 		<!-- 公告 -->
 		<view class="notice">
 			<uni-icons type="info"></uni-icons>
 			<text class="notice_text">公告</text>
+			<view class="_notice">
+				<text :animation="animationData" class="ScrollText notice_text">666</text>
+			</view>
+
 			<text class="notice_text_right">></text>
-			
+
 		</view>
-		
-		
-		
+
+		<!-- <button @click="anitest">btn</button> -->
+
 	</view>
 	</view>
 </template>
@@ -57,69 +61,79 @@
 		},
 		data() {
 			return {
-
+				animationData: {},
 				indicatorDots: true,
 				autoplay: true,
 				interval: 5000,
 				duration: 500,
-				kindsData: [
-					{
+				kindsData: [{
 						imgsrc: "../../static/logo.png",
 						name: "蔬菜豆制品",
-						id:0
+						id: 0
 					},
 					{
 						imgsrc: "../../static/logo.png",
 						name: "肉类",
-						id:1
+						id: 1
 					},
 
-{
+					{
 						imgsrc: "../../static/logo.png",
 						name: "水产海鲜",
-						id:2
+						id: 2
 					},
 					{
 						imgsrc: "../../static/logo.png",
 						name: "方便速食",
-						id:3
+						id: 3
 					},
 					{
 						imgsrc: "../../static/logo.png",
 						name: "粮油干调",
-						id:4
+						id: 4
 					},
 					{
 						imgsrc: "../../static/logo.png",
 						name: "水果",
-						id:5
+						id: 5
 					},
 					{
 						imgsrc: "../../static/logo.png",
 						name: "西式料理",
-						id:6
+						id: 6
 					},
 					{
 						imgsrc: "../../static/logo.png",
 						name: "禽类",
-						id:7
+						id: 7
 					},
 					{
 						imgsrc: "../../static/logo.png",
 						name: "蛋类",
-						id:8
+						id: 8
 					},
 					{
 						imgsrc: "../../static/logo.png",
 						name: "豆制品",
-						id:9
-					},
+						id: 9
+					}
 
 				]
 			}
 		},
 		onLoad() {
 
+		},
+		onShow() {
+			console.log("show");
+			// 初始化一个动画
+			var animation = uni.createAnimation({
+				duration: 5000,
+				
+			})
+			this.animation = animation
+			
+			
 		},
 		onPullDownRefresh() {
 			console.log("下拉刷新")
@@ -129,11 +143,22 @@
 			}, 1000);
 		},
 		methods: {
-			KindsTap:function(index){
-				console.log("点击了种类--",index)
+			anitest: function() {
+				
+				const query = uni.createSelectorQuery().in(this);
+				query.select('.ScrollText').boundingClientRect(data => {
+				  console.log("得到布局位置信息" + JSON.stringify(data));
+				  console.log("节点离页面顶部的距离为" + data.top);
+				}).exec();
+				
+				
+
 			},
-			
-			
+			KindsTap: function(index) {
+				console.log("点击了种类--", index)
+			},
+
+
 
 		}
 	}
@@ -163,6 +188,7 @@
 		height: 300rpx;
 		line-height: 300rpx;
 		text-align: center;
+
 	}
 
 	.swiperimg {
@@ -185,13 +211,15 @@
 	}
 
 	.kind_item {
-		margin: 10rpx;
+		margin-left: 15rpx;
+		margin-right: 15rpx;
+		margin-top: 20rpx;
 		/* background-color: #10AEFF; */
 		display: flex;
 		flex-direction: column;
 		justify-items: flex-end;
 		align-items: center;
-		width: 130rpx;
+		width: 120rpx;
 		height: 150rpx;
 		text-align: center;
 	}
@@ -205,25 +233,43 @@
 		margin-top: 10rpx;
 		/* width: 80rpx; */
 		height: 80rpx;
-		word-break:keep-all;
+		word-break: keep-all;
 	}
-	
-	.notice{
+
+	.notice {
 		width: 100%;
 		height: 55rpx;
-		background-color: #ff0000;
-		opacity: 0.5;
+		background-color: rgba(255, 0, 0, 0.5);
+		/* opacity: 0.5; */
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 	}
-	.notice_text{
+
+	.notice_text {
 		margin-left: 10rpx;
 		color: white;
+
 	}
-	.notice_text_right{
+
+	.notice_text_right {
 		position: absolute;
 		right: 10rpx;
 		color: white;
+	}
+
+	._notice {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin-left: 15rpx;
+		width: 590rpx;
+		background: rgba(255, 0, 0, 0.25);
+		height: 40rpx;
+		border-radius: 6upx;
+		overflow: hidden;
+		box-sizing: border-box;
+		
+
 	}
 </style>
