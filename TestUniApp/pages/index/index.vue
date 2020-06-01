@@ -63,11 +63,11 @@
 				</view>
 			</view>
 			
-			</view>
+			
 
 		</view>
 
-
+		<view style="height:60px;"></view>
 
 	</view>
 </template>
@@ -158,6 +158,12 @@
 						name:"红富士2",
 						id:1003
 					},
+					{
+						imgsrc:"../../static/logo.png",
+						price:3,
+						name:"红富士4",
+						id:1004
+					}
 					
 					
 				]
@@ -328,19 +334,19 @@
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: space-between;
-		align-items: flex-start;
-		align-content: space-between;
 		margin-top: 15rpx;
 	}
 	.new_goods_item{
 		width: 40%;
-		height: 650rpx;
+		height: 500rpx;
 		/* background-color: #0062CC; */
 		margin-left: 20rpx;
 		margin-right: 20rpx;
 		display: flex;
 		flex-direction: column;
+		justify-content: flex-start;
 		align-items: center;
+		margin-top: 10rpx;
 	}
 	.new_goods_img{
 		width: 100%;
