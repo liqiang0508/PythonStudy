@@ -16,6 +16,22 @@
 	    
        
        
+        ,{
+            "path" : "pages/ThirdPage/ThirdPage",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/Kinds/Kinds",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/ShopCard/ShopCard",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/Me/Me",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -36,12 +52,24 @@
 			"pagePath": "pages/index/index",
 			"iconPath": "static/logo.png",
 			"selectedIconPath": "static/logo.png",
-			"text": "Index"
+			"text": "商城"
 		}, {
-			"pagePath": "pages/Home/Home",
+			"pagePath": "pages/Kinds/Kinds",
 			"iconPath": "static/logo.png",
 			"selectedIconPath": "static/logo.png",
-			"text": "Home"
+			"text": "分类"
+		},
+		{
+			"pagePath": "pages/ShopCard/ShopCard",
+			"iconPath": "static/logo.png",
+			"selectedIconPath": "static/logo.png",
+			"text": "购物车"
+		},
+		{
+			"pagePath": "pages/Me/Me",
+			"iconPath": "static/logo.png",
+			"selectedIconPath": "static/logo.png",
+			"text": "我"
 		}]
 	}
 
