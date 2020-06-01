@@ -275,7 +275,7 @@
 		flex-direction: column;
 		justify-items: flex-end;
 		align-items: center;
-		width: 120rpx;
+		width: 15%;
 		height: 150rpx;
 		text-align: center;
 	}
