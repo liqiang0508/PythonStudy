@@ -233,7 +233,10 @@
 		/* background-color: #000000; */
 	}
 
-
+	.uni-padding-wrap{
+		width: 100%;
+		padding: 0;
+	}
 	.swiper {
 		height: 300rpx;
 		width: 100%;
