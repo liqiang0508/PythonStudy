@@ -27,7 +27,7 @@
 
 		<view class="kinds">
 			<view class="kind_item" @tap="KindsTap(index)" v-for="(item,index) in kindsData" :key="index">
-				<image class="kind_img" src="../../static/logo.png"></image>
+				<image class="kind_img" :src=item.imgsrc ></image>
 				<text class="kind_txt">{{item.name}}</text>
 			</view>
 
@@ -47,9 +47,28 @@
 
 		</view>
 
-		<!-- <button @click="anitest">btn</button> -->
+		<!-- 新品推荐 -->
+		<view style="text-align: center;margin-top: 10rpx;">
+			<text>新品推荐</text>
+		</view>
 
-	</view>
+		<view class="new_goods">
+			
+			<view @tap="NewGoosTap(item)" class="new_goods_item" v-for="(item,index) in newGoodsData" :key="index">
+				<image  mode="aspectFit" class="new_goods_img" :src=item.imgsrc></image>
+				<text class="new_goods_text">{{item.name}}</text>
+				<view class="Price">
+					<text style=" font-size: 15px; margin-left: 15rpx;">¥{{item.price}}</text>
+					<image src="../../static/logo.png" style="margin-right: 15rpx; width: 50rpx; height: 50rpx;"></image>
+				</view>
+			</view>
+			
+			</view>
+
+		</view>
+
+
+
 	</view>
 </template>
 
@@ -66,7 +85,7 @@
 				autoplay: true,
 				interval: 5000,
 				duration: 500,
-				kindsData: [{
+				kindsData: [{ // 种类
 						imgsrc: "../../static/logo.png",
 						name: "蔬菜豆制品",
 						id: 0
@@ -118,6 +137,29 @@
 						id: 9
 					}
 
+				],
+				newGoodsData:[ //新品推荐数据
+					{
+						imgsrc:"../../static/logo.png",
+						price:96.5,
+						name:"红富士",
+						id:1001
+					},
+					{
+						imgsrc:"../../static/logo.png",
+						price:1,
+						name:"红富士1",
+						id:1002
+					},
+					
+					{
+						imgsrc:"../../static/logo.png",
+						price:2,
+						name:"红富士2",
+						id:1003
+					},
+					
+					
 				]
 			}
 		},
@@ -127,13 +169,7 @@
 		onShow() {
 			console.log("show");
 			// 初始化一个动画
-			var animation = uni.createAnimation({
-				duration: 5000,
-				
-			})
-			this.animation = animation
-			
-			
+
 		},
 		onPullDownRefresh() {
 			console.log("下拉刷新")
@@ -143,16 +179,28 @@
 			}, 1000);
 		},
 		methods: {
-			anitest: function() {
-				
-				const query = uni.createSelectorQuery().in(this);
-				query.select('.ScrollText').boundingClientRect(data => {
-				  console.log("得到布局位置信息" + JSON.stringify(data));
-				  console.log("节点离页面顶部的距离为" + data.top);
-				}).exec();
-				
-				
+			ScrollText: function() {
+				console.log("ScrollText");
+				var animation = uni.createAnimation({
+					duration: 7000,
 
+				})
+				var self = this
+				this.animation = animation
+
+
+				// animation.translateX(900).step()
+
+				this.animationData = animation.export()
+				// setTimeout(function(){
+				// 	animation.translateX(0).step({ duration: 0 })
+				// 	self.ScrollText()
+				// },7000)
+
+			},
+			NewGoosTap:function(data){
+				
+				console.log("点击了新品推荐--", data.name)
 			},
 			KindsTap: function(index) {
 				console.log("点击了种类--", index)
@@ -199,7 +247,6 @@
 
 	.kinds {
 		width: 100%;
-		/* height: 350rpx; */
 		/* background: #cc0000; */
 		display: flex;
 		flex-direction: row;
@@ -240,7 +287,6 @@
 		width: 100%;
 		height: 55rpx;
 		background-color: rgba(255, 0, 0, 0.5);
-		/* opacity: 0.5; */
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -269,7 +315,46 @@
 		border-radius: 6upx;
 		overflow: hidden;
 		box-sizing: border-box;
-		
 
+	}
+
+	.new_goods {
+		width: 100%;
+		/* background: #cc0000; */
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: flex-start;
+		align-content: space-between;
+		margin-top: 15rpx;
+	}
+	.new_goods_item{
+		width: 40%;
+		height: 650rpx;
+		/* background-color: #0062CC; */
+		margin-left: 20rpx;
+		margin-right: 20rpx;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.new_goods_img{
+		width: 100%;
+		height: 350rpx;
+	}
+	.new_goods_text{
+		margin-top: 10rpx;
+		font-size: 15px;
+	}
+	.Price{
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		color: rgba(255,0,0,1);
+		margin-top: 50rpx;
+		
+		
 	}
 </style>
