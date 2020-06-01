@@ -59,7 +59,7 @@
 				<text class="new_goods_text">{{item.name}}</text>
 				<view class="Price">
 					<text style=" font-size: 15px; margin-left: 15rpx;">¥{{item.price}}</text>
-					<image src="../../static/logo.png" style="margin-right: 15rpx; width: 50rpx; height: 50rpx;"></image>
+					<image @tap.stop="ToShopCar(item)"  src="../../static/logo.png" style="margin-right: 15rpx; width: 50rpx; height: 50rpx;"></image>
 				</view>
 			</view>
 			
@@ -205,6 +205,9 @@
 			KindsTap: function(index) {
 				console.log("点击了种类--", index)
 			},
+			ToShopCar:function(data){
+				console.log("点击了购物车--", data.name)
+			}
 
 
 

@@ -3,8 +3,8 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "Index", //设置页面标题文字
-				"enablePullDownRefresh": true //开启下拉刷新
+				"navigationBarTitleText": "Index" //设置页面标题文字
+				// "enablePullDownRefresh": true //开启下拉刷新
 			}
 		}, {
 			"path": "pages/Home/Home",
