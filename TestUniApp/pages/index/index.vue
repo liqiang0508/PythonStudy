@@ -27,7 +27,7 @@
 
 		<view class="kinds">
 			<view class="kind_item" @tap="KindsTap(index)" v-for="(item,index) in kindsData" :key="index">
-				<image class="kind_img" :src=item.imgsrc ></image>
+				<image class="kind_img" :src=item.imgsrc></image>
 				<text class="kind_txt">{{item.name}}</text>
 			</view>
 
@@ -40,7 +40,9 @@
 			<uni-icons type="info"></uni-icons>
 			<text class="notice_text">公告</text>
 			<view class="_notice">
-				<text :animation="animationData" class="ScrollText notice_text">666</text>
+				<!-- <text :animation="animationData" class="ScrollText">666</text> -->
+				<marquee scrollamount = 3 class = "ScrollText" direction="left">{{ScrollText}}</marquee>
+
 			</view>
 
 			<text class="notice_text_right">></text>
@@ -53,19 +55,21 @@
 		</view>
 
 		<view class="new_goods">
-			
+
 			<view @tap="NewGoosTap(item)" class="new_goods_item" v-for="(item,index) in newGoodsData" :key="index">
-				<image  mode="aspectFit" class="new_goods_img" :src=item.imgsrc></image>
+				<image mode="aspectFit" class="new_goods_img" :src=item.imgsrc></image>
 				<text class="new_goods_text">{{item.name}}</text>
 				<view class="Price">
 					<text style=" font-size: 15px; margin-left: 15rpx;">¥{{item.price}}</text>
-					<image @tap.stop="ToShopCar(item)"  src="../../static/logo.png" style="margin-right: 15rpx; width: 50rpx; height: 50rpx;"></image>
+					<image @tap.stop="ToShopCar(item)" src="../../static/logo.png" style="margin-right: 15rpx; width: 50rpx; height: 50rpx;"></image>
 				</view>
 			</view>
-			
-			
+
+
 
 		</view>
+		
+		
 
 		<view style="height:60px;"></view>
 
@@ -74,9 +78,11 @@
 
 <script>
 	// import Test1 from '@/components/Test1/Test1.vue'
+
 	export default {
 		comments: {
 			// Test1
+
 		},
 		data() {
 			return {
@@ -85,6 +91,7 @@
 				autoplay: true,
 				interval: 5000,
 				duration: 500,
+				ScrollText: "666",
 				kindsData: [{ // 种类
 						imgsrc: "../../static/logo.png",
 						name: "蔬菜豆制品",
@@ -138,34 +145,34 @@
 					}
 
 				],
-				newGoodsData:[ //新品推荐数据
+				newGoodsData: [ //新品推荐数据
 					{
-						imgsrc:"../../static/logo.png",
-						price:96.5,
-						name:"红富士",
-						id:1001
+						imgsrc: "../../static/logo.png",
+						price: 96.5,
+						name: "红富士",
+						id: 1001
 					},
 					{
-						imgsrc:"../../static/logo.png",
-						price:1,
-						name:"红富士1",
-						id:1002
+						imgsrc: "../../static/logo.png",
+						price: 1,
+						name: "红富士1",
+						id: 1002
 					},
-					
+
 					{
-						imgsrc:"../../static/logo.png",
-						price:2,
-						name:"红富士2",
-						id:1003
+						imgsrc: "../../static/logo.png",
+						price: 2,
+						name: "红富士2",
+						id: 1003
 					},
 					{
-						imgsrc:"../../static/logo.png",
-						price:3,
-						name:"红富士4",
-						id:1004
+						imgsrc: "../../static/logo.png",
+						price: 3,
+						name: "红富士4",
+						id: 1004
 					}
-					
-					
+
+
 				]
 			}
 		},
@@ -175,7 +182,11 @@
 		onShow() {
 			console.log("show");
 			// 初始化一个动画
+			this.ScrollText = "果蔬自由-您身边的菜市 快捷服务，配送到家"
 
+		},
+		onReady() {
+			
 		},
 		onPullDownRefresh() {
 			console.log("下拉刷新")
@@ -185,33 +196,16 @@
 			}, 1000);
 		},
 		methods: {
-			ScrollText: function() {
-				console.log("ScrollText");
-				var animation = uni.createAnimation({
-					duration: 7000,
+			
+			
+			NewGoosTap: function(data) {
 
-				})
-				var self = this
-				this.animation = animation
-
-
-				// animation.translateX(900).step()
-
-				this.animationData = animation.export()
-				// setTimeout(function(){
-				// 	animation.translateX(0).step({ duration: 0 })
-				// 	self.ScrollText()
-				// },7000)
-
-			},
-			NewGoosTap:function(data){
-				
 				console.log("点击了新品推荐--", data.name)
 			},
 			KindsTap: function(index) {
 				console.log("点击了种类--", index)
 			},
-			ToShopCar:function(data){
+			ToShopCar: function(data) {
 				console.log("点击了购物车--", data.name)
 			}
 
@@ -233,10 +227,11 @@
 		/* background-color: #000000; */
 	}
 
-	.uni-padding-wrap{
+	.uni-padding-wrap {
 		width: 100%;
 		padding: 0;
 	}
+
 	.swiper {
 		height: 300rpx;
 		width: 100%;
@@ -305,9 +300,14 @@
 	}
 
 	.notice_text {
-		margin-left: 10rpx;
+		margin-left: 10px;
 		color: white;
 
+	}
+
+	.ScrollText {
+		/* margin-left: 0px; */
+		color: white;
 	}
 
 	.notice_text_right {
@@ -339,7 +339,8 @@
 		justify-content: space-between;
 		margin-top: 15rpx;
 	}
-	.new_goods_item{
+
+	.new_goods_item {
 		width: 40%;
 		height: 500rpx;
 		/* background-color: #0062CC; */
@@ -351,22 +352,25 @@
 		align-items: center;
 		margin-top: 10rpx;
 	}
-	.new_goods_img{
+
+	.new_goods_img {
 		width: 100%;
 		height: 350rpx;
 	}
-	.new_goods_text{
+
+	.new_goods_text {
 		margin-top: 10rpx;
 		font-size: 15px;
 	}
-	.Price{
+
+	.Price {
 		width: 100%;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		color: rgba(255,0,0,1);
+		color: rgba(255, 0, 0, 1);
 		margin-top: 50rpx;
-		
-		
+
+
 	}
 </style>
