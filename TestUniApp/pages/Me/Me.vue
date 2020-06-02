@@ -194,14 +194,17 @@
 
 	.orderinfos {
 		width: 100%;
-		height: 150rpx;
+		/* height: 150rpx; */
 		/* background-color: #0062CC; */
 		display: flex;
 		flex-direction: row;
+		flex-wrap: wrap;
 
 	}
 
 	.orderinfo {
+		margin-top: 20rpx;
+		margin-bottom: 10rpx;
 		width: 20%;
 		height: 100%;
 		/* background-color: #3F536E; */
