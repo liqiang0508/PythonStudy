@@ -322,7 +322,7 @@
 	.ScrollText {
 		/* margin-left: 0px; */
 		color: white;
-		font-size: 15px;
+		font-size: 15rpx;
 	}
 
 	.notice_text_right {
