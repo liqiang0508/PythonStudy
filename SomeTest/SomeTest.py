@@ -70,7 +70,7 @@ print a
 b =[1,4,96]
 print 1 in b,b.index(4)
 
-print 
+print 8^8^0
 # os.system('explorer E:\github')
 # os.system("explorer "+ "../")
 # timestamp = time.time()

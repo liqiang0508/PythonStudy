@@ -50,7 +50,7 @@
 		</view>
 
 		<!-- 新品推荐 -->
-		<view style="text-align: center;margin-top: 10rpx;">
+		<view style="text-align: center;margin-top: 25rpx; font-size: 30rpx;">
 			<text>新品推荐</text>
 		</view>
 
@@ -301,6 +301,7 @@
 		margin-top: 10rpx;
 		/* width: 80rpx; */
 		height: 80rpx;
+		font-size: 15rpx;
 		word-break: keep-all;
 	}
 
@@ -316,6 +317,7 @@
 	.notice_text {
 		margin-left: 10px;
 		color: white;
+		font-size: 2rpx;
 
 	}
 
