@@ -2,8 +2,36 @@ Fb 获取密钥
 keytool -exportcert -alias androiddebugkey -keystore C:\Users\Administrator\.android\debug.keystore | openssl sha1 -binary | openssl base64
 Q31jP4jTdvBvOpDQoOIvUJ8JzkA= 本地debug离散密钥  （注意：生成的和代码生成的可能不一样）
 
+代码获取密钥
+	try {
+	PackageInfo info = getPackageManager().getPackageInfo(
+			ApplicationUtil.getPackageName(),
+			PackageManager.GET_SIGNATURES);
+	for (Signature signature : info.signatures) {
+		MessageDigest md = MessageDigest.getInstance("SHA");
+		md.update(signature.toByteArray());
+		Log.d("FB KeyHash=", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+	}
+	} catch (PackageManager.NameNotFoundException e) {
+
+	} catch (NoSuchAlgorithmException e) {
+
+	}//fb 后台的秘钥 如果有问题，直接连上看秘钥是多少
+
+
 获取打包密钥信息
 keytool -list -v -keystore %HOMEPATH%\.android\debug.keystore -alias androiddebugkey
 
 
 数据库设置自增主键 起始值 ALTER TABLE userinfo AUTO_INCREMENT = 30000
+
+
+
+
+
+
+centos 开机启动脚本  autorun.sh
+
+#!/bin/bash
+#chkconfig:2345 61 61 //此行的2345参数表示,在哪些运行级别启动,启动序号61;关闭序号61；两位数字即可。
+python2.7 /Lee/flask/FlaskHello.py

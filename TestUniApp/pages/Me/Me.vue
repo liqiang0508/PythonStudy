@@ -9,7 +9,7 @@
 				</view>
 				<view class="addres">
 					<image style="width: 50rpx; height: 50rpx; margin-left: 15rpx;" src="../../static/logo.png" mode="scaleToFill"></image>
-					<text style="color: #ffffff; margin-left: 25rpx;">收货地址</text>
+					<text style="font-size: 15rpx; color: #ffffff; margin-left: 25rpx;">收货地址</text>
 				</view>
 			</view>
 
@@ -18,12 +18,12 @@
 		<view class="MJ">
 			<view class="money">
 				<image style="width: 50rpx; height: 50rpx;" src="../../static/logo.png" mode="scaleToFill"></image>
-				<text>我的钱包</text>
+				<text style="font-size: 20rpx;">我的钱包</text>
 			</view>
 
 			<view class="money">
-				<text>0</text>
-				<text>积分</text>
+				<text style="font-size: 20rpx; color: rgba(255, 85, 0, 1.0);">0</text>
+				<text style="font-size: 20rpx;">积分</text>
 			</view>
 		</view>
 
@@ -38,27 +38,27 @@
 		<view class="orderinfos">
 			<view class="orderinfo">
 				<image style="width: 50rpx; height: 50rpx;" src="../../static/logo.png" mode="scaleToFill"></image>
-				<text>待付款</text>
+				<text style="font-size: 20rpx; margin-top: 10rpx;">待付款</text>
 			</view>
 
 			<view class="orderinfo">
 				<image style="width: 50rpx; height: 50rpx;" src="../../static/logo.png" mode="scaleToFill"></image>
-				<text>待发货</text>
+				<text style="font-size: 20rpx;margin-top: 10rpx;">待发货</text>
 			</view>
 
 			<view class="orderinfo">
 				<image style="width: 50rpx; height: 50rpx;" src="../../static/logo.png" mode="scaleToFill"></image>
-				<text>待收货</text>
+				<text style="font-size: 20rpx;margin-top: 10rpx;">待收货</text>
 			</view>
 
 			<view class="orderinfo">
 				<image style="width: 50rpx; height: 50rpx;" src="../../static/logo.png" mode="scaleToFill"></image>
-				<text>已完成</text>
+				<text style="font-size: 20rpx;margin-top: 10rpx;">已完成</text>
 			</view>
 
 			<view class="orderinfo">
 				<image style="width: 50rpx; height: 50rpx;" src="../../static/logo.png" mode="scaleToFill"></image>
-				<text>售后</text>
+				<text style="font-size: 20rpx;margin-top: 10rpx;">售后</text>
 			</view>
 		</view>
 
