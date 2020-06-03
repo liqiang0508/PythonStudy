@@ -78,7 +78,8 @@
 
 <script>
 	// import Test1 from '@/components/Test1/Test1.vue'
-
+	import HttpHelper from "../../common/HttpHelper.js"
+	import helper from "../../common/helper.js"
 	export default {
 		comments: {
 			// Test1
@@ -204,6 +205,19 @@
 			},
 			KindsTap: function(index) {
 				console.log("点击了种类--", index)
+				var url = "https://192.168.65.172:5000/hello" //"http://pokerofroyal.com:8080/a/thaitexashotupiii/configrelease"
+				HttpHelper.HttpGet(url, (data) => {
+				
+					if (data) {
+						console.log( data[0])
+						
+						helper.ShowAlert("提示","OK")
+					} else {
+						
+						helper.ShowAlert("提示","EROR")
+				
+					}
+				})
 			},
 			ToShopCar: function(data) {
 				console.log("点击了购物车--", data.name)
@@ -308,6 +322,7 @@
 	.ScrollText {
 		/* margin-left: 0px; */
 		color: white;
+		font-size: 15px;
 	}
 
 	.notice_text_right {
@@ -321,7 +336,7 @@
 		flex-direction: row;
 		align-items: center;
 		margin-left: 15rpx;
-		width: 590rpx;
+		width: 550rpx;
 		background: rgba(255, 0, 0, 0.25);
 		height: 40rpx;
 		border-radius: 6upx;
