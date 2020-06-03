@@ -248,7 +248,7 @@
 				HttpHelper.HttpGet(url, (data) => {
 
 					if (data) {
-						console.log( data[0]["name"])
+						console.log( data[0])
 						
 						helper.ShowAlert("提示","OK")
 					} else {
