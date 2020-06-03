@@ -9,6 +9,11 @@ from werkzeug.utils import secure_filename
 import logging
 import os
 import ziputils
+import json
+from flask_cors import CORS
+
+import dbManager
+
 app = Flask(__name__)
 
 UPLOAD_FOLDER = os.getcwd()+"/uploadfiles"
@@ -16,6 +21,11 @@ if not os.path.exists(UPLOAD_FOLDER):
 	os.makedirs(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+
+@app.route('/hello')
+def Hello():
+    data = dbManager.MySqlSelectAll("select name from userinfo")
+    return json.dumps(data)
 
 @app.route('/ip')
 def getip():
@@ -91,4 +101,8 @@ if __name__ == '__main__':
 
    handler.setFormatter(logging_format)
    app.logger.addHandler(handler)
-   app.run(host='0.0.0.0',debug = False)
+   CORS(app, supports_credentials=True)#跨域
+   app.run(host='0.0.0.0',debug = False,ssl_context=(
+        "CA/ca-cert.pem",
+        "CA/ca-key.pem"))
+   # app.run(host='0.0.0.0',debug = False)

@@ -66,5 +66,5 @@ def MySqlInsert(sql):
 # if b:
 # 	print "插入ok"
 
-
-# print MySqlSelectAll("select name from userinfo")
+# data =  MySqlSelectAll("select name from userinfo")
+# print data,type(json.dumps(data))

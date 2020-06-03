@@ -44,7 +44,7 @@
 			<text>{{ item }}</text>
 		</view> -->
 
-	<!-- 	<view>
+		<!-- 	<view>
 			<view class="uni-title uni-common-pl">地区选择器</view>
 			<view class="uni-list">
 				<view class="uni-list-cell">
@@ -68,10 +68,10 @@
 
 			<button class="btns" type="warn" @tap="openAddres3">自定义：根据省市区“code”打开地址</button>
 			<textarea v-model="pickerText" cols="30" rows="10"></textarea> -->
-			<!--
+		<!--
 				         mask-bg-color="rgba(0, 229, 238, 0.4)" // 自定义遮罩层背景颜色
 				         -->
-			<!-- <simple-address ref="simpleAddress" :pickerValueDefault="cityPickerValueDefault" @onConfirm="onConfirm" themeColor="#007AFF"></simple-address>
+		<!-- <simple-address ref="simpleAddress" :pickerValueDefault="cityPickerValueDefault" @onConfirm="onConfirm" themeColor="#007AFF"></simple-address>
 		</view> -->
 
 
@@ -243,11 +243,18 @@
 				});
 			},
 			HttpGet: function() {
-
-				var url = "http://pokerofroyal.com:8080/a/thaitexashotupiii/configrelease"
+				console.log("HttpGet");
+				var url = "https://192.168.65.172:5000/hello" //"http://pokerofroyal.com:8080/a/thaitexashotupiii/configrelease"
 				HttpHelper.HttpGet(url, (data) => {
+
 					if (data) {
-						console.log("scriptVersion==" + data["scriptVersion"])
+						console.log( data[0]["name"])
+						
+						helper.ShowAlert("提示","OK")
+					} else {
+						
+						helper.ShowAlert("提示","EROR")
+
 					}
 				})
 
@@ -258,18 +265,17 @@
 </script>
 
 <style>
-	
 	picker-view {
-	    width: 100%;
-	    height: 600rpx;
-	    margin-top:20rpx;
+		width: 100%;
+		height: 600rpx;
+		margin-top: 20rpx;
 	}
-	
+
 	.item {
-	    line-height: 100rpx;
-	    text-align: center;
+		line-height: 100rpx;
+		text-align: center;
 	}
-	
+
 	button {
 		width: 200rpx;
 		margin: 25rpx;
