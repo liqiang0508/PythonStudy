@@ -202,8 +202,8 @@
 			NewGoosTap: function(data) {
 
 				console.log("点击了新品推荐--", data.name)
-				// helper.ShowLoading()
-				// setTimeout(helper.HideLoading,2000)
+				helper.ShowLoading()
+				setTimeout(helper.HideLoading,2000)
 			},
 			KindsTap: function(data) {
 				console.log("点击了种类--", data.name)
@@ -322,9 +322,9 @@
 		font-size: 2rpx;
 
 	}
-	image:hover{
+	/* image:hover{
 		opacity: 0.5;
-	}
+	} */
 
 	.ScrollText {
 		/* margin-left: 0px; */

@@ -1,7 +1,7 @@
 {
 	"pages": [
-			// pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-			{
+		// pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "Index"
@@ -14,24 +14,40 @@
 				"navigationBarTitleText": "Home"
 				// "enablePullDownRefresh": true 
 			}
+		}, {
+			"path": "pages/ThirdPage/ThirdPage",
+			"style": {}
+		}, {
+			"path": "pages/Kinds/Kinds",
+			"style": {
+				// "navigationBarTitleText": "我的",
+				// "app-plus": {
+				// 	"titleNView": {
+				// 		"buttons": [{
+
+				// 				"text": "果蔬自由",
+				// 				// "fontSrc": "/static/iconfont.ttf",
+				// 				"fontSize": "15px",
+				// 				"float": "left"
+				// 			},
+				// 			{
+				// 				"text": "LOL",
+				// 				// "fontSrc": "/static/iconfont.ttf",
+				// 				"fontSize": "15px"
+
+				// 			}
+				// 		]
+				// 	}
+				// }
+			}
+		}, {
+			"path": "pages/ShopCard/ShopCard",
+			"style": {}
+		}, {
+			"path": "pages/Me/Me",
+			"style": {}
 		}
-        ,{
-            "path" : "pages/ThirdPage/ThirdPage",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/Kinds/Kinds",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/ShopCard/ShopCard",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/Me/Me",
-            "style" : {}
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		// "navigationBarTitleText": "uni-app",
@@ -48,28 +64,29 @@
 		"height": "50px",
 		"backgroundColor": "#ffffff",
 		"list": [{
-			"pagePath": "pages/index/index",
-			"iconPath": "static/logo.png",
-			"selectedIconPath": "static/logo.png",
-			"text": "商城"
-		}, {
-			"pagePath": "pages/Kinds/Kinds",
-			"iconPath": "static/logo.png",
-			"selectedIconPath": "static/logo.png",
-			"text": "分类"
-		},
-		{
-			"pagePath": "pages/ShopCard/ShopCard",
-			"iconPath": "static/logo.png",
-			"selectedIconPath": "static/logo.png",
-			"text": "购物车"
-		},
-		{
-			"pagePath": "pages/Me/Me",
-			"iconPath": "static/logo.png",
-			"selectedIconPath": "static/logo.png",
-			"text": "我"
-		}]
+				"pagePath": "pages/index/index",
+				"iconPath": "static/logo.png",
+				"selectedIconPath": "static/logo.png",
+				"text": "商城"
+			}, {
+				"pagePath": "pages/Kinds/Kinds",
+				"iconPath": "static/logo.png",
+				"selectedIconPath": "static/logo.png",
+				"text": "分类"
+			},
+			{
+				"pagePath": "pages/ShopCard/ShopCard",
+				"iconPath": "static/logo.png",
+				"selectedIconPath": "static/logo.png",
+				"text": "购物车"
+			},
+			{
+				"pagePath": "pages/Me/Me",
+				"iconPath": "static/logo.png",
+				"selectedIconPath": "static/logo.png",
+				"text": "我"
+			}
+		]
 	}
 
 }
