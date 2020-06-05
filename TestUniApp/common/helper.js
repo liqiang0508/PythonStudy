@@ -1,13 +1,11 @@
-function SayHello() {
 
-	console.log("SayHello")
-}
 
 //获取当前平台
 function GetPaltform() {
 	return uni.getSystemInfoSync().platform
 }
 
+// 显示弹框
 function ShowAlert(title,str,call){
 	
 		uni.showModal({
@@ -28,9 +26,24 @@ function ShowAlert(title,str,call){
 			}
 		});
 }
+//显示loading
+function showloading(title)
+{
+	title = title?title:"加载中"
+	uni.showLoading({
+	    title: title,
+		mask:true
+	});
+}
+//隐藏loading
+function hideloading()
+{
+	uni.hideLoading()
+}
 
 module.exports = {
-	SayHello: SayHello,
 	GetPaltform: GetPaltform,
-	ShowAlert:ShowAlert
+	ShowAlert:ShowAlert,
+	ShowLoading:showloading,
+	HideLoading:hideloading
 }

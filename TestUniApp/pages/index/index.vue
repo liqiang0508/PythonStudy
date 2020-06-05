@@ -26,7 +26,7 @@
 		<!-- 种类 -->
 
 		<view class="kinds">
-			<view class="kind_item" @tap="KindsTap(index)" v-for="(item,index) in kindsData" :key="index">
+			<view class="kind_item" @tap="KindsTap(item)" v-for="(item,index) in kindsData" :key="index">
 				<image class="kind_img" :src=item.imgsrc></image>
 				<text class="kind_txt">{{item.name}}</text>
 			</view>
@@ -202,9 +202,11 @@
 			NewGoosTap: function(data) {
 
 				console.log("点击了新品推荐--", data.name)
+				// helper.ShowLoading()
+				// setTimeout(helper.HideLoading,2000)
 			},
-			KindsTap: function(index) {
-				console.log("点击了种类--", index)
+			KindsTap: function(data) {
+				console.log("点击了种类--", data.name)
 				var url = "https://192.168.65.172:5000/hello" //"http://pokerofroyal.com:8080/a/thaitexashotupiii/configrelease"
 				HttpHelper.HttpGet(url, (data) => {
 				
@@ -319,6 +321,9 @@
 		color: white;
 		font-size: 2rpx;
 
+	}
+	image:hover{
+		opacity: 0.5;
 	}
 
 	.ScrollText {

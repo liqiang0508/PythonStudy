@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<text>购物车</text>
+		<!-- <text>购物车</text> -->
 		
 		<view style="height: 800rpx; background-color: #fff2f3;" v-for="(item,index) in dataList" :key="index">
 			
