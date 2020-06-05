@@ -97,7 +97,7 @@
 
 <script>
 	import simpleAddress from '@/components/simple-address/simple-address.vue';
-	import helper from "../../common/helper.js"
+	import helper from "../../common/utils.js"
 	import HttpHelper from "../../common/HttpHelper.js"
 	// import uniList from "@/components/uni-list/uni-list.vue"
 	// import uniListItem from "@/components/uni-list-item/uni-list-item.vue"

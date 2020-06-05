@@ -79,7 +79,7 @@
 <script>
 	// import Test1 from '@/components/Test1/Test1.vue'
 	import HttpHelper from "../../common/HttpHelper.js"
-	import helper from "../../common/helper.js"
+	import helper from "../../common/utils.js"
 	export default {
 		comments: {
 			// Test1

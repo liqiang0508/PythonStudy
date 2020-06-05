@@ -40,6 +40,15 @@ function hideloading()
 {
 	uni.hideLoading()
 }
+//显示toast
+function showtoast(str,time)
+{	
+	time = time?time:2000
+	uni.showToast({
+	    title: str,
+	    duration: time
+	});
+}
 
 module.exports = {
 	GetPaltform: GetPaltform,
