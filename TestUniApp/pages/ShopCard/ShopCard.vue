@@ -29,28 +29,41 @@
 		</view>
 
 		<button @click="open">打开弹窗</button>
-		<uni-popup ref="popup" type="bottom">底部弹出 Popup</uni-popup>
+		<!-- <uni-popup ref="popup" type="bottom">底部弹出 Popup</uni-popup> -->
+
+
+		<view v-if="popshow" class="popup" @click="hidepop">
+			<view class="popbg">
+				<text style="margin-top: 25rpx; margin-left: 250rpx;"></text>
+			</view>
+		</view>
+
+
 
 	</view>
 </template>
 
 <script>
-	import uniPopup from '@/components/uni-popup/uni-popup.vue'
+	// import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	export default {
 		components: {
-			uniPopup
+			// uniPopup
 		},
 		data() {
 			return {
+				popshow: true,
 				isAllSelect: false,
 				totalmoney: 0,
 				dataList: [{}, {}]
 			}
 		},
 		methods: {
-			 open(){
-			         this.$refs.popup.open()
-			      },
+			open() {
+				this.popshow = true
+			},
+			hidepop() {
+				this.popshow = false
+			},
 			dclick: function() {
 				console.log("dbclick");
 			},
@@ -72,12 +85,25 @@
 
 <style>
 	.popup {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		position: absolute;
 		left: 0;
 		top: 0;
 		width: 100%;
 		height: 100%;
 		background-color: rgba(0, 0, 0, 0.5);
+	}
+	
+	.popbg{
+		text-align: center;
+		display: flex;
+		
+		width: 600rpx;
+		height: 400rpx;
+		border-radius: 25rpx;
+		background-color: rgb(255, 255, 255);
 	}
 
 	.bottom {
@@ -87,7 +113,7 @@
 		position: fixed;
 		/* bottom: 0;
 		left: 0; */
-		bottom:var(--window-bottom);
+		bottom: var(--window-bottom);
 		/* background-color: #cc596a; */
 		width: 100%;
 		height: 40px;
