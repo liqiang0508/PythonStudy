@@ -1,4 +1,4 @@
-<template>
+<template >
 	<view>
 		<!-- <text>购物车</text> -->
 
@@ -31,12 +31,8 @@
 		<button @click="open">打开弹窗</button>
 		<!-- <uni-popup ref="popup" type="bottom">底部弹出 Popup</uni-popup> -->
 
-
-		<view v-if="popshow" class="popup" @click="hidepop">
-			<view class="popbg">
-				<text style="margin-top: 25rpx; margin-left: 250rpx;"></text>
-			</view>
-		</view>
+		<alert  ref = "alert" :popshow = false @closepop = "btnclose"></alert>
+		
 
 
 
@@ -44,10 +40,12 @@
 </template>
 
 <script>
-	// import uniPopup from '@/components/uni-popup/uni-popup.vue'
+	import uniPopup from '@/components/uni-popup/uni-popup.vue'
+	import alert from "@/components/alert/alert.vue"
 	export default {
 		components: {
 			// uniPopup
+			alert
 		},
 		data() {
 			return {
@@ -59,10 +57,10 @@
 		},
 		methods: {
 			open() {
-				this.popshow = true
+				this.$refs.alert.show("123","456")
 			},
-			hidepop() {
-				this.popshow = false
+			btnclose: function(index) {
+				console.log(" parents close---",index);
 			},
 			dclick: function() {
 				console.log("dbclick");
@@ -84,27 +82,7 @@
 </script>
 
 <style>
-	.popup {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
-	}
-	
-	.popbg{
-		text-align: center;
-		display: flex;
-		
-		width: 600rpx;
-		height: 400rpx;
-		border-radius: 25rpx;
-		background-color: rgb(255, 255, 255);
-	}
+
 
 	.bottom {
 		display: flex;
