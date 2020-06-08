@@ -27,13 +27,14 @@
 			</view>
 
 		</view>
-
-		<button @click="open">打开弹窗</button>
+		<button  @click="open">一个按钮</button>
+		<button  @click="open2">打开2个按钮</button>
+		<button  @click="open3">打开3个按钮</button>
 		<!-- <uni-popup ref="popup" type="bottom">底部弹出 Popup</uni-popup> -->
 
-		<alert  ref = "alert" :popshow = false @closepop = "btnclose"></alert>
+		<alert  ref = "alert" :popshow = false   @closepop = "btnclose"></alert>
 		
-
+       
 
 
 	</view>
@@ -56,8 +57,20 @@
 			}
 		},
 		methods: {
+			open2(){
+				this.$refs.alert.showDialog("提示","提示xxxxxx11？",["yes","no"],function(index){
+					console.log("父节点收到点击事件回调",index);
+				})
+			},
+			open3(){
+				this.$refs.alert.showDialog("提示","提示xxxxxx11？",["yes","no","middle"],function(index){
+					console.log("父节点收到点击事件回调",index);
+				})
+			},
 			open() {
-				this.$refs.alert.show("123","456")
+				this.$refs.alert.showDialog("提示","提示xxxxxx22？",["yes"],function(index){
+					console.log("父节点收到点击事件回调2",index);
+				})
 			},
 			btnclose: function(index) {
 				console.log(" parents close---",index);

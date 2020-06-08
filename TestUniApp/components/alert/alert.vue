@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view v-if="popshow" class="popup" @click="hidepop">
+		<view v-if="popshow" class="popup" @click.stop="">
 			<view class="popbg" @click.stop="">
 				
 				<text style="display: block;margin-top: 25rpx;">{{ title }}</text>
@@ -11,9 +11,9 @@
 					
 				</view>
 				<view class="bottombtns">
-					<button size = "mini" class="popbtn" @click.stop="clickBtnCall(0)">Yes</button>
-					<button size = "mini" class="popbtn" @click.stop="clickBtnCall(1)">Middle</button>
-					<button size = "mini" class="popbtn" @click.stop="clickBtnCall(2)">No</button>
+					<button v-if  = "this.isDialog"  size = "mini" class="popbtn" @click.stop="clickBtnCall(0)">{{ this.btninfos[0] }}</button>
+					<button v-if  = "this.isAlert"  size = "mini" class="popbtn" @click.stop="clickBtnCall(2)">{{ this.btninfos[2] }}</button>
+					<button v-if  = "this.isDialog"  size = "mini" class="popbtn" @click.stop="clickBtnCall(1)">{{ this.btninfos[1] }}</button>
 				</view>
 			</view>
 		</view>
@@ -27,25 +27,59 @@
 			return {
 				popshow: false,
 				contentstr:"",
-				title:""
+				title:"",
+				isAlert:false,
+				isDialog:false,
+				btninfos:[]
 			}
 		},
 		props:{popshow: false},
 		methods: {
-			show(title,contentstr) {
+			//显示弹框
+			//btninfo 按钮情况 ["yes","no",middle""]
+			// 回调 call(0-2)
+			showDialog(title,contentstr,btninfo,call) {
 				this.title = title
 				this.contentstr = contentstr
 				this.popshow = true
+				this.btnCall = call
+				this.btninfos = btninfo
+				console.log(this.btninfos)
+				console.log(this.btninfos.length);
+				if (btninfo.length>2)//3个按钮
+				{
+
+					this.isDialog = true
+					this.isAlert = true
+				}else if(btninfo.length==1)//1个按钮
+				{
+
+					this.isDialog = false
+					this.isAlert = true
+					this.btninfos[2] = btninfo[0]
+				}
+				else//2个按钮
+				{
+					console.log("2 btn");
+					this.isDialog = true
+					this.isAlert = false
+				}
+				
 			},
+			
+		
 			hidepop() {
-				this.$emit("closepop");
 				this.popshow = false
 				
 			},
 			clickBtnCall(index){
 				console.log("clickBtnCall",index)
-				this.$emit("closepop",index);
+				// this.$emit("closepop",index);
 				this.popshow = false
+				if (this.btnCall)
+				{
+					this.btnCall(index)
+				}
 			}
 		}
 	}
