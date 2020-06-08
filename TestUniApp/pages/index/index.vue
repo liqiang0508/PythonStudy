@@ -40,7 +40,7 @@
 			<uni-icons type="info"></uni-icons>
 			<text class="notice_text">公告</text>
 			<view class="_notice">
-				<!-- <text :animation="animationData" class="ScrollText">666</text> -->
+				
 				<marquee scrollamount = 3 class = "ScrollText" direction="left">{{ScrollText}}</marquee>
 
 			</view>
@@ -303,7 +303,7 @@
 		margin-top: 10rpx;
 		/* width: 80rpx; */
 		height: 80rpx;
-		font-size: 15rpx;
+		font-size: 10px;
 		word-break: keep-all;
 	}
 
@@ -317,7 +317,7 @@
 	}
 
 	.notice_text {
-		margin-left: 10px;
+		margin-left: 10rpx;
 		color: white;
 		font-size: 2rpx;
 
@@ -343,10 +343,10 @@
 		flex-direction: row;
 		align-items: center;
 		margin-left: 15rpx;
-		width: 550rpx;
+		width: 600rpx;
 		background: rgba(255, 0, 0, 0.25);
 		height: 40rpx;
-		border-radius: 6upx;
+		border-radius: 6rpx;
 		overflow: hidden;
 		box-sizing: border-box;
 
