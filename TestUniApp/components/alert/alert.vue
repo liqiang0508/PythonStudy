@@ -97,6 +97,7 @@
 		width: 100%;
 		height: 100%;
 		background-color: rgba(0, 0, 0, 0.5);
+		animation: bgscale 0.25s;
 	}
 	
 	/* 弹框白色背景 */
@@ -137,5 +138,52 @@
 		width: 180rpx;
 		/* height: 80rpx; */
 		text-align: center;
+	}
+	
+	.content {
+	
+		animation: bgscale;
+		
+	}
+	
+	@keyframes bgscale {
+		0% {
+			transform: scale(1);
+			opacity: 0;
+			/*开始为原始大小*/
+		}
+	
+		
+	
+		50% {
+			transform: scale(1.1);
+			opacity: 0.5;
+		}
+	
+		100% {
+			transform: scale(1);
+			opacity: 1;
+		}
+	
+	}
+	
+	@-webkit-keyframes bgscale
+	/*Safari and Chrome*/
+		{
+		0% {
+			transform: scale(1);
+			opacity: 0;
+			/*开始为原始大小*/
+		}
+	
+		50% {
+			transform: scale(1.1);
+			opacity: 0.5;
+		}
+	
+		100% {
+			transform: scale(1);
+			opacity: 1;
+		}
 	}
 </style>

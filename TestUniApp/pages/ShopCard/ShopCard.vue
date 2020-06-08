@@ -1,5 +1,5 @@
-<template >
-	<view>
+<template>
+	<view class=content>
 		<!-- <text>购物车</text> -->
 
 		<!-- <view style="height: 800rpx; background-color: #fff2f3;" v-for="(item,index) in dataList" :key="index">
@@ -27,14 +27,14 @@
 			</view>
 
 		</view>
-		<button  @click="open">一个按钮</button>
-		<button  @click="open2">打开2个按钮</button>
-		<button  @click="open3">打开3个按钮</button>
+		<button @click="open">一个按钮</button>
+		<button @click="open2">打开2个按钮</button>
+		<button @click="open3">打开3个按钮</button>
 		<!-- <uni-popup ref="popup" type="bottom">底部弹出 Popup</uni-popup> -->
 
-		<alert  ref = "alert" :popshow = false   @closepop = "btnclose"></alert>
-		
-       
+		<alert ref="alert" :popshow=false @closepop="btnclose"></alert>
+
+
 
 
 	</view>
@@ -57,23 +57,23 @@
 			}
 		},
 		methods: {
-			open2(){
-				this.$refs.alert.showDialog("提示","提示xxxxxx11？",["yes","no"],function(index){
-					console.log("父节点收到点击事件回调",index);
+			open2() {
+				this.$refs.alert.showDialog("提示", "提示xxxxxx11？", ["yes", "no"], function(index) {
+					console.log("父节点收到点击事件回调", index);
 				})
 			},
-			open3(){
-				this.$refs.alert.showDialog("提示","提示xxxxxx11？",["yes","no","middle"],function(index){
-					console.log("父节点收到点击事件回调",index);
+			open3() {
+				this.$refs.alert.showDialog("提示", "提示xxxxxx11？", ["yes", "no", "middle"], function(index) {
+					console.log("父节点收到点击事件回调", index);
 				})
 			},
 			open() {
-				this.$refs.alert.showDialog("提示","提示xxxxxx22？",["yes"],function(index){
-					console.log("父节点收到点击事件回调2",index);
+				this.$refs.alert.showDialog("提示", "提示xxxxxx22？", ["yes"], function(index) {
+					console.log("父节点收到点击事件回调2", index);
 				})
 			},
 			btnclose: function(index) {
-				console.log(" parents close---",index);
+				console.log(" parents close---", index);
 			},
 			dclick: function() {
 				console.log("dbclick");
@@ -95,8 +95,6 @@
 </script>
 
 <style>
-
-
 	.bottom {
 		display: flex;
 		flex-direction: row;
@@ -129,4 +127,6 @@
 		justify-content: center;
 		align-items: center;
 	}
+
+	
 </style>
