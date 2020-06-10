@@ -8,7 +8,9 @@ import re
 import json
 from collections import OrderedDict
 import os
-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 headers = {'User-Agent':'Mozilla/7.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6'} 
 
@@ -20,11 +22,13 @@ def GetHtmlData(url):
 	return response.text
 
 def GetArea(href,index):
-	AreaData.append([])
+	if len(AreaData)<=index:
+		AreaData.append([])
+
 	baseurl = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2019/{}"
 	data = GetHtmlData(baseurl.format(href))
 	selector = etree.HTML(data)
-	print "GetArea--" ,baseurl.format(href),index
+	print "获取区域****" ,index
 	countytrs = selector.xpath("//tr[@class='countytr']/td/a")
 
 	tempdata = []
@@ -34,13 +38,13 @@ def GetArea(href,index):
 		citycode = countytrs[x].xpath("string(.)")
 		if citycode.isdigit():
 			cityname = countytrs[x+1].xpath("string(.)").encode('utf-8')
-			# print "GetArea--",href,citycode,cityname
+			print "写入区域--",citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
 	
 	if len(tempdata)>0:
 		AreaData[index].append(tempdata)
 
-	
+	# print "区域长度======",len(AreaData)
 	
 
 
@@ -58,7 +62,7 @@ def GetCity(code,index):
 		citycode = cityinfos[x].xpath("string(.)")
 		if citycode.isdigit():
 			cityname = cityinfos[x+1].xpath("string(.)").encode('utf-8')
-			print "GetCity--",href,citycode,cityname
+			print "获取城市----------",citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
 			
 			GetArea(href,index)
@@ -80,14 +84,14 @@ def GetPronces():
 	privonces = selector.xpath("//tr[@class='provincetr']/td/a")
 
 	# i = 0
-	
+	print "省份len",len(privonces)
 	for i in xrange(len(privonces)):
 		href = privonces[i].get("href")
 		provicesName = privonces[i].xpath("string(.)")
 		provicescode = re.search("\d+",href).group()
 		provicescode = provicescode+"0100000000"
 		provicesName = provicesName.encode('utf-8')
-		print "GetPronces==",provicesName,provicescode
+		print "获取省份-------------------",provicesName,provicescode
 		ProviceData.append({"name":provicesName,"Value":provicescode})
 		GetCity(href,i)
 	# GetCity("50.html",21)
@@ -135,6 +139,6 @@ with open("area.json","r") as f:
 
 print "data--",privonces[0]["name"],citys[0][0]["name"],area[0][0][0]['name'],area[21][1][0]['name']
 
-os.system('pause')
+# os.system('pause')
 # provicescode = re.match("\d+",name)
 # print provicescode.group()
