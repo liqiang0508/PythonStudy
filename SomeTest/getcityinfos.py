@@ -11,9 +11,9 @@ import os
 
 headers = {'User-Agent':'Mozilla/6.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6','Connection': 'close'} 
 
-	
+httpsession = requests.session()
 def GetHtmlData(url):
-	response = requests.get(url,headers = headers )
+	response = httpsession.get(url,headers = headers )
 	response.encoding = 'gb2312'
 	return response.text
 
@@ -34,8 +34,10 @@ def GetArea(href,index):
 			# print "GetArea--",href,citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
 	
-
-	AreaData.append(tempdata)
+	if len(AreaData)<=index:
+		AreaData.append([tempdata])
+	else:
+		AreaData[index].append([tempdata])
 
 	
 	
@@ -58,6 +60,7 @@ def GetCity(code,index):
 			print "GetCity--",href,citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
 			GetArea(href,index)
+
 	CityData.append(tempdata)
 	
 
@@ -68,14 +71,14 @@ def GetCity(code,index):
 def GetPronces():
 		  
 	url = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2019/index.html"
-	response = requests.get(url,headers = headers)
+	response = httpsession.get(url,headers = headers)
 	response.encoding = 'gb2312'
 	selector = etree.HTML(response.text)
 	privonces = selector.xpath("//tr[@class='provincetr']/td/a")
 
 	# i = 0
 	
-	for i in xrange(3):
+	for i in xrange(len(privonces)):
 		href = privonces[i].get("href")
 		provicesName = privonces[i].xpath("string(.)")
 		provicescode = re.search("\d+",href).group()
@@ -87,12 +90,15 @@ def GetPronces():
 
 	with open("Provice.json","w") as f:
 		f.write(json.dumps(ProviceData,ensure_ascii=False,indent = 4))
+		f.close()
 
 	with open("city.json","w") as f:
 		f.write(json.dumps(CityData,ensure_ascii=False,indent = 4))
+		f.close()
 
 	with open("area.json","w") as f:
 		f.write(json.dumps(AreaData,ensure_ascii=False,indent = 4))
+		f.close()
 
 
 
@@ -100,7 +106,7 @@ def GetPronces():
 ProviceData = []
 CityData = []
 AreaData = []
-GetPronces()
+# GetPronces()
 
 privonces = None
 citys = None
@@ -122,7 +128,7 @@ with open("area.json","r") as f:
 	f.close()
 
 
-# print "data--",privonces[2]["name"],citys[2][0]["name"],area[2][0][0]["name"]
+print "data--",privonces[21]["name"],citys[21][1]["name"],area[21][1][0][0]['name']
 
 os.system('pause')
 # provicescode = re.match("\d+",name)
