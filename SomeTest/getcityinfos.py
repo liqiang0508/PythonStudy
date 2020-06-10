@@ -9,12 +9,14 @@ import json
 from collections import OrderedDict
 import os
 
-headers = {'User-Agent':'Mozilla/6.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6','Connection': 'close'} 
+
+headers = {'User-Agent':'Mozilla/6.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6'} 
 
 httpsession = requests.session()
 def GetHtmlData(url):
 	response = httpsession.get(url,headers = headers )
 	response.encoding = 'gb2312'
+	response.close()
 	return response.text
 
 def GetArea(href,index):
@@ -73,6 +75,7 @@ def GetPronces():
 	url = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2019/index.html"
 	response = httpsession.get(url,headers = headers)
 	response.encoding = 'gb2312'
+	response.close()
 	selector = etree.HTML(response.text)
 	privonces = selector.xpath("//tr[@class='provincetr']/td/a")
 
@@ -106,7 +109,7 @@ def GetPronces():
 ProviceData = []
 CityData = []
 AreaData = []
-# GetPronces()
+GetPronces()
 
 privonces = None
 citys = None
