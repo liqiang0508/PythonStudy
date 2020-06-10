@@ -10,7 +10,7 @@ from collections import OrderedDict
 import os
 
 
-headers = {'User-Agent':'Mozilla/6.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6'} 
+headers = {'User-Agent':'Mozilla/7.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6'} 
 
 httpsession = requests.session()
 def GetHtmlData(url):
@@ -20,6 +20,7 @@ def GetHtmlData(url):
 	return response.text
 
 def GetArea(href,index):
+	AreaData.append([])
 	baseurl = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2019/{}"
 	data = GetHtmlData(baseurl.format(href))
 	selector = etree.HTML(data)
@@ -36,10 +37,8 @@ def GetArea(href,index):
 			# print "GetArea--",href,citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
 	
-	if len(AreaData)<=index:
-		AreaData.append([tempdata])
-	else:
-		AreaData[index].append([tempdata])
+	if len(tempdata)>0:
+		AreaData[index].append(tempdata)
 
 	
 	
@@ -61,6 +60,7 @@ def GetCity(code,index):
 			cityname = cityinfos[x+1].xpath("string(.)").encode('utf-8')
 			print "GetCity--",href,citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
+			
 			GetArea(href,index)
 
 	CityData.append(tempdata)
@@ -90,6 +90,8 @@ def GetPronces():
 		print "GetPronces==",provicesName,provicescode
 		ProviceData.append({"name":provicesName,"Value":provicescode})
 		GetCity(href,i)
+	# GetCity("50.html",21)
+
 
 	with open("Provice.json","w") as f:
 		f.write(json.dumps(ProviceData,ensure_ascii=False,indent = 4))
@@ -131,7 +133,7 @@ with open("area.json","r") as f:
 	f.close()
 
 
-print "data--",privonces[21]["name"],citys[21][1]["name"],area[21][1][0][0]['name']
+print "data--",privonces[0]["name"],citys[0][0]["name"],area[0][0][0]['name'],area[21][1][0]['name']
 
 os.system('pause')
 # provicescode = re.match("\d+",name)
