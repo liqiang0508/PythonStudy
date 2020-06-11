@@ -9,6 +9,7 @@ import json
 from collections import OrderedDict
 import os
 import sys
+import time
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -22,6 +23,7 @@ def GetHtmlData(url):
 	return response.text
 
 def GetArea(href,index):
+	# print "GetArea",len(AreaData),index
 	if len(AreaData)<=index:
 		AreaData.append([])
 
@@ -42,6 +44,7 @@ def GetArea(href,index):
 			tempdata.append({"name":cityname,"Value":citycode})
 	
 	if len(tempdata)>0:
+		# print "write==",index
 		AreaData[index].append(tempdata)
 
 	# print "区域长度======",len(AreaData)
@@ -64,7 +67,8 @@ def GetCity(code,index):
 			cityname = cityinfos[x+1].xpath("string(.)").encode('utf-8')
 			print "获取城市----------",citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
-			
+			# time.sleep(1)
+			time.sleep(1)
 			GetArea(href,index)
 
 	CityData.append(tempdata)
@@ -93,6 +97,7 @@ def GetPronces():
 		provicesName = provicesName.encode('utf-8')
 		print "获取省份-------------------",provicesName,provicescode
 		ProviceData.append({"name":provicesName,"Value":provicescode})
+		time.sleep(3)
 		GetCity(href,i)
 	# GetCity("50.html",21)
 
@@ -137,7 +142,7 @@ with open("area.json","r") as f:
 	f.close()
 
 
-print "data--",privonces[0]["name"],citys[0][0]["name"],area[0][0][0]['name'],area[21][1][0]['name']
+# print "data--",privonces[0]["name"],citys[0][0]["name"],area[0][0][0]['name'],area[21][1][0]['name']
 
 # os.system('pause')
 # provicescode = re.match("\d+",name)
