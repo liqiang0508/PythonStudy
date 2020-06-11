@@ -1,0 +1,61 @@
+{
+  
+  "openUIDs": [
+    "-----------",
+    "all-1",
+    "770x",
+    "-----------"
+  ],
+
+
+  "scriptVersion": 687,
+  "baseUrl": "http://honour-texaspoker.com:8080/a/thaitexashotupiii/script_%s/",
+  "configFile": "src/app/gameii/appinfoiii.json",
+
+  "debugScriptVersion": 687,
+  "debugBaseUrl": "http://honour-texaspoker.com:8080/a/thaitexashotupiii/script_%s/",
+  "debugConfigFile": "src/app/gameii/appinfoiii.json",
+  "debugUIDs": [
+    "-----------",
+    "975780",
+    "930912",
+    "724001",
+    "264138",
+    "1149323",
+    "-----------"
+  ],
+
+
+  "channels": [
+    "-----------",
+    "1",
+    "2",
+    "3",
+    "-----------"
+  ],
+
+
+  "supportBinarys": [
+    "-----------",
+    "x.x.x",
+    "1.0.6",
+    "1.0.8",
+    "1.0.9",
+    "1.1.0",
+    "1.2.0",
+    "1.3.0",
+    "1.4.0",
+    "-----------"
+  ],
+
+
+  "forcedBinaryVersions": [
+    "-----------",
+    "x.x.x",
+    "-----------"
+  ],
+  "binaryUrl": "",
+
+
+  "MarkLast":""
+}

@@ -1,0 +1,52 @@
+{
+  
+  "openUIDs": [
+    "-----------",
+    "all-1",
+    "770x",
+    "-----------"
+  ],
+
+
+  "scriptVersion": 656,
+  "baseUrl": "http://pokerofroyal.com:8080/a/thaitexashotupiii/script_%s/",
+  "configFile": "src/app/gameii/appinfoiii.json",
+
+  "debugScriptVersion": 656,
+  "debugBaseUrl": "http://pokerofroyal.com:8080/a/thaitexashotupiii/script_%s/",
+  "debugConfigFile": "src/app/gameii/appinfoiii.json",
+  "debugUIDs": [
+    "-----------",
+    "605x",
+    "731693",
+    "-----------"
+  ],
+
+
+  "channels": [
+    "-----------",
+    "1",
+    "2",
+    "3",
+    "-----------"
+  ],
+
+
+  "supportBinarys": [
+    "-----------",
+    "x.x.x",
+    "0.9.56",
+    "-----------"
+  ],
+
+
+  "forcedBinaryVersions": [
+    "-----------",
+    "x.x.x",
+    "-----------"
+  ],
+  "binaryUrl": "",
+
+
+  "MarkLast":""
+}
