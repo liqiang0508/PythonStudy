@@ -9,16 +9,9 @@ import json
 import os
 import sys
 
-# print sys.version 
-# print sys.version_info
-version_info = sys.version_info
-print  (version_info.major)
-if version_info == 2:
-    reload(sys)
-    sys.setdefaultencoding( "utf-8" )
-else:
-    import importlib
-    importlib.reload(sys)
+import sys
+reload(sys) 
+sys.setdefaultencoding('utf-8')
 
 
 headers = { 
@@ -33,7 +26,8 @@ def GetWeatherByCode(code):
     r.encoding='utf-8'   #编码
     datas = r.json()
     datas = datas["data"]
-    resultStr =  datas['city']+" "+datas['wendu']+"°c"+" "+datas["ganmao"]+"\n"
+    print datas
+    resultStr =  datas['city'] +" "+datas['wendu'].decode("utf-8")+"°c"+" "+datas["ganmao"]+"\n"
     for d in datas["forecast"]:
         # print d["date"]
         resultStr = resultStr+d["date"]+":"+d['low']+"-"+d['high']+" "+d['type']+"\n"
