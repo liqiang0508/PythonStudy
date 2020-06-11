@@ -13,7 +13,7 @@ import time
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-headers = {'User-Agent':'Mozilla/7.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6'} 
+headers = {'User-Agent':'Mozilla/8.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6'} 
 
 httpsession = requests.session()
 def GetHtmlData(url):
@@ -24,17 +24,24 @@ def GetHtmlData(url):
 
 def GetArea(href,index):
 	# print "GetArea",len(AreaData),index
-	if len(AreaData)<=index:
-		AreaData.append([])
+	# if len(AreaData)<=index:
+	AreaData.append([])
 
 	baseurl = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2019/{}"
-	data = GetHtmlData(baseurl.format(href))
+	url = baseurl.format(href)
+	data = GetHtmlData(url)
 	selector = etree.HTML(data)
 	print "获取区域****" ,index
 	countytrs = selector.xpath("//tr[@class='countytr']/td/a")
 
 	tempdata = []
-  
+  	if len(countytrs)==0:
+  		countytrs = selector.xpath("//tr[@class='towntr']/td/a")
+  		# print "获取区域失败**************************************************************************************",url
+  		# time.sleep(1)
+  		# GetArea(href,index)
+  		# return
+
 	for x in xrange(len(countytrs)):
 		href = countytrs[x].get("href")
 		citycode = countytrs[x].xpath("string(.)")
@@ -68,7 +75,7 @@ def GetCity(code,index):
 			print "获取城市----------",citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
 			# time.sleep(1)
-			time.sleep(1)
+			time.sleep(1.5)
 			GetArea(href,index)
 
 	CityData.append(tempdata)
@@ -97,11 +104,12 @@ def GetPronces():
 		provicesName = provicesName.encode('utf-8')
 		print "获取省份-------------------",provicesName,provicescode
 		ProviceData.append({"name":provicesName,"Value":provicescode})
-		time.sleep(3)
+		time.sleep(2)
 		GetCity(href,i)
 	# GetCity("50.html",21)
 
 
+	AreaData1 = [x for x in AreaData if x]
 	with open("Provice.json","w") as f:
 		f.write(json.dumps(ProviceData,ensure_ascii=False,indent = 4))
 		f.close()
@@ -111,7 +119,7 @@ def GetPronces():
 		f.close()
 
 	with open("area.json","w") as f:
-		f.write(json.dumps(AreaData,ensure_ascii=False,indent = 4))
+		f.write(json.dumps(AreaData1,ensure_ascii=False,indent = 4))
 		f.close()
 
 
@@ -120,7 +128,7 @@ def GetPronces():
 ProviceData = []
 CityData = []
 AreaData = []
-GetPronces()
+# GetPronces()
 
 privonces = None
 citys = None
@@ -142,7 +150,7 @@ with open("area.json","r") as f:
 	f.close()
 
 
-# print "data--",privonces[0]["name"],citys[0][0]["name"],area[0][0][0]['name'],area[21][1][0]['name']
+print "data--",privonces[21]["name"],citys[21][0]["name"],area[21][0][0]['name']
 
 # os.system('pause')
 # provicescode = re.match("\d+",name)
