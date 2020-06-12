@@ -6,9 +6,15 @@
 # logging.error("This is a error log.")
 # logging.critical("This is a critical log.")
 
-
+# import WsSever 
+import os
 def add(x,y,call):
 	return call(x+y)
 
 
+os.system("WsSever.py")
+
 print add(1,10,lambda x: x-1)
+
+
+os.system('pause')

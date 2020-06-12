@@ -51,11 +51,10 @@ class WsSever:
       self.server.set_fn_message_received(self.message_received)
       self.server.run_forever()
             
-      # Called for every client connecting (after handshake)
   
 
 
-
+# if __name__ == "__main__":
 t = WsSever(9001)
 
 
