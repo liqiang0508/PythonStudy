@@ -1,4 +1,3 @@
-
 #encoding:utf-8
 #!/usr/bin/env python
 
@@ -8,52 +7,64 @@ from websocket_server import WebsocketServer
 
 import logging  
 import time
+import messagedispatch
+#发送给单个连接
+def send_to(server,client,message):
 
-class WsSever:
+   server.send_message_to_all(client,message)
+#广播给所有人
+def send_to_all(server,message):
 
-   def new_client(self,client, server):
-      # client['id'] = 1000
-      print self.server.clients
-      print("New client connected and was given id %d" % client['id'])
-      server.send_message_to_all("Hey all, a new client has joined us")
+   server.send_message_to_all(message)
+#有新连接
+def new_client(client, server):
 
+   print("New client connected and was given id %d" % client['id'])
+   server.send_message_to_all("Hey all, a new client has joined us")
+   SetPlayerUid(724001)
 
-   # Called for every client disconnecting
-   def client_left(self,client, server):
-      print("Client(%d) disconnected" % client['id'])
-      self.logger.info("Client(%d) leave" % (client['id']))
-     
+#连接后客户端请求下设置uid
+def SetPlayerUid(id):
 
-   # Called when a client sends a message
-   def message_received(self,client, server, message):
-      if len(message) > 200:
-         message = message[:200]+'..'
-      print("Client(%d) said: %s" % (client['id'], message))
-      self.logger.info("Client(%d) said: %s" % (client['id'], message))
-      server.send_message_to_all(message)
+   print "SetPlayerUid----------",id
+   server.clients[len(server.clients)-1]["uid"] = id
+   print server.clients
+   
+# Called for every client disconnecting
+def client_left(client, server):
 
-   def __init__(self, host,port):
+   print("Client(%d) disconnected" % client['id'])
+   logger.info("Client(%d) leave" % (client['id']))
 
-      day = time.strftime("%Y-%m-%d", time.localtime()) 
-      self.logger = logging.getLogger(__name__)
-      self.logger.setLevel(level = logging.DEBUG)
-      handler = logging.FileHandler("{}-{}.txt".format(day,port))
-      handler.setLevel(logging.INFO)
-      formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-      handler.setFormatter(formatter)
-      self.logger.addHandler(handler)
+  
 
-      self.port = port
-      self.server = WebsocketServer(port = port,host = host)
-      self.server.set_fn_new_client(self.new_client)
-      self.server.set_fn_client_left(self.client_left)
-      self.server.set_fn_message_received(self.message_received)
-      self.server.run_forever()
-            
+# Called when a client sends a message
+def message_received(client, server, message):
+
+   print("Client(%d) said: %s" % (client['id'], message))
+   logger.info("Client(%d) said: %s" % (client['id'], message))
+   message = "Client(%d) said: %s" % (client['id'], message)
+   messagedispatch.message_received(client, server, message)
+
   
 
 
 if __name__ == "__main__":
-   t = WsSever(host = "0.0.0.0",port = 9001)
+   # t = WsSever(host = "0.0.0.0",port = 9001)
+   port = 9001
+   day = time.strftime("%Y-%m-%d", time.localtime()) 
+   logger = logging.getLogger(__name__)
+   logger.setLevel(level = logging.DEBUG)
+   handler = logging.FileHandler("{}-{}.txt".format(day,port))
+   handler.setLevel(logging.INFO)
+   formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+   handler.setFormatter(formatter)
+   logger.addHandler(handler)
+
+   server = WebsocketServer(host = "0.0.0.0",port = port)
+   server.set_fn_new_client(new_client)
+   server.set_fn_client_left(client_left)
+   server.set_fn_message_received(message_received)
+   server.run_forever()
 
 
