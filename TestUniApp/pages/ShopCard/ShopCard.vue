@@ -43,6 +43,7 @@
 <script>
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import alert from "@/components/alert/alert.vue"
+	import HttpHelper from "../../common/HttpHelper.js"
 	export default {
 		components: {
 			// uniPopup
@@ -56,6 +57,9 @@
 				dataList: [{}, {}]
 			}
 		},
+		onReady() {
+			// uni.showNavigationBarLoading()
+		},
 		methods: {
 			open2() {
 				this.$refs.alert.showDialog("提示", "提示xxxxxx11？", ["yes", "no"], function(index) {
@@ -68,8 +72,21 @@
 				})
 			},
 			open() {
-				this.$refs.alert.showDialog("提示", "提示xxxxxx22？", ["yes"], function(index) {
-					console.log("父节点收到点击事件回调2", index);
+				// this.$refs.alert.showDialog("提示", "提示xxxxxx22？", ["yes"], function(index) {
+				// 	console.log("父节点收到点击事件回调2", index);
+				// })
+				
+				HttpHelper.httpPost("http://192.168.65.172:8080/req", {"name":"liqiang"},(data) => {
+				
+					if (data) {
+						console.log( data)
+						
+						
+					} else {
+						
+						console.log( "error")
+				
+					}
 				})
 			},
 			btnclose: function(index) {
@@ -89,6 +106,10 @@
 
 			onSettlement: function() {
 				console.log("结算");
+				// #ifdef APP-PLUS
+					plus.globalEvent.addEventListener('netchange', function(){});
+				// #endif
+				
 			}
 		}
 	}

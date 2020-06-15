@@ -2,48 +2,49 @@ function httpGet(url, call) {
 
 	uni.request({
 		url: url, //仅为示例，并非真实接口地址。
-		sslVerify:false,
-		method:"GET",
+		sslVerify: false,
+		method: "GET",
 		success: (res) => {
 
-			if(call)
-			{
+			if (call) {
 				call(res.data)
 			}
 
 		},
 		fail: (e) => {
-			console.log("httpGet error",url,e);
+			console.log("httpGet error", url, e);
 			call(null)
 		}
-		
+
 	});
 
 }
 
-function httpPost(url,data, call) {
-	
+function httpPost(url, data, call) {
+
 	uni.request({
 		url: url, //仅为示例，并非真实接口地址。
-		sslVerify:false,
-		method:"POST",
-		data:data,
+		sslVerify: false,
+		method: "POST",
+		data: data,
+		header: {
+			'content-type': 'application/json' //json
+		},
 		success: (res) => {
-	
-			if(call)
-			{
+
+			if (call) {
 				call(res.data)
 			}
-	
+
 		},
 		fail: (e) => {
-			console.log("httpPost error",url,e);
+			console.log("httpPost error", url, e);
 			call(null)
 		}
-		
+
 	});
 }
 module.exports = {
-	HttpGet:httpGet,
-	httpPost:httpPost
+	HttpGet: httpGet,
+	httpPost: httpPost
 }
