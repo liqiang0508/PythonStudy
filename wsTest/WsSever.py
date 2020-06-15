@@ -1,6 +1,9 @@
 
 #encoding:utf-8
 #!/usr/bin/env python
+
+# https://github.com/Pithikos/python-websocket-server
+# pip install websocket-server
 from websocket_server import WebsocketServer
 
 import logging  
@@ -9,7 +12,7 @@ import time
 class WsSever:
 
    def new_client(self,client, server):
-      client['id'] = 1000
+      # client['id'] = 1000
       self.clientGroup[client['id']] = client
       print self.clientGroup
       print("New client connected and was given id %d" % client['id'])
@@ -32,7 +35,7 @@ class WsSever:
       self.logger.info("Client(%d) said: %s" % (client['id'], message))
       server.send_message(client,message)
 
-   def __init__(self, port):
+   def __init__(self, host,port):
 
       day = time.strftime("%Y-%m-%d", time.localtime()) 
       self.logger = logging.getLogger(__name__)
@@ -45,7 +48,7 @@ class WsSever:
 
       self.clientGroup = {}
       self.port = port
-      self.server = WebsocketServer(port)
+      self.server = WebsocketServer(port = port,host = host )
       self.server.set_fn_new_client(self.new_client)
       self.server.set_fn_client_left(self.client_left)
       self.server.set_fn_message_received(self.message_received)
@@ -54,7 +57,7 @@ class WsSever:
   
 
 
-# if __name__ == "__main__":
-t = WsSever(9001)
+if __name__ == "__main__":
+   t = WsSever(host = "0.0.0.0",port = 9001)
 
 
