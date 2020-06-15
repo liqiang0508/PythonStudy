@@ -13,8 +13,7 @@ class WsSever:
 
    def new_client(self,client, server):
       # client['id'] = 1000
-      self.clientGroup[client['id']] = client
-      print self.clientGroup
+      print self.server.clients
       print("New client connected and was given id %d" % client['id'])
       server.send_message_to_all("Hey all, a new client has joined us")
 
@@ -23,9 +22,7 @@ class WsSever:
    def client_left(self,client, server):
       print("Client(%d) disconnected" % client['id'])
       self.logger.info("Client(%d) leave" % (client['id']))
-      del self.clientGroup[client['id']]
-      print self.clientGroup
-
+     
 
    # Called when a client sends a message
    def message_received(self,client, server, message):
@@ -33,7 +30,7 @@ class WsSever:
          message = message[:200]+'..'
       print("Client(%d) said: %s" % (client['id'], message))
       self.logger.info("Client(%d) said: %s" % (client['id'], message))
-      server.send_message(client,message)
+      server.send_message_to_all(message)
 
    def __init__(self, host,port):
 
@@ -46,9 +43,8 @@ class WsSever:
       handler.setFormatter(formatter)
       self.logger.addHandler(handler)
 
-      self.clientGroup = {}
       self.port = port
-      self.server = WebsocketServer(port = port,host = host )
+      self.server = WebsocketServer(port = port,host = host)
       self.server.set_fn_new_client(self.new_client)
       self.server.set_fn_client_left(self.client_left)
       self.server.set_fn_message_received(self.message_received)
