@@ -20,6 +20,19 @@
 		</iframe>
 
 		<div id="win"></div>
+		
+		<select  name = "divchange" onchange="change(this)">
+			<option value="tab1">tab1</option>
+			<option value="tab2">tab2</option>
+			<option value="tab3">tab3</option>
+			<option value="tab4">tab4</option>
+		</select>
+		<div id = "tab1">tab1</div>
+		<div id = "tab2">tab2</div>
+		<div id = "tab3">tab3</div>
+		<div id = "tab4">tab4</div>
+		
+
 		<!-- <div id="win" class="easyui-window" title="My Window" style="width:400px;height:200px"
     data-options="model:true,iconCls:'icon-save',modal:true,closed:true,collapsible:false,minimizable:false,maximizable:false">
         <div style="text-align:center;margin-top:25px">
@@ -37,6 +50,33 @@
         
     </div> -->
 		<script type="text/javascript">
+			
+			function user(name,no)
+			{
+				this.name  = name;
+				this.no = no
+				
+				this.getname = function()
+				{
+					return this.name;
+				}
+				this.removeAttr = function(){
+					delete this.no;
+				}
+			}
+			
+			var a = new user("Lee",96)
+		
+			 a.removeAttr()
+		
+			
+			function change(obj)
+			{
+				var index = obj.selectedIndex; // 选中索引
+				var text = obj.options[index].text; // 选中文本
+				var value = obj.options[index].value; // 选中值
+				$("div[id!="+value+"]").hide()
+			}
 			function refreshTree() {
 				console.log("refreshTree")
 

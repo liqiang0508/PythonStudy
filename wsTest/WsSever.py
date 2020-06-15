@@ -12,14 +12,16 @@ import messagedispatch
 def send_to(server,client,message):
 
    server.send_message_to_all(client,message)
+   
 #广播给所有人
 def send_to_all(server,message):
 
    server.send_message_to_all(message)
+
 #有新连接
 def new_client(client, server):
 
-   print("New client connected and was given id %d" % client['id'])
+   # print("New client connected and was given id %d" % client['id'])
    server.send_message_to_all("Hey all, a new client has joined us")
    SetPlayerUid(724001)
 

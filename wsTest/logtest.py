@@ -8,13 +8,25 @@
 
 # import WsSever 
 import os
+import threading,time
+import json
+def func(a):
+    print time.time(),"Hello Timer!",a
+
+print int(time.time())
+s = threading.Timer(2,func,("test222",))
+s.start()
+print time.time()
+
+
 def add(x,y,call):
 	return call(x+y)
 
 
-os.system("WsSever.py")
+# os.system("WsSever.py")
 
 print add(1,10,lambda x: x-1)
 
-
+data = {"name":"lee","age":27}
+print json.dumps(data)
 os.system('pause')

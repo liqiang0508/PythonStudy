@@ -3,6 +3,7 @@
     package="com.example.uniapptest">
 
     <application
+		
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -39,7 +40,7 @@
                 <data android:scheme="h56131bcf" />
             </intent-filter>
         </activity>
-
+		<meta-data android:name="DCLOUD_WRITE_EXTERNAL_STORAGE" android:value="once"/> 
     </application>
 
 </manifest>

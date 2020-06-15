@@ -9,7 +9,7 @@
 
   function init()
   {
-    document.myform.url.value = "ws://127.0.0.1:9001/"
+    document.myform.url.value = "ws://192.168.65.172:9001/"
     document.myform.inputtext.value = "Hello World!"
     document.myform.disconnectButton.disabled = true;
   }
@@ -56,7 +56,12 @@
   function doSend(message)
   {
     // writeToScreen("sent: " + message + '\n'); 
+    if (document.myform.inputtext.value=="")
+    {
+      return 
+    }
     websocket.send(message);
+    document.myform.inputtext.value = ""
   }
 
   function writeToScreen(message)

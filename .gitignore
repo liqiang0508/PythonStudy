@@ -16,3 +16,9 @@ testmin.js
 Flask/static
 /virtualenvtTest
 TestUniApp/unpackage
+TestUniApp/AndroidProject/.idea/jarRepositories.xml
+TestUniApp/AndroidProject/app/src/main/assets/apps/__UNI__37FA08B/www/app-config-service.js
+TestUniApp/AndroidProject/app/src/main/assets/apps/__UNI__37FA08B/www/app-service.js
+TestUniApp/AndroidProject/app/src/main/assets/apps/__UNI__37FA08B/www/app-view.js
+TestUniApp/AndroidProject/app/src/main/assets/apps/__UNI__37FA08B/www/manifest.json
+TestUniApp/AndroidProject/app/src/main/assets/apps/__UNI__37FA08B/www/static/uni.ttf

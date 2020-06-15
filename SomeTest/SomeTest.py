@@ -8,8 +8,8 @@ import sys
 import random
 import string
 import hashlib
-localtime = time.localtime(time.time())
-print "本地时间为 :", localtime
+# localtime = time.localtime(time.time())
+# print "本地时间为 :", localtime
 
 print os.path.join("an/","2")
 print os.getcwd()
@@ -52,8 +52,9 @@ def ranstr(num):
 
 # moduleA.SayHello()
 # moduleB.SayHello()
-for i in range(1,2):
-	print i
+# for i in range(1,8):
+# 	time.sleep(2)
+# 	print i
 # print sys.maxsize
 # print sys.maxint
 # print "".join(random.sample('zyxwvutsrqponmlkjihgfedcba',25)).upper()
@@ -71,6 +72,17 @@ b =[1,4,96]
 print 1 in b,b.index(4)
 
 print 8^8^0
+a = "3694"
+print a[0:2]
+
+b = [1,2,4]
+print b
+
+del b[2]
+print b
+
+
+os.system('pause')
 # os.system('explorer E:\github')
 # os.system("explorer "+ "../")
 # timestamp = time.time()
