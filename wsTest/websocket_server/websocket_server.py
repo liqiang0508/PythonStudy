@@ -8,7 +8,7 @@ from hashlib import sha1
 import logging
 from socket import error as SocketError
 import errno
-
+import time
 if sys.version_info[0] < 3:
     from SocketServer import ThreadingMixIn, TCPServer, StreamRequestHandler
 else:
@@ -133,7 +133,7 @@ class WebsocketServer(ThreadingMixIn, TCPServer, API):
         pass
 
     def _new_client_(self, handler):
-        self.id_counter += 1
+        self.id_counter = int(time.time())
         client = {
             'id': self.id_counter,
             'handler': handler,
