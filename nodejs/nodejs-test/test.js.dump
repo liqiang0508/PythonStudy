@@ -1,0 +1,138 @@
+var http = require('http');
+var url = require("url");
+var util = require('util');
+var qs = require('querystring');
+var db = require("./MySql");
+var Person = require("./protohelper").Person
+
+var writeOut = function (query, res) {
+	console.log("response data= " + query);
+    // console.log("response stringify= " + JSON.stringify(query))
+	
+	// var obj = JSON.parse(query);
+	// obj.age = obj.age+20;
+	res.writeHead(200, {'Content-Type': 'application/json'});
+    res.write(JSON.stringify(query));
+    res.end();
+
+}
+
+function handleLogin(request, response){
+
+        // if (request.method.toUpperCase() == 'POST') 
+        // {
+            var postData = "";
+          
+            request.addListener("data", function (data) 
+            {
+                postData += data;
+            });
+           
+            request.addListener("end", function () 
+            {
+                console.log("Request data= " + postData);
+        
+                postData = JSON.parse(postData);
+                // var query = JSON.parse(postData);
+                // writeOut(postData, response);
+                // console.log("is_account_exist",postData.udid);
+                            db.is_account_exist(postData.udid,function(b){
+
+                                                console.log("is_account_exist",b,postData.udid);
+                                                if(b)//
+                                                {
+                                                    db.get_userInfo(postData,function(data){
+                                                        console.log("get_userInfo",data[0]); 
+                                                        writeOut(data[0],response);
+                                                 });
+                                                }
+                                                else
+                                                {
+                                                    db.create_account(postData,function(data){
+                                                        console.log("create_account--",data);  
+                                                        writeOut(data,response);
+                                                    });
+                                                }
+                                       });
+
+            });
+
+           // db.is_account_exist(postData.udid,function(b){
+
+           //          console.log("is_account_exist",b,postData.udid);
+           //          if(b)//
+           //          {
+
+           //          }
+           //          else
+           //          {
+           //              db.create_account(null,postData.udid,postData.name,function(b){console.log("create_account--",b);});
+           //          }
+           // });
+
+            
+        // }
+        // else if(request.method.toUpperCase() == 'GET') 
+        // {
+         
+        //     var query = "hello";
+        //     writeOut(query, response);
+        // }
+
+}
+
+http.createServer(function (request, response) {
+
+	var pathname = url.parse(request.url).pathname;
+	console.log("Request for " + pathname + " received.");
+	// 路垄脣脥 HTTP 脥路虏驴 
+	// HTTP 脳麓脤卢脰碌: 200 : OK
+	// 脛脷脠脻脌脿脨脥: text/plain
+	// response.writeHead(200, {'Content-Type': 'text/plain'});
+
+    if (pathname=="/login")
+    {   
+        console.log("/login");
+        handleLogin(request, response);
+        return;
+    }
+	 if (request.method.toUpperCase() == 'POST') {
+            var postData = "";
+            /**
+             * 脪貌脦陋post路陆脢陆碌脛脢媒戮脻虏禄脤芦脪禄脩霉驴脡脛脺潞脺脜脫麓贸赂麓脭脫拢卢
+             * 脣霉脪脭脪陋脤铆录脫录脿脤媒脌麓禄帽脠隆麓芦碌脻碌脛脢媒戮脻
+             * 脪虏驴脡脨麓脳梅 req.on("data",function(data){});
+             */
+            request.addListener("data", function (data) {
+                postData += data;
+            });
+            /**
+             * 脮芒赂枚脢脟脠莽鹿没脢媒戮脻露脕脠隆脥锚卤脧戮脥禄谩脰麓脨脨碌脛录脿脤媒路陆路篓
+             */
+            request.addListener("end", function () {
+            	console.log("Request data= " + postData);
+                // var data = Person.Person.deserializeBinary(postData)
+                // console.log(data)
+                var query = JSON.parse(postData);
+                writeOut(postData, response);
+            });
+        }
+        else if (request.method.toUpperCase() == 'GET') {
+            /**
+             * 脪虏驴脡脢鹿脫脙var query=qs.parse(url.parse(req.url).query);
+             * 脟酶卤冒戮脥脢脟url.parse碌脛arguments[1]脦陋true拢潞
+             * ...脪虏脛脺麓茂碌陆隆庐querystring驴芒隆炉碌脛陆芒脦枚脨搂鹿没拢卢露酶脟脪虏禄脢鹿脫脙querystring
+             */
+            var query = "hello";
+            writeOut(query, response);
+        } else {
+            //head put delete options etc.
+        }
+
+	// 路垄脣脥脧矛脫娄脢媒戮脻 "Hello World"
+	// response.end('Hello World---3699\n');
+	// response.end(util.inspect(url.parse(request.url, true)));
+}).listen(8888);
+
+// 脰脮露脣麓貌脫隆脠莽脧脗脨脜脧垄
+console.log('Server running at http://127.0.0.1:8888/');
