@@ -7,24 +7,40 @@ from websocket_server import WebsocketServer
 
 import logging  
 import time
-import messagedispatch
+import gamelogic
 #发送给单个连接
 def send_to(server,client,message):
 
-   server.send_message_to_all(client,message)
+   server.send_message(client,message)
 
 #广播给所有人
 def send_to_all(server,message):
 
    server.send_message_to_all(message)
 
+#广播给房间所有人
+def send_to_all_room(server,message,clients):
+   for i in clients:
+      client = clients[i]
+      server.send_message(client,message)
+
+
+
+
 #有新连接
 def new_client(client, server):
 
    # print("New client connected and was given id %d" % client['id'])
    server.send_message_to_all("Hey all, a new client has joined us")
-   SetPlayerUid(724001)
-   logger.info("Client(%d) connected" % (client['uid']))
+   # logger.info("Client(%d) connected" % (client['uid']))
+   
+   gamelogic.player_connect_room(client,server)
+   
+
+
+   
+   
+
 
 #连接后客户端请求下设置uid
 def SetPlayerUid(id):
@@ -37,24 +53,29 @@ def SetPlayerUid(id):
 def client_left(client, server):
 
    # print("Client(%d) disconnected" % client['uid'])
-   logger.info("Client(%d) disconnected" % (client['uid']))
+   # logger.info("Client(%d) disconnected" % (client['uid']))
+   gamelogic.player_leave_room(client,server)
 
   
 
 # Called when a client sends a message
 def message_received(client, server, message):
 
-   # print("Client(%d) said: %s" % (client['uid'], message))
-   logger.info("message_received(%d) said: %s" % (client['uid'], message))
-   message = "Client(%d) said: %s" % (client['uid'], message)
-   messagedispatch.message_received(client, server, message)
-
+   # print("Client(%d) said: %s" % (client['id'], message))
+   logger.info(message)
+   # message = "Client(%d) said: %s" % (client['id'], message)
+   gamelogic.message_received(client, server, message)
   
 
 
+
+
+
 if __name__ == "__main__":
+
    # t = WsSever(host = "0.0.0.0",port = 9001)
    port = 9001
+
    day = time.strftime("%Y-%m-%d", time.localtime()) 
    logger = logging.getLogger(__name__)
    logger.setLevel(level = logging.DEBUG)

@@ -28,6 +28,8 @@
     writeToScreen("connected\n");
     document.myform.connectButton.disabled = true;
     document.myform.disconnectButton.disabled = false;
+    send(JSON.stringify({ "funcName":"auth","uid": Number(new Date())}))
+    send(JSON.stringify({ "funcName":"enterroom","roomid": 444}))
   }
 
   function onClose(evt)
@@ -60,7 +62,7 @@
     {
       return 
     }
-    websocket.send(message);
+    send(JSON.stringify({ "funcName":"chatText","txt": document.myform.inputtext.value}))
     document.myform.inputtext.value = ""
   }
 
@@ -71,6 +73,9 @@
 
   }
 
+  function send(message){
+    websocket.send(message);
+  }
   window.addEventListener("load", init, false);
 
 

@@ -29,4 +29,6 @@ print add(1,10,lambda x: x-1)
 
 data = {"name":"lee","age":27}
 print json.dumps(data)
+
+print type(dict()),type({})
 os.system('pause')
