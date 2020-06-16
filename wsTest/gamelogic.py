@@ -10,7 +10,6 @@ connections = []
 
 def message_received(client, server, message):
 	print "message_received=============",message
-	# server.send_message_to_all(message)
 	message = json.loads(message)
 	funcName = message["funcName"] 
 	if funcName == "auth":
@@ -19,7 +18,7 @@ def message_received(client, server, message):
 		chattext(client, server,message)
 	if funcName == "enterroom":
 		player_join_room(client, server,message)
-	# WsSever.send_to_all_room(server,message,roomsInfo[client["roomid"]])
+
 
 def auth(client, server,data):
 	# print "auth----------", data
@@ -48,10 +47,11 @@ def player_join_room(client,server,data):
 
 
 def player_leave_room(client,server):
-	pass
-	# uid = client['uid']
-	# roomid = client['roomid']
-	# print "player_leave_room-----",uid,roomid
+	roomid = client['roomid']
+	playerid = client['uid']
+	print playerid,"leave_room"
+	del roomsInfo[roomid][playerid]
+
 
 
 
