@@ -1,5 +1,5 @@
-#encoding:utf-8
-#!/usr/bin/env python
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 
 # https://github.com/Pithikos/python-websocket-server
 # pip install websocket-server
@@ -17,7 +17,7 @@ class WsSever:
       day = time.strftime("%Y-%m-%d", time.localtime()) 
       self.logger = logging.getLogger(__name__)
       self.logger.setLevel(level = logging.DEBUG)
-      handler = logging.FileHandler("{}-{}.txt".format(day,port))
+      handler = logging.FileHandler("{}-{}.txt".format(day,port),encoding="utf-8")
       handler.setLevel(logging.DEBUG)
       formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
       handler.setFormatter(formatter)

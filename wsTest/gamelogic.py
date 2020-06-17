@@ -1,6 +1,5 @@
-
-#encoding:utf-8
-#!/usr/bin/env python
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 
 
 from WsSever import *
@@ -40,7 +39,7 @@ def message_received(client, server, message):
 		message["uid"] = client["uid"]
 
 	
-	loginfo("message_received=="+json.dumps(message))
+	loginfo("message_received=="+json.dumps(message,ensure_ascii=False))
 	funcName = message["funcName"] 
 	if funcName == "auth":
 		auth(client, server,message)
