@@ -35,7 +35,8 @@ class WsSever:
    def GetServer(self):
       return self.Server
   
-     
+   def loginfo(self,str):
+      self.logger.info(str)
 
 
 

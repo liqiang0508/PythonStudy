@@ -8,6 +8,9 @@ import json
 roomsInfo = {}#房间信息 {roomid:{playerid:{client.....}.....}}
 global Server#当前server
 
+def loginfo(str):
+	Server.loginfo(str)
+
 #发送给单个连接
 def send_to(server,client,message):
    server.send_message(client,message)
@@ -32,8 +35,12 @@ def push_message_room(message,roomid):
 #收到消息
 def message_received(client, server, message):
 	
-	print "message_received=============",message
 	message = json.loads(message)
+	if "uid" in client:
+		message["uid"] = client["uid"]
+
+	
+	loginfo("message_received=="+json.dumps(message))
 	funcName = message["funcName"] 
 	if funcName == "auth":
 		auth(client, server,message)
@@ -71,14 +78,17 @@ def player_join_room(client,server,data):
 	client["roomid"] = roomid
 
 	push_message_room("有人进入聊天室",roomid)
+	loginfo(str(playerid)+"----joinroom")
 	# WsSever.push_message("Hey all, a new client has joined us")
 
 #离开房间
 def player_leave_room(client,server):
-	roomid = client['roomid']
-	playerid = client['uid']
-	print playerid,"leave_room"
-	del roomsInfo[roomid][playerid]
+	if "roomid" in client:
+		roomid = client['roomid']
+		playerid = client['uid']
+		print playerid,"leave_room"
+		del roomsInfo[roomid][playerid]
+		loginfo(str(playerid)+"----leave_room")
 
 
 
