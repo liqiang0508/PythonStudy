@@ -22,6 +22,14 @@ def send_to_all_room(server,message,clients):
       client = clients[i]
       server.send_message(client,message)
 
+
+#主动push给指定房间ID
+def push_message_room(message,roomid):
+	server = Server.GetServer()
+	clients = roomsInfo[roomid]
+	send_to_all_room(server,message,clients)
+
+#收到消息
 def message_received(client, server, message):
 	
 	print "message_received=============",message
@@ -34,7 +42,7 @@ def message_received(client, server, message):
 	if funcName == "enterroom":
 		player_join_room(client, server,message)
 
-
+#验证玩家id
 def auth(client, server,data):
 	client["uid"] = data['uid']
 
@@ -42,8 +50,6 @@ def chattext(client, server,data):
 	global Server1
 	playerid = client["uid"]
 	send_to_all_room(server,str(playerid)+" say: "+data["txt"],roomsInfo[client["roomid"]])
-	print Server.GetServer()
-	print server
 
 # 玩家连接到房间
 def player_connect_room(client,server):
@@ -64,7 +70,7 @@ def player_join_room(client,server,data):
 
 	client["roomid"] = roomid
 
-	send_to_all_room(Server.GetServer(),"有人进入聊天室",roomsInfo[roomid])
+	push_message_room("有人进入聊天室",roomid)
 	# WsSever.push_message("Hey all, a new client has joined us")
 
 #离开房间
