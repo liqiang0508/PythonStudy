@@ -3,12 +3,27 @@
 #!/usr/bin/env python
 
 
-import WsSever
+from WsSever import *
 import json
-roomsInfo = {}
-connections = []
+roomsInfo = {}#房间信息 {roomid:{playerid:{client.....}.....}}
+global Server#当前server
+
+#发送给单个连接
+def send_to(server,client,message):
+   server.send_message(client,message)
+
+#广播给所有人
+def send_to_all(server,message):
+   server.send_message_to_all(message)
+
+#广播给房间所有人
+def send_to_all_room(server,message,clients):
+   for i in clients:
+      client = clients[i]
+      server.send_message(client,message)
 
 def message_received(client, server, message):
+	
 	print "message_received=============",message
 	message = json.loads(message)
 	funcName = message["funcName"] 
@@ -21,17 +36,21 @@ def message_received(client, server, message):
 
 
 def auth(client, server,data):
-	# print "auth----------", data
 	client["uid"] = data['uid']
 
 def chattext(client, server,data):
-	print "chattext----------", client["uid"],client["roomid"]
+	global Server1
 	playerid = client["uid"]
-	WsSever.send_to_all_room(server,str(playerid)+" say: "+data["txt"],roomsInfo[client["roomid"]])
+	send_to_all_room(server,str(playerid)+" say: "+data["txt"],roomsInfo[client["roomid"]])
+	print Server.GetServer()
+	print server
 
+# 玩家连接到房间
 def player_connect_room(client,server):
+
 	pass
 
+# 加入房间
 def player_join_room(client,server,data):
 
 	roomid = data['roomid']
@@ -45,7 +64,10 @@ def player_join_room(client,server,data):
 
 	client["roomid"] = roomid
 
+	send_to_all_room(Server.GetServer(),"有人进入聊天室",roomsInfo[roomid])
+	# WsSever.push_message("Hey all, a new client has joined us")
 
+#离开房间
 def player_leave_room(client,server):
 	roomid = client['roomid']
 	playerid = client['uid']
@@ -55,4 +77,7 @@ def player_leave_room(client,server):
 
 
 
-
+if __name__ == "__main__":
+	   global Server
+	   Server= WsSever("0.0.0.0",9001,player_connect_room,player_leave_room,message_received)
+	   Server.startRun()
