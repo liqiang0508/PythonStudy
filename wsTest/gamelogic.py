@@ -3,7 +3,9 @@
 
 
 from WsSever import *
+from PokerGame import *
 import json
+
 roomsInfo = {}#房间信息 {roomid:{playerid:{client.....}.....}}
 global Server#当前server
 
@@ -53,7 +55,6 @@ def auth(client, server,data):
 	client["uid"] = data['uid']
 
 def chattext(client, server,data):
-	global Server1
 	playerid = client["uid"]
 	send_to_all_room(server,str(playerid)+" say: "+data["txt"],roomsInfo[client["roomid"]])
 
@@ -78,8 +79,7 @@ def player_join_room(client,server,data):
 
 	push_message_room("有人进入聊天室",roomid)
 	loginfo(str(playerid)+"----joinroom")
-	# WsSever.push_message("Hey all, a new client has joined us")
-
+	
 #离开房间
 def player_leave_room(client,server):
 	if "roomid" in client:
@@ -91,8 +91,9 @@ def player_leave_room(client,server):
 
 
 
+global Server
+# if __name__ == "__main__":
+# 	   global Server
+Server= WsSever("0.0.0.0",9001,player_connect_room,player_leave_room,message_received)
+Server.startRun()
 
-if __name__ == "__main__":
-	   global Server
-	   Server= WsSever("0.0.0.0",9001,player_connect_room,player_leave_room,message_received)
-	   Server.startRun()

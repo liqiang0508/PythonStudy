@@ -10,6 +10,7 @@
 import os
 import threading,time
 import json
+
 def func(a):
     print time.time(),"Hello Timer!",a
 
@@ -22,7 +23,8 @@ print time.time()
 def add(x,y,call):
 	return call(x+y)
 
-
+a = 6
+del a
 # os.system("WsSever.py")
 
 print add(1,10,lambda x: x-1)

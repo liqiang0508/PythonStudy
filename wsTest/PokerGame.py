@@ -6,6 +6,8 @@ import threading
 import time
 import copy
 
+
+
 CardData = [
 		{"suit":0,"rank":"2"},
 		{"suit":0,"rank":"3"},
@@ -70,23 +72,27 @@ CardData = [
 
 class PokerGame:
 	def __init__(self, roomid):
+		self.roomid = roomid
 		self.initData(roomid)
 
 	def initData(self,roomid):
-		self.roomid = roomid
+		print("开始新一局")
+		
 		self.playerInfos = {}
 		self.pokerData = copy.deepcopy(CardData)
 		self.dealCards = {}
 		self.bankerCards= ""
-		random.shuffle(self.pokerData)
+		self.State = 0;
+		random.shuffle(self.pokerData)  #随机打乱顺序
+
 		self.DealCard()
+
 
     
 	def dealCardToPos(self,index,carNum):
 		cards = ""
 		for i in range(0,carNum):
 			card = self.GetRandCard()
-			# cards.append(card)
 			cards = cards + card
 
 		return cards
@@ -99,27 +105,29 @@ class PokerGame:
 		return card
 
 	def DealCard(self):
+		print("发牌")
 		bankercard = self.dealCardToPos(1002,1)
 		self.bankerCards = bankercard
 		for i in xrange(4):
 			card = self.dealCardToPos(i,1)
 			self.dealCards[i] = card
-		time.sleep(2)
-		self.gameResult()
-		
+
+		s = threading.Timer(2,self.gameResult,())
+		s.start()
 
 	def player_sit_down(self,seatNum,uid):
 		playerdata = {"uid":uid}
 		self.playerInfos[seatNum] = playerdata
 
 	def gameResult(self):
+		print("结算")
 		for i in self.dealCards:
 			cards = self.dealCards[i]
 			cards = self.str2rank(cards)
 			rank = cards[0]["rank"]
 
 			banerrank = self.str2rank(self.bankerCards)[0]["rank"]
-			print banerrank ,rank
+			# print banerrank ,rank
 
 			if ord(banerrank)>ord(rank):
 				print "庄家>",i
@@ -128,13 +136,10 @@ class PokerGame:
 			else:
 				print "庄家==",i
 
-		time.sleep(2)
-		print "**********"
-		print self.bankerCards
+		s = threading.Timer(4,self.initData,(self.roomid,))
+		s.start()
 
-		print self.dealCards
-		print "**********"
-		self.initData(self.roomid)
+
 
 	def str2rank(self,str_):
 		cards = []
@@ -144,25 +149,18 @@ class PokerGame:
 		return cards
 
 
-p = PokerGame(200)
-# p.DealCard()
-# p.gameResult()
 
-# print "********"
-# # # print p.str2rank("2B")
-# print p.bankerCards
-
-# print p.dealCards
-
-# a = "36492B3948"
-
-# print len(a)/2
-
-# for i in xrange(len(a)/2):
-
-# 	print  i, a[2*i],a[2*i+1]
+		
+	def setServer(self,s):
+		self.server = s
 
 
-# print ord("0"),ord("9")
 
-# print ord("A"),ord("E")
+	@staticmethod
+	def LOL(a):
+		print a
+
+
+p = PokerGame(444)
+
+
