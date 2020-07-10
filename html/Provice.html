@@ -11,7 +11,7 @@
 		<select id="city">
 
 		</select>
-		<div class="div">1</div>
+		<div class="div1" lol = "lol" id="idlol1">1</div>
 		<div class="div">2</div>
 	</body>
 </html>
@@ -61,21 +61,22 @@
 
 	$(function() {
 		//遍历选取的div数组
-		var div = $("div")
-		div.each(function(i, n) //jqurey选取的元素数组这样遍历
-			{
-				console.log("each----" + n.innerText)
-			})
-		//数组自带遍历
-		provinces.forEach(function(e) //js的数组遍历
-			{
-				console.log(e)
-			})
-		//jqurey的数组遍历
-		$.each(provinces, function(i, n) { //js的数组用jqurey的遍历
+		console.log($(".div1").attr("id"))
+		// var div = $("div")
+		// div.each(function(i, n) //jqurey选取的元素数组这样遍历
+		// 	{
+		// 		console.log("each----" + n.innerText)
+		// 	})
+		// //数组自带遍历
+		// provinces.forEach(function(e) //js的数组遍历
+		// 	{
+		// 		console.log(e)
+		// 	})
+		// //jqurey的数组遍历
+		// $.each(provinces, function(i, n) { //js的数组用jqurey的遍历
 
-			console.log(n)
-		})
+		// 	console.log(n)
+		// })
 
 		//初始化把第一个省份数据弄进去
 		var province = $("#province");
@@ -84,18 +85,31 @@
 			provinces1 = provinces1 + "<option value='" + n.id + "'>" + n.name + "</option>";
 		})
 		province.append(provinces1)
+		
+		var city = $("#city")
+		var citydata = "";
+		$.each(provinces[0].children, function(i, n) {
+			citydata = citydata + "<option value='" + n.id + "'>" + n.name + "</option>";
+		})
+		city.append(citydata)
+		
 	})
 
 	$(function() {
 
 		var province = $("#province");
 		var city = $("#city")
-		var cityData = "";
+		
 
 		province.change(function() { //当省份控件修改的时候
+			
+			console.log("change")
+			city.empty()
+			var cityData = "";
 			$.each(provinces, function(i, n) { //循环数组里面的数据
 				if (province.val() == n.id) //当省份的值等于遍历的值
 				{
+					console.log(n.name)
 					$.each(n.children, function(i, n) { //把对应city数据弄进city控件
 						cityData = cityData + "<option value='" + n.id + "'>" + n.name + "</option>";
 					})
