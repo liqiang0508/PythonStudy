@@ -13,7 +13,7 @@
 	</style>
 	<body>
 		<div id="app">
-			<p>{{ message }}</p>
+			<p>{{ message1 }}</p>
 			<hr />
 			<div v-html="v_html"></div>
 			<hr />
@@ -49,20 +49,26 @@
 				</li>
 			</ol>
 			<hr >
-			<runoob message = "LOL"> </runoob>
+			<runoob posttitle = "LOL1"  message = "666"> </runoob>
+			
+			<hr>
+
+			<p>{{ testText }}</p>
+			<button v-on:click="ChangeText">changetext</button>
 		</div>
 	</body>
 
 	<script>
 		Vue.component('runoob', {//自定义组件
-			props:["message"],
-			template: '<h1>{{ message }}</h1>'
+			props:['posttitle','message'],
+			template: '<div><h1>{{ posttitle }} </h1> <h2>{{ message }}</h2></div>'
 		})
 
 		var p = new Vue({
 			el: "#app",
 			data: {
-				message: "我是message文字", //直接插值
+				testText:"Test",
+				message1: "我是message文字", //直接插值
 				v_html: "<h1>我是html代码<h1>", //v-html 绑定的是html的代码
 				use: false, //v-model 数据绑定
 				id: 99, //v-bind 绑定属性值
@@ -81,6 +87,9 @@
 			methods: {
 				Click: function() { //v-on  监听事件
 					alert("clicked")
+				},
+				ChangeText:function(){
+					this.testText = Math.random()*100
 				}
 			},
 			filters: { //过滤变成大写字母
@@ -96,6 +105,6 @@
 			}
 
 		})
-		// p.message = "lol"
+		p.message1 = "lol----"
 	</script>
 </html>
