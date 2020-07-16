@@ -1,7 +1,56 @@
 <!doctype html>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1.0/">
+<!-- 新 Bootstrap4 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+<script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+<link href="static/signin.css" rel="stylesheet">
+<link href="static/Alert.css" rel="stylesheet">
+
+<script src = static/utilsmin.js></script>
+<!-- <script src = static/Alert.js></script> -->
 <title>Hello from Flask</title>
-{% if name %}
-  <h1>Hello {{ name }}!</h1>
-{% else %}
-  <h1>Hello template!</h1>
-{% endif %}
+
+<body>
+	
+	{% if name %}
+	<h1>Hello {{ name }}!</h1>
+	{% else %}
+	<h1>Hello template!</h1>
+	{% endif %}
+	<p class="pp"></p>
+	<button class="mybtn">btn</button>
+</body>
+
+
+<script>
+	$(function() 
+	{
+		console.log("load")
+
+		BtnAddClick($(".mybtn"),function(){
+			$.get("/hello",function(data,status){
+			 $(".pp").text(data)
+			
+			showAlert("","我是Alert提示内容",undefined,function(index){
+					console.log("Alert index==",index)
+				})
+	  			
+
+    		})
+	
+		})
+		console.log(add(5,2))
+		// sayhello()
+		
+		sayHello()
+		
+	})
+</script>

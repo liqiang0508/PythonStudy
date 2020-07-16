@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jqurey Test</title>
+</head>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+</script>
+<script>
+	$(function(){
+		$("button").click(function(){
+
+			$.get("/hello",function(data,status){
+				alert("数据: " + data + "\n状态: " + status);
+			});
+			console.log("click")
+		})
+	});
+
+</script>
+</head>
+<body>
+
+	<h2 id="myDiv">这是一个标题</h2>
+	<p>这是一个段落。</p>
+	<p>这是另一个段落。</p>
+	<button>点我</button>
+	<body>
+
+	</body>
+	</html>

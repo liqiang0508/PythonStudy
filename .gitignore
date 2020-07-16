@@ -13,7 +13,7 @@ test.db
 testmin.js
 /node_modules
 /douyin/video
-Flask/static
+
 /virtualenvtTest
 TestUniApp/unpackage
 TestUniApp/AndroidProject/.idea/jarRepositories.xml

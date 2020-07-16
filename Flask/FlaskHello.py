@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello World  Flask Test! '
+    return render_template('hello.html')
 @app.route('/hello')
 def hello():
     return 'Hello Flask Test'
@@ -17,4 +17,4 @@ def hello():
       
 if __name__ == '__main__':
 	CORS(app, supports_credentials=True)
-	app.run(host='0.0.0.0',port=8080,debug = False)
+	app.run(host='0.0.0.0',port=8080,debug = True)
