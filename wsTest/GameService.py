@@ -3,7 +3,7 @@
 
 
 from WsSever import *
-from PokerGame import *
+# from PokerGame import *
 import json
 
 roomsInfo = {}#房间信息 {roomid:{playerid:{client.....}.....}}
@@ -78,7 +78,7 @@ def player_join_room(client,server,data):
 	client["roomid"] = roomid
 
 	push_message_room("有人进入聊天室",roomid)
-	loginfo(str(playerid)+"----joinroom")
+	loginfo(str(playerid)+"----player_join_room")
 	
 #离开房间
 def player_leave_room(client,server):
@@ -91,7 +91,7 @@ def player_leave_room(client,server):
 
 
 
-global Server
+# global Server
 # if __name__ == "__main__":
 # 	   global Server
 Server= WsSever("0.0.0.0",9001,player_connect_room,player_leave_room,message_received)
