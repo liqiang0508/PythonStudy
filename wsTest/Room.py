@@ -1,13 +1,14 @@
 # -*- coding: UTF-8 -*-
 # 一个房间
 
-from Log import*
+from LogUtils import*
 import json
 class Room:
 	def __init__(self,data):
 		self.roomid = data["roomid"]
-		self.log = Log(self.roomid)
+		self.log = LogUtils(self.roomid)
 		self.playerGroup = {}#保存玩家连接
+		self.SeatsPlayer = {}#座位上的玩家
 		
 	def LogInfo(self,msg):
 		self.log.log(msg)
