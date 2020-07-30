@@ -11,7 +11,7 @@ class LogUtils:
 		day = time.strftime("%Y-%m-%d", time.localtime()) 
 		self.logger = logging.getLogger(__name__+" RoomID=="+str(roomid))
 		self.logger.setLevel(level = logging.DEBUG)
-		handler = logging.FileHandler("{}-{}.txt".format(day,roomid),encoding="utf-8")
+		handler = logging.FileHandler("log/{}-{}.txt".format(day,roomid),encoding="utf-8")
 		handler.setLevel(logging.DEBUG)
 		formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 		handler.setFormatter(formatter)
