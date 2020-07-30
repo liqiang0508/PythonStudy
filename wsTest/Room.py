@@ -4,15 +4,10 @@
 from Log import*
 import json
 class Room:
-
-	roomid = 0 #房间id
-
-	playerGroup = {}#保存玩家连接
-
-	log = None
 	def __init__(self,data):
 		self.roomid = data["roomid"]
 		self.log = Log(self.roomid)
+		self.playerGroup = {}#保存玩家连接
 		
 	def LogInfo(self,msg):
 		self.log.log(msg)
@@ -20,13 +15,17 @@ class Room:
 	def handleMsg(self,client, server, message):
 		
 		funcName = message["funcName"] 
-		print "Room handleMsg==",message
+		self.LogInfo(str(message))
 		if funcName == "chatText":
 			self.chattext(client, server,message)
 
 	def AddPlayerClient(self,client):
+
 		playerid = client['uid']
 		self.playerGroup[playerid] = client
+
+		print("AddPlayerClient==",self.roomid,len(self.playerGroup))
+
 	def RemovePlayerClient(self,client):
 		playerid = client['uid']
 		del self.playerGroup[playerid]
@@ -37,6 +36,7 @@ class Room:
 	def chattext(self,client, server,data):
 		playerid = client["uid"]
 		self.send_to_all(server,data["txt"])
+
 
 	#发送给指定id
 	def send_to(self,server,playerid,message):

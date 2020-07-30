@@ -6,11 +6,12 @@ from WsSever import *
 # from PokerGame import *
 from Room import *
 import json
-roomsInfo = {}#房间信息 {roomid:{players:{client.....}.....}}
+roomsInfo = {}#房间信息 {roomid:{room:{Room.....}.....}}
 global Server#当前server
 
 def loginfo(msg,roomid):
-	pass
+	room = roomsInfo[roomid]["room"]
+	room.LogInfo(msg)
 
 
 #发送给单个连接
@@ -60,10 +61,6 @@ def message_received(client, server, message):
 def auth(client, server,data):
 	client["uid"] = data['uid']
 
-# def chattext(client, server,data):
-# 	playerid = client["uid"]
-# 	clients = roomsInfo[client["roomid"]]["players"]
-# 	send_to_all_room(server,str(playerid)+" say: "+data["txt"],clients)
 
 # 玩家连接到房间
 def player_connect_room(client,server):
@@ -74,25 +71,28 @@ def player_connect_room(client,server):
 def player_join_room(client,server,data):
 
 	roomid = data['roomid']
+	playerid = client["uid"]
 	if roomid not in roomsInfo:#房间号没有
 		
-		print("player_join_room =====>>> error "+str(roomid))
+		loginfo(str(playerid)+"=====join_room =====error "+str(roomid),roomid)
 		return
 	else:
 		client["roomid"] = roomid
 		room = roomsInfo[roomid]["room"]
 		room.AddPlayerClient(client)#房间添加玩家
 		push_message_room("someone join room",roomid)
-		playerid = client["uid"]
-		loginfo(str(playerid)+"----player_join_room",roomid)
+		
+		loginfo(str(playerid)+"=====player_join_room===="+str(roomid),roomid)
 	
 #离开房间
 def player_leave_room(client,server):
-	print("player_leave_room")
+	
 	if "roomid" in client:
 		roomid = client["roomid"]
 		room = roomsInfo[roomid]["room"]
 		room.RemovePlayerClient(client)#房间移除玩家
+		playerid = client["uid"]
+		loginfo(str(playerid)+"=====player_leave_room===="+str(roomid),roomid)
 		
 
 
@@ -112,7 +112,7 @@ def StartRoom():
 
 
 
-	print "StartRoom===done",roomsInfo
+	print "StartRoom===done"
 
 
 if __name__ == "__main__":
