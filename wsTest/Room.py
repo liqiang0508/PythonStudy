@@ -27,6 +27,9 @@ class Room:
 	def AddPlayerClient(self,client):
 		playerid = client['uid']
 		self.playerGroup[playerid] = client
+	def RemovePlayerClient(self,client):
+		playerid = client['uid']
+		del self.playerGroup[playerid]
 
 	def GetPlayerClient(self):
 		return self.playerGroup

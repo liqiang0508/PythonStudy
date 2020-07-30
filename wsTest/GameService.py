@@ -60,10 +60,10 @@ def message_received(client, server, message):
 def auth(client, server,data):
 	client["uid"] = data['uid']
 
-def chattext(client, server,data):
-	playerid = client["uid"]
-	clients = roomsInfo[client["roomid"]]["players"]
-	send_to_all_room(server,str(playerid)+" say: "+data["txt"],clients)
+# def chattext(client, server,data):
+# 	playerid = client["uid"]
+# 	clients = roomsInfo[client["roomid"]]["players"]
+# 	send_to_all_room(server,str(playerid)+" say: "+data["txt"],clients)
 
 # 玩家连接到房间
 def player_connect_room(client,server):
@@ -88,12 +88,12 @@ def player_join_room(client,server,data):
 	
 #离开房间
 def player_leave_room(client,server):
+	print("player_leave_room")
 	if "roomid" in client:
-		roomid = client['roomid']
-		playerid = client['uid']
-		if "players" in roomsInfo:
-			del roomsInfo[roomid]["players"][playerid]
-		loginfo(str(playerid)+"----leave_room",roomid)
+		roomid = client["roomid"]
+		room = roomsInfo[roomid]["room"]
+		room.RemovePlayerClient(client)#房间移除玩家
+		
 
 
 def StartRoom():
