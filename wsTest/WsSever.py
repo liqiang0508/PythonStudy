@@ -14,14 +14,14 @@ class WsSever:
    def __init__(self, host,port,connectCall,leftCall,messageCall):
      
      
-      day = time.strftime("%Y-%m-%d", time.localtime()) 
-      self.logger = logging.getLogger(__name__)
-      self.logger.setLevel(level = logging.DEBUG)
-      handler = logging.FileHandler("{}-{}.txt".format(day,port),encoding="utf-8")
-      handler.setLevel(logging.DEBUG)
-      formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-      handler.setFormatter(formatter)
-      self.logger.addHandler(handler)
+      # day = time.strftime("%Y-%m-%d", time.localtime()) 
+      # self.logger = logging.getLogger(__name__)
+      # self.logger.setLevel(level = logging.DEBUG)
+      # handler = logging.FileHandler("{}-{}.txt".format(day,port),encoding="utf-8")
+      # handler.setLevel(logging.DEBUG)
+      # formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+      # handler.setFormatter(formatter)
+      # self.logger.addHandler(handler)
 
       self.Server = WebsocketServer(host = host,port = port,loglevel=logging.INFO)
       self.Server.set_fn_new_client(connectCall)
@@ -36,7 +36,8 @@ class WsSever:
       return self.Server
   
    def loginfo(self,str):
-      self.logger.info(str)
+      # self.logger.info(str)
+      pass
 
 
 

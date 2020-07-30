@@ -61,7 +61,7 @@ CardData = [
 		{"suit":3,"rank":"E"},#A
 ]
 
-class Cards:
+class Cards52:
 	cards =[]#一副牌的数据
 	removeCards = []#移除的的牌的数据
 
@@ -88,8 +88,8 @@ class Cards:
 		self.cards = self.cards + self.removeCards
 		self.removeCards = []
 
-b = Cards()
-print b.dealCard(5)
-print len(b.cards),len(b.removeCards)
-b.preNext()
-print len(b.cards),len(b.removeCards)
+# b = Cards()
+# print b.dealCard(5)
+# print len(b.cards),len(b.removeCards)
+# b.preNext()
+# print len(b.cards),len(b.removeCards)

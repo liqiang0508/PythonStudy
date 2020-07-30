@@ -4,13 +4,14 @@
 
 from WsSever import *
 # from PokerGame import *
+from Room import *
 import json
-
-roomsInfo = {}#房间信息 {roomid:{playerid:{client.....}.....}}
+roomsInfo = {}#房间信息 {roomid:{players:{client.....}.....}}
 global Server#当前server
 
-def loginfo(str):
-	Server.loginfo(str)
+def loginfo(msg,roomid):
+	pass
+
 
 #发送给单个连接
 def send_to(server,client,message):
@@ -20,7 +21,7 @@ def send_to(server,client,message):
 def send_to_all(server,message):
    server.send_message_to_all(message)
 
-#广播给房间所有人
+#广播给房间所有clients
 def send_to_all_room(server,message,clients):
    for i in clients:
       client = clients[i]
@@ -30,7 +31,8 @@ def send_to_all_room(server,message,clients):
 #主动push给指定房间ID
 def push_message_room(message,roomid):
 	server = Server.GetServer()
-	clients = roomsInfo[roomid]
+	room = roomsInfo[roomid]["room"]
+	clients = room.GetPlayerClient()
 	send_to_all_room(server,message,clients)
 
 #收到消息
@@ -40,8 +42,12 @@ def message_received(client, server, message):
 	if "uid" in client:
 		message["uid"] = client["uid"]
 
-	
-	loginfo("message_received=="+json.dumps(message,ensure_ascii=False))
+	if "roomid" in client:
+		loginfo("message_received=="+json.dumps(message,ensure_ascii=False),client["roomid"])
+		roomid = client["roomid"]
+		room = roomsInfo[roomid]["room"]
+		room.handleMsg(client, server, message)
+		return
 	funcName = message["funcName"] 
 	if funcName == "auth":
 		auth(client, server,message)
@@ -56,7 +62,8 @@ def auth(client, server,data):
 
 def chattext(client, server,data):
 	playerid = client["uid"]
-	send_to_all_room(server,str(playerid)+" say: "+data["txt"],roomsInfo[client["roomid"]])
+	clients = roomsInfo[client["roomid"]]["players"]
+	send_to_all_room(server,str(playerid)+" say: "+data["txt"],clients)
 
 # 玩家连接到房间
 def player_connect_room(client,server):
@@ -67,33 +74,50 @@ def player_connect_room(client,server):
 def player_join_room(client,server,data):
 
 	roomid = data['roomid']
-	if roomid not in roomsInfo:
-		roomsInfo[roomid] = {}
-		playerid = client["uid"]
-		roomsInfo[roomid][playerid] = client
+	if roomid not in roomsInfo:#房间号没有
+		
+		print("player_join_room =====>>> error "+str(roomid))
+		return
 	else:
+		client["roomid"] = roomid
+		room = roomsInfo[roomid]["room"]
+		room.AddPlayerClient(client)#房间添加玩家
+		push_message_room("someone join room",roomid)
 		playerid = client["uid"]
-		roomsInfo[roomid][playerid] = client
-
-	client["roomid"] = roomid
-
-	push_message_room("有人进入聊天室",roomid)
-	loginfo(str(playerid)+"----player_join_room")
+		loginfo(str(playerid)+"----player_join_room",roomid)
 	
 #离开房间
 def player_leave_room(client,server):
 	if "roomid" in client:
 		roomid = client['roomid']
 		playerid = client['uid']
-		print playerid,"leave_room"
-		del roomsInfo[roomid][playerid]
-		loginfo(str(playerid)+"----leave_room")
+		if "players" in roomsInfo:
+			del roomsInfo[roomid]["players"][playerid]
+		loginfo(str(playerid)+"----leave_room",roomid)
+
+
+def StartRoom():
+	print "StartRoom"
+
+	roomcfg = {
+			   444:{"roomid":444},
+			   888:{"roomid":888}
+			  }
+
+	
+	for roomid in roomcfg:
+		# roomcfg[roomid]["room"] = Room(roomcfg[roomid])
+		roomsInfo[roomid] = roomcfg[roomid]
+		roomsInfo[roomid]["room"] = Room(roomcfg[roomid])
 
 
 
-# global Server
-# if __name__ == "__main__":
-# 	   global Server
-Server= WsSever("0.0.0.0",9001,player_connect_room,player_leave_room,message_received)
-Server.startRun()
+	print "StartRoom===done",roomsInfo
+
+
+if __name__ == "__main__":
+
+	Server= WsSever("0.0.0.0",9001,player_connect_room,player_leave_room,message_received)
+	StartRoom()
+	Server.startRun()
 

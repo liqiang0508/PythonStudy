@@ -40,6 +40,6 @@ def chat():
       
 if __name__ == '__main__':
 	CORS(app, supports_credentials=True)
-	# app.run(host='0.0.0.0',port=8080,debug = True)
-	server = pywsgi.WSGIServer(('0.0.0.0', 8080), app)
-	server.serve_forever()
+	app.run(host='0.0.0.0',port=8080,debug = True)
+	# server = pywsgi.WSGIServer(('0.0.0.0', 8081), app)
+	# server.serve_forever()

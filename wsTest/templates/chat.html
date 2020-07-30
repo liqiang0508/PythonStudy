@@ -9,8 +9,9 @@
 
   function init()
   {
-    document.myform.url.value = "ws://192.168.65.172:9001/"
+    document.myform.url.value = "ws://127.0.0.1:9001/"
     document.myform.inputtext.value = "Hello World!"
+    document.myform.roomid.value = "888"
     document.myform.disconnectButton.disabled = true;
   }
 
@@ -29,7 +30,8 @@
     document.myform.connectButton.disabled = true;
     document.myform.disconnectButton.disabled = false;
     send(JSON.stringify({ "funcName":"auth","uid": Number(new Date())}))
-    send(JSON.stringify({ "funcName":"enterroom","roomid": 444}))
+    var roomid =  document.myform.roomid.value
+    send(JSON.stringify({ "funcName":"enterroom","roomid": Number(roomid)}))
   }
 
   function onClose(evt)
@@ -100,9 +102,16 @@
 <p>
 <textarea name="outputtext" rows="20" cols="50"></textarea>
 </p>
+<P> message</P>
 <p>
 <textarea name="inputtext" cols="50"></textarea>
 </p>
+<P> 房间号</P>
+<p>
+
+  <textarea name="roomid" cols="50"></textarea>
+</p>
+<P> url</P>
 <p>
 <textarea name="url" cols="50"></textarea>
 </p>
