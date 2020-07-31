@@ -80,7 +80,8 @@ def player_join_room(client,server,data):
 		client["roomid"] = roomid
 		room = roomsInfo[roomid]["room"]
 		room.AddPlayerClient(client)#房间添加玩家
-		push_message_room("someone join room",roomid)
+		data = json.dumps({"txt":"someone join room","funcName":"chatText"})
+		push_message_room(data,roomid)
 		
 		loginfo(str(playerid)+"=====player_join_room===="+str(roomid),roomid)
 	

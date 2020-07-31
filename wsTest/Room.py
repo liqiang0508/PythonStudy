@@ -16,7 +16,7 @@ class Room:
 	def handleMsg(self,client, server, message):
 		
 		funcName = message["funcName"] 
-		self.LogInfo(str(message))
+		# self.LogInfo(json.dumps(message,ensure_ascii=False))
 		if funcName == "chatText":
 			self.chattext(client, server,message)
 
@@ -36,7 +36,7 @@ class Room:
 
 	def chattext(self,client, server,data):
 		playerid = client["uid"]
-		self.send_to_all(server,data["txt"])
+		self.send_to_all(server,json.dumps(data))
 
 
 	#发送给指定id

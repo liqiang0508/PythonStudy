@@ -49,7 +49,14 @@
 
   function onMessage(evt)
   {
-    writeToScreen(evt.data + '\n');
+    var data = JSON.parse(evt.data)
+    var funcName = data["funcName"]
+    console.log(data)
+    if (funcName=="chatText")
+    {
+        writeToScreen(data["txt"] + '\n');
+    }
+    
   }
 
   function onError(evt)
