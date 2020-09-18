@@ -3,11 +3,11 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-07-03 14:20:17
- * @LastEditTime: 2020-09-18 15:53:49
+ * @LastEditTime: 2020-09-18 16:51:28
  */
 import 'package:flutter/material.dart';
 // import 'package:english_words/english_words.dart';
-import "SecondPage.dart";
+import "pages/SecondPage.dart";
 
 void main() {
   runApp(MyApp());
@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       // title: 'Welcome to Flutter',
       debugShowCheckedModeBanner: false,
       home: Home(),
+      routes: {"/SecondPage": (context) => SecondPage()}, //路由配置
     );
   }
 }
@@ -67,10 +68,54 @@ class _HomePage extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return
         // title: 'Welcome to Flutter',
 
-        home: new Scaffold(
+        Scaffold(
+      drawer: Drawer(
+          child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: UserAccountsDrawerHeader(
+                    accountEmail: Text(
+                      "xxxx@qq.com",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    accountName: Text("Lee", style: TextStyle(fontSize: 20)),
+                    currentAccountPicture: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2271338977,1611087163&fm=26&gp=0.jpg"))),
+              )
+            ],
+          ),
+          ListTile(
+            title: Text("我的空间"),
+            leading: Icon(Icons.home),
+            onTap: () {
+              print("点击我的空间");
+            },
+          ),
+          Divider(),
+          ListTile(
+            title: Text("设置"),
+            leading: Icon(Icons.settings),
+            onTap: () {
+              print("点击了设置");
+            },
+          ),
+          Divider(),
+          ListTile(
+            title: Text("用户中心"),
+            leading: Icon(Icons.people),
+            onTap: () {
+              print("点击用户中心");
+            },
+          ),
+          Divider(),
+        ],
+      )),
       appBar: new AppBar(
         title: new Text('Welcome to Flutter'),
         centerTitle: true,
@@ -81,7 +126,7 @@ class _HomePage extends State<Home> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Login",
+              "Welcome",
               style: TextStyle(fontSize: 30),
             ),
             SizedBox(
@@ -114,14 +159,17 @@ class _HomePage extends State<Home> {
               onPressed: () {
                 print("login");
 
-                Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return SecondPage();
-                }));
+                // 第一种跳转界面
+                // Navigator.push(context, MaterialPageRoute(builder: (_) {
+                //   return SecondPage();
+                // }));
+                // 第二种跳转界面  需要在配置 routes
+                Navigator.pushNamed(context, "/SecondPage");
               },
             )
           ],
         ),
       )),
-    ));
+    );
   }
 }
