@@ -3,7 +3,7 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-07-03 14:20:17
- * @LastEditTime: 2020-09-18 13:57:09
+ * @LastEditTime: 2020-09-18 15:53:49
  */
 import 'package:flutter/material.dart';
 // import 'package:english_words/english_words.dart';
@@ -34,7 +34,6 @@ class Home extends StatefulWidget {
 class _HomePage extends State<Home> {
   // 弹出对话框
   final TextEditingController _controller = new TextEditingController();
-  int _counter = 0;
 
   Future<bool> showDeleteConfirmDialog1() {
     return showDialog<bool>(
@@ -82,14 +81,14 @@ class _HomePage extends State<Home> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              this._counter.toString(),
-              style: TextStyle(fontSize: 25),
+              "Login",
+              style: TextStyle(fontSize: 30),
             ),
             SizedBox(
-              height: 15,
+              height: 25,
             ),
             TextField(
-              controller: _controller,
+              // controller: _controller,
               decoration: new InputDecoration(
                   // helperText: '请输入你的账号',
                   hintText: '请输入账号',
@@ -99,6 +98,7 @@ class _HomePage extends State<Home> {
               height: 15,
             ),
             TextField(
+              obscureText: true, //输入密码显示*********
               controller: _controller,
               decoration: new InputDecoration(
                   // helperText: '请输入你的账号',
@@ -113,9 +113,7 @@ class _HomePage extends State<Home> {
               child: Text("登录"),
               onPressed: () {
                 print("login");
-                setState(() {
-                  this._counter++;
-                });
+
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return SecondPage();
                 }));
