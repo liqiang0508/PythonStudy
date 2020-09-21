@@ -3,7 +3,7 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-09-21 14:48:16
- * @LastEditTime: 2020-09-21 15:06:02
+ * @LastEditTime: 2020-09-21 15:24:46
  */
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String _pwd = ""; //密码
   String _account = "";
-
+  bool passwordVisible = false;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -43,15 +43,28 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: '请输入账号',
                   labelText: "请输入账号",
                   icon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-
+                  enabledBorder: OutlineInputBorder(
+                      //没选中颜色
                       ///设置边框四个角的弧度
                       borderRadius: BorderRadius.all(Radius.circular(10)),
 
                       ///用来配置边框的样式
                       borderSide: BorderSide(
                         ///设置边框的颜色
-                        // color: Colors.red,
+                        color: Colors.black12,
+
+                        ///设置边框的粗细
+                        width: 2.0,
+                      )),
+                  focusedBorder: OutlineInputBorder(
+                      //选中颜色
+                      ///设置边框四个角的弧度
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+
+                      ///用来配置边框的样式
+                      borderSide: BorderSide(
+                        ///设置边框的颜色
+                        color: Colors.blue,
 
                         ///设置边框的粗细
                         width: 2.0,
@@ -61,18 +74,45 @@ class _LoginPageState extends State<LoginPage> {
               height: 15,
             ),
             TextField(
-              obscureText: true, //输入密码显示*********
+              obscureText: this.passwordVisible, //输入密码显示*********
               // controller: _controller,
               onChanged: (value) {
                 this._pwd = value;
               },
+              // cursorColor: Colors.pink,//光标颜色
               keyboardType: TextInputType.number,
               decoration: new InputDecoration(
                 // helperText: '请输入你的账号',
                 hintText: '请输入密码',
                 labelText: "请输入密码",
                 icon: Icon(Icons.lock),
-                border: OutlineInputBorder(
+                suffixIcon: IconButton(
+                    icon: Icon(
+                      //根据passwordVisible状态显示不同的图标
+                      passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      color: Theme.of(context).primaryColorDark,
+                    ),
+                    onPressed: () {
+                      //更新状态控制密码显示或隐藏
+                      setState(() {
+                        passwordVisible = !passwordVisible;
+                      });
+                    }),
+                enabledBorder: OutlineInputBorder(
+                    //没选中颜色
+                    ///设置边框四个角的弧度
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+
+                    ///用来配置边框的样式
+                    borderSide: BorderSide(
+                      ///设置边框的颜色
+                      color: Colors.black12,
+
+                      ///设置边框的粗细
+                      width: 2.0,
+                    )),
+                focusedBorder: OutlineInputBorder(
+                    //选中颜色
 
                     ///设置边框四个角的弧度
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -80,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                     ///用来配置边框的样式
                     borderSide: BorderSide(
                       ///设置边框的颜色
-                      color: Colors.black,
+                      color: Colors.blue,
 
                       ///设置边框的粗细
                       width: 2.0,
