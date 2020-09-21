@@ -3,11 +3,12 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-07-03 14:20:17
- * @LastEditTime: 2020-09-18 16:51:28
+ * @LastEditTime: 2020-09-21 14:51:49
  */
 import 'package:flutter/material.dart';
 // import 'package:english_words/english_words.dart';
 import "pages/SecondPage.dart";
+import "pages/LoginPage.dart";
 
 void main() {
   runApp(MyApp());
@@ -20,7 +21,10 @@ class MyApp extends StatelessWidget {
       // title: 'Welcome to Flutter',
       debugShowCheckedModeBanner: false,
       home: Home(),
-      routes: {"/SecondPage": (context) => SecondPage()}, //路由配置
+      routes: {
+        "/SecondPage": (context) => SecondPage(),
+        "/LoginPage": (context) => LoginPage(),
+      }, //路由配置
     );
   }
 }
@@ -120,56 +124,7 @@ class _HomePage extends State<Home> {
         title: new Text('Welcome to Flutter'),
         centerTitle: true,
       ),
-      body: Center(
-          child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Welcome",
-              style: TextStyle(fontSize: 30),
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            TextField(
-              // controller: _controller,
-              decoration: new InputDecoration(
-                  // helperText: '请输入你的账号',
-                  hintText: '请输入账号',
-                  icon: Icon(Icons.text_fields)),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            TextField(
-              obscureText: true, //输入密码显示*********
-              controller: _controller,
-              decoration: new InputDecoration(
-                  // helperText: '请输入你的账号',
-                  hintText: '请输入密码',
-                  icon: Icon(Icons.lock)),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            RaisedButton(
-              color: Colors.blue,
-              child: Text("登录"),
-              onPressed: () {
-                print("login");
-
-                // 第一种跳转界面
-                // Navigator.push(context, MaterialPageRoute(builder: (_) {
-                //   return SecondPage();
-                // }));
-                // 第二种跳转界面  需要在配置 routes
-                Navigator.pushNamed(context, "/SecondPage");
-              },
-            )
-          ],
-        ),
-      )),
+      body: LoginPage(),
     );
   }
 }
