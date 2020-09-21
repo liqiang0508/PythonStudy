@@ -3,7 +3,7 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-09-21 14:48:16
- * @LastEditTime: 2020-09-21 15:24:46
+ * @LastEditTime: 2020-09-21 15:36:55
  */
 import 'package:flutter/material.dart';
 
@@ -128,21 +128,27 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(
-              height: 15,
+              height: 55,
             ),
-            RaisedButton(
-              color: Colors.blue,
-              child: Text("登录"),
-              onPressed: () {
-                print("login" + this._account + ":" + this._pwd);
+            Container(
+              width: 250,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                    // side: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(50))),
+                color: Colors.blue,
+                child: Text("登录"),
+                onPressed: () {
+                  print("login" + this._account + ":" + this._pwd);
 
-                // 第一种跳转界面
-                // Navigator.push(context, MaterialPageRoute(builder: (_) {
-                //   return SecondPage();
-                // }));
-                // 第二种跳转界面  需要在配置 routes
-                // Navigator.pushNamed(context, "/SecondPage");
-              },
+                  // 第一种跳转界面
+                  // Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  //   return SecondPage();
+                  // }));
+                  // 第二种跳转界面  需要在配置 routes
+                  Navigator.pushNamed(context, "/SecondPage");
+                },
+              ),
             )
           ],
         ),
