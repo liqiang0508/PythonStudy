@@ -3,7 +3,7 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-07-03 14:20:17
- * @LastEditTime: 2020-09-21 14:51:49
+ * @LastEditTime: 2020-09-21 16:26:22
  */
 import 'package:flutter/material.dart';
 // import 'package:english_words/english_words.dart';
@@ -101,7 +101,10 @@ class _HomePage extends State<Home> {
               print("点击我的空间");
             },
           ),
-          Divider(),
+          Divider(
+            thickness: 1,
+            color: Colors.black,
+          ),
           ListTile(
             title: Text("设置"),
             leading: Icon(Icons.settings),
@@ -109,7 +112,10 @@ class _HomePage extends State<Home> {
               print("点击了设置");
             },
           ),
-          Divider(),
+          Divider(
+            thickness: 1,
+            color: Colors.black,
+          ),
           ListTile(
             title: Text("用户中心"),
             leading: Icon(Icons.people),
@@ -117,7 +123,10 @@ class _HomePage extends State<Home> {
               print("点击用户中心");
             },
           ),
-          Divider(),
+          Divider(
+            thickness: 1,
+            color: Colors.black,
+          ),
         ],
       )),
       appBar: new AppBar(

@@ -3,9 +3,12 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-09-21 14:48:16
- * @LastEditTime: 2020-09-21 15:36:55
+ * @LastEditTime: 2020-09-21 16:22:03
  */
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+
+import 'SecondPage.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -146,7 +149,12 @@ class _LoginPageState extends State<LoginPage> {
                   //   return SecondPage();
                   // }));
                   // 第二种跳转界面  需要在配置 routes
-                  Navigator.pushNamed(context, "/SecondPage");
+                  // Navigator.pushNamed(context, "/SecondPage");
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          child: SecondPage()));
                 },
               ),
             )
