@@ -3,7 +3,7 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-09-17 15:09:18
- * @LastEditTime: 2020-09-22 11:20:22
+ * @LastEditTime: 2020-09-22 11:32:55
  */
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -62,20 +62,24 @@ class _SecondPageState extends State<SecondPage> {
         body: Container(
             child: Column(
           children: <Widget>[
-            // ListView(
-            //     scrollDirection: Axis.vertical,
-            //     children: listData
-            //         .map((e) => Column(
-            //               children: <Widget>[
-            //                 ListTile(
-            //                     title: Text(e["name"]),
-            //                     leading: Image.network(e["imgurl"])),
-            //                 Divider(
-            //                   thickness: 1,
-            //                 )
-            //               ],
-            //             ))
-            //         .toList()),
+            Container(
+              child: ListView(
+                  shrinkWrap: true,
+                  // physics: NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  children: listData
+                      .map((e) => Column(
+                            children: <Widget>[
+                              ListTile(
+                                  title: Text(e["name"]),
+                                  leading: Image.network(e["imgurl"])),
+                              // Divider(
+                              //   thickness: 1,
+                              // )
+                            ],
+                          ))
+                      .toList()),
+            ),
             Text(this._batteryLevel),
             RaisedButton(
               child: Text("获取电量"),
