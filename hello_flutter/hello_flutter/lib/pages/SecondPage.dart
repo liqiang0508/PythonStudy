@@ -3,10 +3,13 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-09-17 15:09:18
- * @LastEditTime: 2020-09-22 11:32:55
+ * @LastEditTime: 2020-09-22 16:07:11
  */
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_plugin_test/flutter_plugin_test.dart';
 
 final listData = [
   {
@@ -49,9 +52,9 @@ class SecondPage extends StatefulWidget {
 }
 
 class _SecondPageState extends State<SecondPage> {
-  static const platform = const MethodChannel('samples.flutter.io/battery');
+  // static const platform = const MethodChannel('samples.flutter.io/battery');
   String _batteryLevel = 'Unknown battery level.';
-
+  String _platformVersion = 'Unknown';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,32 +76,48 @@ class _SecondPageState extends State<SecondPage> {
                               ListTile(
                                   title: Text(e["name"]),
                                   leading: Image.network(e["imgurl"])),
-                              // Divider(
-                              //   thickness: 1,
-                              // )
+                              Divider(
+                                thickness: 1,
+                              )
                             ],
                           ))
                       .toList()),
             ),
             Text(this._batteryLevel),
+            Text(this._platformVersion),
             RaisedButton(
               child: Text("获取电量"),
               onPressed: _getBatteryLevel,
+            ),
+            RaisedButton(
+              child: Text("获取系统"),
+              onPressed: _getPlatformState,
             )
           ],
         )));
   }
 
+  Future<void> _getPlatformState() async {
+    String platformVersion;
+
+    try {
+      platformVersion = await FlutterPluginTest.platformVersion;
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+    setState(() {
+      _platformVersion = platformVersion;
+    });
+  }
+
   Future<Null> _getBatteryLevel() async {
     String batteryLevel;
     try {
-      final int result = await platform.invokeMethod('getBatteryLevel');
+      final double result = await FlutterPluginTest.battery;
       batteryLevel = 'Battery level at $result % .';
     } on PlatformException catch (e) {
       batteryLevel = "Failed to get battery level: '${e.message}'.";
     }
-
-    print(batteryLevel);
     setState(() {
       _batteryLevel = batteryLevel;
     });
