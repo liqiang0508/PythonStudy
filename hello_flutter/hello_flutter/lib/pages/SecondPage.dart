@@ -3,7 +3,7 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-09-17 15:09:18
- * @LastEditTime: 2020-09-22 17:36:30
+ * @LastEditTime: 2020-09-23 14:09:11
  */
 
 import 'package:flutter/material.dart';
@@ -54,6 +54,7 @@ class _SecondPageState extends State<SecondPage> {
   // static const platform = const MethodChannel('samples.flutter.io/battery');
   String _batteryLevel = 'Unknown battery level.';
   String _platformVersion = 'Unknown';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,22 +66,25 @@ class _SecondPageState extends State<SecondPage> {
             child: Column(
           children: <Widget>[
             Container(
-              child: ListView(
-                  shrinkWrap: true,
-                  // physics: NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  children: listData
-                      .map((e) => Column(
-                            children: <Widget>[
-                              ListTile(
-                                  title: Text(e["name"]),
-                                  leading: Image.network(e["imgurl"])),
-                              Divider(
-                                thickness: 1,
-                              )
-                            ],
-                          ))
-                      .toList()),
+              child: RefreshIndicator(
+                onRefresh: _refresh,
+                child: ListView(
+                    shrinkWrap: true,
+                    // physics: NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    children: listData
+                        .map((e) => Column(
+                              children: <Widget>[
+                                ListTile(
+                                    title: Text(e["name"]),
+                                    leading: Image.network(e["imgurl"])),
+                                Divider(
+                                  thickness: 1,
+                                )
+                              ],
+                            ))
+                        .toList()),
+              ),
             ),
             Text(this._batteryLevel),
             Text(this._platformVersion),
@@ -94,6 +98,10 @@ class _SecondPageState extends State<SecondPage> {
             )
           ],
         )));
+  }
+
+  Future _refresh() async {
+    print("下拉刷新");
   }
 
   Future<void> _getPlatformState() async {

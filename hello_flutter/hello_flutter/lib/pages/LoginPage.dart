@@ -20,7 +20,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String _pwd = ""; //密码
   String _account = "";
-  bool passwordVisible = false;
+  bool passwordVisible = true;
   @override
   Widget build(BuildContext context) {
     return Center(
