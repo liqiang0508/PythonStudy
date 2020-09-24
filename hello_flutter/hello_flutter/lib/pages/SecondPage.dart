@@ -3,7 +3,7 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-09-17 15:09:18
- * @LastEditTime: 2020-09-23 14:09:11
+ * @LastEditTime: 2020-09-24 14:00:55
  */
 
 import 'package:flutter/material.dart';
@@ -130,30 +130,3 @@ class _SecondPageState extends State<SecondPage> {
     });
   }
 }
-// : Column(
-//           children: <Widget>[
-//             Container(
-//               height: 50,
-//               child: ListView(
-//                   scrollDirection: Axis.vertical,
-//                   children: listData
-//                       .map((e) => Column(
-//                             children: <Widget>[
-//                               ListTile(
-//                                   title: Text(e["name"]),
-//                                   leading: Image.network(e["imgurl"])),
-//                               Divider(
-//                                 thickness: 1,
-//                               )
-//                             ],
-//                           ))
-//                       .toList()),
-//             ),
-//             Text(this._batteryLevel),
-//             RaisedButton(
-//               child: Text("获取电量"),
-//               onPressed: _getBatteryLevel,
-//             )
-//           ],
-//         ),
-//       ),
