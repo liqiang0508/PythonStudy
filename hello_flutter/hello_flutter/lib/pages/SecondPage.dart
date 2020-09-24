@@ -3,7 +3,7 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-09-17 15:09:18
- * @LastEditTime: 2020-09-24 14:00:55
+ * @LastEditTime: 2020-09-24 16:22:25
  */
 
 import 'package:flutter/material.dart';
@@ -95,7 +95,12 @@ class _SecondPageState extends State<SecondPage> {
             RaisedButton(
               child: Text("获取系统"),
               onPressed: _getPlatformState,
-            )
+            ),
+            MyButton(
+                title: "我是标题",
+                onPressCall: () {
+                  print("onpresscalll");
+                }),
           ],
         )));
   }
@@ -130,3 +135,50 @@ class _SecondPageState extends State<SecondPage> {
     });
   }
 }
+
+class MyButton extends StatefulWidget {
+  MyButton({Key key, this.title = "", this.onPressCall}) : super(key: key);
+  final onPressCall;
+  final title;
+
+  @override
+  _MyButtonState createState() =>
+      _MyButtonState(title: this.title, onPressCall: this.onPressCall);
+}
+
+class _MyButtonState extends State<MyButton> {
+  var onPressCall;
+  String title;
+
+  _MyButtonState({this.title, this.onPressCall});
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      child: Text(this.title),
+      onPressed: () {
+        print("mybtn==");
+        if (this.onPressCall != null) {
+          this.onPressCall();
+        }
+      },
+    );
+  }
+}
+
+// class MyButton extends StatelessWidget {
+//   const MyButton({this.title = "", this.onPressCall});
+//   final title;
+//   final onPressCall;
+//   @override
+//   Widget build(BuildContext context) {
+//     return RaisedButton(
+//       child: Text(this.title),
+//       onPressed: () {
+//         print("mybtn==");
+//         if (this.onPressCall != null) {
+//           this.onPressCall();
+//         }
+//       },
+//     );
+//   }
+// }

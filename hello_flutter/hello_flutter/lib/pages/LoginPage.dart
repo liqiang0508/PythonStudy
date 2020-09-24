@@ -3,7 +3,7 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-09-21 14:48:16
- * @LastEditTime: 2020-09-24 14:24:57
+ * @LastEditTime: 2020-09-24 14:28:41
  */
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -21,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   String _pwd = ""; //密码
   String _account = "";
   bool passwordVisible = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
