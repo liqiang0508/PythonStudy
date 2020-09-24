@@ -3,7 +3,7 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-09-17 15:09:18
- * @LastEditTime: 2020-09-24 16:22:25
+ * @LastEditTime: 2020-09-24 16:36:48
  */
 
 import 'package:flutter/material.dart';
@@ -142,23 +142,18 @@ class MyButton extends StatefulWidget {
   final title;
 
   @override
-  _MyButtonState createState() =>
-      _MyButtonState(title: this.title, onPressCall: this.onPressCall);
+  _MyButtonState createState() => _MyButtonState();
 }
 
 class _MyButtonState extends State<MyButton> {
-  var onPressCall;
-  String title;
-
-  _MyButtonState({this.title, this.onPressCall});
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
-      child: Text(this.title),
+      child: Text(widget.title),
       onPressed: () {
         print("mybtn==");
-        if (this.onPressCall != null) {
-          this.onPressCall();
+        if (widget.onPressCall != null) {
+          widget.onPressCall();
         }
       },
     );
