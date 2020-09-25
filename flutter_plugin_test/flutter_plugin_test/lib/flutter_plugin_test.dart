@@ -16,4 +16,8 @@ class FlutterPluginTest {
     final double version = await _channel.invokeMethod('getBattery');
     return version;
   }
+
+  static Future<void> get sayHello async {
+    print("ada");
+  }
 }

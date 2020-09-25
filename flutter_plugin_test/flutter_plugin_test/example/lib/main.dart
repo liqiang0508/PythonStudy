@@ -15,11 +15,20 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-
+  static const MethodChannel _channel =
+      const MethodChannel('flutter_plugin_test2');
   @override
   void initState() {
     super.initState();
     initPlatformState();
+    _channel.setMethodCallHandler(_javaCallDart);
+  }
+
+  Future _javaCallDart(MethodCall call) {
+    print("_javaCallDart---------");
+    if (call.method == "sayhello") {
+      print("sayhello-----");
+    }
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.

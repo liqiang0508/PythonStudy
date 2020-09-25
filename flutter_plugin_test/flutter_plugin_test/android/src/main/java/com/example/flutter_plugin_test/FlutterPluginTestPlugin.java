@@ -7,8 +7,9 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Build;
 
-import androidx.annotation.NonNull;
+//import androidx.annotation.NonNull;
 
+import io.flutter.Log;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -23,12 +24,15 @@ public class FlutterPluginTestPlugin implements FlutterPlugin, MethodCallHandler
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
   private MethodChannel channel;
+  private MethodChannel channel2;
   private Context context;
   @Override
-  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+  public void onAttachedToEngine( FlutterPluginBinding flutterPluginBinding) {
     channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutter_plugin_test");
     channel.setMethodCallHandler(this);
     this.context = flutterPluginBinding.getApplicationContext();
+
+    channel2 =new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutter_plugin_test2");
   }
 
   // This static function is optional and equivalent to onAttachedToEngine. It supports the old
@@ -46,14 +50,18 @@ public class FlutterPluginTestPlugin implements FlutterPlugin, MethodCallHandler
   }
 
   @Override
-  public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+  public void onMethodCall( MethodCall call,  Result result) {
     if (call.method.equals("getPlatformVersion")) {
       result.success("Android " + android.os.Build.VERSION.RELEASE);
+        Log.i("lol","lol");
+        channel2.invokeMethod("sayhello",null);
+        Log.i("lol","lol2");
     }
     else if(call.method.equals("getBattery"))
     {
         double level = getBatteryLevel();
         result.success(level);
+
     }
     else {
       result.notImplemented();
@@ -61,7 +69,7 @@ public class FlutterPluginTestPlugin implements FlutterPlugin, MethodCallHandler
   }
 
   @Override
-  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+  public void onDetachedFromEngine( FlutterPluginBinding binding) {
     channel.setMethodCallHandler(null);
   }
 
