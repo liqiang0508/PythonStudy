@@ -3,10 +3,12 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-07-03 14:20:17
- * @LastEditTime: 2020-09-24 14:25:41
+ * @LastEditTime: 2020-10-14 16:57:38
  */
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 // import 'package:english_words/english_words.dart';
+import 'generated/l10n.dart';
 import "pages/SecondPage.dart";
 import "pages/LoginPage.dart";
 
@@ -18,6 +20,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       initialRoute: "/LoginPage",
       routes: {

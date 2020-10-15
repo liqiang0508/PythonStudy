@@ -3,12 +3,14 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-09-17 15:09:18
- * @LastEditTime: 2020-09-24 16:36:48
+ * @LastEditTime: 2020-10-15 09:33:29
  */
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_plugin_test/flutter_plugin_test.dart';
+import 'package:hello_flutter/generated/l10n.dart';
+import 'package:intl/intl.dart' as intl;
 
 final listData = [
   {
@@ -96,11 +98,35 @@ class _SecondPageState extends State<SecondPage> {
               child: Text("获取系统"),
               onPressed: _getPlatformState,
             ),
+            RaisedButton(
+              child: Text("改变语言->En"),
+              onPressed: () {
+                print("当前语言是" + intl.Intl.getCurrentLocale());
+                setState(() {
+                  S.load(Locale('en'));
+                });
+              },
+            ),
+            RaisedButton(
+              child: Text("改变语言->zh"),
+              onPressed: () {
+                print("当前语言是" + intl.Intl.getCurrentLocale());
+                setState(() {
+                  S.load(Locale('zh'));
+                });
+              },
+            ),
             MyButton(
                 title: "我是标题",
                 onPressCall: () {
                   print("onpresscalll");
                 }),
+            new Text(
+              S.of(context).pageHomeConfirm,
+            ),
+            new Text(
+              S.current.pageHomeConfirm, // If you don't have `context` to pass
+            ),
           ],
         )));
   }

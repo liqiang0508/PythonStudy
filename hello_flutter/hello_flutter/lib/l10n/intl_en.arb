@@ -1,0 +1,7 @@
+{
+    "pageHomeConfirm": "Confirm",
+    "pageHomeWelcome": "Welcome {name}",
+    "pageHomeWelcomeGender": "{gender, select, male {Hi man!} female {Hi woman!} other {Hi there!}}",
+    "pageHomeWelcomeRole": "{role, select, admin {Hi admin!} manager {Hi manager!} other {Hi visitor!}}",
+    "pageNotificationsCount": "{howMany, plural, one{1 message} other{{howMany} messages}}"
+}
