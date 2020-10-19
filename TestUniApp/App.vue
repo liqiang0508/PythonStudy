@@ -1,10 +1,19 @@
 <script>
+	import HttpHelper from "common/HttpHelper.js"
+	import VersionManager from "common/VersionManager.js"
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			var url = "http:www.baidu.com"
+			VersionManager.printlog()
+
+			//#ifdef APP-PLUS 
+				VersionManager.checkUpdate(url)
+			//#endif
 		},
 		onShow: function() {
 			console.log('App Show')
+			
 		},
 		onHide: function() {
 			console.log('App Hide')

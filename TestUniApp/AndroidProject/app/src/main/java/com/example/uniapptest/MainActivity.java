@@ -1,14 +1,19 @@
 package com.example.uniapptest;
 
-import androidx.appcompat.app.AppCompatActivity;
+
+import io.dcloud.PandoraEntry;
 
 import android.os.Bundle;
+import android.util.Log;
 
-public class MainActivity extends AppCompatActivity {
+import java.security.PublicKey;
 
+public class MainActivity extends PandoraEntry {
+
+    public String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        Log.i(TAG, "MainActivity oncreate");
     }
 }
