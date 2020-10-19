@@ -3,12 +3,13 @@
  * @version: 
  * @Author: Lee
  * @Date: 2020-09-21 14:48:16
- * @LastEditTime: 2020-09-24 14:28:41
+ * @LastEditTime: 2020-10-15 09:37:05
  */
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../widgets/DrawerPage.dart';
 import 'SecondPage.dart';
+import 'package:intl/intl.dart' as intl;
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -21,6 +22,12 @@ class _LoginPageState extends State<LoginPage> {
   String _pwd = ""; //密码
   String _account = "";
   bool passwordVisible = true;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(intl.Intl.getCurrentLocale());
+  }
 
   @override
   Widget build(BuildContext context) {
