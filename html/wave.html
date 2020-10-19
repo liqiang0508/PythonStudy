@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+	</body>
+	<script src="./js/wave.js?v=2"></script>
+	<style type="text/css">
+		#canvas {
+			position: absolute;
+			z-index: 0;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload = function() {
+
+			console.log("onload")
+			let audio = document.createElement("audio");
+			audio.volume = 1;
+			audio.autoplay = true;
+			audio.onended = () => {
+				audio.src = "https://api.uomg.com/api/rand.music?sort=热歌榜"
+			};
+			audio.onplay = () => {
+				$("#pause").removeClass("pause")
+			};
+			audio.onpause = () => {
+				$("#pause").addClass("pause")
+			};
+			audio.onended();
+		}
+	</script>
+</html>
