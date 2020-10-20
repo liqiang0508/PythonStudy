@@ -303,7 +303,7 @@
 		margin-top: 10rpx;
 		/* width: 80rpx; */
 		height: 80rpx;
-		font-size: 10px;
+		font-size: 25rpx;
 		word-break: keep-all;
 	}
 
@@ -329,7 +329,7 @@
 	.ScrollText {
 		/* margin-left: 0px; */
 		color: white;
-		font-size: 10px;
+		font-size: 10rpx;
 	}
 
 	.notice_text_right {
@@ -382,7 +382,7 @@
 
 	.new_goods_text {
 		margin-top: 10rpx;
-		font-size: 15px;
+		font-size: 38rpx;
 	}
 
 	.Price {

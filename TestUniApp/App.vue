@@ -4,9 +4,7 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
-			var url = "http:www.baidu.com"
-			VersionManager.printlog()
-
+			var url = "http://192.168.65.172/hotupversion/uniconfigrelease"
 			//#ifdef APP-PLUS 
 				VersionManager.checkUpdate(url)
 			//#endif

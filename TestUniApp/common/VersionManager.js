@@ -3,6 +3,10 @@ var VersionManager = {
 	finishCall: null
 }
 
+String.prototype.format = function() {
+  return [...arguments].reduce((p,c) => p.replace(/%s/,c), this);
+};
+
 let HttpHelper = require("./HttpHelper.js")
 
 VersionManager.printlog = function() {
@@ -17,6 +21,7 @@ VersionManager.callFinishWithCode = function(code, message) {
 }
 // code
 // 0 更新成功
+// 100 不需要更新
 // 1 拉取远程配置信息失败
 // 2 下载远程wgt失败
 // 3 install wgt失败
@@ -27,7 +32,9 @@ VersionManager.checkUpdate = function(url, progressCall, finishCall) {
 		HttpHelper.HttpGet(url, (data) => {
 			if (data) //拿到配置数据了
 			{
-
+				this.remoteData = data; //保存下远程配置
+				console.log(data)
+				this.compare()
 			} else { //失败
 				this.callFinishWithCode(1, "拉取远程配置信息失败")
 			}
@@ -36,18 +43,51 @@ VersionManager.checkUpdate = function(url, progressCall, finishCall) {
 
 
 }
-//显示更新弹框
-VersionManager.showUpdateModule = function(content, openUrl) {
-	uni.showModal({
-		title: '更新提示',
-		content: content ? content : '是否选择更新',
-		success: (showResult) => {
-			if (showResult.confirm) {
-				plus.runtime.openURL(openUrl);
-			}
-		}
-	})
+//本地版本号
+VersionManager.getLocalVersion = function() {
+	var value = 100
+	// try {
+	//     value= uni.getStorageSync('storage_key');
+	//     if (value) {
+	//         console.log("getLocalVersion",value);
+	//     }
+	// } catch (e) {
+	//     // error
+	// 	console.log("getLocalVersion错误")
+	// }
+
+	return value
 }
+
+//对比版本
+VersionManager.compare = function() {
+	console.log("VersionManager.compare*****")
+	
+	var remoteScritVersion = this.remoteData["scriptVersion"]
+	var localVersion = this.getLocalVersion()
+	console.log(remoteScritVersion,localVersion)
+	if (Number(remoteScritVersion) != Number(localVersion)) {
+		console.log("需要更新")
+		var wgturl = (this.remoteData["baseUrl"]).format(remoteScritVersion)+".wgt"
+		console.log("需要更新1",wgturl)
+		this.downWgt(wgturl)
+	} else {
+		console.log("不需要更新")
+		this.callFinishWithCode(100, "不需要更新")
+		
+	}
+
+}
+//强制更新弹框
+VersionManager.showUpdateModule = function(content, openUrl) {
+
+	plus.nativeUI.alert("发现新版本，去下载安装！", () => {
+		plus.runtime.openURL(openUrl);
+		plus.runtime.quit()
+	});
+}
+
+
 VersionManager.downWgt = function(url) {
 	const downloadTask = uni.downloadFile({
 		url: url,
@@ -64,7 +104,7 @@ VersionManager.downWgt = function(url) {
 
 	});
 	downloadTask.onProgressUpdate(function(res) {
-		console.og('已下载' + res.progress + '%');
+		console.log('已下载' + res.progress + '%');
 		if (this.progressCall) {
 			this.progressCall(res.progress)
 		}
@@ -81,6 +121,9 @@ VersionManager.installWgt = function(path) {
 	plus.runtime.install(path, {}, function() {
 		plus.nativeUI.closeWaiting();
 		console.log("安装wgt文件成功！");
+		var remoteScritVersion = this.remoteData["scriptVersion"]
+		// uni.setStorageSync('storage_key',remoteScritVersion.toString())
+		// console.log(uni.getStorageSync('storage_key')) 
 		plus.nativeUI.alert("应用资源更新完成！", () => {
 			this.restartApp()
 		});
