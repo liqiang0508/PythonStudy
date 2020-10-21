@@ -1,6 +1,6 @@
 //一些通用的辅助函数
 var GlobalFun = {}
-
+GlobalFun.scriptVersion = 100;//本地脚本版本号
 GlobalFun.LOL = function(){
 	console.log("德玛西亚")
 }

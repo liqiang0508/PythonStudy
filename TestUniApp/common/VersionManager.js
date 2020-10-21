@@ -23,6 +23,7 @@ VersionManager.callFinishWithCode = function(code, message) {
 // code
 // 0 更新成功
 // 100 不需要更新
+// 101 更新成功
 // 1 拉取远程配置信息失败
 // 2 下载远程wgt失败
 // 3 install wgt失败
@@ -70,14 +71,14 @@ VersionManager.binCheck  = function() {
 }
 //本地版本号
 VersionManager.getLocalVersion = function() {
-	var value = 101
+	var value = GlobalFun.scriptVersion
 	try {
 
 		value = uni.getStorageSync("storage_key");
 		if (value) {
 
 		} else {
-			value = 101
+			value =  GlobalFun.scriptVersion
 		}
 		return value
 	} catch (e) {
@@ -132,7 +133,7 @@ VersionManager.downWgt = function(url) {
 		}
 
 	});
-	downloadTask.onProgressUpdate(function(res) {
+	downloadTask.onProgressUpdate((res)=>{
 		// console.log('已下载' + res.progress + '%');
 		if (this.progressCall) {
 			this.progressCall(res)
@@ -153,13 +154,11 @@ VersionManager.installWgt = function(path) {
 		console.log("安装wgt文件成功！");
 		var remoteScritVersion = this.remoteData["scriptVersion"]
 		uni.setStorageSync('storage_key', remoteScritVersion.toString())
-		plus.nativeUI.alert("应用资源更新完成！", () => {
-			this.restartApp()
-		});
+		this.callFinishWithCode(101, "更新成功")
 	}, function(e) {
 		plus.nativeUI.closeWaiting();
 		console.log("安装wgt文件失败[" + e.code + "]：" + e.message);
-		plus.nativeUI.alert("安装失败[" + e.code + "]：" + e.message);
+		// plus.nativeUI.alert("安装失败[" + e.code + "]：" + e.message);
 		this.callFinishWithCode(3, "install wgt失败")
 	});
 	// #endif
