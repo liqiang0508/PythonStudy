@@ -24,9 +24,11 @@ VersionManager.callFinishWithCode = function(code, message) {
 // 0 更新成功
 // 100 不需要更新
 // 101 更新成功
+
 // 1 拉取远程配置信息失败
 // 2 下载远程wgt失败
 // 3 install wgt失败
+// 4 2进制版本不支持热更新
 VersionManager.checkUpdate = function(url, progressCall, finishCall) {
 	console.log("VersionManager.checkUpdate*****")
 	this.progressCall = progressCall
@@ -37,14 +39,22 @@ VersionManager.checkUpdate = function(url, progressCall, finishCall) {
 		{
 			this.remoteData = data; //保存下远程配置
 			console.log(data)
-			if (this.binCheck())//判断是否属于强制更新的版本
+			if (this.forceUpdate())//判断是否属于强制更新的版本
 			{
 				console.log("强制更新")
 				this.showUpdateModule("发现新版本","https://www.baidu.com/")
 			}else//热更新
 			{
 				console.log("走热更新流程")
-				this.compare()
+				if(this.binCheck())
+				{
+					this.compare()
+				}
+				else
+				{
+					this.callFinishWithCode(4, "2进制版本不支持热更新")
+				}
+				
 			}
 			
 		} else { //失败
@@ -56,12 +66,25 @@ VersionManager.checkUpdate = function(url, progressCall, finishCall) {
 
 }
 //2进制版本对比，判断当前版本是否是强制更新版本
-VersionManager.binCheck  = function() {
-	console.log("binchenck****")
+VersionManager.forceUpdate  = function() {
+	console.log("检测是否强制更新****")
 	
 	var curVersion = plus.runtime.version//当前版本号
-	console.log("curVersion == ",curVersion)
+	console.log("当前2进制版本 == ",curVersion)
 	var b = GlobalFun.isContain(curVersion,this.remoteData["forcedBinaryVersions"])
+	if (b)
+	{
+		return true
+	}
+	return false
+	
+}
+
+//2进制版本对比，判断当前版本是否支持热更新
+VersionManager.binCheck  = function() {
+	console.log("检测是否支持热更新****")
+	var curVersion = plus.runtime.version//当前版本号
+	var b = GlobalFun.isContain(curVersion,this.remoteData["supportBinarys"])
 	if (b)
 	{
 		return true

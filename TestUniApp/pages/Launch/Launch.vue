@@ -58,9 +58,8 @@
 
 			},
 			goMain: function() {
-				console.log("goMain")
+				console.log("go index")
 				setTimeout(()=>{
-					console.log("跳转")
 					uni.switchTab({
 						url:"../index/index"
 					})
