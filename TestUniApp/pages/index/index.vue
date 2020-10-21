@@ -45,7 +45,9 @@
 
 			</view>
 
+
 			<text class="notice_text_right">></text>
+			
 
 		</view>
 
@@ -60,7 +62,7 @@
 				<image mode="aspectFit" class="new_goods_img" :src=item.imgsrc></image>
 				<text class="new_goods_text">{{item.name}}</text>
 				<view class="Price">
-					<text style=" font-size: 15px; margin-left: 15rpx;">¥{{item.price}}</text>
+					<text style=" font-size: 38rpx; margin-left: 15rpx;">¥{{item.price}}</text>
 					<image @tap.stop="ToShopCar(item)" src="../../static/logo.png" style="margin-right: 15rpx; width: 50rpx; height: 50rpx;"></image>
 				</view>
 			</view>
@@ -307,7 +309,7 @@
 		word-break: keep-all;
 	}
 
-	.notice {
+	.notice {//滚动文字
 		width: 100%;
 		height: 55rpx;
 		background-color: rgba(255, 0, 0, 0.5);
@@ -316,45 +318,44 @@
 		align-items: center;
 	}
 
-	.notice_text {
-		margin-left: 10rpx;
+	.notice_text {//公告
+		margin-left: 5px;
 		color: white;
-		font-size: 2rpx;
+		font-size: 20rpx;
 
 	}
 	/* image:hover{
 		opacity: 0.5;
 	} */
 
-	.ScrollText {
-		/* margin-left: 0px; */
+	.ScrollText { 
 		color: white;
-		font-size: 10rpx;
+		font-size: 25rpx;
+		width: 100%;
 	}
 
 	.notice_text_right {
-		position: absolute;
-		right: 10rpx;
+		
 		color: white;
 	}
 
 	._notice {
 		display: flex;
 		flex-direction: row;
+		flex: 1;
 		align-items: center;
-		margin-left: 15rpx;
-		width: 600rpx;
-		background: rgba(255, 0, 0, 0.25);
+		margin-left: 5px;
+		margin-right: 5px;
+		background: rgba(124, 10, 255, 0.2);
 		height: 40rpx;
 		border-radius: 6rpx;
-		overflow: hidden;
 		box-sizing: border-box;
 
 	}
 
 	.new_goods {
 		width: 100%;
-		/* background: #cc0000; */
+	/* 	background: #cc0000; */
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
@@ -390,7 +391,7 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-		color: rgba(255, 0, 0, 1);
+		color: rgba(255, 0, 4, 1.0);
 		margin-top: 50rpx;
 
 
