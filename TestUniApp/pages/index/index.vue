@@ -181,7 +181,7 @@
 
 		},
 		onShow() {
-			console.log("show");
+			console.log("index show");
 			// 初始化一个动画
 			this.ScrollText = "果蔬自由-您身边的菜市 快捷服务，配送到家"
 

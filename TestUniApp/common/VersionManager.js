@@ -4,10 +4,11 @@ var VersionManager = {
 }
 
 String.prototype.format = function() {
-  return [...arguments].reduce((p,c) => p.replace(/%s/,c), this);
+	return [...arguments].reduce((p, c) => p.replace(/%s/, c), this);
 };
 
 let HttpHelper = require("./HttpHelper.js")
+let GlobalFun = require("./GlobalFun.js")
 
 VersionManager.printlog = function() {
 	console.log("VersionManager.printlog*****")
@@ -29,66 +30,94 @@ VersionManager.checkUpdate = function(url, progressCall, finishCall) {
 	console.log("VersionManager.checkUpdate*****")
 	this.progressCall = progressCall
 	this.finishCall = finishCall,
-		HttpHelper.HttpGet(url, (data) => {
-			if (data) //拿到配置数据了
+	
+	HttpHelper.HttpGet(url, (data) => {
+		if (data) //拿到配置数据了
+		{
+			this.remoteData = data; //保存下远程配置
+			console.log(data)
+			if (this.binCheck())//判断是否属于强制更新的版本
 			{
-				this.remoteData = data; //保存下远程配置
-				console.log(data)
+				console.log("强制更新")
+				this.showUpdateModule("发现新版本","https://www.baidu.com/")
+			}else//热更新
+			{
+				console.log("走热更新流程")
 				this.compare()
-			} else { //失败
-				this.callFinishWithCode(1, "拉取远程配置信息失败")
 			}
+			
+		} else { //失败
+			this.callFinishWithCode(1, "拉取远程配置信息失败")
+		}
 
-		})
+	})
 
 
 }
+//2进制版本对比，判断当前版本是否是强制更新版本
+VersionManager.binCheck  = function() {
+	console.log("binchenck****")
+	
+	var curVersion = plus.runtime.version//当前版本号
+	console.log("curVersion == ",curVersion)
+	var b = GlobalFun.isContain(curVersion,this.remoteData["forcedBinaryVersions"])
+	if (b)
+	{
+		return true
+	}
+	return false
+	
+}
 //本地版本号
 VersionManager.getLocalVersion = function() {
-	var value = 100
-	// try {
-	//     value= uni.getStorageSync('storage_key');
-	//     if (value) {
-	//         console.log("getLocalVersion",value);
-	//     }
-	// } catch (e) {
-	//     // error
-	// 	console.log("getLocalVersion错误")
-	// }
+	var value = 101
+	try {
 
-	return value
+		value = uni.getStorageSync("storage_key");
+		if (value) {
+
+		} else {
+			value = 101
+		}
+		return value
+	} catch (e) {
+		// error
+		console.log("getLocalVersion错误")
+		return value
+	}
+
+
 }
 
 //对比版本
 VersionManager.compare = function() {
 	console.log("VersionManager.compare*****")
-	
 	var remoteScritVersion = this.remoteData["scriptVersion"]
 	var localVersion = this.getLocalVersion()
-	console.log(remoteScritVersion,localVersion)
+	console.log("远程版本号===", remoteScritVersion)
+	console.log("本地版本号===", localVersion)
 	if (Number(remoteScritVersion) != Number(localVersion)) {
-		console.log("需要更新")
-		var wgturl = (this.remoteData["baseUrl"]).format(remoteScritVersion)+".wgt"
-		console.log("需要更新1",wgturl)
+		var wgturl = (this.remoteData["baseUrl"]).format(remoteScritVersion) + ".wgt"
+		console.log("需要更新", wgturl)
 		this.downWgt(wgturl)
 	} else {
-		console.log("不需要更新")
 		this.callFinishWithCode(100, "不需要更新")
-		
+
 	}
 
 }
 //强制更新弹框
 VersionManager.showUpdateModule = function(content, openUrl) {
 
-	plus.nativeUI.alert("发现新版本，去下载安装！", () => {
+	plus.nativeUI.alert(content, () => {
 		plus.runtime.openURL(openUrl);
-		plus.runtime.quit()
+		// plus.runtime.quit()
 	});
 }
 
 
 VersionManager.downWgt = function(url) {
+
 	const downloadTask = uni.downloadFile({
 		url: url,
 		success: (res) => {
@@ -104,9 +133,9 @@ VersionManager.downWgt = function(url) {
 
 	});
 	downloadTask.onProgressUpdate(function(res) {
-		console.log('已下载' + res.progress + '%');
+		// console.log('已下载' + res.progress + '%');
 		if (this.progressCall) {
-			this.progressCall(res.progress)
+			this.progressCall(res)
 		}
 
 	})
@@ -117,13 +146,13 @@ VersionManager.downWgt = function(url) {
 //更新安装wgt包
 VersionManager.installWgt = function(path) {
 	// #ifdef APP-PLUS
+
 	plus.nativeUI.showWaiting();
-	plus.runtime.install(path, {}, function() {
+	plus.runtime.install(path, {}, () => {
 		plus.nativeUI.closeWaiting();
 		console.log("安装wgt文件成功！");
 		var remoteScritVersion = this.remoteData["scriptVersion"]
-		// uni.setStorageSync('storage_key',remoteScritVersion.toString())
-		// console.log(uni.getStorageSync('storage_key')) 
+		uni.setStorageSync('storage_key', remoteScritVersion.toString())
 		plus.nativeUI.alert("应用资源更新完成！", () => {
 			this.restartApp()
 		});
