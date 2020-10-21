@@ -74,6 +74,8 @@
 		
 
 		<view style="height:60px;"></view>
+		
+		
 
 	</view>
 </template>
@@ -319,9 +321,9 @@
 	}
 
 	.notice_text {//公告
-		margin-left: 5px;
+		margin-left: 2px;
 		color: white;
-		font-size: 20rpx;
+		font-size: 25rpx;
 
 	}
 	/* image:hover{
@@ -335,7 +337,7 @@
 	}
 
 	.notice_text_right {
-		
+		margin-right: 5px;
 		color: white;
 	}
 
@@ -396,4 +398,7 @@
 
 
 	}
+	
+	
+	
 </style>
