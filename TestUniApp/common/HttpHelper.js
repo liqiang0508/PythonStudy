@@ -27,6 +27,7 @@ function httpPost(url, data, call) {
 		url: url, //仅为示例，并非真实接口地址。
 		sslVerify: false,
 		method: "POST",
+		timeout:3000,
 		data: data,
 		header: {
 			'content-type': 'application/json' //json

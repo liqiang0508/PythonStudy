@@ -25,7 +25,7 @@
 		name: 'alert',
 		data() {
 			return {
-				popshow: false,
+				popshow:false,
 				contentstr:"",
 				title:"",
 				isAlert:false,
@@ -33,7 +33,6 @@
 				btninfos:[]
 			}
 		},
-		props:{popshow: false},
 		methods: {
 			//显示弹框
 			//btninfo 按钮情况 ["yes","no",middle""]

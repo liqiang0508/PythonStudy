@@ -8,13 +8,13 @@
 
 <script>
 	export default {
-		
+		name: 'test',
 		props:["name"],
 		methods: {
 			
 			Click:function()
 			{
-				console.log("子组件点击")
+				
 				this.$emit("BtnClick",2);
 			}
 			

@@ -55,7 +55,16 @@
 				}
 			})
 			//#endif
-
+			
+			// #ifdef H5
+				this.goMain()
+			// #endif
+			
+			
+			
+		},
+		onShow() {
+			
 		},
 		methods: {
 			tap: function() {

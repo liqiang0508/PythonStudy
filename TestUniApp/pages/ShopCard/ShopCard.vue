@@ -11,7 +11,7 @@
 
 		<view class="bottom">
 			<view class="left" style="margin-left: 20rpx;">
-				<radio @click="checkboxChange" :value="isAllSelect" :checked="isAllSelect" />
+				<radio @click="radioChange"  :checked="isAllSelect" />
 				<text style="font-size: 20rpx;">全选</text>
 				<text style="font-size: 20rpx; color: red; margin-left: 20rpx;">总金额:{{totalmoney}}</text>
 			</view>
@@ -31,10 +31,10 @@
 		<button @click="open2">打开2个按钮</button>
 		<button @click="open3">打开3个按钮</button>
 		<!-- <uni-popup ref="popup" type="bottom">底部弹出 Popup</uni-popup> -->
+		<test1 name = "组件测试"  @BtnClick = "onTap"></test1>
+		<alert ref="alert"  @closepop="btnclose"></alert>
 
-		<alert ref="alert" :popshow=false @closepop="btnclose"></alert>
-
-
+		
 
 
 	</view>
@@ -43,15 +43,17 @@
 <script>
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import alert from "@/components/alert/alert.vue"
+	import test1 from "@/components/Test1/test.vue"
 	import HttpHelper from "../../common/HttpHelper.js"
+	let uimanager = require("../../common/UiManager.js")
 	export default {
 		components: {
 			// uniPopup
-			alert
+			alert,
+			test1
 		},
 		data() {
 			return {
-				popshow: true,
 				isAllSelect: false,
 				totalmoney: 0,
 				dataList: [{}, {}]
@@ -61,6 +63,10 @@
 			// uni.showNavigationBarLoading()
 		},
 		methods: {
+			onTap(arg){
+				console.log("onTap-----",arg);
+				uimanager.showtoast("tosat")
+			},
 			open2() {
 				this.$refs.alert.showDialog("提示", "提示xxxxxx11？", ["yes", "no"], function(index) {
 					console.log("父节点收到点击事件回调", index);
@@ -72,22 +78,22 @@
 				})
 			},
 			open() {
-				// this.$refs.alert.showDialog("提示", "提示xxxxxx22？", ["yes"], function(index) {
-				// 	console.log("父节点收到点击事件回调2", index);
-				// })
-				
-				HttpHelper.httpPost("http://192.168.65.172:8080/req", {"name":"liqiang"},(data) => {
-				
-					if (data) {
-						console.log( data)
-						
-						
-					} else {
-						
-						console.log( "error")
-				
-					}
+				this.$refs.alert.showDialog("提示", "提示xxxxxx22？", ["yes"], function(index) {
+					console.log("父节点收到点击事件回调2", index);
 				})
+				
+				// HttpHelper.httpPost("http://192.168.65.172:8080/req", {"name":"liqiang"},(data) => {
+				
+				// 	if (data) {
+				// 		console.log( data)
+						
+						
+				// 	} else {
+						
+				// 		console.log( "error")
+				
+				// 	}
+				// })
 			},
 			btnclose: function(index) {
 				console.log(" parents close---", index);
@@ -95,10 +101,10 @@
 			dclick: function() {
 				console.log("dbclick");
 			},
-			checkboxChange: function(e) {
+			radioChange: function(e) {
 
 				this.isAllSelect = !this.isAllSelect
-				console.log(this.isAllSelect);
+				console.log("是否全选",this.isAllSelect);
 			},
 			onEdit: function() {
 				console.log("编辑");
