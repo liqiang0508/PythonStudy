@@ -1,12 +1,12 @@
 <template>
 	<view class="content">
-		<text>{{ tiptext }}</text>
+		<text class="tipText">{{ tiptext }}</text>
 		
 		<view style="height: 20px;"></view>
 		
 		
-		<view style="width: 100%;" class v-if="progress>0">
-			<progress :percent="progress" activeColor="red"  stroke-width="8" />
+		<view style="width: 80%;" class v-if="progress>0">
+			<progress :percent="progress"   stroke-width="4" />
 		</view>
 		
 		
@@ -36,7 +36,7 @@
 				this.tiptext = Math.floor(totalBytesWritten/1024)+"kb/"+ Math.floor(totalBytesExpectedToWrite/1024)+"kb"
 			}, (code) => {
 				console.log("更新结束返回code ===", code)
-				if (code == 100) //不需要更新
+				if (code == 100 || code == 4) //100不需要更新，4不支持更新
 				{
 					this.goMain()
 				}else if(code==101){//更新成功
@@ -80,5 +80,8 @@
 		width: 100%;
 		height: 100%;
 
+	}
+	.tipText{
+		font-size: 30rpx;
 	}
 </style>

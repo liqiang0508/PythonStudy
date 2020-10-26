@@ -4,6 +4,7 @@ function httpGet(url, call) {
 		url: url, //仅为示例，并非真实接口地址。
 		sslVerify: false,
 		method: "GET",
+		timeout:3000,
 		success: (res) => {
 
 			if (call) {
