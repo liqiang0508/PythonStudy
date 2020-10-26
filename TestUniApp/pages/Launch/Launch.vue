@@ -51,13 +51,14 @@
 				else {//some error code
 					plus.nativeUI.alert("Error code===" + code, () => {
 						GlobalFun.exitGame()
+					
 					});
 				}
 			})
 			//#endif
 			
 			// #ifdef H5
-				this.goMain()
+				// this.goMain()
 			// #endif
 			
 			
