@@ -5,11 +5,12 @@
 		
 		<view style="height: 20px;"></view>
 		
-		
+		<!-- 进度条 -->
 		<view style="width: 80%;" class v-if="progress>0">
 			<progress :percent="progress"   stroke-width="4" />
 		</view>
 		
+		<!-- //右下角版本文字 -->
 		<text class="tipText" style="position: absolute;right:9px;bottom: 0rpx;">{{curVersion}}</text>
 		
 	</view>
@@ -21,7 +22,7 @@
 	export default {
 		data() {
 			return {
-				tiptext: "检查更新",
+				tiptext: "Loading...",
 				progress:0,
 				curVersion:1
 			}
