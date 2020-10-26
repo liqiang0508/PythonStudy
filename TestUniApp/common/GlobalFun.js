@@ -16,6 +16,14 @@ GlobalFun.isContain = function(str,arr){
 	return false
 	
 }
+//退出游戏
+GlobalFun.exitGame = function(){
+	
+	// #ifdef APP-NVUE
+		plus.runtime.quit()
+	// #endif
+	
+}
 
 
 

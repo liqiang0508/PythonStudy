@@ -48,9 +48,9 @@
 				}else if(code==101){//更新成功
 					VersionManager.restartApp()
 				}
-				else {
+				else {//some error code
 					plus.nativeUI.alert("Error code===" + code, () => {
-						// VersionManager.restartApp()
+						GlobalFun.exitGame()
 					});
 				}
 			})
