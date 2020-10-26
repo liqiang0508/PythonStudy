@@ -15,7 +15,7 @@ VersionManager.printlog = function() {
 
 }
 VersionManager.callFinishWithCode = function(code, message) {
-	console.log(message)
+	console.log("callFinishWithCode",message)
 	if (this.finishCall) {
 		this.finishCall(code)
 	}
@@ -195,7 +195,7 @@ VersionManager.installWgt = function(path) {
 		var remoteScritVersion = this.remoteData["scriptVersion"]
 		uni.setStorageSync('storage_key', remoteScritVersion.toString())
 		this.callFinishWithCode(101, "更新成功")
-	}, function(e) {
+	}, (e)=> {
 		plus.nativeUI.closeWaiting();
 		console.log("安装wgt文件失败[" + e.code + "]：" + e.message);
 		// plus.nativeUI.alert("安装失败[" + e.code + "]：" + e.message);
