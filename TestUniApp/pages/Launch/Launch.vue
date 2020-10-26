@@ -1,5 +1,6 @@
 <template>
 	<view class="content">
+		
 		<text class="tipText">{{ tiptext }}</text>
 		
 		<view style="height: 20px;"></view>
@@ -9,24 +10,28 @@
 			<progress :percent="progress"   stroke-width="4" />
 		</view>
 		
+		<text class="tipText" style="position: absolute;right:9px;bottom: 0rpx;">{{curVersion}}</text>
 		
 	</view>
 </template>
 
 <script>
 	import VersionManager from "../../common/VersionManager.js"
-	
+	let GlobalFun = require("../../common/GlobalFun.js")
 	export default {
 		data() {
 			return {
 				tiptext: "检查更新",
 				progress:0,
+				curVersion:1
 			}
 		},
 		onReady() {
 			
+			this.curVersion = "Version:"+GlobalFun.scriptVersion
 			var url = "http://192.168.65.172/hotupversion/uniconfigrelease"
 			//#ifdef APP-PLUS 
+			this.curVersion = "Version:"+plus.runtime.version+"("+ GlobalFun.scriptVersion+")"
 			VersionManager.checkUpdate(url, (res) => {
 				var percent = res.progress //进度
 				var totalBytesWritten = res.totalBytesWritten //已经下载的数据长度，单位 Bytes
@@ -74,11 +79,14 @@
 		display: flex;
 		flex-direction: column;
 		position: absolute;
-		background-color: #ffffff;
 		align-items: center;
 		justify-content: center;
 		width: 100%;
 		height: 100%;
+		background-image: url('~@/static/splash.png');
+		background-size: 100% 100%;
+
+
 
 	}
 	.tipText{
