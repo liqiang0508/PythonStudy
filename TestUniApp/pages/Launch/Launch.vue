@@ -32,7 +32,7 @@
 			this.curVersion = "Version:"+GlobalFun.scriptVersion
 			var url = "http://192.168.65.172/hotupversion/uniconfigrelease"
 			//#ifdef APP-PLUS 
-			this.curVersion = "Version:"+plus.runtime.version+"("+ GlobalFun.scriptVersion+")"
+			this.curVersion = "Version:"+plus.runtime.version+"("+ VersionManager.getLocalVersion()+")"
 			VersionManager.checkUpdate(url, (res) => {
 				var percent = res.progress //进度
 				var totalBytesWritten = res.totalBytesWritten //已经下载的数据长度，单位 Bytes
@@ -50,7 +50,7 @@
 				}
 				else {
 					plus.nativeUI.alert("Error code===" + code, () => {
-						VersionManager.restartApp()
+						// VersionManager.restartApp()
 					});
 				}
 			})
