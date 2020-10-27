@@ -13,7 +13,9 @@ layui.config({
 			$ = layui.jquery,
 			upload = layui.upload,
 			carousel = layui.carousel,
+			tree = layui.tree,
 			form = layui.form;
+			
 
 		// carousel.render({
 		//    elem: '#test10'
@@ -22,7 +24,33 @@ layui.config({
 		//    ,interval: 1000
 		//  });
 
-
+		//渲染
+		var inst1 = tree.render({
+		  elem: '#treeTest'  ,//绑定元素
+		  accordion:true
+		  ,data: [{
+			title: '江西' //一级菜单
+			,children: [{
+			  title: '南昌' //二级菜单
+			  ,children: [{
+				title: '高新区' //三级菜单
+				//…… //以此类推，可无限层级
+			  }]
+			}]
+		  },{
+			title: '陕西' //一级菜单
+			,children: [{
+			  title: '西安' //二级菜单
+			}]
+		  }],
+		  click: function(obj){
+				console.log(obj.data); //得到当前点击的节点数据
+				console.log(obj.state); //得到当前节点的展开状态：open、close、normal
+				console.log(obj.elem); //得到当前节点元素
+				
+				console.log(obj.data.children); //当前节点下是否有子节点
+			  }
+		});
 
 		$(".test").on("click", function(data) {
 			var othis = $(this),
@@ -74,12 +102,22 @@ layui.config({
 		//渲染
 		var ins1 = rate.render({
 			elem: '#rateTest', //绑定元素
-			text: true
+			text: true,
+			choose: function(value){
+			   console.log("choose=="+value)
+			  }
 		});
 
 		var table = layui.table;
 		//展示已知数据
 		table.render({
+			// width:640,
+			toolbar: true,
+			defaultToolbar: ['filter', 'print', 'exports', {
+			    title: '提示' //标题
+			    ,layEvent: 'LAYTABLE_TIPS' //事件名，用于 toolbar 事件中使用
+			    ,icon: 'layui-icon-tips' //图标类名
+			  }],
 			elem: '#tabletest',
 			cols: [
 				[ //标题栏
@@ -117,7 +155,7 @@ layui.config({
 					}, {
 						field: 'ip',
 						title: 'IP',
-						width: 80
+						width: 120
 					}
 				]
 			],

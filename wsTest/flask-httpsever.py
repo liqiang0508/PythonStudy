@@ -17,7 +17,7 @@ def object2json(obj):
 @app.route('/',methods = ['GET'])
 def getdata():
 	# print('请求方式为------->', request.method)
-	args = request.args.get("name") or "no args"
+	args = request.args or "no args"
 	# print('args参数是------->', args)
 	form = request.form.get('name') or 'no form'
 	# print('form参数是------->', form)

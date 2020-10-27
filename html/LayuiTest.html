@@ -5,10 +5,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<title>LayuiTest</title>
 		<link rel="stylesheet" href="layui-v2.5.5/layui/css/layui.css">
-
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<div class="layui-container">
+			<div class="layui-row headerpage"></div>
 			<div class="layui-row">
 				<div class="layui-col-xs6 layui-col-lg6" style="background-color: #FFB800;text-align: center;">
 					<button class="layui-btn layui-btn-primary test" data-type="123" id="369">测试按钮</button>
@@ -56,10 +57,21 @@
 			    <div><img src="http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1308/17/c3/24561315_1376700305963.jpg"></div>
 			  </div>
 			</div> -->
+			<div id="treeTest"></div>
+			<div class="layui-row foot"></div>
 		</div>
+		
+		
+		
 
 	</body>
-
+	<script>
+		$(function(){
+			$(".headerpage").load("Head.html"); 
+			$(".foot").load("Foot.html"); 
+			console.log(new Date().getFullYear())
+		})
+	</script>
 	<script src="layui-v2.5.5/layui/layui.all.js"></script>
 	<script src="js/mylayui.js"></script>
 </html>
