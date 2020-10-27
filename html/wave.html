@@ -7,7 +7,7 @@
 	<body>
 		<canvas id="canvas"></canvas>
 	</body>
-	<script src="./js/wave.js?v=2"></script>
+
 	<style type="text/css">
 		#canvas {
 			position: absolute;
@@ -18,23 +18,24 @@
 			height: 100%;
 		}
 	</style>
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+	<script src="js/wave.js?v=2"></script>
 	<script type="text/javascript">
-		window.onload = function() {
-
-			console.log("onload")
+		$(function() {
 			let audio = document.createElement("audio");
-			audio.volume = 1;
-			audio.autoplay = true;
-			audio.onended = () => {
-				audio.src = "https://api.uomg.com/api/rand.music?sort=热歌榜"
-			};
-			audio.onplay = () => {
-				$("#pause").removeClass("pause")
-			};
-			audio.onpause = () => {
-				$("#pause").addClass("pause")
-			};
-			audio.onended();
-		}
+				audio.volume = 1;
+				audio.autoplay = true;
+				audio.onended = () => {
+					audio.src = "https://api.uomg.com/api/rand.music?sort=热歌榜"
+				};
+				audio.onplay = () => {
+					$("#pause").removeClass("pause")
+				};
+				audio.onpause = () => {
+					$("#pause").addClass("pause")
+				};
+				audio.onended();
+		})
+		
 	</script>
 </html>
