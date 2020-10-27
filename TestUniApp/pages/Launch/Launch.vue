@@ -95,9 +95,8 @@
 		width: 100%;
 		height: 100%;
 		background-image: url('~@/static/splash.png');
-		background-size: 100% 100%;
-
-
+		background-size: cover;
+		background-position: center;
 
 	}
 	/* loading text */
