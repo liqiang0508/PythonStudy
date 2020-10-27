@@ -11,7 +11,7 @@
 		</view>
 		
 		<!-- //右下角版本文字 -->
-		<text class="tipText" style="position: absolute;right:9px;bottom: 0rpx;">{{curVersion}}</text>
+		<text class="BRText">{{curVersion}}</text>
 		
 	</view>
 </template>
@@ -24,7 +24,7 @@
 			return {
 				tiptext: "Loading...",
 				progress:0,
-				curVersion:1
+				curVersion:100
 			}
 		},
 		onReady() {
@@ -50,7 +50,7 @@
 				}
 				else {//some error code
 					plus.nativeUI.alert("Error code===" + code, () => {
-						GlobalFun.exitGame()
+						VersionManager.restartApp()
 					
 					});
 				}
@@ -100,7 +100,16 @@
 
 
 	}
+	/* loading text */
 	.tipText{
 		font-size: 30rpx;
+	}
+	
+	/* 右下角 */
+	.BRText{
+		font-size: 30rpx;
+		position: absolute;
+		right:9px;
+		bottom: 0rpx;
 	}
 </style>
