@@ -84,6 +84,7 @@
 	// import Test1 from '@/components/Test1/Test1.vue'
 	import HttpHelper from "../../common/HttpHelper.js"
 	import helper from "../../common/utils.js"
+	let UiManager = require("../../common/UiManager.js")
 	export default {
 		comments: {
 			// Test1
@@ -212,15 +213,15 @@
 			KindsTap: function(data) {
 				console.log("点击了种类--", data.name)
 				var url = "https://192.168.65.172:5000/hello" //"http://pokerofroyal.com:8080/a/thaitexashotupiii/configrelease"
+				UiManager.showloading()
 				HttpHelper.HttpGet(url, (data) => {
-				
+					UiManager.hideloading()
 					if (data) {
 						console.log( data[0])
 						
-						helper.ShowAlert("提示","OK")
+						UiManager.ShowAlert("提示",[""],"OK")
 					} else {
-						
-						helper.ShowAlert("提示","EROR")
+						UiManager.ShowAlert("提示",[""],"EROR")
 				
 					}
 				})

@@ -3,11 +3,14 @@ var UiManager = {}
 
 
 // 显示弹框
-UiManager.ShowAlert = function (title,str,call){
+UiManager.ShowAlert = function (title,btninfos,str,call){
 	
 		uni.showModal({
-			title: title,
+			title: title?title:"提示",
 			content: str,
+			showCancel:btninfos.length>=2,
+			confirmText:btninfos[0]==""?"确认":btninfos[0],
+			cancelText:btninfos[1]==""?"取消":btninfos[1],
 			success: function(res) {
 				if (res.confirm) {
 					if(call	)
