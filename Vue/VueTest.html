@@ -15,6 +15,8 @@
 		<div id="app">
 			<p>{{ message1 }}</p>
 			<hr />
+			<p v-text="v_html"></p>
+			<hr />
 			<div v-html="v_html"></div>
 			<hr />
 			<label for="r1">修改颜色</label> <input type="checkbox" v-model="use">
@@ -36,38 +38,53 @@
 			<input v-model.lazy="inputtext">
 			<hr />
 
-			<button v-on:click="Click">点击</button>
+			<button @click="Click">点击</button>
 			<hr>
 
 			<label>v-show</label> <input type="checkbox" v-model="show">
 			<p v-show="show">show me</p>
-
-			<hr>
-			<ol>
-				<li v-for="site in sites">
-					{{ site.name }}
-				</li>
-			</ol>
-			<hr >
-			<runoob posttitle = "LOL1"  message = "666"> </runoob>
+			<!-- <p v-else>not show me</p> -->
 			
+			
+			
+			
+			<hr>
+			<ul>
+				<li v-for="(value, key) in sites">
+					{{key}}.{{value.name}}
+				</li>
+			</ul>
+			<hr>
+			<runoob posttitle="LOL1" message="666"> </runoob>
+
 			<hr>
 
 			<p>{{ testText }}</p>
 			<button v-on:click="ChangeText">changetext</button>
+			<hr />
+			
+			<p v-show="true">if</p>
+			<div v-html="html">//会覆盖内部的元素
+				　　<p v-text="msg">哈哈哈</p>
+			</div>
+
+			<!-- <input @keydown.enter="alert('2')" /> -->
 		</div>
 	</body>
 
 	<script>
-		Vue.component('runoob', {//自定义组件
-			props:['posttitle','message'],
+		Vue.component('runoob', { //自定义组件
+			props: ['posttitle', 'message'],
 			template: '<div><h1>{{ posttitle }} </h1> <h2>{{ message }}</h2></div>'
 		})
 
-		var p = new Vue({
+		var Vm = new Vue({
 			el: "#app",
 			data: {
-				testText:"Test",
+				msg: '我爱敏敏！！',
+				html: '<p>大海森林我都不爱！</p>',
+				vtext: "vtext",
+				testText: "Test",
 				message1: "我是message文字", //直接插值
 				v_html: "<h1>我是html代码<h1>", //v-html 绑定的是html的代码
 				use: false, //v-model 数据绑定
@@ -77,7 +94,9 @@
 				inputtext: "数据绑定", //v-model 数据绑定
 				show: false, //v-show 是否展示
 				sites: [{
-					"name": "site1"
+					"name": "site1",
+					"url": 'http://www.runoob.com',
+					"slogan": "学的不仅是技术，更是梦想！"
 				}, {
 					"name": "site2"
 				}, {
@@ -88,8 +107,8 @@
 				Click: function() { //v-on  监听事件
 					alert("clicked")
 				},
-				ChangeText:function(){
-					this.testText = Math.random()*100
+				ChangeText: function() {
+					this.testText = new Date().toLocaleString()
 				}
 			},
 			filters: { //过滤变成大写字母
@@ -101,10 +120,13 @@
 			watch: { //监听改变
 				inputtext: function(nval, oval) {
 					alert(oval + "=变成==" + nval)
+				},
+				testText: function(nval, oval) {
+					alert(oval + "=变成==" + nval)
 				}
 			}
 
 		})
-		p.message1 = "lol----"
+		Vm.message1 = "lol----"
 	</script>
 </html>

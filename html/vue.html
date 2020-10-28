@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
-<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
-</head>
-<body>
-<div id = "app">
- <p style = "font-size:25px;">计数器: {{ counter }}</p>
- <button @click = "counter++" style = "font-size:25px;">点我</button>
- <input  v-model="inputText" />
- <p>{{inputText}}</p>
-</div>
-<script type = "text/javascript">
- var vm = new Vue({
-    el: '#app',
-    data: {
-       counter: 1,
-	   inputText:"2222"
-    },
-	methods:{
-		change:function(e){
-			console.log("change",e.target)
-		}
-	}
- });
- vm.$watch('inputText', function(nval, oval) {
-    alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
- });
-</script>
-</body>
+	<head>
+		<meta charset="utf-8">
+		<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+		<script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<p style="font-size:25px;">计数器: {{ counter }}</p>
+			<button @click="counter++" style="font-size:25px;">点我</button>
+			<input v-model="inputText" />
+			<p>{{inputText}}</p>
+			<p v-if="Math.random()>0.5">if</p>
+			<p v-else>else</p>
+		</div>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					counter: 1,
+					inputText: "2222"
+				},
+				methods: {
+					change: function(e) {
+						console.log("change", e.target)
+					}
+				}
+			});
+			vm.$watch('inputText', function(nval, oval) {
+				alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+			});
+		</script>
+	</body>
 </html>
