@@ -58,7 +58,7 @@
 			//#endif
 			
 			// #ifdef H5
-				// this.goMain()
+				this.goMain()
 			// #endif
 			
 			
@@ -68,11 +68,7 @@
 			
 		},
 		methods: {
-			tap: function() {
-				console.log("tap")
-				// this.tiptext = new Date().toLocaleTimeString()
-
-			},
+			
 			goMain: function() {
 				console.log("go index")
 				setTimeout(()=>{

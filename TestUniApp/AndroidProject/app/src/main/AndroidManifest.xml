@@ -40,7 +40,13 @@
                 <data android:scheme="h56131bcf" />
             </intent-filter>
         </activity>
-		<meta-data android:name="DCLOUD_WRITE_EXTERNAL_STORAGE" android:value="once"/> 
+		<meta-data android:name="DCLOUD_WRITE_EXTERNAL_STORAGE" android:value="always"/> 
+		<meta-data android:name="DCLOUD_READ_PHONE_STATE" android:value="always"/> 
+		 
+		
+		//平台隐私与政策提示框配置 
+		<meta-data android:name="DCLOUD_PRIVACY_PROMPT"  android:value="none"/> 
     </application>
 
+	<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 </manifest>

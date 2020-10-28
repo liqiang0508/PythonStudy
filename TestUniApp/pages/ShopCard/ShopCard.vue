@@ -45,7 +45,7 @@
 	import alert from "@/components/alert/alert.vue"
 	import test1 from "@/components/Test1/test.vue"
 	import HttpHelper from "../../common/HttpHelper.js"
-	let uimanager = require("../../common/UiManager.js")
+	let UiManager = require("../../common/UiManager.js")
 	export default {
 		components: {
 			// uniPopup
@@ -65,7 +65,7 @@
 		methods: {
 			onTap(arg){
 				console.log("onTap-----",arg);
-				uimanager.showtoast("tosat")
+				UiManager.showtoast("tosat")
 			},
 			open2() {
 				this.$refs.alert.showDialog("提示", "提示xxxxxx11？", ["yes", "no"], function(index) {
