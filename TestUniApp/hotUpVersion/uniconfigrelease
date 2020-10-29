@@ -1,0 +1,64 @@
+{
+  
+  "openUIDs": [
+    "-----------",
+    "all-1",
+    "770x",
+    "-----------"
+  ],
+
+
+  "scriptVersion":103,
+  "baseUrl": "http://192.168.65.172/hotupversion/Script_%s",
+  "configFile": "appinfoiii.json",
+
+  "debugScriptVersion": 69,
+  "debugBaseUrl": "http://192.168.65.172/hotupversion/Script_%s",
+  "debugConfigFile": "appinfoiii.json",
+  "debugUIDs": [
+    "-----------",
+    "975780",
+    "930912",
+    "724001",
+    "264138",
+    "-----------"
+  ],
+
+
+  "channels": [
+    "-----------",
+    "0",
+    "1",
+    "2",
+    "3",
+    "-----------"
+  ],
+
+
+  "supportBinarys": [
+    "-----------",
+    "x.x.x",
+    "1.3.0",
+	"9.9.3",
+	"1.0.0",
+    "-----------"
+  ],
+
+
+  "forcedBinaryVersions": [
+    "-----------",
+    "x.x.x",
+    "1.3.0X",
+	"9.9.3X",
+    "-----------"
+  ],
+  "binaryUrl": [
+    "www.baidu0.com",
+    "www.baidu1.com",
+    "www.baidu2.com",
+    "www.baidu3.com"
+  ],
+
+
+  "MarkLast":""
+}
