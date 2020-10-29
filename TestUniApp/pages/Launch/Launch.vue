@@ -50,7 +50,7 @@
 					VersionManager.restartApp()
 				}
 				else {//some error code
-					UiManager.ShowAlert("",["",""],"Error code===" + code+" 是否重启?",(res)={
+					UiManager.ShowAlert("",["",""],"Error code===" + code+" 是否重启?",(res)=>{
 						if(res==1)//点击的yes
 						{
 							VersionManager.restartApp()
