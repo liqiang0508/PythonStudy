@@ -19,6 +19,7 @@
 <script>
 	import VersionManager from "../../common/VersionManager.js"
 	let GlobalFun = require("../../common/GlobalFun.js")
+	import UiManager from "../../common/UiManager.js"
 	export default {
 		data() {
 			return {
@@ -49,10 +50,16 @@
 					VersionManager.restartApp()
 				}
 				else {//some error code
-					plus.nativeUI.alert("Error code===" + code, () => {
-						VersionManager.restartApp()
-					
-					});
+					UiManager.ShowAlert("",["",""],"Error code===" + code+" 是否重启?",(res)={
+						if(res==1)//点击的yes
+						{
+							VersionManager.restartApp()
+						}
+						else//no
+						{
+							this.goMain()
+						}
+					})
 				}
 			})
 			//#endif

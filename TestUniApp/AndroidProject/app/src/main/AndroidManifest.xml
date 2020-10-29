@@ -44,13 +44,15 @@
 		<meta-data android:name="DCLOUD_READ_PHONE_STATE" android:value="always"/> 
 		 
 		
-<!--		//平台隐私与政策提示框配置 -->
+	<!--/平台隐私与政策提示框配置 -->
 		<meta-data android:name="DCLOUD_PRIVACY_PROMPT"  android:value="none"/>
 
         <meta-data android:name="DCLOUD_AD_SPLASH" android:value="true"/>
     </application>
-
+	
+	<!-- 权限 -->
 	<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 </manifest>

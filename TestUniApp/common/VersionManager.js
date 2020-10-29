@@ -166,10 +166,15 @@ VersionManager.downWgt = function(url) {
 				console.log('下载成功');
 				this.installWgt(res.tempFilePath)
 			}
+			else
+			{
+				console.log('下载失败');
+				this.callFinishWithCode(2, "下载远程wgt失败")
+			}
 		},
 		fail: (res) => {
 			console.log('下载失败');
-			this.callFinishWithCode(2, "下载远程wgt失败")
+			this.callFinishWithCode(2, "下载远程wgt1失败")
 		}
 
 	});

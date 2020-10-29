@@ -4,7 +4,7 @@ var UiManager = {}
 
 // 显示弹框
 UiManager.ShowAlert = function (title,btninfos,str,call){
-	
+		
 		uni.showModal({
 			title: title?title:"提示",
 			content: str,
