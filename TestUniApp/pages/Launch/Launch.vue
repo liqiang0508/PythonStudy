@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		
-		<text class="tipText">{{ tiptext }}</text>
+		<text class="tipText">{{ i18n.loading  }}</text>
 		
 		<view style="height: 20px;"></view>
 		
@@ -21,6 +21,11 @@
 	let GlobalFun = require("../../common/GlobalFun.js")
 	import UiManager from "../../common/UiManager.js"
 	export default {
+		computed: {  
+		    i18n () {  
+		      return this.$t('index')  
+		    }  
+		  } ,
 		data() {
 			return {
 				tiptext: "Loading...",
@@ -65,7 +70,7 @@
 			//#endif
 			
 			// #ifdef H5
-				this.goMain()
+				// this.goMain()
 			// #endif
 			
 			
