@@ -194,7 +194,7 @@ VersionManager.installWgt = function(path) {
 	// #ifdef APP-PLUS
 
 	plus.nativeUI.showWaiting();
-	plus.runtime.install(path, {}, () => {
+	plus.runtime.install(path, {force:true}, () => {
 		plus.nativeUI.closeWaiting();
 		console.log("安装wgt文件成功！");
 		var remoteScritVersion = this.remoteData["scriptVersion"]
