@@ -1,6 +1,13 @@
 var UiManager = {}
 
-
+UiManager.navigateTo = function(object)
+{
+	uni.navigateTo({
+		url:object.url,
+		animationType:"slide-in-right",
+		animationDuration:1000
+	})
+}
 
 // 显示弹框
 UiManager.ShowAlert = function (title,btninfos,str,call){

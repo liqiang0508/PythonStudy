@@ -2,17 +2,16 @@
 	"pages": [
 		// pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-		    "path" : "pages/Launch/Launch",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "",
-				"navigationBarBackgroundColor":"#ffffff",
-		        "enablePullDownRefresh": false,
-				"app-plus":{
-				"titleNView":false
+			"path": "pages/Launch/Launch",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#ffffff",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": false
 				}
-		    }
-		    
+			}
+
 		},
 		{
 			"path": "pages/index/index",
@@ -29,29 +28,38 @@
 			}
 		}, {
 			"path": "pages/ThirdPage/ThirdPage",
-			"style": {}
+			"style": {
+				// "navigationBarTitleText": "ThirdPage2",
+				"app-plus": {
+					"titleNView": {
+
+						"autoBackButton": "true",
+						"buttons": [{
+							"text": "取消",
+							"float": "right",
+							"fontSize": "36upx"
+						}],
+						"searchInput": {
+							"autoFocus": true,
+							"placeholder": "搜索糗事",
+							"borderRadius": "10upx",
+							"backgroundColor": "#F5F4F4"
+						}
+
+
+
+
+					}
+				}
+			}
 		}, {
 			"path": "pages/Kinds/Kinds",
 			"style": {
-				// "navigationBarTitleText": "我的",
-				// "app-plus": {
-				// 	"titleNView": {
-				// 		"buttons": [{
-
-				// 				"text": "果蔬自由",
-				// 				// "fontSrc": "/static/iconfont.ttf",
-				// 				"fontSize": "15px",
-				// 				"float": "left"
-				// 			},
-				// 			{
-				// 				"text": "LOL",
-				// 				// "fontSrc": "/static/iconfont.ttf",
-				// 				"fontSize": "15px"
-
-				// 			}
-				// 		]
-				// 	}
-				// }
+				"navigationBarTitleText": "种类",
+				"app-plus": {
+					"titleText": "ada",
+					"homeButton": true
+				}
 			}
 		}, {
 			"path": "pages/ShopCard/ShopCard",
@@ -60,8 +68,8 @@
 			"path": "pages/Me/Me",
 			"style": {}
 		}
-	    
-    ],
+
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		// "navigationBarTitleText": "uni-app",

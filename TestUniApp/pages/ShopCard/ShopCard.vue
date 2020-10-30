@@ -61,6 +61,14 @@
 		},
 		onReady() {
 			// uni.showNavigationBarLoading()
+			uni.getLocation({
+			    type: 'wgs84',
+			    success: function (res) {
+			        console.log('当前位置的经度：' + res.longitude);
+			        console.log('当前位置的纬度：' + res.latitude);
+			    }
+			});
+			
 		},
 		methods: {
 			onTap(arg){
@@ -78,8 +86,10 @@
 				})
 			},
 			open() {
+				
 				this.$refs.alert.showDialog("提示", "提示xxxxxx22？", ["yes"], function(index) {
 					console.log("父节点收到点击事件回调2", index);
+					
 				})
 				
 				// HttpHelper.httpPost("http://192.168.65.172:8080/req", {"name":"liqiang"},(data) => {

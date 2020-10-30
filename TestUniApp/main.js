@@ -10,7 +10,7 @@ const i18n = new VueI18n({
   locale: 'zh-CN',  
   messages: {  
     'en-US': require("./lang/EN.js").lang,  
-    'zh-CN': require("./lang/ZH.js").lang,  
+    'zh-CN': require("./lang/ZH.js").lang
   }  
 })  
 

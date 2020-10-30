@@ -1,5 +1,6 @@
 <template>
 	<view>
+		
 		<view v-if="popshow" class="popup" @click.stop="">
 			<view class="popbg" @click.stop="">
 				
@@ -17,6 +18,7 @@
 				</view>
 			</view>
 		</view>
+		
 	</view>
 </template>
 
@@ -90,7 +92,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		position: absolute;
+		position: fixed;
 		left: 0;
 		top: 0;
 		width: 100%;
