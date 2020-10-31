@@ -77,7 +77,7 @@
 			//#endif
 
 			// #ifdef H5
-			// this.goMain()
+			this.goMain()
 			// #endif
 
 

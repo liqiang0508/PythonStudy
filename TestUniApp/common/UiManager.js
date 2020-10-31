@@ -56,6 +56,8 @@ UiManager.showtoast = function (str,time)
 	time = time?time:2000
 	uni.showToast({
 	    title: str,
+		icon:"none",
+		mask:true,
 	    duration: time
 	});
 }

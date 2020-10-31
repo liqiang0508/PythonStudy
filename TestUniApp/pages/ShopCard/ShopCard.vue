@@ -11,7 +11,7 @@
 
 		<view class="bottom">
 			<view class="left" style="margin-left: 20rpx;">
-				<radio @click="radioChange"  :checked="isAllSelect" />
+				<radio @click="radioChange" :checked="isAllSelect" />
 				<text style="font-size: 20rpx;">全选</text>
 				<text style="font-size: 20rpx; color: red; margin-left: 20rpx;">总金额:{{totalmoney}}</text>
 			</view>
@@ -31,10 +31,11 @@
 		<button @click="open2">打开2个按钮</button>
 		<button @click="open3">打开3个按钮</button>
 		<!-- <uni-popup ref="popup" type="bottom">底部弹出 Popup</uni-popup> -->
-		<test1 name = "组件测试"  @BtnClick = "onTap"></test1>
-		<alert ref="alert"  @closepop="btnclose"></alert>
+		<test1 name="组件测试" @BtnClick="onTap"></test1>
+		<alert ref="alert" @closepop="btnclose"></alert>
 
-		
+		<button @click="open4">打开弹窗</button>
+		<uni-popup ref="popup" type="bottom">底部弹出 Popup</uni-popup>
 
 
 	</view>
@@ -48,7 +49,7 @@
 	let UiManager = require("../../common/UiManager.js")
 	export default {
 		components: {
-			// uniPopup
+			uniPopup,
 			alert,
 			test1
 		},
@@ -62,17 +63,17 @@
 		onReady() {
 			// uni.showNavigationBarLoading()
 			uni.getLocation({
-			    type: 'wgs84',
-			    success: function (res) {
-			        console.log('当前位置的经度：' + res.longitude);
-			        console.log('当前位置的纬度：' + res.latitude);
-			    }
+				type: 'wgs84',
+				success: function(res) {
+					console.log('当前位置的经度：' + res.longitude);
+					console.log('当前位置的纬度：' + res.latitude);
+				}
 			});
-			
+
 		},
 		methods: {
-			onTap(arg){
-				console.log("onTap-----",arg);
+			onTap(arg) {
+				console.log("onTap-----", arg);
 				UiManager.showtoast("tosat")
 			},
 			open2() {
@@ -86,23 +87,33 @@
 				})
 			},
 			open() {
-				
+
 				this.$refs.alert.showDialog("提示", "提示xxxxxx22？", ["yes"], function(index) {
 					console.log("父节点收到点击事件回调2", index);
-					
+
 				})
-				
+
 				// HttpHelper.httpPost("http://192.168.65.172:8080/req", {"name":"liqiang"},(data) => {
-				
+
 				// 	if (data) {
 				// 		console.log( data)
-						
-						
+
+
 				// 	} else {
-						
+
 				// 		console.log( "error")
-				
+
 				// 	}
+				// })
+			},
+			open4() {
+				this.$refs.popup.open()
+				// this.$refs.uniPop.show({
+				//     skin: 'toast',
+				//     content: 'loading',
+				//     icon: 'loading', //success | info | error | loading
+				//     shade: false,
+				//     time: 3
 				// })
 			},
 			btnclose: function(index) {
@@ -114,7 +125,7 @@
 			radioChange: function(e) {
 
 				this.isAllSelect = !this.isAllSelect
-				console.log("是否全选",this.isAllSelect);
+				console.log("是否全选", this.isAllSelect);
 			},
 			onEdit: function() {
 				console.log("编辑");
@@ -123,9 +134,9 @@
 			onSettlement: function() {
 				console.log("结算");
 				// #ifdef APP-PLUS
-					plus.globalEvent.addEventListener('netchange', function(){});
+				plus.globalEvent.addEventListener('netchange', function() {});
 				// #endif
-				
+
 			}
 		}
 	}
@@ -164,6 +175,4 @@
 		justify-content: center;
 		align-items: center;
 	}
-
-	
 </style>

@@ -1,24 +1,24 @@
 <template>
 	<view>
-		
+
 		<view v-if="popshow" class="popup" @click.stop="">
 			<view class="popbg" @click.stop="">
-				
+
 				<text style="display: block;margin-top: 25rpx;">{{ title }}</text>
-				
+
 				<view class="con_str">
-				   <text style=" display: block;word-break: break-all;">{{ contentstr }}</text>
-		
-					
+					<text style=" display: block;word-break: break-all;">{{ contentstr }}</text>
+
+
 				</view>
 				<view class="bottombtns">
-					<button v-if  = "this.isDialog"  size = "mini" class="popbtn" @click.stop="clickBtnCall(0)">{{ this.btninfos[0] }}</button>
-					<button v-if  = "this.isAlert"  size = "mini" class="popbtn" @click.stop="clickBtnCall(2)">{{ this.btninfos[2] }}</button>
-					<button v-if  = "this.isDialog"  size = "mini" class="popbtn" @click.stop="clickBtnCall(1)">{{ this.btninfos[1] }}</button>
+					<button v-if="this.isDialog" size="mini" class="popbtn" @click.stop="clickBtnCall(0)">{{ this.btninfos[0] }}</button>
+					<button v-if="this.isAlert" size="mini" class="popbtn" @click.stop="clickBtnCall(2)">{{ this.btninfos[2] }}</button>
+					<button v-if="this.isDialog" size="mini" class="popbtn" @click.stop="clickBtnCall(1)">{{ this.btninfos[1] }}</button>
 				</view>
 			</view>
 		</view>
-		
+
 	</view>
 </template>
 
@@ -35,11 +35,17 @@
 				btninfos:[]
 			}
 		},
+		// props: {
+		// 	popshow: {
+		// 		type: Boolean,
+		// 		default: false
+		// 	}
+		// },
 		methods: {
 			//显示弹框
 			//btninfo 按钮情况 ["yes","no",middle""]
 			// 回调 call(0-2)
-			showDialog(title,contentstr,btninfo,call) {
+			showDialog(title, contentstr, btninfo, call) {
 				this.title = title
 				this.contentstr = contentstr
 				this.popshow = true
@@ -47,38 +53,36 @@
 				this.btninfos = btninfo
 				console.log(this.btninfos)
 				console.log(this.btninfos.length);
-				if (btninfo.length>2)//3个按钮
+				if (btninfo.length > 2) //3个按钮
 				{
 
 					this.isDialog = true
 					this.isAlert = true
-				}else if(btninfo.length==1)//1个按钮
+				} else if (btninfo.length == 1) //1个按钮
 				{
 
 					this.isDialog = false
 					this.isAlert = true
 					this.btninfos[2] = btninfo[0]
-				}
-				else//2个按钮
+				} else //2个按钮
 				{
 					console.log("2 btn");
 					this.isDialog = true
 					this.isAlert = false
 				}
-				
+
 			},
-			
-		
+
+
 			hidepop() {
 				this.popshow = false
-				
+
 			},
-			clickBtnCall(index){
-				console.log("clickBtnCall",index)
-				// this.$emit("closepop",index);
+			clickBtnCall(index) {
+				console.log("clickBtnCall", index)
+				this.$emit("closepop",index);
 				this.popshow = false
-				if (this.btnCall)
-				{
+				if (this.btnCall) {
 					this.btnCall(index)
 				}
 			}
@@ -87,7 +91,6 @@
 </script>
 
 <style>
-	
 	.popup {
 		display: flex;
 		align-items: center;
@@ -99,24 +102,25 @@
 		height: 100%;
 		background-color: rgba(0, 0, 0, 0.5);
 		animation: bgscale 0.25s;
+		z-index: 99999;
 	}
-	
+
 	/* 弹框白色背景 */
-	.popbg{
+	.popbg {
 		text-align: center;
 		display: flex;
-		position:relative ;
+		position: relative;
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: center;
 		width: 600rpx;
-		height: 400rpx; 
+		height: 400rpx;
 		border-radius: 25rpx;
 		background-color: rgb(255, 255, 255);
-		
+
 	}
-	
-	.con_str{
+
+	.con_str {
 		width: 550rpx;
 		height: 230rpx;
 		/* background-color: #09BB07; */
@@ -124,51 +128,54 @@
 		justify-content: center;
 		align-items: center;
 		text-align: center;
-		overflow:auto
+		overflow: auto
 	}
-	.bottombtns{
+
+	.bottombtns {
 		width: 100%;
 		position: absolute;
 		display: flex;
 		flex-direction: row;
 		bottom: 15rpx;
 		/* background-color: #0062CC; */
-		
+
 	}
-	.popbtn{
+
+	.popbtn {
 		width: 180rpx;
 		/* height: 80rpx; */
 		text-align: center;
 	}
-	
+
 	.content {
-	
+
 		animation: bgscale;
-		
+
 	}
-	
+
 	@keyframes bgscale {
 		0% {
 			transform: scale(1);
 			opacity: 0;
 			/*开始为原始大小*/
 		}
-	
-		
-	
+
+
+
 		50% {
 			transform: scale(1.1);
 			opacity: 0.5;
 		}
-	
+
 		100% {
 			transform: scale(1);
 			opacity: 1;
 		}
-	
+
 	}
-	
+
 	@-webkit-keyframes bgscale
+
 	/*Safari and Chrome*/
 		{
 		0% {
@@ -176,12 +183,12 @@
 			opacity: 0;
 			/*开始为原始大小*/
 		}
-	
+
 		50% {
 			transform: scale(1.1);
 			opacity: 0.5;
 		}
-	
+
 		100% {
 			transform: scale(1);
 			opacity: 1;
