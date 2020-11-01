@@ -6,6 +6,9 @@ Vue.use(VueI18n)
 
 Vue.config.productionTip = false
 
+Vue.prototype.SayHello = function(){
+	console.log("SayHello==");
+}
 const i18n = new VueI18n({  
   locale: 'zh-CN',  
   messages: {  

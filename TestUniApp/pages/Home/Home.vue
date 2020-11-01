@@ -205,7 +205,7 @@
 		},
 		onLoad() {
 			console.log("onLoad");
-
+			this.SayHello()
 		},
 
 
