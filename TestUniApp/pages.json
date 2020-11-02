@@ -55,7 +55,7 @@
 		}, {
 			"path": "pages/Kinds/Kinds",
 			"style": {
-				"navigationBarTitleText": "种类",
+				"navigationBarTitleText": "分类",
 				"app-plus": {
 					"titleText": "ada",
 					"homeButton": true

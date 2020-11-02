@@ -3,6 +3,8 @@
 		<view class="leftView">
 			<scroll-view scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower" @scroll="scroll">
 				<view class="item_left" :class="{active: item.id === current.id}" v-for="item in itemData" :key="item.id" @click="changeCate(item)">
+					
+					
 					<text>{{ item.name }}</text>
 				</view>
 			</scroll-view>
@@ -11,7 +13,9 @@
 			<scroll-view class="r_scrollview" scroll-y>
 				<view class="right_wrap">
 					<view class="item_right" v-for="item in current.child" :key="item.id" @click="chooseitem(item)">
+						<image  style="width: 100%; height: 100px;" :src="item.img" mode="aspectFill"></image>
 						<text>{{ item.name }}</text>
+						
 					</view>
 
 				</view>
@@ -36,12 +40,12 @@
 						id: 1,
 						child: [{
 								name: "种类1_1",
-								img: "",
+								img: "https://img10.360buyimg.com/babel/jfs/t1/122053/18/11990/101663/5f55ecacE14fcd2c3/9c23fab8d2186c08.jpg.webp",
 								id: 11
 							},
 							{
 								name: "种类1_2",
-								img: "",
+								img: "https://img10.360buyimg.com/babel/jfs/t1/129017/37/16755/30255/5f9bdaceE34cc4fe8/59d87669e0edded5.jpg.webp",
 								id: 12
 							},
 							{
@@ -171,7 +175,7 @@
 <style>
 	.appkinds {
 		position: absolute;
-		opacity: 0.5;
+		opacity: /* 0.5 */;
 		width: 100%;
 		height: 100%;
 
@@ -188,7 +192,7 @@
 		/* background-color: #cc1354; */
 		height: 80rpx;
 		width: 100%;
-		/* text-align: center; */
+		flex-direction: column;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -232,9 +236,11 @@
 	.item_right {
 		margin-top: 15rpx;
 		margin-left: 15rpx;
+		flex-direction: column;
+		align-items: center;
 		display: flex;
 		width: 30%;
 		height: 250rpx;
-		background-color: #ff0000;
+		/* background-color: #ff0000; */
 	}
 </style>
