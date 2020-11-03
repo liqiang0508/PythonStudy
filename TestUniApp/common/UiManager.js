@@ -6,7 +6,6 @@ UiManager.navigateTo = function(data)
 	uni.navigateTo({
 		url:data.url,
 		animationType:"slide-in-right",
-		animationDuration:1000
 	})
 }
 

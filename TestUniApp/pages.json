@@ -30,27 +30,7 @@
 			"path": "pages/ThirdPage/ThirdPage",
 			"style": {
 				// "navigationBarTitleText": "ThirdPage2",
-				"app-plus": {
-					"titleNView": {
 
-						"autoBackButton": "true",
-						"buttons": [{
-							"text": "取消",
-							"float": "right",
-							"fontSize": "36upx"
-						}],
-						"searchInput": {
-							"autoFocus": true,
-							"placeholder": "搜索糗事",
-							"borderRadius": "10upx",
-							"backgroundColor": "#F5F4F4"
-						}
-
-
-
-
-					}
-				}
 			}
 		}, {
 			"path": "pages/Kinds/Kinds",
@@ -69,16 +49,51 @@
 			"style": {}
 		}
 
-	    ,{
-            "path" : "pages/sample/Itemfilter",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+		, {
+			"path": "pages/sample/Itemfilter",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/sample/custombar",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				// "navigationStyle":"custom",
+				"app-plus": {
+					"titleNView": {
+						// "type":"transparent",
+						// "backgroundColor":"#0000FF",
+						"autoBackButton": false,
+						"titleText": "标题栏",
+						"titleAlign": "left",
+						"subtitleText":"subtitleText",
+						"subtitleSize":"15rpx",
+						"homeButton":true,
+						"buttons": [{
+							"text": "取消",
+							"float": "right",
+							"fontSize": "30rpx",
+							"badgeText": "12"
+
+						}]
+						// ,
+						// "searchInput": {
+						// 	"autoFocus": true,
+						// 	"placeholder": "搜索糗事",
+						// 	"borderRadius": "10upx",
+						// 	"backgroundColor": "#F5F4F4"
+						// }
+					}
+					
+				}
+				
+			}
+
+		}
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		// "navigationBarTitleText": "uni-app",
