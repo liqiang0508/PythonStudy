@@ -22,7 +22,8 @@
 	/*每个页面公共css */
 	
 	  @import './common/uni.css';
-	  
+	  @import "colorui/main.css";
+	  @import "colorui/icon.css";
 	  @keyframes show {
 	  	0% {
 	  		transform: translateY(-50px);
