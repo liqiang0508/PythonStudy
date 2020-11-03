@@ -34,11 +34,11 @@ VersionManager.checkUpdate = function(url, progressCall, finishCall) {
 	this.progressCall = progressCall
 	this.finishCall = finishCall,
 
-		HttpHelper.HttpGet(url, (data) => {
-			if (data) //拿到配置数据了
+		HttpHelper.HttpGet(url, (res) => {
+			if (res.statusCode == 200) //拿到配置数据了
 			{
-				this.remoteData = data; //保存下远程配置
-				console.log(data)
+				this.remoteData = res.data; //保存下远程配置
+				console.log(res)
 				if (this.forceUpdate()) //判断是否属于强制更新的版本
 				{
 					console.log("强制更新")

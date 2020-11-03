@@ -8,7 +8,7 @@ function httpGet(url, call) {
 		success: (res) => {
 
 			if (call) {
-				call(res.data)
+				call(res)
 			}
 
 		},
@@ -35,7 +35,7 @@ function httpPost(url, data, call) {
 		success: (res) => {
 
 			if (call) {
-				call(res.data)
+				call(res)
 			}
 
 		},

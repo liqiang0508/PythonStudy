@@ -254,12 +254,12 @@
 			
 			},
 			changeCate(item) {
-				console.log("当前选择的" + item.name)
+				console.log("当前选择 = " + item.name)
 				this.current = item;
 				UiManager.showtoast("changeCate ="+item.name)
 			},
 			chooseitem(item) {
-				console.log("chooseitem" + item.name)
+				console.log("chooseitem = " + item.name)
 				UiManager.showtoast("chooseitem = "+item.name)
 			}
 		}

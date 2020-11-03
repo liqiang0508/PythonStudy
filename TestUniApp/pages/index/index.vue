@@ -82,9 +82,9 @@
 
 <script>
 	// import Test1 from '@/components/Test1/Test1.vue'
-	import HttpHelper from "../../common/HttpHelper.js"
 	import helper from "../../common/utils.js"
 	let UiManager = require("../../common/UiManager.js")
+	let HttpHelper = require("../../common/HttpHelper.js")
 	export default {
 		comments: {
 			// Test1
@@ -189,7 +189,14 @@
 			console.log("index show");
 			// 初始化一个动画
 			this.ScrollText = "果蔬自由-您身边的菜市 快捷服务，配送到家"
-
+			this.$HttpHelper.HttpGet("https://api.uomg.com/api/rand.music?sort=热歌榜&format=json",(res)=>{
+				console.log(res.statusCode);
+			})
+			
+			HttpHelper.HttpGet("https://api.uomg.com/api/rand.music?sort=热歌榜&format=json",(res)=>{
+				console.log("2=",res.statusCode);
+			})
+			
 		},
 		onReady() {
 			
@@ -212,19 +219,7 @@
 			},
 			KindsTap: function(data) {
 				console.log("点击了种类--", data.name)
-				var url = "https://192.168.65.172:5000/hello" //"http://pokerofroyal.com:8080/a/thaitexashotupiii/configrelease"
-				UiManager.showloading()
-				HttpHelper.HttpGet(url, (data) => {
-					UiManager.hideloading()
-					if (data) {
-						console.log( data[0])
-						
-						UiManager.ShowAlert("提示",[""],"OK")
-					} else {
-						UiManager.ShowAlert("提示",[""],"EROR")
 				
-					}
-				})
 			},
 			ToShopCar: function(data) {
 				console.log("点击了购物车--", data.name)

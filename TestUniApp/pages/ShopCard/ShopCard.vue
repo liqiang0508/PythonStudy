@@ -45,7 +45,6 @@
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import alert from "@/components/alert/alert.vue"
 	import test1 from "@/components/Test1/test.vue"
-	import HttpHelper from "../../common/HttpHelper.js"
 	let UiManager = require("../../common/UiManager.js")
 	export default {
 		components: {
@@ -93,21 +92,12 @@
 
 				})
 
-				// HttpHelper.httpPost("http://192.168.65.172:8080/req", {"name":"liqiang"},(data) => {
-
-				// 	if (data) {
-				// 		console.log( data)
-
-
-				// 	} else {
-
-				// 		console.log( "error")
-
-				// 	}
-				// })
+				
 			},
 			open4() {
 				this.$refs.popup.open()
+				// const subNVue = uni.getSubNVueById('popup')
+				// subNVue.show()
 				// this.$refs.uniPop.show({
 				//     skin: 'toast',
 				//     content: 'loading',
