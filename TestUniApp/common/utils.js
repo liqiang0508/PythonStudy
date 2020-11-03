@@ -1,4 +1,13 @@
-
+//对象转换成url后面的参数xx=xx&
+function queryString (obj){
+	if (typeof(obj)!=="object")
+	{
+		console.log("queryString =错误的参数");
+		return ""
+	}
+	var s = Object.keys(obj).map(key => key + '=' + obj[key]).join('&');
+	return s
+}
 
 //获取当前平台
 function GetPaltform() {
@@ -54,5 +63,6 @@ module.exports = {
 	GetPaltform: GetPaltform,
 	ShowAlert:ShowAlert,
 	ShowLoading:showloading,
-	HideLoading:hideloading
+	HideLoading:hideloading,
+	queryString:queryString
 }

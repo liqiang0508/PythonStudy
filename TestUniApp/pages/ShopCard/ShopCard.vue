@@ -36,6 +36,7 @@
 
 		<button @click="open4">打开弹窗</button>
 		<uni-popup ref="popup" type="bottom">底部弹出 Popup</uni-popup>
+		<button @click="open5">打开网页弹框</button>
 
 
 	</view>
@@ -71,6 +72,13 @@
 
 		},
 		methods: {
+			open5(){
+				
+				UiManager.navigateTo({url:"../ThirdPage/ThirdPage?siteurl=https://www.baidu.com/"})
+				// uni.navigateTo({
+				// 	url:"../ThirdPage/ThirdPage?siteurl=https://www.baidu.com/"
+				// })
+			},
 			onTap(arg) {
 				console.log("onTap-----", arg);
 				UiManager.showtoast("tosat")

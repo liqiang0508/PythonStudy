@@ -82,7 +82,7 @@
 
 <script>
 	// import Test1 from '@/components/Test1/Test1.vue'
-	import helper from "../../common/utils.js"
+	import utils from "../../common/utils.js"
 	let UiManager = require("../../common/UiManager.js")
 	let HttpHelper = require("../../common/HttpHelper.js")
 	export default {
@@ -214,8 +214,8 @@
 			NewGoosTap: function(data) {
 
 				console.log("点击了新品推荐--", data.name)
-				helper.ShowLoading()
-				setTimeout(helper.HideLoading,2000)
+				utils.ShowLoading()
+				setTimeout(utils.HideLoading,2000)
 			},
 			KindsTap: function(data) {
 				console.log("点击了种类--", data.name)

@@ -1,9 +1,10 @@
 var UiManager = {}
 
-UiManager.navigateTo = function(object)
+UiManager.navigateTo = function(data)
 {
+
 	uni.navigateTo({
-		url:object.url,
+		url:data.url,
 		animationType:"slide-in-right",
 		animationDuration:1000
 	})
