@@ -22,6 +22,10 @@
 			  console.log(res.errMsg);
 			  console.log(res.errCode);
 			});
+			this.innerAudioContext = innerAudioContext
+		},
+		onUnload() {
+			this.innerAudioContext.pause()
 		},
 		methods: {
 			
