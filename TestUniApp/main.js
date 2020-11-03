@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import App from './App'
-
+import HttpHelper  from "common/HttpHelper.js"
 import VueI18n from 'lang/vue-i18n.js' 
+
 Vue.use(VueI18n)  
 
 Vue.config.productionTip = false
+
+Vue.prototype.$HttpHelper = HttpHelper
 
 Vue.prototype.SayHello = function(){
 	console.log("SayHello==");
