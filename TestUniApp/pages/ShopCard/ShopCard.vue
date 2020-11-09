@@ -31,7 +31,7 @@
 		<button class="bg-gradual-purple" @click="open2">打开2个按钮</button>
 		<button class="bg-red" @click="open3">打开3个按钮</button>
 		<!-- <uni-popup ref="popup" type="bottom">底部弹出 Popup</uni-popup> -->
-		<test1  name="组件测试" @BtnClick="onTap"></test1>
+		<test1 name="组件测试" @BtnClick="onTap"></test1>
 		<alert ref="alert" @closepop="btnclose"></alert>
 
 		<button class="bg-brown" @click="open4">打开弹窗</button>
@@ -39,12 +39,18 @@
 		<button class="bg-blue" @click="open5">打开网页弹框</button>
 		<button class="bg-gradual-pink" @click="open6">自定义导航栏</button>
 		<button class="bg-gradual-pink" @click="open7">Tohome</button>
-
+		<!-- #ifdef APP-PLUS -->
+			<button class="bg-gradual-pink" @click="open8">插件调用1</button>
+			<button class="bg-gradual-pink" @click="open9">插件调用2</button>
+		<!-- #endif -->
+		
 
 	</view>
 </template>
 
 <script>
+	var pluginTest = uni.requireNativePlugin("pluginTest")
+	const modal = uni.requireNativePlugin('modal');
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import alert from "@/components/alert/alert.vue"
 	import test1 from "@/components/Test1/test.vue"
@@ -74,16 +80,44 @@
 
 		},
 		methods: {
-			open7(){
-				UiManager.navigateTo({url:"../Home/Home"})
+			open8() {
+				pluginTest.testAsyncFunc({
+						'name': 'unimp',
+						'age': 1
+					},
+					(ret) => {
+						modal.toast({
+							message: ret,
+							duration: 1.5
+						});
+					})
 			},
-			open6(){
-				UiManager.navigateTo({url:"../sample/custombar"})
+			open9() {
+				var ret = pluginTest.testSyncFunc({
+					'name': 'unimp',
+					'age': 1
+				})
+				modal.toast({
+					message: ret,
+					duration: 1.5
+				});
 			},
-			open5(){
-				
-				UiManager.navigateTo({url:"../ThirdPage/ThirdPage?siteurl=https://www.baidu.com/"})
-			
+			open7() {
+				UiManager.navigateTo({
+					url: "../Home/Home"
+				})
+			},
+			open6() {
+				UiManager.navigateTo({
+					url: "../sample/custombar"
+				})
+			},
+			open5() {
+
+				UiManager.navigateTo({
+					url: "../ThirdPage/ThirdPage?siteurl=https://www.baidu.com/"
+				})
+
 			},
 			onTap(arg) {
 				console.log("onTap-----", arg);
@@ -106,7 +140,7 @@
 
 				})
 
-				
+
 			},
 			open4() {
 				this.$refs.popup.open()
