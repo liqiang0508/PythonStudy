@@ -3,10 +3,16 @@
     "appid" : "__UNI__37FA08B",
     "description" : "",
     "versionName" : "1.0.2",
-    "versionCode" : 107,
+    "versionCode" : 109,
     "transformPx" : false,
+    "networkTimeout" : {
+        "request" : 5000
+    },
     /* 5+App特有相关 */
     "app-plus" : {
+        "compatible" : {
+            "ignoreVersion" : true //true表示忽略版本检查提示框，HBuilderX1.9.0及以上版本支持  
+        },
         "privacy" : {
             "prompt" : "template",
             "template" : {
@@ -108,7 +114,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "123456",
         "setting" : {
             "urlCheck" : false,
             "es6" : true,
@@ -129,3 +135,5 @@
         "enable" : false
     }
 }
+/* 5+App特有相关 */
+

@@ -35,7 +35,7 @@ VersionManager.checkUpdate = function(url, progressCall, finishCall) {
 	this.finishCall = finishCall,
 
 		HttpHelper.HttpGet(url, (res) => {
-			if (res.statusCode == 200) //拿到配置数据了
+			if (res&&res.statusCode == 200) //拿到配置数据了
 			{
 				this.remoteData = res.data; //保存下远程配置
 				console.log(res)
@@ -106,7 +106,7 @@ VersionManager.getLocalVersion = function() {
 		if (value) {
 
 		} else {
-			value = GlobalFun.scriptVersion
+			value = GlobalFun.getVersionName()
 		}
 		return value
 	} catch (e) {
@@ -162,7 +162,7 @@ VersionManager.downWgt = function(url) {
 	const downloadTask = uni.downloadFile({
 		url: url,
 		success: (res) => {
-			if (res.statusCode === 200) {
+			if (res&&res.statusCode === 200) {
 				console.log('下载成功');
 				this.installWgt(res.tempFilePath)
 			}

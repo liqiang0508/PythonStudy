@@ -77,10 +77,12 @@
 			//#endif
 
 			// #ifdef H5
-			this.goMain()
+				this.goMain()
 			// #endif
 
-
+			// #ifdef MP-WEIXIN
+				this.goMain()
+			// #endif
 
 		},
 		onShow() {

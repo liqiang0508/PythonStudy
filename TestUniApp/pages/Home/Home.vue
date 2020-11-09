@@ -128,6 +128,10 @@
 			endDate() {
 				return this.getDate('end');
 			}
+			// ,
+			// valueList(){
+			// 	return [9999, month - 1, day - 1]
+			// }
 		},
 		mounted() {
 			// 创建附件上传
@@ -241,7 +245,10 @@
 				this.month = this.months[val[1]]
 				this.day = this.days[val[2]]
 
-
+				if (this.years[val[1]]<10)
+				{
+					this.valueList[1] = 10
+				}
 				console.log("this.valueList==", this.valueList)
 
 

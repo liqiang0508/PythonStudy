@@ -38,6 +38,7 @@
 		<uni-popup ref="popup" type="bottom">底部弹出 Popup</uni-popup>
 		<button class="bg-blue" @click="open5">打开网页弹框</button>
 		<button class="bg-gradual-pink" @click="open6">自定义导航栏</button>
+		<button class="bg-gradual-pink" @click="open7">Tohome</button>
 
 
 	</view>
@@ -73,6 +74,9 @@
 
 		},
 		methods: {
+			open7(){
+				UiManager.navigateTo({url:"../Home/Home"})
+			},
 			open6(){
 				UiManager.navigateTo({url:"../sample/custombar"})
 			},
