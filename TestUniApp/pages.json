@@ -43,10 +43,20 @@
 			}
 		}, {
 			"path": "pages/ShopCard/ShopCard",
-			"style": {}
+			
+			"style": {
+				// "navigationStyle":"custom"
+				"app-plus": {
+					"titleNView": false
+				}
+			}
 		}, {
 			"path": "pages/Me/Me",
-			"style": {}
+			"style": {
+				"navigationBarBackgroundColor":"#3c6bd1",
+				"navigationBarTitleText": "我"
+				
+			}
 		}
 
 		, {

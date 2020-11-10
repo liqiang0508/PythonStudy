@@ -6,8 +6,7 @@
 
 		</view> -->
 
-
-
+		<uni-nav-bar left-icon="back" left-text="返回" right-text="菜单" title="导航栏组件" @clickLeft = "clickLeft" @clickRight="clickRight"></uni-nav-bar>
 
 		<view class="bottom">
 			<view class="left" style="margin-left: 20rpx;">
@@ -49,6 +48,7 @@
 </template>
 
 <script>
+	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 	var pluginTest = uni.requireNativePlugin("pluginTest")
 	const modal = uni.requireNativePlugin('modal');
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
@@ -59,7 +59,8 @@
 		components: {
 			uniPopup,
 			alert,
-			test1
+			test1,
+			uniNavBar
 		},
 		data() {
 			return {
@@ -80,6 +81,12 @@
 
 		},
 		methods: {
+			clickRight(){
+				console.log("自定义导航右边点击");
+			},
+			clickLeft(){
+				console.log("自定义导航左边点击");
+			},
 			open8() {
 				pluginTest.testAsyncFunc({
 						'name': 'unimp',
@@ -181,6 +188,7 @@
 </script>
 
 <style>
+
 	.bottom {
 		display: flex;
 		flex-direction: row;
