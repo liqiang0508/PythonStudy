@@ -1,7 +1,7 @@
 <template>
 	<view class=content>
 	
-		<uni-nav-bar statusBar = true left-icon="back" left-text="返回" right-text="菜单" title="导航栏组件" @clickLeft="clickLeft" @clickRight="clickRight"></uni-nav-bar>
+		<uni-nav-bar :fixed="true" statusBar = true left-icon="back" left-text="返回" right-text="菜单" title="导航栏组件" @clickLeft="clickLeft" @clickRight="clickRight"></uni-nav-bar>
 
 		<view class="bottom">
 			<view class="left" style="margin-left: 20rpx;">
@@ -37,7 +37,15 @@
 		<button class="bg-gradual-pink" @click="open8">插件调用1</button>
 		<button class="bg-gradual-pink" @click="open9">插件调用2</button>
 		<!-- #endif -->
-
+		
+		<uni-list :scrollY="true">
+			<uni-list-item>666</uni-list-item>
+			<uni-list-item>666</uni-list-item>
+			<uni-list-item>666</uni-list-item>
+			<uni-list-item>666</uni-list-item>
+			<uni-list-item>666</uni-list-item>
+			<uni-list-item>666</uni-list-item>
+		</uni-list>
 
 	</view>
 </template>
@@ -75,10 +83,14 @@
 
 		},
 		onPullDownRefresh() {
-			console.log("下拉刷新");
+			console.log("shop 下拉刷新");
 			setTimeout(function() {
 				uni.stopPullDownRefresh();
 			}, 1000);
+		},
+		onReachBottom(){
+			console.log("shop 上拉刷新")
+			
 		},
 		methods: {
 			clickRight() {

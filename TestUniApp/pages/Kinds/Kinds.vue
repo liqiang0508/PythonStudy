@@ -7,17 +7,17 @@
 				</view>
 			</scroll-view>
 		</view>
-		
+
 		<view class="rightView">
-			<scroll-view class="r_scrollview" scroll-y @scrolltoupper="rightupper" @scrolltolower="rightlower" @scroll="rightscroll">
+			<scroll-view class="r_scrollview" scroll-y :lower-threshold =5 @scrolltoupper="rightupper" @scrolltolower="rightlower" @scroll="rightscroll">
 				<view class="right_wrap">
 					<view class="item_right" v-for="item in current.child" :key="item.id" @click="chooseitem(item)">
-						<image class="item_img"  :src="item.img" mode="aspectFill"></image>
+						<image class="item_img" :src="item.img" mode="aspectFill"></image>
 						<text>{{ item.name }}</text>
 					</view>
 
 				</view>
-
+			
 			</scroll-view>
 
 
@@ -29,8 +29,8 @@
 <script>
 	let UiManager = require("../../common/UiManager.js")
 	export default {
-		
-		
+
+
 		data() {
 			return {
 				current: {}, //当前选择的数据
@@ -183,7 +183,7 @@
 								img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
 								id: 39
 							}
-			
+
 
 						]
 					},
@@ -229,13 +229,23 @@
 		onHide() {
 			console.log("onHide");
 		},
-
+		onPullDownRefresh() {
+			console.log("下拉刷新")
+			setTimeout(function() {
+				uni.stopPullDownRefresh();
+				console.log("停止下拉刷新")
+			}, 1000);
+		},
+		onReachBottom(){
+			console.log("onReachBottom");
+		},
 		methods: {
 			upper: function(e) {
-				console.log("滚动到顶部/左边，会触发 scrolltoupper 事件")
+				console.log("滚动到顶部/左边，会触发 scrolltoupper 事件2")
 			},
 			lower: function(e) {
-				console.log("滚动到底部/右边，会触发 scrolltolower 事件")
+				console.log("滚动到底部/右边，会触发 scrolltolower 事件1")
+
 			},
 			scroll: function(e) {
 				// console.log(e)
@@ -243,24 +253,55 @@
 
 			},
 			rightupper: function(e) {
-				console.log("滚动到顶部/左边，会触发 scrolltoupper 事件")
+				console.log("滚动到顶部/左边，会触发 scrolltoupper 事件3")
 			},
 			rightlower: function(e) {
-				console.log("滚动到底部/右边，会触发 scrolltolower 事件")
+				console.log("滚动到底部/右边，会触发 scrolltolower 事件4")
+				UiManager.showloading()
+				var index = this.current.child[this.current.child.length-1].id+1
+				var obj = [
+					{
+						name: "种类1_" +index,
+						img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
+						id: index
+					},
+					{
+						name: "种类1_" +index+1,
+						img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
+						id: index+1
+					},
+					{
+						name: "种类1_" +index+2,
+						img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
+						id: index+2
+					},
+					{
+						name: "种类1_" +index+3,
+						img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
+						id: index+3
+					},
+					{
+						name: "种类1_" +index+4,
+						img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
+						id: index+4
+					}
+				]
+				this.current.child = this.current.child.concat(obj)
+				UiManager.hideloading()
 			},
 			rightscroll: function(e) {
 				// console.log(e)
 				//滚动时触发，event.detail = {scrollLeft, scrollTop, scrollHeight, scrollWidth, deltaX, deltaY}
-			
+
 			},
 			changeCate(item) {
 				console.log("当前选择 = " + item.name)
 				this.current = item;
-				UiManager.showtoast("changeCate ="+item.name)
+				UiManager.showtoast("changeCate =" + item.name)
 			},
 			chooseitem(item) {
 				console.log("chooseitem = " + item.name)
-				UiManager.showtoast("chooseitem = "+item.name)
+				UiManager.showtoast("chooseitem = " + item.name)
 			}
 		}
 	}
@@ -269,7 +310,9 @@
 <style>
 	.appkinds {
 		position: absolute;
-		opacity: /* 0.5 */;
+		opacity:
+			/* 0.5 */
+		;
 		width: 100%;
 		height: 100%;
 
@@ -281,16 +324,16 @@
 		display: flex;
 		background-color: #e2e2e2;
 	}
-	
 
-	
+
+
 	.item_left {
 		height: 80rpx;
 		width: 100%;
 		flex-direction: column;
 		display: flex;
 		align-items: center;
-		justify-content: center;	
+		justify-content: center;
 	}
 
 	.active {
@@ -337,12 +380,12 @@
 		align-items: center;
 		display: flex;
 		width: 30%;
-		height: 250rpx;
+		height: 200rpx;
 		/* background-color: #ff0000; */
 	}
-	
-	.item_img{
-		width: 100%; 
+
+	.item_img {
+		width: 100%;
 		height: 100px;
 	}
 </style>

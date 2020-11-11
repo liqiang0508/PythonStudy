@@ -16,8 +16,15 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "index"
-				// "enablePullDownRefresh": true 
+				"navigationBarTitleText": "index",
+				"enablePullDownRefresh": true,
+				"app-plus": {
+					// "titleNView": false,
+					"pullToRefresh":{
+						"support":true,
+						"style":"circle"
+					}
+				}
 			}
 		},
 		{
@@ -35,6 +42,7 @@
 		}, {
 			"path": "pages/Kinds/Kinds",
 			"style": {
+				"enablePullDownRefresh": true,
 				"navigationBarTitleText": "分类",
 				"app-plus": {
 					"titleText": "ada",

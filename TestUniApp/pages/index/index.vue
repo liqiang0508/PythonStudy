@@ -201,12 +201,17 @@
 		onReady() {
 			
 		},
+		
 		onPullDownRefresh() {
 			console.log("下拉刷新")
 			setTimeout(function() {
 				uni.stopPullDownRefresh();
 				console.log("停止下拉刷新")
 			}, 1000);
+		},
+		onReachBottom(){
+			console.log("上拉刷新")
+			
 		},
 		methods: {
 			
