@@ -45,9 +45,14 @@
 			"path": "pages/ShopCard/ShopCard",
 			
 			"style": {
-				// "navigationStyle":"custom"
+				"enablePullDownRefresh":true,
+				"navigationStyle":"custom",
 				"app-plus": {
-					"titleNView": false
+					// "titleNView": false,
+					"pullToRefresh":{
+						"support":true,
+						"style":"circle"
+					}
 				}
 			}
 		}, {

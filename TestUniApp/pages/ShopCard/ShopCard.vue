@@ -1,12 +1,7 @@
 <template>
 	<view class=content>
-		<!-- <text>购物车</text> -->
-
-		<!-- <view style="height: 800rpx; background-color: #fff2f3;" v-for="(item,index) in dataList" :key="index">
-
-		</view> -->
-
-		<uni-nav-bar left-icon="back" left-text="返回" right-text="菜单" title="导航栏组件" @clickLeft = "clickLeft" @clickRight="clickRight"></uni-nav-bar>
+	
+		<uni-nav-bar statusBar = true left-icon="back" left-text="返回" right-text="菜单" title="导航栏组件" @clickLeft="clickLeft" @clickRight="clickRight"></uni-nav-bar>
 
 		<view class="bottom">
 			<view class="left" style="margin-left: 20rpx;">
@@ -39,16 +34,16 @@
 		<button class="bg-gradual-pink" @click="open6">自定义导航栏</button>
 		<button class="bg-gradual-pink" @click="open7">Tohome</button>
 		<!-- #ifdef APP-PLUS -->
-			<button class="bg-gradual-pink" @click="open8">插件调用1</button>
-			<button class="bg-gradual-pink" @click="open9">插件调用2</button>
+		<button class="bg-gradual-pink" @click="open8">插件调用1</button>
+		<button class="bg-gradual-pink" @click="open9">插件调用2</button>
 		<!-- #endif -->
-		
+
 
 	</view>
 </template>
 
 <script>
-	import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
+	// import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
 	var pluginTest = uni.requireNativePlugin("pluginTest")
 	const modal = uni.requireNativePlugin('modal');
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
@@ -59,8 +54,7 @@
 		components: {
 			uniPopup,
 			alert,
-			test1,
-			uniNavBar
+			test1
 		},
 		data() {
 			return {
@@ -80,12 +74,20 @@
 			});
 
 		},
+		onPullDownRefresh() {
+			console.log("下拉刷新");
+			setTimeout(function() {
+				uni.stopPullDownRefresh();
+			}, 1000);
+		},
 		methods: {
-			clickRight(){
+			clickRight() {
 				console.log("自定义导航右边点击");
+				UiManager.showtoast("自定义导航右边点击")
 			},
-			clickLeft(){
+			clickLeft() {
 				console.log("自定义导航左边点击");
+				UiManager.showtoast("自定义导航左边点击")
 			},
 			open8() {
 				pluginTest.testAsyncFunc({
@@ -188,6 +190,11 @@
 </script>
 
 <style>
+	.status_bar {  
+	    height: var(--status-bar-height);  
+	    width: 100%;  
+	    background-color: #ffffff;  
+	}  
 
 	.bottom {
 		display: flex;

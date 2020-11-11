@@ -5,7 +5,20 @@
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
+			let platform = '';
+			var sysInfo = uni.getSystemInfoSync()
 			
+			// #ifdef APP-PLUS
+				platform = 'App';
+				if (sysInfo.platform == 'android') {
+					uni.setStorageSync('isAndroid', true);
+				} else {
+					uni.setStorageSync('isAndroid', false);
+				}
+				console.log('CustomBar=='+Vue.prototype.CustomBar)
+			// #endif
+			
+			uni.setStorageSync('platform', platform);
 		},
 		onShow: function() {
 			console.log('App Show')
