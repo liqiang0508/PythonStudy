@@ -15,7 +15,7 @@
 				} else {
 					uni.setStorageSync('isAndroid', false);
 				}
-				console.log('CustomBar=='+Vue.prototype.CustomBar)
+				
 			// #endif
 			
 			uni.setStorageSync('platform', platform);

@@ -1,2 +1,3 @@
+include ':pluginTest'
 rootProject.name='uniapptest'
 include ':app'

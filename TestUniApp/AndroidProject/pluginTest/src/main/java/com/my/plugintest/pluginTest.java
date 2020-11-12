@@ -4,17 +4,20 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
-import com.taobao.weex.annotation.JSMethod;
 import com.taobao.weex.bridge.JSCallback;
-import com.taobao.weex.common.WXModule;
 
-public class pluginTest extends WXModule{
+
+import io.dcloud.feature.uniapp.annotation.UniJSMethod;
+import io.dcloud.feature.uniapp.bridge.UniJSCallback;
+import io.dcloud.feature.uniapp.common.UniModule;
+
+public class pluginTest extends UniModule {
 
     String TAG = "TestModule";
 
     //run ui thread
-    @JSMethod(uiThread = true)
-    public void testAsyncFunc(JSONObject options, JSCallback callback) {
+    @UniJSMethod(uiThread = true)
+    public void testAsyncFunc(JSONObject options, UniJSCallback callback) {
         Log.e(TAG, "testAsyncFunc--"+options);
         if(callback != null) {
             JSONObject data = new JSONObject();
@@ -27,7 +30,7 @@ public class pluginTest extends WXModule{
     }
 
     //run JS thread
-    @JSMethod (uiThread = false)
+    @UniJSMethod (uiThread = false)
     public JSONObject testSyncFunc(){
         JSONObject data = new JSONObject();
         data.put("code", "success");

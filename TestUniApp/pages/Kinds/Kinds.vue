@@ -9,7 +9,7 @@
 		</view>
 
 		<view class="rightView">
-			<scroll-view class="r_scrollview" scroll-y :lower-threshold=5 @scrolltoupper="rightupper" @scrolltolower="rightlower"
+			<scroll-view class="r_scrollview" scroll-y :lower-threshold= 5 @scrolltoupper="rightupper" @scrolltolower="rightlower"
 			 @scroll="rightscroll">
 				<view class="right_wrap">
 					<view class="item_right" v-for="item in current.child" :key="item.id" @click="chooseitem(item)">
@@ -247,10 +247,10 @@
 		},
 		methods: {
 			upper: function(e) {
-				console.log("滚动到顶部/左边，会触发 scrolltoupper 事件2")
+				// console.log("滚动到顶部/左边，会触发 scrolltoupper 事件2")
 			},
 			lower: function(e) {
-				console.log("滚动到底部/右边，会触发 scrolltolower 事件1")
+				// console.log("滚动到底部/右边，会触发 scrolltolower 事件1")
 
 			},
 			scroll: function(e) {
@@ -259,10 +259,10 @@
 
 			},
 			rightupper: function(e) {
-				console.log("滚动到顶部/左边，会触发 scrolltoupper 事件3")
+				// console.log("滚动到顶部/左边，会触发 scrolltoupper 事件3")
 			},
 			rightlower: function(e) {
-				console.log("滚动到底部/右边，会触发 scrolltolower 事件4")
+				// console.log("滚动到底部/右边，会触发 scrolltolower 事件4")
 				UiManager.showloading()
 				setTimeout(()=>{
 					var index = this.current.child[this.current.child.length - 1].id + 1
