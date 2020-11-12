@@ -42,7 +42,6 @@
 		}, {
 			"path": "pages/Kinds/Kinds",
 			"style": {
-				"enablePullDownRefresh": true,
 				"navigationBarTitleText": "分类",
 				"app-plus": {
 					"titleText": "ada",

@@ -9,14 +9,12 @@
 		</view>
 
 		<view class="rightView">
-			<scroll-view class="r_scrollview" scroll-y :lower-threshold= 5 @scrolltoupper="rightupper" @scrolltolower="rightlower"
-			 @scroll="rightscroll">
+			<scroll-view  class="r_scrollview"    :scroll-top="scrollTop" :scroll-y="true" @scrolltoupper="rightupper" @scrolltolower="rightlower" @scroll="rightscroll">
 				<view class="right_wrap">
 					<view class="item_right" v-for="item in current.child" :key="item.id" @click="chooseitem(item)">
 						<image class="item_img" :src="item.img" mode="aspectFill"></image>
 						<text>{{ item.name }}</text>
 					</view>
-
 				</view>
 
 			</scroll-view>
@@ -34,6 +32,10 @@
 
 		data() {
 			return {
+				scrollTop: 0,
+				old: {
+					scrollTop: 0
+				},
 				current: {}, //当前选择的数据
 				itemData: [ //所有商品数据
 					{
@@ -261,8 +263,7 @@
 			rightupper: function(e) {
 				// console.log("滚动到顶部/左边，会触发 scrolltoupper 事件3")
 			},
-			rightlower: function(e) {
-				// console.log("滚动到底部/右边，会触发 scrolltolower 事件4")
+			getdata(){
 				UiManager.showloading()
 				setTimeout(()=>{
 					var index = this.current.child[this.current.child.length - 1].id + 1
@@ -272,28 +273,35 @@
 					
 					for (var i = 0; i < 15; i++) {
 						obj.push({
-							name: "种类1_" + index + i,
+							name: "种类1_" + (index + i),
 							img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
 							id:index + i,
 						}, )
 					}
 					this.current.child = this.current.child.concat(obj)
 					UiManager.hideloading()
+					this.scrollTop = this.old.scrollTop
 				},2000)
 			},
+			rightlower: function(e) {
+				// console.log("滚动到底部/右边，会触发 scrolltolower 事件4")
+				this.getdata()
+			},
 			rightscroll: function(e) {
-				// console.log(e)
+				// console.log(e.detail.scrollHeight,e.detail.scrollTop)
 				//滚动时触发，event.detail = {scrollLeft, scrollTop, scrollHeight, scrollWidth, deltaX, deltaY}
-
+				this.old.scrollTop = e.detail.scrollTop
+				
 			},
 			changeCate(item) {
 				console.log("当前选择 = " + item.name)
-				this.current = item;
-				UiManager.showtoast("changeCate =" + item.name)
+				var id = item.id
+				this.current = this.itemData[id-1];
+	
 			},
 			chooseitem(item) {
 				console.log("chooseitem = " + item.name)
-				UiManager.showtoast("chooseitem = " + item.name)
+
 			}
 		}
 	}
