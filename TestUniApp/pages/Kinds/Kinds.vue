@@ -2,8 +2,8 @@
 	<view class="appkinds uni-flex uni-row">
 		<view class="leftView">
 			<scroll-view scroll-y="true" class="scroll-Y" @scrolltoupper="upper" @scrolltolower="lower" @scroll="scroll">
-				<view class="item_left" :class="{active: item.id === current.id}" v-for="item in itemData" :key="item.id" @click="changeCate(item)">
-					<text :class="{active: item.id === current.id}">{{ item.name }}</text>
+				<view class="item_left" :class="{active: item.id === currentkind.id}" v-for="item in itemData" :key="item.id" @click="changeCate(item)">
+					<text :class="{active: item.id === currentkind.id}">{{ item.name }}</text>
 				</view>
 			</scroll-view>
 		</view>
@@ -11,7 +11,7 @@
 		<view class="rightView">
 			<scroll-view  class="r_scrollview"    :scroll-top="scrollTop" :scroll-y="true" @scrolltoupper="rightupper" @scrolltolower="rightlower" @scroll="rightscroll">
 				<view class="right_wrap">
-					<view class="item_right" v-for="item in current.child" :key="item.id" @click="chooseitem(item)">
+					<view class="item_right" v-for="item in currentItems" :key="item.id" @click="chooseitem(item)">
 						<image class="item_img" :src="item.img" mode="aspectFill"></image>
 						<text>{{ item.name }}</text>
 					</view>
@@ -36,7 +36,8 @@
 				old: {
 					scrollTop: 0
 				},
-				current: {}, //当前选择的数据
+				currentkind: {}, //当前选择的种类
+				currentItems:[],//当前种类下的道具
 				itemData: [ //所有商品数据
 					{
 						name: "种类1",
@@ -197,11 +198,13 @@
 					},
 					{
 						name: "种类2",
-						id: 2
+						id: 2,
+						
 					},
 					{
 						name: "种类3",
-						id: 3
+						id: 3,
+						
 					},
 					{
 						name: "种类4",
@@ -226,7 +229,8 @@
 		},
 		onLoad() {
 			console.log("onLoad");
-			this.current = this.itemData[0]
+			this.currentkind = this.itemData[0]
+			this.currentItems = this.currentkind.child
 		},
 		onReady() {
 			console.log("onReady");
@@ -266,7 +270,7 @@
 			getdata(){
 				UiManager.showloading()
 				setTimeout(()=>{
-					var index = this.current.child[this.current.child.length - 1].id + 1
+					var index = this.currentItems[this.currentItems.length - 1].id + 1
 					var obj = [
 					
 					]
@@ -278,7 +282,7 @@
 							id:index + i,
 						}, )
 					}
-					this.current.child = this.current.child.concat(obj)
+					this.currentItems = this.currentItems.concat(obj)
 					UiManager.hideloading()
 					this.scrollTop = this.old.scrollTop
 				},2000)
@@ -295,13 +299,13 @@
 			},
 			changeCate(item) {
 				console.log("当前选择 = " + item.name)
-				var id = item.id
-				this.current = this.itemData[id-1];
-	
+				this.currentkind = item
+				this.currentItems = item.child || []
+
 			},
 			chooseitem(item) {
 				console.log("chooseitem = " + item.name)
-
+				UiManager.showtoast("chooseitem = " + item.name)
 			}
 		}
 	}

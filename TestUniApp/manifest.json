@@ -3,7 +3,7 @@
     "appid" : "__UNI__37FA08B",
     "description" : "",
     "versionName" : "1.0.2",
-    "versionCode" : 112,
+    "versionCode" : 123,
     "transformPx" : false,
     "networkTimeout" : {
         "request" : 5000
@@ -108,7 +108,36 @@
                 "iosStyle" : "common"
             }
         },
-        "nvueLaunchMode" : ""
+        "nvueLaunchMode" : "",
+        "nativePlugins" : {
+            "my_pluginTest" : {
+                "appkey" : "",
+                "appid" : "",
+                "__plugin_info__" : {
+                    "name" : "pluginTest",
+                    "description" : "插件测试",
+                    "platforms" : "Android",
+                    "url" : "",
+                    "android_package_name" : "",
+                    "ios_bundle_id" : "",
+                    "isCloud" : false,
+                    "bought" : -1,
+                    "pid" : "",
+                    "parameters" : {
+                        "appkey" : {
+                            "des" : "Android appkey",
+                            "key" : "getui:appkey",
+                            "value" : ""
+                        },
+                        "appid" : {
+                            "des" : "Android appid",
+                            "key" : "getui:appid",
+                            "value" : ""
+                        }
+                    }
+                }
+            }
+        }
     },
     /* 快应用特有相关 */
     "quickapp" : {},
