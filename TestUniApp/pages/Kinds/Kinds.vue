@@ -9,7 +9,8 @@
 		</view>
 
 		<view class="rightView">
-			<scroll-view class="r_scrollview" scroll-y :lower-threshold =5 @scrolltoupper="rightupper" @scrolltolower="rightlower" @scroll="rightscroll">
+			<scroll-view class="r_scrollview" scroll-y :lower-threshold=5 @scrolltoupper="rightupper" @scrolltolower="rightlower"
+			 @scroll="rightscroll">
 				<view class="right_wrap">
 					<view class="item_right" v-for="item in current.child" :key="item.id" @click="chooseitem(item)">
 						<image class="item_img" :src="item.img" mode="aspectFill"></image>
@@ -17,7 +18,7 @@
 					</view>
 
 				</view>
-			
+
 			</scroll-view>
 
 
@@ -182,6 +183,11 @@
 								name: "种类1_39",
 								img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
 								id: 39
+							},
+							{
+								name: "种类1_40",
+								img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
+								id: 40
 							}
 
 
@@ -236,7 +242,7 @@
 				console.log("停止下拉刷新")
 			}, 1000);
 		},
-		onReachBottom(){
+		onReachBottom() {
 			console.log("onReachBottom");
 		},
 		methods: {
@@ -258,36 +264,22 @@
 			rightlower: function(e) {
 				console.log("滚动到底部/右边，会触发 scrolltolower 事件4")
 				UiManager.showloading()
-				var index = this.current.child[this.current.child.length-1].id+1
-				var obj = [
-					{
-						name: "种类1_" +index,
-						img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
-						id: index
-					},
-					{
-						name: "种类1_" +index+1,
-						img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
-						id: index+1
-					},
-					{
-						name: "种类1_" +index+2,
-						img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
-						id: index+2
-					},
-					{
-						name: "种类1_" +index+3,
-						img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
-						id: index+3
-					},
-					{
-						name: "种类1_" +index+4,
-						img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
-						id: index+4
+				setTimeout(()=>{
+					var index = this.current.child[this.current.child.length - 1].id + 1
+					var obj = [
+					
+					]
+					
+					for (var i = 0; i < 15; i++) {
+						obj.push({
+							name: "种类1_" + index + i,
+							img: "https://img14.360buyimg.com/n7/jfs/t1/50975/30/15545/168609/5dc985c4E06e8dbda/032be1072bde8b82.jpg",
+							id:index + i,
+						}, )
 					}
-				]
-				this.current.child = this.current.child.concat(obj)
-				UiManager.hideloading()
+					this.current.child = this.current.child.concat(obj)
+					UiManager.hideloading()
+				},2000)
 			},
 			rightscroll: function(e) {
 				// console.log(e)

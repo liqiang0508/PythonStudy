@@ -2,7 +2,8 @@
 	<view class=content>
 	
 		<uni-nav-bar :fixed="true" statusBar = true left-icon="back" left-text="返回" right-text="菜单" title="导航栏组件" @clickLeft="clickLeft" @clickRight="clickRight"></uni-nav-bar>
-
+		<!-- <view   style="width: 750rpx; height:44px; background-color: #000080;z-index: 998; display: block;position: fixed;"></view>
+		<view style="width: 750rpx; height:44px;"></view> -->
 		<view class="bottom">
 			<view class="left" style="margin-left: 20rpx;">
 				<radio @click="radioChange" :checked="isAllSelect" />
