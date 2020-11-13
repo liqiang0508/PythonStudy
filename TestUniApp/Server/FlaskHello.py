@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 from flask import Flask, redirect, url_for,request,session
 from flask import render_template
 from flask import jsonify
@@ -18,9 +20,9 @@ def hello():
 
 @app.route('/post',methods=['POST'])
 def post():
-	postData = request.get_data()
-	print postData
-	return postData
+	postData = request.get_data()#获取原始json数据 字符串
+	jsonData = request.get_json()#json数据  对象
+	return jsonData
       
 if __name__ == '__main__':
 	CORS(app, supports_credentials=True)
