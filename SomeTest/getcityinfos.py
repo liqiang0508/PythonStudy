@@ -152,6 +152,8 @@ with open("area.json","r") as f:
 
 print "data--",privonces[21]["name"],citys[21][0]["name"],area[21][0][0]['name']
 
+print (json.dumps(area[21][0],ensure_ascii=False,indent = 4))
+
 # os.system('pause')
 # provicescode = re.match("\d+",name)
 # print provicescode.group()

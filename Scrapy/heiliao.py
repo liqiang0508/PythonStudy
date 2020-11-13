@@ -51,7 +51,9 @@ def getVideo(url):
 
 def GetOnePage(pageindex):
 	url = "https://zzzttt.me/page/"+str(pageindex)+"/"
-	htmldata = requests.get(url)
+	
+	htmldata = requests.get(url, headers=headers)
+	# print htmldata.text
 	selector = etree.HTML(htmldata.text)
 	articles = selector.xpath("//article")
 	for article in  articles:
@@ -70,7 +72,7 @@ def GetOnePage(pageindex):
 # driver = webdriver.Chrome(options=opt)
 # driver.implicitly_wait(5)
 # driver.get("https://www.baidu.com/")
-
-for i in range(30):
+# GetOnePage(1)
+for i in range(1,10):
 	GetOnePage(i)
 # getVideo("https://zzzttt.me/archives/6.html")

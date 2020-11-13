@@ -53,8 +53,11 @@
 
 <script>
 	// import uniNavBar from "@/components/uni-nav-bar/uni-nav-bar.vue"
-	var pluginTest = uni.requireNativePlugin("pluginTest")
-	const modal = uni.requireNativePlugin('modal');
+	// #ifdef APP-PLUS
+		var pluginTest = uni.requireNativePlugin("pluginTest")
+		const modal = uni.requireNativePlugin('modal');
+	// #endif
+	
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import alert from "@/components/alert/alert.vue"
 	import test1 from "@/components/Test1/test.vue"

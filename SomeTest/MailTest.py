@@ -6,8 +6,8 @@ from email.mime.text import MIMEText
 from email.utils import formataddr
  
 my_sender='497232807@qq.com'    # 发件人邮箱账号
-my_pass = 'yxjjkocizamjbjfj'              # 发件人邮箱密码
-my_user=' 543415830@qq.com'      # 收件人邮箱账号，我这边发送给自己
+my_pass = 'tlbgjgnomulncahg'              # 发件人邮箱密码
+my_user=' 497232807@qq.com'      # 收件人邮箱账号，我这边发送给自己
 def mail():
     ret=True
     try:
@@ -24,7 +24,7 @@ def mail():
         ret=False
     return ret
  
-for x in range(1,10):
+for x in range(1,2):
     ret=mail()
     if ret:
       print("邮件发送成功")

@@ -145,6 +145,7 @@ def Getmain(startindex,endindex):
            
            
 # 5-233
+# https://www.keke2345.com/gaoqing/list_5_2.html
 url = "https://www.keke2345.com/gaoqing/list_5_1.html"
 htmldata = getHtmlData(url)
 htmldata.encoding = "gb2312"

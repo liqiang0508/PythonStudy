@@ -81,7 +81,18 @@ print b
 del b[2]
 print b
 
+p = "1,2,3"
+print p.split(",")
+print(".".join(reversed("123")))
+b = [1,2,3,4]
 
+for x in xrange(0,len(b)):
+	print x,b[x]
+
+a = -2
+a = a  if a>=0 else -a
+print(a)
+print(len("https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=246653379193569&height=200&width=200&ext=1604906771&hash=AeR9soxw4SdX8JJJtho"))
 os.system('pause')
 # os.system('explorer E:\github')
 # os.system("explorer "+ "../")
