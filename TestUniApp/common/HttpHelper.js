@@ -30,7 +30,7 @@ function httpPost(url, data, call) {
 		timeout:3000,
 		data: data,
 		header: {
-			'content-type': 'application/json' //json
+			'content-type':  data["content-type"]||'application/json' //json
 		},
 		success: (res) => {
 
