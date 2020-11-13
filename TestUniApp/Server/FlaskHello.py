@@ -6,9 +6,20 @@ from flask import jsonify
 from flask_cors import CORS
 import json
 import sqlite3
+
+from time import sleep
+from wsgiref.simple_server import make_server
+
 app = Flask(__name__)
 # app.secret_key='123456789'
 
+
+
+@app.route('/testsleep')
+def test_sleep():
+    sleep( 10 )
+    return 'Hi, You wait for about 10 seconds, right?'
+	
 @app.route('/')
 def hello_world():
     return render_template('hello.html')
@@ -26,4 +37,8 @@ def post():
       
 if __name__ == '__main__':
 	CORS(app, supports_credentials=True)
-	app.run(host='0.0.0.0',port=8080,debug = True)
+	# app.run(host='0.0.0.0',port=8080,debug = True)
+	
+	server = make_server('0.0.0.0', 8080, app)
+	server.serve_forever()
+	app.run()
