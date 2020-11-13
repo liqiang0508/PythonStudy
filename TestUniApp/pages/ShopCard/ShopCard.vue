@@ -102,7 +102,9 @@
 				UiManager.showtoast("自定义导航右边点击")
 				var url = "http://192.168.65.172:8080/post"
 				var data = {"name":"Lee","age":28,"job":"coder"}
+				UiManager.showloading()
 				this.$HttpHelper.httpPost(url,data,(res)=>{
+						UiManager.hideloading()
 						if(res&&res.statusCode == 200)
 						{
 							console.log("请求成功= "+JSON.stringify(res.data));
@@ -117,7 +119,9 @@
 				console.log("自定义导航左边点击");
 				UiManager.showtoast("自定义导航左边点击")
 				var url = "http://192.168.65.172:8080/hello"
+				// UiManager.showloading()
 				this.$HttpHelper.HttpGet(url,(res)=>{
+						// UiManager.hideloading()
 						if(res&&res.statusCode == 200)
 						{
 							console.log("请求成功 "+JSON.stringify(res.data));
