@@ -13,6 +13,10 @@ test.db
 testmin.js
 /node_modules
 /douyin/video
+speex/speex/speexTest/speexTest/libspeex/Release
+speex/speex/speexTest/speexTest/libspeex/Debug
+speex/speex/speexTest/Debug
+speex/speex/speexTest/Release
 
 /virtualenvtTest
 TestUniApp/unpackage
@@ -22,3 +26,7 @@ TestUniApp/AndroidProject/app/src/main/assets/apps/__UNI__37FA08B/www/app-servic
 TestUniApp/AndroidProject/app/src/main/assets/apps/__UNI__37FA08B/www/app-view.js
 TestUniApp/AndroidProject/app/src/main/assets/apps/__UNI__37FA08B/www/manifest.json
 TestUniApp/AndroidProject/app/src/main/assets/apps/__UNI__37FA08B/www/static/uni.ttf
+speex/speex/speexTest/libspeex/Debug/
+speex/speex/speexTest/libspeex/Release/
+speex/speex/speexTest/speexTest/Debug/
+speex/speex/speexTest/speexTest/Release/
