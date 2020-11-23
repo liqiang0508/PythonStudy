@@ -1,6 +1,7 @@
 <template>
 	<view class="content">
 
+		
 		<!-- 轮播图 -->
 		<view class="uni-padding-wrap">
 			<view class="page-section swiper">
@@ -10,7 +11,7 @@
 							<image mode="aspectFit" class="swiperimg" src="../../static/logo.png"></image>
 						</swiper-item>
 						<swiper-item>
-
+		
 							<image mode="aspectFit" class="swiperimg" src="../../static/logo.png"></image>
 						</swiper-item>
 						<swiper-item>
@@ -20,21 +21,22 @@
 				</view>
 			</view>
 		</view>
-
+		
 		<hr style=" margin-top: 10rpx" />
-
+		
+		
 		<!-- 种类 -->
-
+		
 		<view class="kinds">
 			<view class="kind_item" @tap="KindsTap(item)" v-for="(item,index) in kindsData" :key="index">
 				<image class="kind_img" :src=item.imgsrc></image>
 				<text class="kind_txt">{{item.name}}</text>
 			</view>
-
+		
 		</view>
-
+		
 		<hr />
-
+		
 		<!-- 公告 -->
 		<view class="notice">
 			<uni-icons type="info"></uni-icons>
@@ -42,22 +44,22 @@
 			<view class="_notice">
 				
 				<marquee scrollamount = 3 class = "ScrollText" direction="left">{{ScrollText}}</marquee>
-
+		
 			</view>
-
-
+		
+		
 			<text class="notice_text_right">></text>
 			
-
+		
 		</view>
-
+		
 		<!-- 新品推荐 -->
 		<view style="text-align: center;margin-top: 25rpx; font-size: 30rpx;">
 			<text>新品推荐</text>
 		</view>
-
+		
 		<view class="new_goods">
-
+		
 			<view @tap="NewGoosTap(item)" class="new_goods_item" v-for="(item,index) in newGoodsData" :key="index">
 				<image mode="aspectFit" class="new_goods_img" :src=item.imgsrc></image>
 				<text class="new_goods_text">{{item.name}}</text>
@@ -66,15 +68,14 @@
 					<image @tap.stop="ToShopCar(item)" src="../../static/logo.png" style="margin-right: 15rpx; width: 50rpx; height: 50rpx;"></image>
 				</view>
 			</view>
-
-
-
+		
+		
+		
 		</view>
 		
 		
-
-		<view style="height:60px;"></view>
 		
+		<view style="height:60px;"></view>
 		
 
 	</view>

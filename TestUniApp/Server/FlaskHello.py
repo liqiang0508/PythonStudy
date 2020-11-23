@@ -8,8 +8,7 @@ import json
 import sqlite3
 
 from time import sleep
-# from wsgiref.simple_server import make_server
-from gevent.pywsgi import WSGIServer
+
 
 
 app = Flask(__name__)
@@ -39,14 +38,8 @@ def post():
       
 if __name__ == '__main__':
 	CORS(app, supports_credentials=True)
-	app.run(host='0.0.0.0',port=8080,debug = False,ssl_context=(
-        "CA/ca-cert.pem",
-        "CA/ca-key.pem"))
+	app.run(host='0.0.0.0',port=8080,debug = False,ssl_context="adhoc")
  
-	# server = make_server("", 8080, app)
-	# server.serve_forever()
 	
-	# http_server = WSGIServer(('0.0.0.0', 8080), app,keyfile='CA/ca-key.pem',certfile='CA/ca-cert.pem')
-	# http_server.serve_forever()
 
 	

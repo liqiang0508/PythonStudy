@@ -1,0 +1,44 @@
+{  
+    "name": "pluginTest", 
+    "id": "my_pluginTest",  
+    "version": "1.0.0",  
+    "description": "插件测试",  
+    "_dp_type":"nativeplugin",  
+    "_dp_nativeplugin":{  
+        "android": {  
+            "plugins": [  
+                {  
+                    "type": "module",
+					"name": "pluginTest",
+                    "class": "com.my.plugintest.pluginTest"
+                }  
+            ],  
+            "integrateType": "aar|jar",  
+            "dependencies": [  
+                
+            ],  
+            "compileOptions": {  
+                "sourceCompatibility": "1.8",  
+                "targetCompatibility": "1.8"  
+            },  
+            "abis": [  
+                "armeabi-v7a" ,"arm64-v8a" ,"x86"
+            ],  
+            "minSdkVersion": "16",  
+            "permissions": [  
+                  
+            ],   
+            "parameters": {  
+                            "appkey": {  
+                                "des": "Android appkey",  
+                                "key": "getui:appkey"  
+                            },  
+                            "appid":{  
+                                "des": "Android appid",  
+                                "key": "getui:appid"  
+                            }  
+                        }
+        }  
+ 
+    }  
+}
