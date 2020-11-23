@@ -3,6 +3,8 @@
 #include <speex/speex.h>
 #define FRAME_SIZE 160
 
+//speex 音频编码 解码 案列
+
 typedef struct WAVE_HEADER {
 	char    fccID[4];       //内容为""RIFF
 	unsigned int dwSize;   //最后填写，WAVE格式音频的大小
@@ -245,9 +247,9 @@ int pcm_to_wave( char *pcmpath, int bits, int channels, int sample_rate,  char *
 	return 0;
 }
 
-int main()
+int main(int argc, char **argv)
 {
-	char *pcmfile = "3.pcm";
+	char *pcmfile = argv[1];
 	char *encode_pcmfile = "3_encode";
 	char *decode_pcmfile = "3_decode.pcm";
 	char *wavfile = "3.wav";
