@@ -112,8 +112,9 @@
 		width: 100%;
 		height: 100%;
 		background-image: url('~@/static/splash.png');
-		background-size: contain;
+		background-size: cover;
 		background-position: center;
+/* 		background-color: #0062CC; */
 
 	}
 
