@@ -39,14 +39,8 @@
 		<button class="bg-gradual-pink" @click="open9">插件调用2</button>
 		<!-- #endif -->
 		
-		<uni-list :scrollY="true">
-			<uni-list-item>666</uni-list-item>
-			<uni-list-item>666</uni-list-item>
-			<uni-list-item>666</uni-list-item>
-			<uni-list-item>666</uni-list-item>
-			<uni-list-item>666</uni-list-item>
-			<uni-list-item>666</uni-list-item>
-		</uni-list>
+		<button class="bg-gradual-pink" @click="open10">获取位置信息</button>
+		
 
 	</view>
 </template>
@@ -77,13 +71,7 @@
 		},
 		onReady() {
 			// uni.showNavigationBarLoading()
-			uni.getLocation({
-				type: 'wgs84',
-				success: function(res) {
-					console.log('当前位置的经度：' + res.longitude);
-					console.log('当前位置的纬度：' + res.latitude);
-				}
-			});
+			
 
 		},
 		onPullDownRefresh() {
@@ -97,6 +85,17 @@
 			
 		},
 		methods: {
+		
+			open10(){
+				uni.getLocation({
+					type: 'wgs84',
+					geocode:true,
+					success: function(res) {
+						UiManager.ShowAlert("",["",""],res.longitude+"\n"+res.longitude+"\n"+res.address)
+					}
+				});
+				
+			},
 			clickRight() {
 				console.log("自定义导航右边点击");
 				UiManager.showtoast("自定义导航右边点击")
