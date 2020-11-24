@@ -35,7 +35,8 @@
 -keep class vi.com.gdi.** {*;} 
 -keep class android.support.v4.** {*;}
 -dontwarn pl.droidsonroids.gif.**
-
+-keep public class * extends io.dcloud.feature.uniapp.common.UniModule{*;}
+-keep public class * extends io.dcloud.feature.uniapp.ui.component.UniComponent{*;}
 -keepclasseswithmembers class * extends io.dcloud.js.geolocation.GeoManagerBase {
     <methods>;
 }
