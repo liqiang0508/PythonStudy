@@ -40,6 +40,7 @@
 		<!-- #endif -->
 		
 		<button class="bg-gradual-pink" @click="open10">获取位置信息</button>
+		<button class="bg-gradual-pink" @click="changeLang">{{ i18n("index").changeLang }}</button>
 		
 
 	</view>
@@ -61,6 +62,11 @@
 			uniPopup,
 			alert,
 			test1
+		},
+		computed: {
+			i18n() {
+				return this.$t
+			}
 		},
 		data() {
 			return {
@@ -85,7 +91,12 @@
 			
 		},
 		methods: {
-		
+			changeLang(){
+					console.log("改变语言");
+					var item = "en-US"
+					this.$i18n.locale = this.$i18n.locale=="en-US"?"zh-CN":"en-US";
+					
+			},
 			open10(){
 				uni.getLocation({
 					type: 'wgs84',
