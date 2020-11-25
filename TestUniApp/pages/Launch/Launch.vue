@@ -107,7 +107,7 @@
 		methods: {
 			//显示加载文字小点
 			showLoadingText(){
-				
+				this.tiptext = this.i18n("index").loading
 				this.loadfun = setInterval(()=>{
 					 
 					 var num = this.dotNum%4
