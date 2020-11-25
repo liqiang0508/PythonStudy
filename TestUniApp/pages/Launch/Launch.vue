@@ -1,7 +1,8 @@
 <template>
 	<view class="content">
-
-		<text class="tipText">{{ i18n('index').loading  }}</text>
+		<image style="width: 50px; height: 50px; margin-top: 200px;" mode="aspectFill" src="../../static/logo.png"></image>
+		<view style="height: 20px;"></view>
+		<text class="tipText">{{ tiptext  }}</text>
 
 		<view style="height: 20px;"></view>
 
@@ -28,9 +29,10 @@
 		},
 		data() {
 			return {
-				tiptext: "Loading...",
+				tiptext: "",
 				progress: 0,
-				curVersion: 100
+				curVersion: 0,
+				dotNum:0
 			}
 		},
 		onReady() {
@@ -49,6 +51,7 @@
 			//#ifdef APP-PLUS 
 			this.curVersion = "Version:" + plus.runtime.version + "(" + VersionManager.getLocalVersion() + ")"
 			VersionManager.checkUpdate(url, (res) => {
+				this.stopLoadingText()
 				var percent = res.progress //进度
 				var totalBytesWritten = res.totalBytesWritten //已经下载的数据长度，单位 Bytes
 				var totalBytesExpectedToWrite = res.totalBytesExpectedToWrite //预期需要下载的数据总长度，单位 Bytes
@@ -56,6 +59,7 @@
 				this.progress = percent
 				this.tiptext = Math.floor(totalBytesWritten / 1024) + "kb/" + Math.floor(totalBytesExpectedToWrite / 1024) + "kb"
 			}, (code) => {
+				this.stopLoadingText()
 				console.log("更新结束返回code ===", code)
 				if (code == 100 || code == 4) //100不需要更新，4不支持更新
 				{
@@ -83,13 +87,43 @@
 			// #ifdef MP-WEIXIN
 				this.goMain()
 			// #endif
-
+			
 		},
 		onShow() {
 
+			
+			// #ifdef APP-PLUS
+				this.showLoadingText()
+			// #endif
+			
+			
+		},
+		onHide() {
+			this.stopLoadingText()
+		},
+		onUnload(){
+			this.stopLoadingText()
 		},
 		methods: {
-
+			//显示加载文字小点
+			showLoadingText(){
+				
+				this.loadfun = setInterval(()=>{
+					 
+					 var num = this.dotNum%4
+					 this.dotNum = this.dotNum+1
+					 this.tiptext = this.i18n("index").loading+(".").repeat(num)
+					 
+				},1000)
+			},
+			//停止加载文字
+			stopLoadingText(){
+				if(this.loadfun)
+				{
+					clearInterval(this.loadfun)
+					this.loadfun = null
+				}
+			},
 			goMain: function() {
 				console.log("go index")
 				setTimeout(() => {
@@ -108,12 +142,12 @@
 		flex-direction: column;
 		position: absolute;
 		align-items: center;
-		justify-content: center;
+		/* justify-content: center; */
 		width: 100%;
 		height: 100%;
-		background-image: url('~@/static/splash.png');
+		/* background-image: url('~@/static/splash.png'); */
 		background-size: cover;
-		background-position: center;
+		/* background-position: center; */
 /* 		background-color: #0062CC; */
 
 	}
