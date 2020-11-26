@@ -187,7 +187,12 @@
 
 		},
 		onShow() {
-			console.log("index show");
+			// var s="my name is %s, I'm %s years old, and I have %s brother."
+			// s=s.format("wendy",24,2)
+			// console.log("index show---",s);
+			// var teststr = "Visit Microsoft %s 222"
+			// var txt = teststr.fin(/\s+/,"Runoob");
+			// console.log("index show---2",txt);
 			// 初始化一个动画
 			this.ScrollText = "果蔬自由-您身边的菜市 快捷服务，配送到家"
 			this.$HttpHelper.HttpGet("https://api.uomg.com/api/rand.music?sort=热歌榜&format=json",(res)=>{

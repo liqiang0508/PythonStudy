@@ -47,7 +47,7 @@
 			// #endif
 
 			this.curVersion = "Version:" + GlobalFun.scriptVersion
-			var url = "http://192.168.65.172/hotupversion/uniconfigrelease"
+			var url = Global.HotUpUrl
 			//#ifdef APP-PLUS 
 			this.curVersion = "Version:" + plus.runtime.version + "(" + VersionManager.getLocalVersion() + ")"
 			VersionManager.checkUpdate(url, (res) => {

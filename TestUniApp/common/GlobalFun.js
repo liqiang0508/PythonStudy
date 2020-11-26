@@ -1,9 +1,8 @@
 //一些通用的辅助函数
 var GlobalFun = {}
 GlobalFun.scriptVersion = 109;//本地脚本版本号
-GlobalFun.LOL = function(){
-	console.log("德玛西亚")
-}
+GlobalFun.HotUpUrl = "http://192.168.65.172/hotupversion/uniconfigrelease"//热更新地址
+
 
 GlobalFun.isContain = function(str,arr){
 	
