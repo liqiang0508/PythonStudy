@@ -102,7 +102,7 @@ VersionManager.getLocalVersion = function() {
 	var value = GlobalFun.scriptVersion
 	try {
 
-		value = uni.getStorageSync("storage_key");
+		value = uni.getStorageSync("cur_version");
 		if (value) {
 
 		} else {
@@ -198,7 +198,7 @@ VersionManager.installWgt = function(path) {
 		plus.nativeUI.closeWaiting();
 		console.log("安装wgt文件成功！");
 		var remoteScritVersion = this.remoteData["scriptVersion"]
-		uni.setStorageSync('storage_key', remoteScritVersion.toString())
+		uni.setStorageSync('cur_version', remoteScritVersion.toString())
 		this.callFinishWithCode(101, "更新成功")
 	}, (e)=> {
 		plus.nativeUI.closeWaiting();
