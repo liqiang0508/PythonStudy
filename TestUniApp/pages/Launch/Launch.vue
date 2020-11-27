@@ -47,7 +47,7 @@
 			// #endif
 
 			this.curVersion = "Version:" + GlobalFun.scriptVersion
-			var url = Global.HotUpUrl
+			var url = GlobalFun.HotUpUrl
 			//#ifdef APP-PLUS 
 			this.curVersion = "Version:" + plus.runtime.version + "(" + VersionManager.getLocalVersion() + ")"
 			VersionManager.checkUpdate(url, (res) => {

@@ -34,12 +34,7 @@
 <style>
 	/*每个页面公共css */
 
-	body {
-		padding-bottom: constant(safe-area-inset-bottom);
-		/* 兼容 iOS < 11.2 */
-		padding-bottom: env(safe-area-inset-bottom);
-		/* 兼容 iOS >= 11.2 */
-	}
+	
 
 	@import url("/common/uni.css");
 	@import url("/colorui/main.css");
@@ -71,5 +66,13 @@
 		100% {
 			transform: translateY(0px);
 		}
+	}
+	
+	
+	body {
+		padding-bottom: constant(safe-area-inset-bottom);
+		/* 兼容 iOS < 11.2 */
+		padding-bottom: env(safe-area-inset-bottom);
+		/* 兼容 iOS >= 11.2 */
 	}
 </style>
