@@ -2,20 +2,27 @@
 	<view class="content">
 
 		<view class="chat_content">
-			<scroll-view :scroll-into-view="viewIndex" scroll-with-animation='true' class="chat_scrollview" scroll-y="true" @scrolltoupper="upper"
-			 @scrolltolower="lower" @scroll="scroll">
+			<view class="chat_scrollview">
 				<view class="chat_item" v-for="item in chatRecords" :key="item.id">
-					<image class="head_img" mode="aspectFit" :src="item.headimg"></image>
-					<text class="chat_text">{{ item.text }}</text>
+					<view class="head_img">
+						<image class="head_img" mode="aspectFit" :src="item.headimg"></image>
+					</view>
+
+
+					<view class="chat_wrap_text">
+						<text class="chat_text">{{ item.text }}</text>
+					</view>
+
+
 				</view>
-				
-				 <!-- 可滚动到底部的view标签 -->  
-				 <view :id="'im_'+chatRecords.length" class="bottom"></view> 
-			</scroll-view>
+			</view>
+
+
 		</view>
+		
+		<view style="height: 40px; background-color: #0000FF;width: 100%;">
 
-
-
+		</view>
 		<view class="inputbg">
 			<icon type="success" size="26" />
 			<input v-model="text" class="inputlElement" placeholder="自动获得焦点"></input>
@@ -32,38 +39,31 @@
 				viewIndex: "",
 				text: "",
 				chatRecords: [
-	
+
 				]
 			}
 		},
 		onShow() {
-			// for (var i = 0; i < 25; i++) {
-			// 	this.chatRecords.push({
-			// 		"id":i,
-			// 		"text": i,
-			// 		"headimg": "../../static/logo.png",
-			// 	})
-			// }
-			
+			for (var i = 0; i < 25; i++) {
+				this.chatRecords.push({
+					"id": i,
+					"text": i,
+					"headimg": "../../static/logo.png",
+				})
+			}
+			this.scrollToBottom()
 		},
 		methods: {
-			lower(e) {
-
-			},
-			upper(e) {
-
-			},
-			scrolltolower(e) {
-
-			},
-			scroll(e) {
-
+			scrollToBottom() {
+				uni.pageScrollTo({
+					scrollTop: 99999,
+					duration: 50
+				});
 			},
 			sendText() {
-				
-				if (this.text.length<1)
-				{
-					return 
+
+				if (this.text.length < 1) {
+					return
 				}
 				console.log("发送文字" + this.text);
 				this.chatRecords[this.chatRecords.length] = {
@@ -73,12 +73,9 @@
 				}
 				this.text = ""
 
-				this.viewIndex = "";
-				//设置viewIndex值，使聊天滚动到底部  
-				this.$nextTick(() => {
-					this.viewIndex = "im_" + this.chatRecords.length;
-
-				})
+				setTimeout(() => {
+					this.scrollToBottom()
+				}, 50);
 
 
 			}
@@ -87,17 +84,12 @@
 </script>
 
 <style>
-	 .bottom {  
-	        width: 100vw;  
-	        height: 20rpx;
-			 
-	    }  
 	.content {
 		display: flex;
 		flex-direction: column;
 		position: absolute;
 		/* background-color: #0062CC; */
-		height: 100%;
+
 		width: 100%;
 	}
 
@@ -115,42 +107,58 @@
 	}
 
 	.inputbg {
-		/* position: fixed; */
+		position: fixed;
 		bottom: 0;
 		width: 100%;
-		height: 30px;
+		height: 40px;
 		background-color: #c8c8c8;
 		display: flex;
 		align-items: center;
-		/* opacity: 0.1; */
+
 	}
 
 	.inputlElement {
 		flex: 1;
 		background-color: #ffffff;
+		height: 30px;
 
 	}
 
 	.inputBtn {
 		display: flex;
-		right: 0px;
+		right: 2px;
+		margin-left: 5px;
 
 	}
 
 	.chat_item {
 		display: flex;
-		margin-top: 10rpx;
+		margin-top: 15px;
 		align-items: center;
-		/* background-color: #0000FF; */
+		/* background-color: #ff1736; */
 	}
 
 	.head_img {
 		width: 50px;
 		height: 50px;
 		border-radius: 25px;
+		margin-left: 1px;
+	}
+
+	.chat_wrap_text {
+		margin-left: 10px;
+		margin-right: 5px;
+		background-color: #00aa00;
+		border-radius: 5px;
+		padding: 10px;
+		/* padding-right: 15px; */
+
 	}
 
 	.chat_text {
-		margin-left: 10px;
+
+		word-break: break-all;
+		text-align: left;
+
 	}
 </style>

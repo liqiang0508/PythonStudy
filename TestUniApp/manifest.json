@@ -3,7 +3,7 @@
     "appid" : "__UNI__37FA08B",
     "description" : "",
     "versionName" : "1.0.2",
-    "versionCode" : 129,
+    "versionCode" : 133,
     "transformPx" : false,
     "networkTimeout" : {
         "request" : 5000
