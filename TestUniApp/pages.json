@@ -115,7 +115,16 @@
 			}
 
 		}
-	],
+	    ,{
+            "path" : "pages/inputTest/inputTest",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "输入框测试",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		// "navigationBarTitleText": "uni-app",

@@ -41,6 +41,7 @@
 		
 		<button class="bg-gradual-pink" @click="open10">获取位置信息</button>
 		<button class="bg-gradual-pink" @click="changeLang">{{ i18n("index").changeLang }}</button>
+		<button class="bg-gradual-pink" @click="open11">输入框测试</button>
 		
 
 	</view>
@@ -91,6 +92,12 @@
 			
 		},
 		methods: {
+			open11(){
+				console.log("输入框测试");
+				UiManager.navigateTo({
+					url: "../inputTest/inputTest"
+				})
+			},
 			changeLang(){
 					console.log("改变语言");
 					var item = "en-US"

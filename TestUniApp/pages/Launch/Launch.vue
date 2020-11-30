@@ -32,7 +32,7 @@
 				tiptext: "",
 				progress: 0,
 				curVersion: 0,
-				dotNum:0
+				dotNum: 0
 			}
 		},
 		onReady() {
@@ -81,45 +81,44 @@
 			//#endif
 
 			// #ifdef H5
-				this.goMain()
+			this.goMain()
 			// #endif
 
 			// #ifdef MP-WEIXIN
-				this.goMain()
+			this.goMain()
 			// #endif
-			
+
 		},
 		onShow() {
 
-			
+
 			// #ifdef APP-PLUS
-				this.showLoadingText()
+			this.showLoadingText()
 			// #endif
-			
-			
+
+
 		},
 		onHide() {
 			this.stopLoadingText()
 		},
-		onUnload(){
+		onUnload() {
 			this.stopLoadingText()
 		},
 		methods: {
 			//显示加载文字小点
-			showLoadingText(){
+			showLoadingText() {
 				this.tiptext = this.i18n("index").loading
-				this.loadfun = setInterval(()=>{
-					 
-					 var num = this.dotNum%4
-					 this.dotNum = this.dotNum+1
-					 this.tiptext = this.i18n("index").loading+(".").repeat(num)
-					 
-				},1000)
+				this.loadfun = setInterval(() => {
+
+					var num = this.dotNum % 4
+					this.dotNum = this.dotNum + 1
+					this.tiptext = this.i18n("index").loading + (".").repeat(num)
+
+				}, 1000)
 			},
 			//停止加载文字
-			stopLoadingText(){
-				if(this.loadfun)
-				{
+			stopLoadingText() {
+				if (this.loadfun) {
 					clearInterval(this.loadfun)
 					this.loadfun = null
 				}
@@ -148,7 +147,7 @@
 		/* background-image: url('~@/static/splash.png'); */
 		background-size: cover;
 		/* background-position: center; */
-/* 		background-color: #0062CC; */
+		/* 		background-color: #0062CC; */
 
 	}
 
