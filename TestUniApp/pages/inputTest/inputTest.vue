@@ -2,12 +2,15 @@
 	<view class="content">
 
 		<view class="chat_content">
-			<scroll-view :scroll-into-view="viewIndex" class="chat_scrollview" scroll-y="true" @scrolltoupper="upper"
+			<scroll-view :scroll-into-view="viewIndex" scroll-with-animation='true' class="chat_scrollview" scroll-y="true" @scrolltoupper="upper"
 			 @scrolltolower="lower" @scroll="scroll">
-				<view class="chat_item" v-for="item in chatRecords" :key="item.id" @click="changeCate(item)">
+				<view class="chat_item" v-for="item in chatRecords" :key="item.id">
 					<image class="head_img" mode="aspectFit" :src="item.headimg"></image>
 					<text class="chat_text">{{ item.text }}</text>
 				</view>
+				
+				 <!-- 可滚动到底部的view标签 -->  
+				 <view :id="'im_'+chatRecords.length" class="bottom"></view> 
 			</scroll-view>
 		</view>
 
@@ -29,14 +32,7 @@
 				viewIndex: "",
 				text: "",
 				chatRecords: [
-					// {
-					// 	"text": 1,
-					// 	"headimg": "../../static/logo.png",
-					// },
-					// {
-					// 	"text": 1,
-					// 	"headimg": "../../static/logo.png",
-					// }
+	
 				]
 			}
 		},
@@ -48,7 +44,7 @@
 			// 		"headimg": "../../static/logo.png",
 			// 	})
 			// }
-
+			
 		},
 		methods: {
 			lower(e) {
@@ -64,19 +60,23 @@
 
 			},
 			sendText() {
+				
+				if (this.text.length<1)
+				{
+					return 
+				}
 				console.log("发送文字" + this.text);
-
-				this.chatRecords.push({
-					"id":this.chatRecords.length+1,
+				this.chatRecords[this.chatRecords.length] = {
+					"id": this.chatRecords.length + 1,
 					"text": this.text,
 					"headimg": "../../static/logo.png",
-				})
+				}
 				this.text = ""
 
 				this.viewIndex = "";
 				//设置viewIndex值，使聊天滚动到底部  
 				this.$nextTick(() => {
-					this.viewIndex = "im_" + this.chatList.length;
+					this.viewIndex = "im_" + this.chatRecords.length;
 
 				})
 
@@ -87,6 +87,11 @@
 </script>
 
 <style>
+	 .bottom {  
+	        width: 100vw;  
+	        height: 20rpx;
+			 
+	    }  
 	.content {
 		display: flex;
 		flex-direction: column;
