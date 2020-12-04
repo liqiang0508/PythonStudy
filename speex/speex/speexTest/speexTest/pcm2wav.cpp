@@ -253,9 +253,9 @@ int main(int argc, char **argv)
 	char *encode_pcmfile = "3_encode";
 	char *decode_pcmfile = "3_decode.pcm";
 	char *wavfile = "3.wav";
-	int b = pcm_encode(pcmfile, encode_pcmfile);
-	if (b == 0)
+	if (pcmfile)
 	{
+		int b = pcm_encode(pcmfile, encode_pcmfile);
 		int result = pcm_decode(encode_pcmfile, decode_pcmfile);
 		if (result == 0)
 		{
