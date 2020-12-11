@@ -6,7 +6,6 @@
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationBarBackgroundColor": "#ffffff",
-				"enablePullDownRefresh": false,
 				"app-plus": {
 					"titleNView": false
 				}
@@ -130,7 +129,7 @@
 		// "navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"navigationStyle": "default", //去掉顶部的标题栏
-		"backgroundColor": "#f82929"
+		"backgroundColor": "#ffffff"
 
 	},
 
