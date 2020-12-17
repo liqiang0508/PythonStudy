@@ -3,7 +3,10 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "热歌"
+			   "navigationBarTitleText": "热歌",
+				"h5":{
+					"titleNView":false
+				}
 			}
 		}
 	],
