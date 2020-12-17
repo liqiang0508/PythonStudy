@@ -39,3 +39,5 @@ TestUniApp/AiosProject/HBuilder-Hello/HBuilder-Hello/Pandora/
 hotMusic/unpackage/
 electronTest/node_modules/
 electronTest/out/
+electronTest/static/
+hotMusic/AndroidProject/app/release/
