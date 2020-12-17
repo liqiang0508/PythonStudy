@@ -1,0 +1,13 @@
+{
+  "nativePlugins": [
+    {
+      "plugins": [
+        {
+          "type": "module",
+          "name": "pluginTest",
+          "class": "com.my.plugintest.pluginTest"
+        }
+      ]
+    }
+  ]
+}

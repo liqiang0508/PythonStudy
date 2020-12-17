@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">热歌</string>
+	<string name="dcloud_permission_read_phone_state_message">读取手机状态权限提示语</string>
+	<string name="dcloud_permission_write_external_storage_message">存储权限提示语</string>  
+</resources>
