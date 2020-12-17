@@ -56,6 +56,7 @@
 			this.innerAudioContext.onError((res) => {
 				console.log(res.errMsg);
 				console.log(res.errCode);
+				this.nextSound()
 			});
 			this.innerAudioContext.onEnded((res) => {
 				this.nextSound()

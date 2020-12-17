@@ -1,0 +1,17 @@
+{
+  "name": "electrontest",
+  "version": "1.0.0",
+  "description": "My Electron app",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "package": "electron-packager ./ hotMusic --platform=win32 --arch=x64 --icon=./icon.ico --out=./out --electron-version=8.2.3 --app-version=0.1.0 --overwrite --ignore=node_modules"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^11.1.0"
+  }
+}
