@@ -41,3 +41,5 @@ electronTest/node_modules/
 electronTest/out/
 electronTest/static/
 hotMusic/AndroidProject/app/release/
+speex/speex/speexTest/speexTest.VC.db
+speex/speex/speexTest/.vs/speexTest/v14/.suo
