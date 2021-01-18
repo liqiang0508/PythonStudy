@@ -5,6 +5,8 @@ import tornado.websocket
 import os
 
 UPLOADPATH = "static/uploadfile"#上传文件夹名称
+PORT = 8888 #端口
+
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -32,6 +34,7 @@ class UpLoadFile(tornado.web.RequestHandler):
     def get(self):
     	 self.render('UpLoadFile.html')
 
+    # @tornado.web.asynchronous 如果是耗时的操作 要加上 然后最后调用finish
     def post(self):
     	file_metas = self.request.files["uploadFile"]               #获取上传文件信息
         for meta in file_metas:                                 #循环文件信息
@@ -42,6 +45,8 @@ class UpLoadFile(tornado.web.RequestHandler):
                 up.write(meta['body'])
                 up.close()
         self.redirect("uploadsuccess?path="+savePath)
+        # self.finish()
+        # self.redirect("https://www.baidu.com/")
 
 #文件成功上传
 class UpLoadFileSuccess(tornado.web.RequestHandler):
@@ -50,7 +55,7 @@ class UpLoadFileSuccess(tornado.web.RequestHandler):
          path = self.get_argument('path')
     	 self.render('UpLoadFileSuccess.html',filePath = path)
 
-#websocket
+# #websocket
 class WebScocketHandler(tornado.websocket.WebSocketHandler) :
     def check_origin(self, origin) :
         '''重写同源检查 解决跨域问题'''
@@ -67,10 +72,11 @@ class WebScocketHandler(tornado.websocket.WebSocketHandler) :
 
     def on_message(self, message) :
         '''接收到客户端消息时被调用'''
-        print("on_message")
+        print("on_message==",message)
         self.write_message('new message :' + message)  # 向客服端发送
 
-
+def omMessageCall(msg):
+    print(msg)
 if __name__ == "__main__":
 
     if os.path.exists(UPLOADPATH) == False:#不存在
@@ -89,5 +95,5 @@ if __name__ == "__main__":
     )
 
     http_server = tornado.httpserver.HTTPServer(app)
-    http_server.listen(8888)
+    http_server.listen(PORT)
     tornado.ioloop.IOLoop.current().start()

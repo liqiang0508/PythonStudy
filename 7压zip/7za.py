@@ -1,16 +1,17 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import os
+import shutil
+#把 zipFolder指定文件夹压缩成saveZipName
+def zipFolder(saveZipName,zipFolder,pwd):#压缩文件
 
-
-def zipFolder(savefile,zipFolder,pwd):#压缩文件
-
-	cmd = "7za.exe a -r   "+savefile+" "+zipFolder +"  -mx=9 -mm=LZMA"
+	cmd = "7za.exe a    "+saveZipName+" "+zipFolder +"  -mx=9 -mm=LZMA"
 	if pwd:
 		cmd = cmd +" -p"+pwd
 	print cmd
 	os.system(cmd)
 
+#解压zip
 def extralFolder(zippath,savefoler,pwd):#解压zip
 	
 	# savefoler = os.path.join( os.getcwd(),savefoler)
@@ -24,11 +25,19 @@ def extralFolder(zippath,savefoler,pwd):#解压zip
 	print cmd
 	os.system(cmd)
 
-# zipFolder("test7.zip","../html/easyui","123")
-# zipFolder("test7.7z","../html/easyui","123")
-# zipFolder("test8.7z","Script_8","123")
-# zipFolder("test7.zip","*.png","123")
 
-path1 = "test7.7z"
 
-extralFolder(path1,"abc","123")
+targetZip = "test7.zip"
+if os.path.exists(targetZip):
+	os.remove(targetZip)
+
+# 7za.exe a 666.zip .\123\*
+zipFolder(targetZip,".\\123\\*","1234")
+
+
+testdir = "abc"
+if os.path.exists(testdir):
+	shutil.rmtree(testdir)
+extralFolder(targetZip,testdir,"1234")
+
+os.system("pause")
