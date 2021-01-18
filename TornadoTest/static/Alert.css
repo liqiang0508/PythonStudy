@@ -1,0 +1,32 @@
+.AlertLayer{
+	position: absolute;
+	top:0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+}
+.layerbg{
+	position: absolute;
+	background:#000;
+	top:0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: 0.5
+
+}
+.dialog{
+	position: absolute;
+	margin: auto;
+	background-color: #fff;
+	width: 300px;
+	height: 180px;
+	border: 1px solid #ddd;
+	top:0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	text-align: center;
+	border-radius: 10px;
+}

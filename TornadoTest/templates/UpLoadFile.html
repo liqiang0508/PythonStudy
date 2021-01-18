@@ -1,0 +1,117 @@
+<html>
+	<head>
+		<title>上传</title>
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1.0/">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<!-- <link rel="icon" href="../../favicon.ico"> -->
+		<link rel="icon" href="../static/1.ico" type="image/x-icon"/>
+		<!-- Custom styles for this template -->
+		<link href="static/signin.css" rel="stylesheet">
+		<link href="static/Alert.css" rel="stylesheet">
+
+
+		<!-- 新 Bootstrap4 核心 CSS 文件 -->
+		<link rel="stylesheet" href="../static/bootstrap4.1.3/bootstrap.min.css">
+		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+		<script src="../static/jqurey3.5.1/jquery-3.5.1.min.js"></script>
+		<!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+		<!-- <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script> -->
+		<!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+		<script src="../static/bootstrap4.1.3/bootstrap.min.js"></script>
+
+		<script src="../static/Alert.js"></script>
+
+		<style type="text/css">
+			.container {
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+		<script>
+
+
+			$(function()
+		{
+			$("#upfilebtn").click(function(){
+				var fileInput = $('#upfile').get(0).files[0];
+				var filekey = $('#filekey').val()
+				if (fileInput==undefined)
+				{
+					showConfirm("","请选择上传文件",{1:{}})
+					return
+				}
+	
+				if(filekey == "")
+				{
+					showConfirm("","请输入上传密钥",{1:{}})
+					return
+					
+				}
+				
+				$("#upfilebtn").parent().submit()
+				
+			})
+			
+			$("#upfilecfg").click(function(){
+				var fileInput = $('#upconfig').get(0).files[0];
+				var cfgkey = $('#cfgkey').val()
+				if (fileInput==undefined)
+				{
+					showConfirm("","请选择上传配置文件",{1:{}})
+					return	
+				}
+				if(cfgkey == "")
+				{
+					
+						showConfirm("","请输入上传密钥",{1:{}})
+						return
+					
+				}
+				$("#upfilecfg").parent().submit()
+			})
+		});
+
+	</script>
+
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-12" align="center">
+					<hr class="btn-primary">
+
+					<p>选择热更新zip包</p>
+					<form action="/upload" method="POST" enctype="multipart/form-data">
+
+						<input type="file" name="uploadFile" id="upfile" />
+						<input type="password" name="filekey" id="filekey" placeholder="请输入上传密钥" />
+						<input type="button" value="提交" id="upfilebtn"></input>
+					</form>
+
+					<hr class="btn-primary">
+
+					<p>选择热更新配置</p>
+					<form action="/uploaderConfig" method="POST" enctype="multipart/form-data">
+						<input type="file" name="file" id="upconfig" />
+						<input type="password" name="cfgkey" id="cfgkey" placeholder="请输入上传密钥" />
+						<input type="button" value="提交" id="upfilecfg"></input>
+					</form>
+					<hr class="btn-primary">
+					
+				</div>
+
+				</form>
+			</div>
+
+
+
+		</div>
+
+	</body>
+</html>
