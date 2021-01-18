@@ -4,7 +4,7 @@ import tornado.web
 import tornado.websocket
 import os
 
-UPLOADPATH = "uploadfile"#上传文件夹名称
+UPLOADPATH = "static/uploadfile"#上传文件夹名称
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -77,7 +77,12 @@ if __name__ == "__main__":
     	os.makedirs(UPLOADPATH)
 
     app = tornado.web.Application(
-        handlers=[(r'/', MainHandler),(r'/upload', UpLoadFile),(r'/uploadsuccess', UpLoadFileSuccess),(r'/ws', WebScocketHandler)],
+        handlers=[
+            (r'/', MainHandler),
+            (r'/upload', UpLoadFile),
+            (r'/uploadsuccess', UpLoadFileSuccess),
+            (r'/ws', WebScocketHandler)
+            ],
         template_path = os.path.join(os.path.dirname(__file__), "templates"),
         static_path = os.path.join(os.path.dirname(__file__), "static"),
         debug = True
