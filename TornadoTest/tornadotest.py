@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import tornado.ioloop
 import tornado.web
+import tornado.websocket
 import os
 
-UPLOADPATH = "static"#上传文件夹名称
+UPLOADPATH = "uploadfile"#上传文件夹名称
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -42,12 +43,32 @@ class UpLoadFile(tornado.web.RequestHandler):
                 up.close()
         self.redirect("uploadsuccess?path="+savePath)
 
-#文件上传测试
+#文件成功上传
 class UpLoadFileSuccess(tornado.web.RequestHandler):
 
     def get(self):
          path = self.get_argument('path')
     	 self.render('UpLoadFileSuccess.html',filePath = path)
+
+#websocket
+class WebScocketHandler(tornado.websocket.WebSocketHandler) :
+    def check_origin(self, origin) :
+        '''重写同源检查 解决跨域问题'''
+        return True
+
+    def open(self) :
+        '''新的websocket连接后被调动'''
+        print("on_open")
+        self.write_message('Welcome')
+
+    def on_close(self) :
+        print("on_close")
+        '''websocket连接关闭后被调用'''
+
+    def on_message(self, message) :
+        '''接收到客户端消息时被调用'''
+        print("on_message")
+        self.write_message('new message :' + message)  # 向客服端发送
 
 
 if __name__ == "__main__":
@@ -56,7 +77,7 @@ if __name__ == "__main__":
     	os.makedirs(UPLOADPATH)
 
     app = tornado.web.Application(
-        handlers=[(r'/', MainHandler),(r'/upload', UpLoadFile),(r'/uploadsuccess', UpLoadFileSuccess)],
+        handlers=[(r'/', MainHandler),(r'/upload', UpLoadFile),(r'/uploadsuccess', UpLoadFileSuccess),(r'/ws', WebScocketHandler)],
         template_path = os.path.join(os.path.dirname(__file__), "templates"),
         static_path = os.path.join(os.path.dirname(__file__), "static"),
         debug = True
