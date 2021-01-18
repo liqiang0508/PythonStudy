@@ -12,14 +12,16 @@ PORT = 8888 #端口
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        # self.write("Hello, Torenado")
-        self.render('index.html')
-        
+        self.write("Hello, Torenado")
+     
 
     def write_error(self, status_code, **kwargs):
         self.write("Gosh darnit, user! You caused a %d error." % status_code)
 
-
+#聊天界面
+class ChatHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('ws.html')
 
 class PoemPageHandler(tornado.web.RequestHandler):
     def post(self):
@@ -96,6 +98,7 @@ if __name__ == "__main__":
             (r'/', MainHandler),
             (r'/upload', UpLoadFile),
             (r'/uploadsuccess', UpLoadFileSuccess),
+            (r'/chat', ChatHandler),
             (r'/ws', WebScocketHandler)
             ],
         template_path = os.path.join(os.path.dirname(__file__), "templates"),
