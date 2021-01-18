@@ -12,7 +12,8 @@ PORT = 8888 #端口
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.write("Hello, Torenado")
+        # self.write("Hello, Torenado")
+        self.render('index.html')
         
 
     def write_error(self, status_code, **kwargs):
@@ -84,8 +85,7 @@ class WebScocketHandler(tornado.websocket.WebSocketHandler) :
         for user in self.users:  # 向在线用户广播消息
             user.write_message(u"[%s]-[%s]-说：%s" % (self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), message))
 
-def omMessageCall(msg):
-    print(msg)
+
 if __name__ == "__main__":
 
     if os.path.exists(UPLOADPATH) == False:#不存在

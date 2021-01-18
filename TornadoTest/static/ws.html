@@ -15,10 +15,13 @@
     <!-- jQuery -->
     <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
-    
+
         var ws = new WebSocket("ws://192.168.65.151:8888/ws");
         ws.onmessage = function (e) {
             $("#contents").append("<p>" + e.data + "</p>");
+        }
+        ws.onclose = function (e) {
+            alert("close====")
         }
         function sendMsg() {
             console.log(ws)
