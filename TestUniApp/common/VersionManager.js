@@ -64,7 +64,7 @@ VersionManager.checkUpdate = function(url, progressCall, finishCall) {
 }
 //判断是否是测试玩家
 VersionManager.isDebugPlayer = function() {
-	var debugid = uni.getStorageSync("playerID")
+	var debugid = uni.getStorageSync("LastLoginPlayerID")||0//根据上次登录玩家的id 判断是否是测试玩家
 	var b = GlobalFun.isContain(debugid, this.remoteData["debugUIDs"])
 	if (b) {
 		return true
