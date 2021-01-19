@@ -4,10 +4,32 @@ import tornado.web
 import tornado.websocket
 import os
 import datetime
+import time
 
+from tornado.concurrent import run_on_executor
+from concurrent.futures import ThreadPoolExecutor
 
 UPLOADPATH = "static/uploadfile"#上传文件夹名称
 PORT = 8888 #端口
+
+
+class TestHandler(tornado.web.RequestHandler):
+    # 线程池
+    max_thread_num = 10
+    executor = ThreadPoolExecutor(max_workers=max_thread_num)
+
+    @run_on_executor
+    def my_func(self):
+        # do your thing
+        time.sleep(10)
+        return 1
+
+    @tornado.web.asynchronous
+    @tornado.gen.engine
+    def get(self):
+        res = yield self.my_func()
+        self.write("TestHandler")
+        self.finish()
 
 
 class MainHandler(tornado.web.RequestHandler):
@@ -42,6 +64,7 @@ class UpLoadFile(tornado.web.RequestHandler):
     # @tornado.web.asynchronous 如果是耗时的操作 要加上 然后最后调用finish
     def post(self):
     	file_metas = self.request.files["uploadFile"]               #获取上传文件信息
+        filekey = self.get_argument("filekey")    #获取提交的filekey字段
         for meta in file_metas:                                 #循环文件信息
             file_name = meta['filename']                        #获取文件的名称  
             savePath =  os.path.join(UPLOADPATH,file_name)  
@@ -99,7 +122,8 @@ if __name__ == "__main__":
             (r'/upload', UpLoadFile),
             (r'/uploadsuccess', UpLoadFileSuccess),
             (r'/chat', ChatHandler),
-            (r'/ws', WebScocketHandler)
+            (r'/ws', WebScocketHandler),
+            (r'/test', TestHandler)
             ],
         template_path = os.path.join(os.path.dirname(__file__), "templates"),
         static_path = os.path.join(os.path.dirname(__file__), "static"),
