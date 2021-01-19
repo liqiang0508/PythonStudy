@@ -9,8 +9,11 @@ import time
 from tornado.concurrent import run_on_executor
 from concurrent.futures import ThreadPoolExecutor
 
-UPLOADPATH = "static/uploadfile"#上传文件夹名称
-PORT = 8888 #端口
+from tornado.options import define, options, parse_command_line;
+
+define("port", default=8888, help=" running port number")  # 启动的端口号
+
+UPLOADPATH = "static/uploadfile"  # 上传文件夹名称
 
 
 class TestHandler(tornado.web.RequestHandler):
@@ -22,100 +25,109 @@ class TestHandler(tornado.web.RequestHandler):
     def my_func(self):
         # do your thing
         time.sleep(10)
-        return 1
+        return "my_func"
 
     @tornado.web.asynchronous
     @tornado.gen.engine
     def get(self):
         res = yield self.my_func()
-        self.write("TestHandler")
+        self.write(res)
         self.finish()
 
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("Hello, Torenado")
-     
 
     def write_error(self, status_code, **kwargs):
         self.write("Gosh darnit, user! You caused a %d error." % status_code)
 
-#聊天界面
+
+# 聊天界面
 class ChatHandler(tornado.web.RequestHandler):
     def get(self):
         self.render('ws.html')
 
+
 class PoemPageHandler(tornado.web.RequestHandler):
+    def data_received(self, chunk):
+        pass
+
     def post(self):
         noun1 = self.get_argument('noun1')
         noun2 = self.get_argument('noun2')
         verb = self.get_argument('verb')
         noun3 = self.get_argument('noun3')
         self.render('poem.html', roads=noun1, wood=noun2, made=verb,
-                difference=noun3)
-        
+                    difference=noun3)
 
-#文件上传测试
+
+# 文件上传测试
 class UpLoadFile(tornado.web.RequestHandler):
 
     def get(self):
-    	 self.render('UpLoadFile.html')
+        self.render('UpLoadFile.html')
 
     # @tornado.web.asynchronous 如果是耗时的操作 要加上 然后最后调用finish
     def post(self):
-    	file_metas = self.request.files["uploadFile"]               #获取上传文件信息
-        filekey = self.get_argument("filekey")    #获取提交的filekey字段
-        for meta in file_metas:                                 #循环文件信息
-            file_name = meta['filename']                        #获取文件的名称  
-            savePath =  os.path.join(UPLOADPATH,file_name)  
-            print("uploadfile===",savePath)                                 
-            with open(savePath,'wb') as up:            #os拼接文件保存路径，以字节码模式打开
+        file_metas = self.request.files["uploadFile"]  # 获取上传文件信息
+        filekey = self.get_argument("filekey")  # 获取提交的filekey字段
+        for meta in file_metas:  # 循环文件信息
+            file_name = meta['filename']  # 获取文件的名称
+            savePath = os.path.join(UPLOADPATH, file_name)
+            print("uploadfile===", savePath)
+            with open(savePath, 'wb') as up:  # os拼接文件保存路径，以字节码模式打开
                 up.write(meta['body'])
                 up.close()
-        self.redirect("uploadsuccess?path="+savePath)
+        self.redirect("uploadsuccess?path=" + savePath)
         # self.finish()
         # self.redirect("https://www.baidu.com/")
 
-#文件成功上传
+
+# 文件成功上传
 class UpLoadFileSuccess(tornado.web.RequestHandler):
 
     def get(self):
-         path = self.get_argument('path')
-    	 self.render('UpLoadFileSuccess.html',filePath = path)
+        path = self.get_argument('path')
+        self.render('UpLoadFileSuccess.html', filePath=path)
+
 
 # #websocket
-class WebScocketHandler(tornado.websocket.WebSocketHandler) :
-
+class WebScocketHandler(tornado.websocket.WebSocketHandler):
     users = set()  # 用来存放在线用户的容器
-    def check_origin(self, origin) :
+
+    def check_origin(self, origin):
         '''重写同源检查 解决跨域问题'''
         return True
 
-    def open(self) :
+    def open(self):
         '''新的websocket连接后被调动'''
         print("on_open")
         self.users.add(self)  # 建立连接后添加用户到容器中
         for user in self.users:  # 向已在线用户发送消息
-            user.write_message(u"[%s]-[%s]-进入聊天室" % (self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+            user.write_message(
+                u"[%s]-[%s]-进入聊天室" % (self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
-    def on_close(self) :
+    def on_close(self):
         print("on_close")
-        self.users.remove(self) # 用户关闭连接后从容器中移除用户
+        self.users.remove(self)  # 用户关闭连接后从容器中移除用户
         for user in self.users:
-            user.write_message(u"[%s]-[%s]-离开聊天室" % (self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+            user.write_message(
+                u"[%s]-[%s]-离开聊天室" % (self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
-    def on_message(self, message) :
+    def on_message(self, message):
         '''接收到客户端消息时被调用'''
-        print("on_message==",message)
+        print("on_message==", message)
         for user in self.users:  # 向在线用户广播消息
-            user.write_message(u"[%s]-[%s]-说：%s" % (self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), message))
+            user.write_message(u"[%s]-[%s]-说：%s" % (
+                self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), message))
 
 
 if __name__ == "__main__":
 
-    if os.path.exists(UPLOADPATH) == False:#不存在
-    	os.makedirs(UPLOADPATH)
-
+    if os.path.exists(UPLOADPATH) == False:  # 不存在
+        os.makedirs(UPLOADPATH)
+    parse_command_line()
     app = tornado.web.Application(
         handlers=[
             (r'/', MainHandler),
@@ -124,12 +136,12 @@ if __name__ == "__main__":
             (r'/chat', ChatHandler),
             (r'/ws', WebScocketHandler),
             (r'/test', TestHandler)
-            ],
-        template_path = os.path.join(os.path.dirname(__file__), "templates"),
-        static_path = os.path.join(os.path.dirname(__file__), "static"),
-        debug = True
+        ],
+        template_path=os.path.join(os.path.dirname(__file__), "templates"),
+        static_path=os.path.join(os.path.dirname(__file__), "static"),
+        debug=True
     )
 
-    http_server = tornado.httpserver.HTTPServer(app)
-    http_server.listen(PORT)
-    tornado.ioloop.IOLoop.current().start()
+http_server = tornado.httpserver.HTTPServer(app)
+http_server.listen(options.port)
+tornado.ioloop.IOLoop.current().start()
