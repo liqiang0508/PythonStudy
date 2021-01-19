@@ -10,6 +10,7 @@ from tornado.concurrent import run_on_executor
 from concurrent.futures import ThreadPoolExecutor
 
 from tornado.options import define, options, parse_command_line;
+from tornado import gen
 
 define("port", default=8888, help=" running port number")  # 启动的端口号
 
@@ -27,8 +28,7 @@ class TestHandler(tornado.web.RequestHandler):
         time.sleep(10)
         return "my_func"
 
-    @tornado.web.asynchronous
-    @tornado.gen.engine
+    @gen.coroutine
     def get(self):
         res = yield self.my_func()
         self.write(res)
@@ -97,11 +97,11 @@ class WebScocketHandler(tornado.websocket.WebSocketHandler):
     users = set()  # 用来存放在线用户的容器
 
     def check_origin(self, origin):
-        '''重写同源检查 解决跨域问题'''
+        """重写同源检查 解决跨域问题"""
         return True
 
     def open(self):
-        '''新的websocket连接后被调动'''
+        """新的websocket连接后被调动"""
         print("on_open")
         self.users.add(self)  # 建立连接后添加用户到容器中
         for user in self.users:  # 向已在线用户发送消息
@@ -116,7 +116,7 @@ class WebScocketHandler(tornado.websocket.WebSocketHandler):
                 u"[%s]-[%s]-离开聊天室" % (self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
     def on_message(self, message):
-        '''接收到客户端消息时被调用'''
+        """接收到客户端消息时被调用"""
         print("on_message==", message)
         for user in self.users:  # 向在线用户广播消息
             user.write_message(u"[%s]-[%s]-说：%s" % (
@@ -125,7 +125,7 @@ class WebScocketHandler(tornado.websocket.WebSocketHandler):
 
 if __name__ == "__main__":
 
-    if os.path.exists(UPLOADPATH) == False:  # 不存在
+    if not os.path.exists(UPLOADPATH):  # 不存在
         os.makedirs(UPLOADPATH)
     parse_command_line()
     app = tornado.web.Application(
