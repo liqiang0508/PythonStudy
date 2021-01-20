@@ -40,7 +40,9 @@ class MainHandler(tornado.web.RequestHandler):
         self.write("Hello, Torenado")
 
     def write_error(self, status_code, **kwargs):
-        self.write("Gosh darnit, user! You caused a %d error." % status_code)
+        pass
+        # if status_code == 404:
+        #     self.write("Page not find")
 
 
 # 聊天界面
@@ -101,7 +103,7 @@ class WebScocketHandler(tornado.websocket.WebSocketHandler):
         return True
 
     def open(self):
-        """新的websocket连接后被调动"""
+        """新的websockets连接后被调动"""
         print("on_open")
         self.users.add(self)  # 建立连接后添加用户到容器中
         for user in self.users:  # 向已在线用户发送消息
@@ -123,11 +125,17 @@ class WebScocketHandler(tornado.websocket.WebSocketHandler):
                 self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), message))
 
 
+def write_error(self, state, **kw):
+    self.write("Page not find  "+str(state))
+
+
 if __name__ == "__main__":
 
     if not os.path.exists(UPLOADPATH):  # 不存在
         os.makedirs(UPLOADPATH)
+
     parse_command_line()
+
     app = tornado.web.Application(
         handlers=[
             (r'/', MainHandler),
@@ -141,6 +149,7 @@ if __name__ == "__main__":
         static_path=os.path.join(os.path.dirname(__file__), "static"),
         debug=True
     )
+    tornado.web.RequestHandler.write_error = write_error  # Errorhandler
 
 http_server = tornado.httpserver.HTTPServer(app)
 http_server.listen(options.port)
