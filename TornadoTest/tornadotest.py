@@ -18,6 +18,9 @@ UPLOADPATH = "static/uploadfile"  # 上传文件夹名称
 
 
 class TestHandler(tornado.web.RequestHandler):
+    def data_received(self, chunk):
+        pass
+
     # 线程池
     max_thread_num = 10
     executor = ThreadPoolExecutor(max_workers=max_thread_num)
@@ -36,6 +39,9 @@ class TestHandler(tornado.web.RequestHandler):
 
 
 class MainHandler(tornado.web.RequestHandler):
+    def data_received(self, chunk):
+        pass
+
     def get(self):
         self.write("Hello, Torenado")
 
@@ -47,6 +53,9 @@ class MainHandler(tornado.web.RequestHandler):
 
 # 聊天界面
 class ChatHandler(tornado.web.RequestHandler):
+    def data_received(self, chunk):
+        pass
+
     def get(self):
         self.render('ws.html')
 
@@ -66,6 +75,9 @@ class PoemPageHandler(tornado.web.RequestHandler):
 
 # 文件上传测试
 class UpLoadFile(tornado.web.RequestHandler):
+
+    def data_received(self, chunk):
+        pass
 
     def get(self):
         self.render('UpLoadFile.html')
@@ -89,6 +101,9 @@ class UpLoadFile(tornado.web.RequestHandler):
 # 文件成功上传
 class UpLoadFileSuccess(tornado.web.RequestHandler):
 
+    def data_received(self, chunk):
+        pass
+
     def get(self):
         path = self.get_argument('path')
         self.render('UpLoadFileSuccess.html', filePath=path)
@@ -96,6 +111,9 @@ class UpLoadFileSuccess(tornado.web.RequestHandler):
 
 # #websocket
 class WebScocketHandler(tornado.websocket.WebSocketHandler):
+    def data_received(self, chunk):
+        pass
+
     users = set()  # 用来存放在线用户的容器
 
     def check_origin(self, origin):
@@ -104,14 +122,14 @@ class WebScocketHandler(tornado.websocket.WebSocketHandler):
 
     def open(self):
         """新的websockets连接后被调动"""
-        print("on_open")
+        # print("on_open")
         self.users.add(self)  # 建立连接后添加用户到容器中
         for user in self.users:  # 向已在线用户发送消息
             user.write_message(
                 u"[%s]-[%s]-进入聊天室" % (self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
     def on_close(self):
-        print("on_close")
+        # print("on_close")
         self.users.remove(self)  # 用户关闭连接后从容器中移除用户
         for user in self.users:
             user.write_message(
@@ -119,14 +137,14 @@ class WebScocketHandler(tornado.websocket.WebSocketHandler):
 
     def on_message(self, message):
         """接收到客户端消息时被调用"""
-        print("on_message==", message)
+        # print("on_message==", message)
         for user in self.users:  # 向在线用户广播消息
             user.write_message(u"[%s]-[%s]-说：%s" % (
                 self.request.remote_ip, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), message))
 
 
 def write_error(self, state, **kw):
-    self.write("Page not find  "+str(state))
+    self.write("Page not find  " + str(state))
 
 
 if __name__ == "__main__":
@@ -147,7 +165,7 @@ if __name__ == "__main__":
         ],
         template_path=os.path.join(os.path.dirname(__file__), "templates"),
         static_path=os.path.join(os.path.dirname(__file__), "static"),
-        debug=True
+        debug=False
     )
     tornado.web.RequestHandler.write_error = write_error  # Errorhandler
 
