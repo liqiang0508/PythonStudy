@@ -86,6 +86,7 @@ class UpLoadFile(tornado.web.RequestHandler):
     def post(self):
         file_metas = self.request.files["uploadFile"]  # 获取上传文件信息
         file_key = self.get_argument("file_key")  # 获取提交的file_key字段
+        save_path = ""
         for meta in file_metas:  # 循环文件信息
             file_name = meta['filename']  # 获取文件的名称
             save_path = os.path.join(UPLOADPATH, file_name)
