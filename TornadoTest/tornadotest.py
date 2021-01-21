@@ -85,15 +85,15 @@ class UpLoadFile(tornado.web.RequestHandler):
     # @tornado.web.asynchronous 如果是耗时的操作 要加上 然后最后调用finish
     def post(self):
         file_metas = self.request.files["uploadFile"]  # 获取上传文件信息
-        filekey = self.get_argument("filekey")  # 获取提交的filekey字段
+        file_key = self.get_argument("file_key")  # 获取提交的file_key字段
         for meta in file_metas:  # 循环文件信息
             file_name = meta['filename']  # 获取文件的名称
-            savePath = os.path.join(UPLOADPATH, file_name)
-            print("uploadfile===", savePath)
-            with open(savePath, 'wb') as up:  # os拼接文件保存路径，以字节码模式打开
+            save_path = os.path.join(UPLOADPATH, file_name)
+            print("upload_file===", save_path)
+            with open(save_path, 'wb') as up:  # os拼接文件保存路径，以字节码模式打开
                 up.write(meta['body'])
                 up.close()
-        self.redirect("uploadsuccess?path=" + savePath)
+        self.redirect("upload_success?path=" + save_path)
         # self.finish()
         # self.redirect("https://www.baidu.com/")
 
@@ -167,8 +167,8 @@ if __name__ == "__main__":
         static_path=os.path.join(os.path.dirname(__file__), "static"),
         debug=False
     )
-    tornado.web.RequestHandler.write_error = write_error  # Errorhandler
+    tornado.web.RequestHandler.write_error = write_error  # Error_handler
 
-http_server = tornado.httpserver.HTTPServer(app)
-http_server.listen(options.port)
-tornado.ioloop.IOLoop.current().start()
+    http_server = tornado.httpserver.HTTPServer(app)
+    http_server.listen(options.port)
+    tornado.ioloop.IOLoop.current().start()
