@@ -110,7 +110,7 @@ class UpLoadFileSuccess(tornado.web.RequestHandler):
 
 
 # #websocket
-class WebScocketHandler(tornado.websocket.WebSocketHandler):
+class WebSocketHandler(tornado.websocket.WebSocketHandler):
     def data_received(self, chunk):
         pass
 
@@ -160,7 +160,7 @@ if __name__ == "__main__":
             (r'/upload', UpLoadFile),
             (r'/uploadsuccess', UpLoadFileSuccess),
             (r'/chat', ChatHandler),
-            (r'/ws', WebScocketHandler),
+            (r'/ws', WebSocketHandler),
             (r'/test', TestHandler)
         ],
         template_path=os.path.join(os.path.dirname(__file__), "templates"),
