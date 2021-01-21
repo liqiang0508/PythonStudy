@@ -9,7 +9,7 @@ import time
 from tornado.concurrent import run_on_executor
 from concurrent.futures import ThreadPoolExecutor
 
-from tornado.options import define, options, parse_command_line;
+from tornado.options import define, options, parse_command_line
 from tornado import gen
 
 define("port", default=8888, help=" running port number")  # 启动的端口号
@@ -43,7 +43,7 @@ class MainHandler(tornado.web.RequestHandler):
         pass
 
     def get(self):
-        self.write("Hello, Torenado")
+        self.write("Hello, Tornado")
 
     def write_error(self, status_code, **kwargs):
         pass
