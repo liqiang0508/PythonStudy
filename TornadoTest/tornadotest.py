@@ -14,7 +14,7 @@ from tornado import gen
 
 define("port", default=8888, help=" running port number")  # 启动的端口号
 
-UPLOADPATH = "static\uploadfile"  # 上传文件夹名称
+UPLOADPATH = "static/uploadfile"  # 上传文件夹名称
 
 
 class TestHandler(tornado.web.RequestHandler):
