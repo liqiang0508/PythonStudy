@@ -89,7 +89,7 @@ class UpLoadFile(tornado.web.RequestHandler):
         save_path = ""
         for meta in file_metas:  # 循环文件信息
             file_name = meta['filename']  # 获取文件的名称
-            save_path = os.path.join(UPLOADPATH, file_name)
+            save_path = os.path.join(UPLOADPATH, file_name).replace("\\", "/")
             print("upload_file===", save_path)
             with open(save_path, 'wb') as up:  # os拼接文件保存路径，以字节码模式打开
                 up.write(meta['body'])
