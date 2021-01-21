@@ -14,7 +14,7 @@ from tornado import gen
 
 define("port", default=8888, help=" running port number")  # 启动的端口号
 
-UPLOADPATH = "static/uploadfile"  # 上传文件夹名称
+UPLOADPATH = "static\uploadfile"  # 上传文件夹名称
 
 
 class TestHandler(tornado.web.RequestHandler):
@@ -154,18 +154,23 @@ if __name__ == "__main__":
 
     parse_command_line()
 
+    setting = {
+        "template_path": os.path.join(os.path.dirname(__file__), "templates"),
+        "static_path": os.path.join(os.path.dirname(__file__), "static"),
+        "debug": False
+
+    }
+
     app = tornado.web.Application(
         handlers=[
             (r'/', MainHandler),
             (r'/upload', UpLoadFile),
-            (r'/uploadsuccess', UpLoadFileSuccess),
+            (r'/upload_success', UpLoadFileSuccess),
             (r'/chat', ChatHandler),
             (r'/ws', WebSocketHandler),
             (r'/test', TestHandler)
         ],
-        template_path=os.path.join(os.path.dirname(__file__), "templates"),
-        static_path=os.path.join(os.path.dirname(__file__), "static"),
-        debug=False
+        **setting
     )
     tornado.web.RequestHandler.write_error = write_error  # Error_handler
 
