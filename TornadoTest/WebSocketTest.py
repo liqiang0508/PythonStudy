@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 # 聊天界面
 import datetime
-
-import tornado
 import tornado.websocket
 
 

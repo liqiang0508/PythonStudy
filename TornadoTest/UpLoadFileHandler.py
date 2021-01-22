@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # 文件上传测试
+import os
+
 import tornado
 
 UPLOADPATH = "static/uploadfile"  # 上传文件夹名称

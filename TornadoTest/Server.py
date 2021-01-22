@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import tornado.ioloop
 import tornado.web
-import os
-
 from tornado.options import define, options, parse_command_line
 
 from TestHandler import *
@@ -10,6 +8,7 @@ from UpLoadFileHandler import *
 from WebSocketTest import *
 
 define("port", default=8888, help=" running port number")  # 启动的端口号
+
 
 def write_error(self, state, **kw):
     self.write("Page not find  " + str(state))
