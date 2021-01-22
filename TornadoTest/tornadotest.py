@@ -45,11 +45,15 @@ class MainHandler(tornado.web.RequestHandler):
         pass
 
     def get(self):
-        self.save_data()
-        data = self.get_data()
-        jsonData = json.dumps(data, indent=4)
-        self.write(jsonData)
-        self.finish()
+        res =  self.save_data()
+        if res:
+            data = self.get_data()
+            jsonData = json.dumps(data, indent=8)
+            self.write(jsonData)
+        else:
+            self.write("error")
+
+
 
     def get_data(self):
         data = MySqlSelectAll("select * from users")
@@ -57,10 +61,7 @@ class MainHandler(tornado.web.RequestHandler):
 
     def save_data(self):
         b = MySqlInsert("insert into users(name,age) values ('liqiang',29)")
-        if b:
-            print "插入ok"
-        else:
-            print "插入error"
+        return b
 
 
 # 聊天界面
