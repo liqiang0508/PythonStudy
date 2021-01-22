@@ -5,12 +5,14 @@ import tornado.websocket
 import os
 import datetime
 import time
-
+import json
 from tornado.concurrent import run_on_executor
 from concurrent.futures import ThreadPoolExecutor
 
 from tornado.options import define, options, parse_command_line
 from tornado import gen
+
+from DbManager import *
 
 define("port", default=8888, help=" running port number")  # 启动的端口号
 
@@ -43,12 +45,22 @@ class MainHandler(tornado.web.RequestHandler):
         pass
 
     def get(self):
-        self.write("Hello, Tornado")
+        self.save_data()
+        data = self.get_data()
+        jsonData = json.dumps(data, indent=4)
+        self.write(jsonData)
+        self.finish()
 
-    def write_error(self, status_code, **kwargs):
-        pass
-        # if status_code == 404:
-        #     self.write("Page not find")
+    def get_data(self):
+        data = MySqlSelectAll("select * from users")
+        return data
+
+    def save_data(self):
+        b = MySqlInsert("insert into users(name,age) values ('liqiang',29)")
+        if b:
+            print "插入ok"
+        else:
+            print "插入error"
 
 
 # 聊天界面
