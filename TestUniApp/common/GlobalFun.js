@@ -1,7 +1,7 @@
 //一些通用的辅助函数
 var GlobalFun = {}
-GlobalFun.scriptVersion = 100;//本地脚本版本号
-GlobalFun.HotUpUrl = "http://192.168.65.151/unihotUpVersion/uniconfigrelease"//热更新地址
+GlobalFun.scriptVersion = 124;//本地脚本版本号
+GlobalFun.HotUpUrl = "http://lee.free.vipnps.vip/unihotUpVersion/uniconfigrelease"//热更新地址
 
 //数组里面是否包含一个字符串
 GlobalFun.isContain = function(str,arr){
@@ -19,7 +19,7 @@ GlobalFun.isContain = function(str,arr){
 GlobalFun.getVersionName = function(){
 	
 	// #ifdef APP-PLUS
-	return plus.runtime.versionCode
+	return this.scriptVersion //plus.runtime.versionCode
 	// #endif
 	
 	return ""
@@ -37,3 +37,4 @@ GlobalFun.exitGame = function(){
 
 
 module.exports = GlobalFun;
+// window.GlobalFun = GlobalFun

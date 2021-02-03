@@ -42,6 +42,8 @@
 		<button class="bg-gradual-pink" @click="open10">获取位置信息</button>
 		<button class="bg-gradual-pink" @click="changeLang">{{ i18n("index").changeLang }}</button>
 		<button class="bg-gradual-pink" @click="open11">输入框测试</button>
+		<view style="height: 15px;"></view>
+		<hr style='background-color:#ff55ff; height:1px; border:none;''/>
 		
 
 	</view>

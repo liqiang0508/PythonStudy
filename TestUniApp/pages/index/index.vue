@@ -22,7 +22,7 @@
 			</view>
 		</view>
 		
-		<hr style=" margin-top: 10rpx" />
+		<hr style=" margin-top: 10rpx;background-color: #ff1014; height: 1px; border: none;" />
 		
 		
 		<!-- 种类 -->

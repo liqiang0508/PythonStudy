@@ -9,11 +9,11 @@
 
 
   "scriptVersion":124,
-  "baseUrl": "http://192.168.65.151/unihotUpVersion/Script_%s",
+  "baseUrl": "http://lee.free.vipnps.vip/unihotUpVersion/Script_%s",
   "configFile": "appinfoiii.json",
 
   "debugScriptVersion": 124,
-  "debugBaseUrl": "http://192.168.65.151/unihotUpVersion/Script_%s",
+  "debugBaseUrl": "http://lee.free.vipnps.vip/unihotUpVersion/Script_%s",
   "debugConfigFile": "appinfoiii.json",
   "debugUIDs": [
     "-----------",
