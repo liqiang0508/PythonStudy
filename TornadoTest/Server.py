@@ -6,6 +6,7 @@ from tornado.options import define, options, parse_command_line
 from TestHandler import *
 from UpLoadFileHandler import *
 from WebSocketTest import *
+from MysqlHandle import  *
 
 define("port", default=8888, help=" running port number")  # 启动的端口号
 
@@ -23,16 +24,17 @@ if __name__ == "__main__":
     setting = {
         "template_path": os.path.join(os.path.dirname(__file__), "templates"),
         "static_path": os.path.join(os.path.dirname(__file__), "static"),
-        "debug": False
+        "debug": True
     }
     app = tornado.web.Application(
         handlers=[
-            (r'/', MainHandler),
+            (r'/', MysqlHandler),
             (r'/upload', UpLoadFile),
             (r'/upload_success', UpLoadFileSuccess),
             (r'/chat', ChatHandler),
             (r'/ws', WebSocketHandler),
             (r'/test', TestHandler)
+
         ],
         **setting
     )
