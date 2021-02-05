@@ -2,13 +2,15 @@
 import tornado
 from MysqlUtils import *
 import json
+
+
 class MysqlHandler(tornado.web.RequestHandler):
     def data_received(self, chunk):
         pass
 
     def get(self):
-        argument = self.get_argument('code',"0")#获取get参数 url?xx=？&xx=?
-        print("argument==",argument)
+        argument = self.get_argument('code', "0")  # 获取get参数 url?xx=？&xx=?
+        print("argument==", argument)
         res = self.save_data()
         if res:
             data = self.get_data()

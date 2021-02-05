@@ -7,8 +7,6 @@ from tornado import gen
 from tornado.concurrent import run_on_executor
 
 
-
-
 class TestHandler(tornado.web.RequestHandler):
     def data_received(self, chunk):
         pass
@@ -28,6 +26,3 @@ class TestHandler(tornado.web.RequestHandler):
         res = yield self.my_func()
         self.write(res)
         self.finish()
-
-
-
