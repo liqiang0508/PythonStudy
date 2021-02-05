@@ -3,8 +3,8 @@
 
 
 	export default {
-		onLaunch: function() {
-			console.log('App Launch')
+		onLaunch: function(option) {
+			console.log('App Launch',option.query.id)//获取参数
 			let platform = '';
 			var sysInfo = uni.getSystemInfoSync()
 
