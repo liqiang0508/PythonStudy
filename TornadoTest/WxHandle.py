@@ -61,4 +61,9 @@ class AuthHandler(tornado.web.RequestHandler):
     def get(self):
         url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={}&redirect_uri={}&response_type=code&scope=snsapi_userinfo#wechat_redirect".format(APPID,"http%3A%2F%2Flee.free.vipnps.vip%2Fhome")
         self.redirect(url)
-    
+
+    def get_token(self):#获取tocken
+        pass
+
+    def get_userinfo(self):#获取WX用户信息
+        pass
