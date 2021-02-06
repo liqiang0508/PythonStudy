@@ -6,9 +6,12 @@ from tornado.options import define, options, parse_command_line
 from TestHandler import *
 from UpLoadFileHandler import *
 from WebSocketTest import *
-from MysqlHandle import  *
+# from MysqlHandle import  *
+from WxHandle import *
 
-define("port", default=8888, help=" running port number")  # 启动的端口号
+from HomeHandler import *
+
+define("port", default=80, help=" running port number")  # 启动的端口号
 
 
 def write_error(self, state, **kw):
@@ -28,12 +31,16 @@ if __name__ == "__main__":
     }
     app = tornado.web.Application(
         handlers=[
-            (r'/', MysqlHandler),
+            # (r'/', MysqlHandler),
+            (r'/', WxHandler),
             (r'/upload', UpLoadFile),
             (r'/upload_success', UpLoadFileSuccess),
             (r'/chat', ChatHandler),
             (r'/ws', WebSocketHandler),
-            (r'/test', TestHandler)
+            (r'/test', TestHandler),
+            (r'/wx', WxHandler),
+            (r'/home', HomeHandler),
+            (r'/auth', AuthHandler)
 
         ],
         **setting
