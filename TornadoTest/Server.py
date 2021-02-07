@@ -14,8 +14,8 @@ define("port", default=80, help=" running port number")  # 启动的端口号
 
 
 class Hello(tornado.web.RequestHandler):
-    @tornado.web.asynchronous
-    @tornado.gen.engine
+    @gen.coroutine
+    # @tornado.gen.engine
     def get(self):
         # client = tornado.httpclient.AsyncHTTPClient()
         # client.fetch("https://www.baidu.com",callback=self.on_response)
@@ -35,9 +35,12 @@ class Hello(tornado.web.RequestHandler):
     def say(self):
         client = tornado.httpclient.AsyncHTTPClient()
         response = yield tornado.gen.Task(client.fetch, "https://www.baidu.com")
-        print("responce==",response.code)
-        raise gen.Return(response.code)
-        # return response
+        print("response==", response.code)
+        data = yield self.Add(response.code)
+        raise gen.Return(data)
+
+    def Add(self, num):
+        raise gen.Return(num + 2)
 
     def on_response(self, response):
         print(response)
