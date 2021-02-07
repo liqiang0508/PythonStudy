@@ -67,9 +67,11 @@ class AuthHandler(tornado.web.RequestHandler):
     def get(self):
         print("wx auth****")
         server = "http://lee.free.vipnps.vip/get_code"  # 回调code 的地址
+        state = "adadafa21"  #重定向后会带上state参数，开发者可以填写a-zA-Z0-9的参数值，最多128字节
         server = urllib.quote_plus(server)
-        url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={}&redirect_uri={}&response_type=code&scope=snsapi_userinfo#wechat_redirect".format(
-            APPID, server)
+        # https://open.weixin.qq.com/connect/oauth2/authorizeappid=wxf0e81c3bee622d60&redirect_uri=http://nba.bluewebgame.com/oauth_response.php&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
+        url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={}&redirect_uri={}&response_type=code&scope=snsapi_userinfo&state={}#wechat_redirect".format(
+            APPID, server,state)
         self.redirect(url)
 
 
