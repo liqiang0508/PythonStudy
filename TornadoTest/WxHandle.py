@@ -66,7 +66,7 @@ class AuthHandler(tornado.web.RequestHandler):
 
     def get(self):
         print("wx auth****")
-        server = "http://lee.free.vipnps.vip/get_code"# 回调code 的地址
+        server = "http://lee.free.vipnps.vip/get_code"  # 回调code 的地址
         server = urllib.quote_plus(server)
         url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={}&redirect_uri={}&response_type=code&scope=snsapi_userinfo#wechat_redirect".format(
             APPID, server)
@@ -78,21 +78,18 @@ class TokenHandler(tornado.web.RequestHandler):
     @tornado.web.asynchronous
     @tornado.gen.engine
     def get(self):  # 重定向获取code
-        print("wx getcode****")
         code = self.get_argument("code", None)
         if code is not None:
-            info = yield self.get_token(code)  # 获取token
-
-            if info is not None:
-                self.write("get code error")
+            userinfo = yield self.get_token(code)  # 获取token
+            print("userinfo==", userinfo)
+            if userinfo is not None:
+                self.render("home.html", userinfo=userinfo)
 
             else:
-                self.write("get code error")
+                self.write("get code error3")
 
         else:
-            self.write("get code error")
-
-        self.finish()
+            self.write("get code error4")
 
     @gen.coroutine
     def get_token(self, code):  # 获取tocken
@@ -102,12 +99,28 @@ class TokenHandler(tornado.web.RequestHandler):
 
         client = tornado.httpclient.AsyncHTTPClient()
         response = yield tornado.gen.Task(client.fetch, url)
+        print("get_token response", response.body)
         body = json.loads(response.body)
 
         openid = body["openid"]
         access_token = body["access_token"]
-        userinfo = yield self.get_userinfo(openid, access_token)  # 获取个人信息
-        raise gen.Return(userinfo)
+        refresh_token = body["refresh_token"]
+
+        token = yield self.check_token(access_token, openid)
+        # token["errcode"] = 1
+        print("errcode", token)
+        if int(token["errcode"]) == 0:  # token没有过期
+            userinfo = yield self.get_userinfo(openid, access_token)  # 获取个人信息
+            raise gen.Return(userinfo)
+        else:  # 过期了
+            print("token 过期了")
+            refreshData = yield self.refresh_token(refresh_token)  # 刷新token
+            access_token = refreshData["access_token"]
+
+            userinfo = yield self.get_userinfo(openid, access_token)  # 获取个人信息
+            raise gen.Return(userinfo)
+
+        self.finish()
 
         # {
         #     "access_token": "ACCESS_TOKEN",
@@ -118,16 +131,39 @@ class TokenHandler(tornado.web.RequestHandler):
         # }
 
     @gen.coroutine
+    def refresh_token(self, refrsh_token):  # 刷新token
+        url = "https://api.weixin.qq.com/sns/oauth2/refresh_token?appid={}&grant_type=refresh_token&refresh_token={} ".format(
+            APPID, refrsh_token)
+        client = tornado.httpclient.AsyncHTTPClient()
+        response = yield tornado.gen.Task(client.fetch, url)
+        response = json.loads(response.body)
+        raise gen.Return(response)
+
+        # {
+        #     "access_token": "ACCESS_TOKEN",
+        #     "expires_in": 7200,
+        #     "refresh_token": "REFRESH_TOKEN",
+        #     "openid": "OPENID",
+        #     "scope": "SCOPE"
+        # }
+
+    @gen.coroutine
+    def check_token(self, token, openid):  # 检测token是否过期
+        url = "https://api.weixin.qq.com/sns/auth?access_token={}&openid={}".format(token, openid)
+        client = tornado.httpclient.AsyncHTTPClient()
+        response = yield tornado.gen.Task(client.fetch, url)
+        response = json.loads(response.body)
+        raise gen.Return(response)
+
+    @gen.coroutine
     def get_userinfo(self, openid, access_token):  # 获取WX用户信息
         # https: // api.weixin.qq.com / sns / userinfo?access_token = ACCESS_TOKEN & openid = OPENID & lang = zh_CN
 
-        url = "https://api.weixin.qq.com/sns/userinfo?access_token={}&openid={}&lang=zh_CN".format(openid, access_token)
+        url = "https://api.weixin.qq.com/sns/userinfo?access_token={}&openid={}&lang=zh_CN".format(access_token, openid)
         client = tornado.httpclient.AsyncHTTPClient()
         response = yield tornado.gen.Task(client.fetch, url)
+        response = json.loads(response.body)
         raise gen.Return(response)
-
-        userinfo = json.loads(response.body)
-        # return userinfo
 
         # {
         #     "openid": " OPENID",

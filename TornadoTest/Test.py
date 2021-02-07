@@ -18,3 +18,5 @@ print math.ceil(time.time())
 value = "http://nba.bluewebgame.com/oauth_response.php"
 data = urllib.quote_plus(value).lower()
 print(data)
+
+print time.time()
