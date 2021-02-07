@@ -74,7 +74,7 @@ if __name__ == "__main__":
             (r'/test', TestHandler),
             (r'/wx', WxHandler),
             (r'/home', HomeHandler),
-            (r'/get_token', TokenHandler),
+            (r'/get_code', TokenHandler),
             (r'/auth', AuthHandler)
 
         ],

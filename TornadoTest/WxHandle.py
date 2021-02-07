@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import urllib
+
 import tornado
 import json
 import hashlib
@@ -64,8 +66,10 @@ class AuthHandler(tornado.web.RequestHandler):
 
     def get(self):
         print("wx auth****")
+        server = "http://lee.free.vipnps.vip/get_code"# 回调code 的地址
+        server = urllib.quote_plus(server)
         url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={}&redirect_uri={}&response_type=code&scope=snsapi_userinfo#wechat_redirect".format(
-            APPID, "http%3A%2F%2Flee.free.vipnps.vip%2Fget_token")
+            APPID, server)
         self.redirect(url)
 
 
@@ -74,6 +78,7 @@ class TokenHandler(tornado.web.RequestHandler):
     @tornado.web.asynchronous
     @tornado.gen.engine
     def get(self):  # 重定向获取code
+        print("wx getcode****")
         code = self.get_argument("code", None)
         if code is not None:
             info = yield self.get_token(code)  # 获取token
