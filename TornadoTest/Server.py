@@ -6,12 +6,43 @@ from tornado.options import define, options, parse_command_line
 from TestHandler import *
 from UpLoadFileHandler import *
 from WebSocketTest import *
-# from MysqlHandle import  *
 from WxHandle import *
 
 from HomeHandler import *
 
 define("port", default=80, help=" running port number")  # 启动的端口号
+
+
+class Hello(tornado.web.RequestHandler):
+    @tornado.web.asynchronous
+    @tornado.gen.engine
+    def get(self):
+        # client = tornado.httpclient.AsyncHTTPClient()
+        # client.fetch("https://www.baidu.com",callback=self.on_response)
+
+        # client = tornado.httpclient.AsyncHTTPClient()
+        # response = yield tornado.gen.Task(client.fetch,"https://www.baidu.com")
+        # print(response.code)
+        # self.write(str(response.code))
+        # self.finish()
+
+        data = yield self.say()
+        print("data==", data)
+        self.write(str(data))
+        self.finish()
+
+    @gen.coroutine
+    def say(self):
+        client = tornado.httpclient.AsyncHTTPClient()
+        response = yield tornado.gen.Task(client.fetch, "https://www.baidu.com")
+        print("responce==",response.code)
+        raise gen.Return(response.code)
+        # return response
+
+    def on_response(self, response):
+        print(response)
+        self.write(response.code)
+        self.finish()
 
 
 def write_error(self, state, **kw):
@@ -27,11 +58,11 @@ if __name__ == "__main__":
     setting = {
         "template_path": os.path.join(os.path.dirname(__file__), "templates"),
         "static_path": os.path.join(os.path.dirname(__file__), "static"),
-        "debug": True
+        "debug": False
     }
     app = tornado.web.Application(
         handlers=[
-            # (r'/', MysqlHandler),
+            (r'/', Hello),
             (r'/', WxHandler),
             (r'/upload', UpLoadFile),
             (r'/upload_success', UpLoadFileSuccess),
@@ -40,6 +71,7 @@ if __name__ == "__main__":
             (r'/test', TestHandler),
             (r'/wx', WxHandler),
             (r'/home', HomeHandler),
+            (r'/get_token', TokenHandler),
             (r'/auth', AuthHandler)
 
         ],
