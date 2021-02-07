@@ -41,9 +41,10 @@ class WxHandler(tornado.web.RequestHandler):
 
     def post(self):
         webData = self.request.body
-        print("body=", webData)
+        # print("body=", webData)
 
         recMsg = receive.parse_xml(webData)
+        print("recMsg==", recMsg.__dict__)
         if isinstance(recMsg, receive.Msg):
             toUser = recMsg.FromUserName
             fromUser = recMsg.ToUserName
