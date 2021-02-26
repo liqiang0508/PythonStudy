@@ -9,7 +9,7 @@ class ChatHandler(tornado.web.RequestHandler):
         pass
 
     def get(self):
-        self.render('ws.html')
+        self.render('Chat.html')
 
 
 # #websocket

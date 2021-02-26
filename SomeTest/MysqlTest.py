@@ -2,7 +2,8 @@
 # -*- coding: UTF-8 -*-
 import pymysql
 import json
-from DBUtils.PooledDB import PooledDB
+# from DBUtils.PooledDB import PooledDB
+from dbutils.pooled_db import PooledDB
 
 
 # 打开数据库连接
@@ -15,7 +16,7 @@ from DBUtils.PooledDB import PooledDB
 #     db='hello',
 #     charset='utf8'
 # )
-pool = PooledDB(pymysql,5,host='localhost',user='root',passwd='123456',db='hello',port=3306, charset="utf8") #5为连接池里的最少连接数
+pool = PooledDB(pymysql,5,host='localhost',user='root',passwd='123456',db='testdb',port=3306, charset="utf8") #5为连接池里的最少连接数
 
 
 
@@ -62,9 +63,10 @@ def MySqlInsert(sql):
 
 # print MySqlSelectOne("SELECT VERSION()")
 
-# b = MySqlInsert("insert into userinfo(name,age) values ('liqiang',29)")
-# if b:
-# 	print "插入ok"
+b = MySqlInsert("insert into users(name,age) values ('liqiang',29)")
+if b:
+	print "插入ok"
 
 
-# print MySqlSelectAll("select name from userinfo")
+print MySqlSelectAll("select name from users")
+print type(json.dumps(MySqlSelectAll("select name from users")))

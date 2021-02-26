@@ -93,6 +93,9 @@ a = -2
 a = a  if a>=0 else -a
 print(a)
 print(len("https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=246653379193569&height=200&width=200&ext=1604906771&hash=AeR9soxw4SdX8JJJtho"))
+a = 2
+x = lambda x: x + 2
+print x(2),a
 os.system('pause')
 # os.system('explorer E:\github')
 # os.system("explorer "+ "../")
