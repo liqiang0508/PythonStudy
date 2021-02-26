@@ -10,7 +10,7 @@ from WxHandle import *
 
 from HomeHandler import *
 
-define("port", default=80, help=" running port number")  # 启动的端口号
+define("port", default=8080, help=" running port number")  # 启动的端口号
 
 
 class Hello(tornado.web.RequestHandler):
@@ -81,7 +81,10 @@ if __name__ == "__main__":
         **setting
     )
     tornado.web.RequestHandler.write_error = write_error  # Error_handler
-
-    http_server = tornado.httpserver.HTTPServer(app)
+    # //https://github.com/FiloSottile/mkcert 信任自签证书
+    http_server = tornado.httpserver.HTTPServer(app,ssl_options={
+           "certfile": "key/key.pem",
+           "keyfile":  "key/key-key.pem",
+       })
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.current().start()
