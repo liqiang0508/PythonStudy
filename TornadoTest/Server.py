@@ -61,7 +61,7 @@ if __name__ == "__main__":
     setting = {
         "template_path": os.path.join(os.path.dirname(__file__), "templates"),
         "static_path": os.path.join(os.path.dirname(__file__), "static"),
-        "debug": False
+        "debug": True
     }
     app = tornado.web.Application(
         handlers=[
@@ -86,5 +86,6 @@ if __name__ == "__main__":
            "certfile": "key/key.pem",
            "keyfile":  "key/key-key.pem",
        })
+    # http_server = tornado.httpserver.HTTPServer(app)
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.current().start()
