@@ -48,6 +48,9 @@
 		<meta-data android:name="DCLOUD_PRIVACY_PROMPT"  android:value="none"/>
 
         <meta-data android:name="DCLOUD_AD_SPLASH" android:value="true"/>
+        <meta-data
+            android:name="CHANNEL_NAME"
+            android:value="${BAIDU_CHANNEL_VALUE}" />
     </application>
 	
 	<!-- 权限 -->

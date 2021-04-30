@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('E:\\github\\pythonStudy\\TestUniApp\\AndroidProject\\keystore2')
+            storePassword '123456'
+            keyAlias 'thai2'
+            keyPassword '123456'
+        }
+    }
     compileSdkVersion 30
 
 
@@ -10,7 +18,7 @@ android {
         targetSdkVersion 30
         versionCode 124
         versionName "1.0.0"
-
+        flavorDimensions "versionCode"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 		ndk {  
 		        abiFilters 'arm64-v8a','armeabi-v7a'  
@@ -20,12 +28,40 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     aaptOptions {
         additionalParameters '--auto-add-overlay'
         ignoreAssetsPattern "!.svn:!.git:.*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~"
+    }
+
+    productFlavors {
+        //应用宝、360手机助手、魅族应用市场、华为应用市场、自动更新
+        yingyongbao {
+            applicationId "com.lee.test"
+            manifestPlaceholders = [BAIDU_CHANNEL_VALUE: "应用宝"]
+            resValue "string", "app_name", "应用宝"
+        }
+        qh360 {
+            manifestPlaceholders = [BAIDU_CHANNEL_VALUE: "360手机助手"]
+            resValue "string", "app_name", "360手机助手"
+        }
+
+
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            //def outputFile = output.outputFile
+            //if (outputFile != null && outputFile.name.endsWith('.apk')) {
+            //if (variant.buildType.name == 'release') {
+                def fileName = productFlavors[0].name+"_${defaultConfig.versionName}_${defaultConfig.versionCode}"+"_"+variant.buildType.name +"_.apk"
+                outputFileName = fileName
+            //}//
+            //}
+        }
     }
 }
 
