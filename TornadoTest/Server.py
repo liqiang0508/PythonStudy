@@ -20,7 +20,8 @@ class Hello(tornado.web.RequestHandler):
     async def get(self):
         data = await self.doFun()
         print("data==", data)
-        self.write(str(data.code))
+        response = self.request.remote_ip+" code = "+str(data.code)
+        self.write(response)
         self.finish()
         # self.redirect("http://www.baidu.com")
 
