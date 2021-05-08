@@ -20,7 +20,7 @@ class Hello(tornado.web.RequestHandler):
     async def get(self):
         data = await self.doFun()
         print("data==", data)
-        response = self.request.remote_ip+" code = "+str(data.code)
+        response = self.request.remote_ip + " code = " + str(data.code)
         self.write(response)
         self.finish()
         # self.redirect("http://www.baidu.com")
@@ -34,7 +34,6 @@ class Hello(tornado.web.RequestHandler):
         else:
             return response
             print(response.code)
-
 
 
 def write_error(self, state, **kw):
@@ -70,10 +69,10 @@ if __name__ == "__main__":
     )
     tornado.web.RequestHandler.write_error = write_error  # Error_handler
     # //https://github.com/FiloSottile/mkcert 信任自签证书
-    http_server = tornado.httpserver.HTTPServer(app,ssl_options={
-           "certfile": "key/key.pem",
-           "keyfile":  "key/key-key.pem",
-       })
+    http_server = tornado.httpserver.HTTPServer(app, ssl_options={
+        "certfile": "key/key.pem",
+        "keyfile": "key/key-key.pem",
+    })
     # http_server = tornado.httpserver.HTTPServer(app)
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.current().start()
