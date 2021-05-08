@@ -11,6 +11,7 @@ from WxHandle import *
 
 from HomeHandler import *
 
+# Server.py --port=8000  命令行启动自定义端口号
 define("port", default=8080, help=" running port number")  # 启动的端口号
 
 
@@ -21,6 +22,7 @@ class Hello(tornado.web.RequestHandler):
         print("data==", data)
         self.write(str(data.code))
         self.finish()
+        # self.redirect("http://www.baidu.com")
 
     async def doFun(self):
         http_client = AsyncHTTPClient()
