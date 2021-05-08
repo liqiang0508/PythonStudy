@@ -51,7 +51,7 @@ def getOnePageImage(url):
         images = selector.xpath('//div[@class = "content"]/img')
 
         dirName = re.search("\d+", os.path.basename(url))
-        print("dirName=====len", len(images),dirName.group())
+        print("dirName=====len", len(images), dirName.group())
         dirName = HomeDir + "/" + dirName.group()
         if os.path.exists(dirName):  # 存在文件夹
             pass

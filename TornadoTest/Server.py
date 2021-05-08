@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import tornado.ioloop
 import tornado.web
+from tornado.httpclient import AsyncHTTPClient
 from tornado.options import define, options, parse_command_line
 
 from TestHandler import *
@@ -14,38 +15,23 @@ define("port", default=8080, help=" running port number")  # 启动的端口号
 
 
 class Hello(tornado.web.RequestHandler):
-    @gen.coroutine
-    # @tornado.gen.engine
-    def get(self):
-        # client = tornado.httpclient.AsyncHTTPClient()
-        # client.fetch("https://www.baidu.com",callback=self.on_response)
 
-        # client = tornado.httpclient.AsyncHTTPClient()
-        # response = yield tornado.gen.Task(client.fetch,"https://www.baidu.com")
-        # print(response.code)
-        # self.write(str(response.code))
-        # self.finish()
-
-        data = yield self.say()
+    async def get(self):
+        data = await self.doFun()
         print("data==", data)
-        self.write(str(data))
+        self.write(str(data.code))
         self.finish()
 
-    @gen.coroutine
-    def say(self):
-        client = tornado.httpclient.AsyncHTTPClient()
-        response = yield tornado.gen.Task(client.fetch, "https://www.baidu.com")
-        print("response==", response.code)
-        data = yield self.Add(response.code)
-        raise gen.Return(data)
+    async def doFun(self):
+        http_client = AsyncHTTPClient()
+        try:
+            response = await http_client.fetch("http://www.baidu.com")
+        except Exception as e:
+            print("Error: %s" % e)
+        else:
+            return response
+            print(response.code)
 
-    def Add(self, num):
-        raise gen.Return(num + 2)
-
-    def on_response(self, response):
-        print(response)
-        self.write(response.code)
-        self.finish()
 
 
 def write_error(self, state, **kw):

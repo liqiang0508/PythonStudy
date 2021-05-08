@@ -33,7 +33,7 @@ class WxHandler(tornado.web.RequestHandler):
         sha1 = hashlib.sha1()
         map(sha1.update, listData)
         hashcode = sha1.hexdigest()
-        print "handle/GET func: hashcode, signature: ", hashcode, signature
+        print("handle/GET func: hashcode, signature: ", hashcode, signature)
         if hashcode == signature:
             print("yes")
             self.write(echostr)
@@ -77,8 +77,8 @@ class AuthHandler(tornado.web.RequestHandler):
 
 class TokenHandler(tornado.web.RequestHandler):
 
-    @tornado.web.asynchronous
-    @tornado.gen.engine
+    # @tornado.web.asynchronous
+    # @tornado.gen.engine
     def get(self):  # 重定向获取code
         code = self.get_argument("code", None)
         if code is not None:
