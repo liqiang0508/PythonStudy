@@ -13,7 +13,7 @@ import receive
 APPID = "wxb781d732550afa4f"
 appsecret = "76417792d3d4dce05f9e1c19f5512c13"
 
-
+# 调试地址  https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login
 class WxHandler(tornado.web.RequestHandler):
     def data_received(self, chunk):
         pass
@@ -61,7 +61,7 @@ class WxHandler(tornado.web.RequestHandler):
             else:  # 暂不处理
                 self.write(reply.Msg().send())
 
-
+# wx网页登录流程  https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html
 class AuthHandler(tornado.web.RequestHandler):
 
     def get(self):
