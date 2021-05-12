@@ -16,8 +16,17 @@ person.name = "LEE"
 person.email = "497232807@qq.com"
 
 phone_number = person.phones.add()
-phone_number.type = addressbook_pb2.Person.PhoneType.MOBILE
+phone_number.type = addressbook_pb2.Person.PhoneType.HOME
 phone_number.number = "1234567"
+
+phone_number2 = person.phones.add()
+phone_number2.type = addressbook_pb2.Person.PhoneType.WORK
+phone_number2.number = "89102151"
+
+phone_number3 = person.phones.add()
+phone_number3.type = addressbook_pb2.Person.PhoneType.WORK
+phone_number3.number = "6666666"
+
 
 print("1=====",addressbook_pb2.Person.PhoneType.MOBILE)
 print("2=====",addressbook_pb2.Person.MOBILE)
@@ -30,5 +39,10 @@ print(serializeToString, type(serializeToString))
 
 address_book.ParseFromString(serializeToString)
 print(address_book)
+
+for person in address_book.people:
+    for phone_number in person.phones:
+        print(phone_number.type,phone_number.number)
+
 
 os.system("pause")
