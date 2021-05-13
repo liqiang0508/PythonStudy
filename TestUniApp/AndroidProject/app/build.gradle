@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            storeFile file('E:\\github\\pythonStudy\\TestUniApp\\AndroidProject\\keystore2')
+            storeFile file('../keystore2')
             storePassword '123456'
             keyAlias 'thai2'
             keyPassword '123456'
@@ -56,20 +56,24 @@ android {
 
 
     }
-    sourceSets{
-        main {
-            manifest.srcFile 'src/main/AndroidManifest.xml'
-            java.srcDirs = ['src/main/java']
-            resources.srcDirs = ['src/main/java']
-            aidl.srcDirs = ['src/main/java']
-            renderscript.srcDirs = ['src/main/java']
-            res.srcDirs = ['src/main/res']
-            assets.srcDirs = ['src/main/assets']
-            jniLibs.srcDirs = ['libs']
-
-        }
-        qh360.java.srcDirs = ['src/qh360/java']
-    }
+//    暂时用不到
+//    sourceSets{
+//        main {
+//            manifest.srcFile 'src/main/AndroidManifest.xml'
+//            java.srcDirs = ['src/main/java']
+//            resources.srcDirs = ['src/main/java']
+//            aidl.srcDirs = ['src/main/java']
+//            renderscript.srcDirs = ['src/main/java']
+//            res.srcDirs = ['src/main/res']
+//            assets.srcDirs = ['src/main/assets']
+//            jniLibs.srcDirs = ['libs']
+//
+//        }
+//        qh360{
+//            java.srcDirs = ['src/qh360/java']
+//            res.srcDirs = ['src/qh360/res']
+//        }
+//    }
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
             //def outputFile = output.outputFile
