@@ -139,3 +139,6 @@
 -dontwarn com.amap.**
 -dontwarn org.apache.commons.**
 -dontwarn com.sina.weibo.sdk.**
+
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}

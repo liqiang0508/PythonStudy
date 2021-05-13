@@ -18,7 +18,6 @@ android {
         targetSdkVersion 30
         versionCode 124
         versionName "1.0.0"
-        flavorDimensions "versionCode"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 		ndk {  
 		        abiFilters 'arm64-v8a','armeabi-v7a'  
@@ -37,27 +36,46 @@ android {
         ignoreAssetsPattern "!.svn:!.git:.*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~"
     }
 
+    flavorDimensions "sdk"
     productFlavors {
-        //应用宝、360手机助手、魅族应用市场、华为应用市场、自动更新
+        //渠道名称
         yingyongbao {
-            applicationId "com.lee.test"
-            manifestPlaceholders = [BAIDU_CHANNEL_VALUE: "应用宝"]
+            dimension "sdk"
+            signingConfig signingConfigs.release
+            applicationId "com.example.uniapptest"
+            manifestPlaceholders = [BAIDU_CHANNEL_VALUE: "应用宝",BUGLY_APP_ID:"59fb8ee7bc",isDebug:false]
             resValue "string", "app_name", "应用宝"
         }
         qh360 {
-            manifestPlaceholders = [BAIDU_CHANNEL_VALUE: "360手机助手"]
+            dimension "sdk"
+            signingConfig signingConfigs.release
+            applicationId "com.lee.test360"
+            manifestPlaceholders = [BAIDU_CHANNEL_VALUE: "360手机助手",BUGLY_APP_ID:"59fb8ee7bc",isDebug:false]
             resValue "string", "app_name", "360手机助手"
         }
 
 
     }
+    sourceSets{
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java']
+            resources.srcDirs = ['src/main/java']
+            aidl.srcDirs = ['src/main/java']
+            renderscript.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
+            assets.srcDirs = ['src/main/assets']
+            jniLibs.srcDirs = ['libs']
 
+        }
+        qh360.java.srcDirs = ['src/qh360/java']
+    }
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
             //def outputFile = output.outputFile
             //if (outputFile != null && outputFile.name.endsWith('.apk')) {
             //if (variant.buildType.name == 'release') {
-                def fileName = productFlavors[0].name+"_${defaultConfig.versionName}_${defaultConfig.versionCode}"+"_"+variant.buildType.name +"_.apk"
+                def fileName = productFlavors[0].name+"_${defaultConfig.versionName}_${defaultConfig.versionCode}"+"_"+variant.buildType.name +".apk"
                 outputFileName = fileName
             //}//
             //}
@@ -82,4 +100,7 @@ dependencies {
 
     // 添加uni-app插件
     implementation project(':pluginTest')
+
+    implementation 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
 }
