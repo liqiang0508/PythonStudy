@@ -42,7 +42,7 @@ android {
         yingyongbao {
             dimension "sdk"
             signingConfig signingConfigs.release
-            applicationId "com.example.uniapptest"
+            applicationId "com.example.uniapptest2"
             manifestPlaceholders = [BAIDU_CHANNEL_VALUE: "应用宝",BUGLY_APP_ID:"59fb8ee7bc",isDebug:false]
             resValue "string", "app_name", "应用宝"
         }
@@ -57,23 +57,29 @@ android {
 
     }
 //    暂时用不到
-//    sourceSets{
-//        main {
-//            manifest.srcFile 'src/main/AndroidManifest.xml'
-//            java.srcDirs = ['src/main/java']
-//            resources.srcDirs = ['src/main/java']
-//            aidl.srcDirs = ['src/main/java']
-//            renderscript.srcDirs = ['src/main/java']
-//            res.srcDirs = ['src/main/res']
-//            assets.srcDirs = ['src/main/assets']
-//            jniLibs.srcDirs = ['libs']
-//
-//        }
-//        qh360{
-//            java.srcDirs = ['src/qh360/java']
-//            res.srcDirs = ['src/qh360/res']
-//        }
-//    }
+    sourceSets{
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java']
+            resources.srcDirs = ['src/main/java']
+            aidl.srcDirs = ['src/main/java']
+            renderscript.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
+            assets.srcDirs = ['src/main/assets']
+            jniLibs.srcDirs = ['libs']
+            assets.srcDir "assets"
+        }
+        qh360{
+            java.srcDirs = ['src/qh360/java']
+            res.srcDirs = ['src/qh360/res']
+            manifest.srcFile 'src/qh360/AndroidManifest.xml'
+        }
+        yingyongbao{
+            java.srcDirs = ['src/yingyongbao/java']
+            res.srcDirs = ['src/yingyongbao/res']
+            manifest.srcFile 'src/yingyongbao/AndroidManifest.xml'
+        }
+    }
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
             //def outputFile = output.outputFile

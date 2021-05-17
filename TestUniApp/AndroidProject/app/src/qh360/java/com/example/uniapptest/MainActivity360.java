@@ -11,9 +11,9 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import java.security.PublicKey;
 
-public class MainActivity extends Activity {
+public class MainActivity360 extends Activity {
 
-    public String TAG = "MainActivity";
+    public String TAG = "MainActivity360";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

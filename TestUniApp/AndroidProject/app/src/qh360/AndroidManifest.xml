@@ -12,13 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivity360"
             android:configChanges="orientation|keyboardHidden|keyboard|navigation"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:hardwareAccelerated="true"
             android:theme="@style/TranslucentTheme"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
