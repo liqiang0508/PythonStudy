@@ -56,7 +56,7 @@ layui.config({
 			var othis = $(this),
 				type = othis.data('type');
 			var id = othis.attr("id")
-			// console.log("id===" + id)
+			console.log("id===" + id,type)
 			let btnText = othis.text()
 			// console.log("id===" + btnText)
 
@@ -110,6 +110,23 @@ layui.config({
 
 		var table = layui.table;
 		//展示已知数据
+		var tableDatas = []
+		for(var  i = 0;i<11;i++)
+		{
+			tableDatas.push({
+					"id": "10001",
+					"username": "杜甫",
+					"email": "xianxin@layui.com",
+					"sex": "男",
+					"city": "浙江杭州",
+					"sign": "人生恰似一场修行",
+					"experience": "116",
+					"ip": "192.168.0.8",
+					"logins": "108",
+					"joinTime": "2016-10-14"
+				})
+		}
+		console.log(tableDatas)
 		table.render({
 			// width:640,
 			toolbar: true,
@@ -159,96 +176,7 @@ layui.config({
 					}
 				]
 			],
-			data: [{
-					"id": "10001",
-					"username": "杜甫",
-					"email": "xianxin@layui.com",
-					"sex": "男",
-					"city": "浙江杭州",
-					"sign": "人生恰似一场修行",
-					"experience": "116",
-					"ip": "192.168.0.8",
-					"logins": "108",
-					"joinTime": "2016-10-14"
-				}, {
-					"id": "10002",
-					"username": "李白",
-					"email": "xianxin@layui.com",
-					"sex": "男",
-					"city": "浙江杭州",
-					"sign": "人生恰似一场修行",
-					"experience": "12",
-					"ip": "192.168.0.8",
-					"logins": "106",
-					"joinTime": "2016-10-14",
-					"LAY_CHECKED": true
-				}, {
-					"id": "10003",
-					"username": "王勃",
-					"email": "xianxin@layui.com",
-					"sex": "男",
-					"city": "浙江杭州",
-					"sign": "人生恰似一场修行",
-					"experience": "65",
-					"ip": "192.168.0.8",
-					"logins": "106",
-					"joinTime": "2016-10-14"
-				}, {
-					"id": "10004",
-					"username": "贤心",
-					"email": "xianxin@layui.com",
-					"sex": "男",
-					"city": "浙江杭州",
-					"sign": "人生恰似一场修行",
-					"experience": "666",
-					"ip": "192.168.0.8",
-					"logins": "106",
-					"joinTime": "2016-10-14"
-				}, {
-					"id": "10005",
-					"username": "贤心",
-					"email": "xianxin@layui.com",
-					"sex": "男",
-					"city": "浙江杭州",
-					"sign": "人生恰似一场修行",
-					"experience": "86",
-					"ip": "192.168.0.8",
-					"logins": "106",
-					"joinTime": "2016-10-14"
-				}, {
-					"id": "10006",
-					"username": "贤心",
-					"email": "xianxin@layui.com",
-					"sex": "男",
-					"city": "浙江杭州",
-					"sign": "人生恰似一场修行",
-					"experience": "12",
-					"ip": "192.168.0.8",
-					"logins": "106",
-					"joinTime": "2016-10-14"
-				}, {
-					"id": "10007",
-					"username": "贤心",
-					"email": "xianxin@layui.com",
-					"sex": "男",
-					"city": "浙江杭州",
-					"sign": "人生恰似一场修行",
-					"experience": "16",
-					"ip": "192.168.0.8",
-					"logins": "106",
-					"joinTime": "2016-10-14"
-				}, {
-					"id": "10008",
-					"username": "贤心",
-					"email": "xianxin@layui.com",
-					"sex": "男",
-					"city": "浙江杭州",
-					"sign": "人生恰似一场修行",
-					"experience": "106",
-					"ip": "192.168.0.8",
-					"logins": "106",
-					"joinTime": "2016-10-14"
-				}]
+			data: tableDatas
 				//,skin: 'line' //表格风格
 				,
 			even: true
