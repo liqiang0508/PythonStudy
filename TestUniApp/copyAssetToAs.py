@@ -10,14 +10,14 @@ print("copyAssetsToAs")
 #复制src目录下面所有的文件到 dst目录下面 
 def copyFileTree(src,dst ): 
 	if os.path.exists(dst):
-		print dst+"  delete**** "
+		print (dst+"  delete**** ")
 		shutil.rmtree(dst)
 	else:
 		pass
 			
 
 	shutil.copytree(src, dst)
-	print "copy tree %s -> %s"%( src,dst)
+	print ("copy tree %s -> %s"%( src,dst))
 	# return
 
 
