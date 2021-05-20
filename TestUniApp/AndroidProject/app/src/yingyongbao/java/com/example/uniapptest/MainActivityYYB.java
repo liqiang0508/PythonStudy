@@ -16,9 +16,9 @@ public class MainActivityYYB extends PandoraEntry {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CrashReport.initCrashReport(getApplicationContext());
-        CrashReport.testJavaCrash();
+//        CrashReport.initCrashReport(getApplicationContext());
+//        CrashReport.testJavaCrash();
 //        CrashReport.postCatchedException(thr);
-        Log.i(TAG, "MainActivity oncreate");
+        Log.i(TAG, "MainActivityYYB oncreate");
     }
 }

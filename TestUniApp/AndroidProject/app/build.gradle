@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.uniapptest"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 124
         versionName "1.0.0"
@@ -26,6 +26,7 @@ android {
 
     buildTypes {
         release {
+            debuggable true
             minifyEnabled false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -42,8 +43,8 @@ android {
         yingyongbao {
             dimension "sdk"
             signingConfig signingConfigs.release
-            applicationId "com.example.uniapptest2"
-            manifestPlaceholders = [BAIDU_CHANNEL_VALUE: "应用宝",BUGLY_APP_ID:"59fb8ee7bc",isDebug:false]
+            applicationId "com.example.uniapptest"
+            manifestPlaceholders = [BAIDU_CHANNEL_VALUE: "应用宝",BUGLY_APP_ID:"59fb8ee7bc",isDebug:false,"dcloud_appkey":"7304ba1a859dd1a189d6b7c473cbd6fc"]
             resValue "string", "app_name", "应用宝"
             multiDexEnabled true
         }
