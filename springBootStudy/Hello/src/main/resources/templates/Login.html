@@ -8,29 +8,34 @@
 </head>
 <body>
 
-<div class="layui-fluid">
+<div style="height: 100%;width:100%;display:flex; flex-direction: column; align-items: center; justify-content: center">
 
-    <div class="layui-row" >
+    <div style="width: 500px;height: 350px;background-color: rgba(0,0,255,0.6);border-radius:25px;">
 
-        <form class="layui-form" action="">
-            <div class="layui-form-item">
-                <label class="layui-form-label">输入框</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="title" required lay-verify="required" placeholder="请输入标题"
-                           autocomplete="off" class="layui-input">
-                </div>
+            <div  style="text-align: center;margin-top: 50px;font-size: 2em">
+                <h1>Login</h1>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">密码框</label>
-                <div class="layui-input-inline">
-                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码"
-                           autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </form>
+<!--        <div style="display: flex;flex-direction: column;height: 320px;justify-content: center;background-color: #0C0C0C">-->
 
+            <form class="layui-form" action="" style="margin-top:50px;margin-left: 30px">
+                <div class="layui-form-item" >
+                    <label class="layui-form-label">账号:</label>
+                    <div class="layui-input-inline" style="width: 260px">
+                        <input type="text" name="title" required lay-verify="required" placeholder="请输入账号"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div style="height: 30px"></div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码:</label>
+                    <div class="layui-input-inline" style="width: 260px">
+                        <input type="password" name="password" required lay-verify="required" placeholder="请输入密码"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </form>
+<!--        </div>-->
     </div>
-
 </div>
 
 </body>
@@ -45,6 +50,8 @@
 
 </script>
 <style>
-
+    html, body {
+        height: 100%;
+    }
 </style>
 </html>
