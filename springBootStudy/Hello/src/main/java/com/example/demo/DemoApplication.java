@@ -10,6 +10,7 @@ import com.example.restservice.Greeting;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,6 +49,10 @@ public class DemoApplication {
 		long time = new Date().getTime();
 
 		return time;
+	}
+	@PostMapping("/login")
+	public String login(@RequestParam("title") String title,@RequestParam("password") String Pwd){
+		return title +":"+Pwd;
 	}
 
 }
