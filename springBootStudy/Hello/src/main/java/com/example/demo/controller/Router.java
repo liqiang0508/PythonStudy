@@ -20,4 +20,10 @@ public class Router {
     }
 
 
+    @RequestMapping(value = "/blogin",method = RequestMethod.GET )
+    public String blogin() {
+        return "bootStrapLogin";
+    }
+
+
 }
