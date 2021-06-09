@@ -17,7 +17,7 @@
         </div>
 
 
-        <form class="layui-form" action="/login" style="margin-top:30px;margin-left: 30px" method="post">
+        <form class="layui-form  login-form" action="/login" style="margin-top:30px;margin-left: 30px" method="post">
             <div class="layui-form-item">
                 <label class="layui-form-label">账号:</label>
                 <div class="layui-input-inline" style="width: 260px">
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div style="text-align:center">
-                <button type="submit" class="layui-btn layui-btn-lg">登录</button>
+                <button type="button" class="layui-btn layui-btn-lg  btn-submit" >登录</button>
             </div>
         </form>
 
@@ -47,8 +47,17 @@
 <script src="/webjars/layui/2.5.5/layui.js"></script>
 <script>
     $(function () {
+        $(".btn-submit").click(function (){
 
+            // $(".login-form").submit()
+            // var arg = JSON.stringify({title:"Lee","Pwd":222})
+            var arg = {title:"Lee","password":222}
+            $.post("/login",arg,function (data){
 
+                console.log(data)
+            })
+
+        })
     })
 
 </script>
