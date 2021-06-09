@@ -7,7 +7,7 @@
 
 package com.example.demo;
 
-import com.example.restservice.Greeting;
+import com.example.common.Greeting;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -25,42 +25,14 @@ import java.util.concurrent.atomic.AtomicLong;
 @RestController
 public class DemoApplication {
 
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
-    public Logger logger = (Logger) LoggerFactory.getLogger(getClass());
+
 
     public static void main(String[] args) {
 
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    @GetMapping("/")
-    public String index() {
-		logger.info("我是info");
-        return "Hello";
-    }
 
-    @GetMapping("/hello")
-    public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return String.format("Hello %s!", name);
-    }
-
-    @GetMapping("/greeting")
-    public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return new Greeting(counter.incrementAndGet(), String.format(template, name));
-    }
-
-    @GetMapping("getTime")
-    public long getTime() {
-        long time = new Date().getTime();
-
-        return time;
-    }
-
-    @PostMapping("/login")
-    public String login(@RequestParam("title") String title, @RequestParam("password") String Pwd) {
-        return title + ":" + Pwd;
-    }
 
 }
             
