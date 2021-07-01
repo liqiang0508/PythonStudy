@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
@@ -73,9 +72,21 @@ public class HelloController {
         {
             result.setCode(0);
         }
-
-        result.setCode(201);
+        else
+        {
+            result.setCode(201);
+        }
         return result;
 
     }
+//    @GetMapping("/login")
+//    public LoginResult login() {
+//
+//        LoginResult result  = new LoginResult();
+//
+//        result.setCode(400);
+//
+//        return result;
+//
+//    }
 }

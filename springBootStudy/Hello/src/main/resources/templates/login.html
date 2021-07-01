@@ -35,7 +35,7 @@
 <body class="text-center">
 
 <main class="form-signin">
-    <form>
+    <div>
         <img class="mb-4" src="brand/bootstrap-logo.svg" alt="" width="72" height="57">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
         <!--        <p style="color: red" th:text="${msg}" th:if ="${not #strings.isEmpty(msg)}"></p>-->
@@ -53,20 +53,21 @@
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-        <button class="w-100 btn btn-lg btn-primary btn-submit" type="submit">Sign in</button>
+        <button class="w-100 btn btn-lg btn-primary btn-login">Sign in</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
-    </form>
+    </div>
+
 </main>
 
 
 <script>
     $(function () {
-        $(".btn-submit").click(function () {
+        $(".btn-login").click(function () {
 
             var arg = {email: $(".email").val(), "password": $(".password").val()}
 
             $.post("/login", arg, function (data) {
-
+                console.log(JSON.stringify(data))
                 alert(JSON.stringify(data))
             })
 
