@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.common.Greeting;
+import com.example.common.LoginResult;
 import com.example.common.Person;
 import com.mongodb.client.MongoClients;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
@@ -48,7 +50,8 @@ public class HelloController {
         //mongoOps.remove(p);
         List<Person> people =  mongoOps.findAll(Person.class);
         log.info("Number of people = : " + people.size());
-        return p;//String.format("Hello %s!", name);
+        return p;//
+//        return String.format("Hello %s!", name);
     }
     //用类来接收参数
     @GetMapping("/greeting")
@@ -63,14 +66,16 @@ public class HelloController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("title") String title, @RequestParam("password") String Pwd) {
-        log.info("login==="+title+":"+Pwd);
+    public LoginResult login(@RequestParam("email") String email, @RequestParam("password") String Pwd) {
+        log.info("login==="+email+":"+Pwd);
+        LoginResult result  = new LoginResult();
         if(Pwd=="123456")
         {
-            return title + ":" + Pwd;
+            result.setCode(0);
         }
 
-        return "err login";
+        result.setCode(201);
+        return result;
 
     }
 }
