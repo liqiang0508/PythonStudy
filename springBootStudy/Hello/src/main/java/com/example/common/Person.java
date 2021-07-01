@@ -2,8 +2,9 @@ package com.example.common;
 
 
 public class Person {
-   private String name;
-   private int age;
+    private String id;
+    private String name;
+    private int age;
 
     public String getName() {
         return name;
@@ -15,7 +16,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return this.name +"="+ this.age;
+        return this.name + "=" + this.age;
     }
 
     public int getAge() {
@@ -24,5 +25,13 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
