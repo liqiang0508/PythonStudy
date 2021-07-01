@@ -1,7 +1,10 @@
 package com.example.common;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Person {
+    @JsonIgnore //类返回json的时候过滤掉这个属性
     private String id;
     private String name;
     private int age;
