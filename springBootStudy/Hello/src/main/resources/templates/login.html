@@ -35,10 +35,12 @@
 <body class="text-center">
 
 <main class="form-signin">
+
     <div>
+
         <img class="mb-4" src="brand/bootstrap-logo.svg" alt="" width="72" height="57">
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-        <p style="color: red;display:none"  class = “errorTip”> 密码错误</p>
+        <p style="color: red;display:none" class="errorTip"> 密码错误</p>
         <div class="form-floating">
             <input type="email" class=" email form-control" id="floatingInput" placeholder="name@example.com">
             <label for="floatingInput">Email address</label>
@@ -62,16 +64,13 @@
 
 <script>
     $(function () {
-        console.log($(".errorTip").css("display"))
+
         $(".btn-login").click(function () {
             var arg = {email: $(".email").val(), "password": $(".password").val()}
             $.post("/login", arg, function (data) {
                 console.log(JSON.stringify(data))
-                // $(".errorTip").css("display","block")
-
-
+                $(".errorTip").css("display","block")
             })
-
         })
     })
 
