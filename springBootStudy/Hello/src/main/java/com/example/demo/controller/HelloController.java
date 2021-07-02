@@ -72,7 +72,7 @@ public class HelloController {
     public LoginResult login(@RequestParam("email") String email, @RequestParam("password") String Pwd) {
         log.info("login===" + email + ":" + Pwd);
         LoginResult result = new LoginResult();
-        if (Pwd == "123456") {
+        if (Pwd.equals("123456")) {
             result.setCode(0);
         } else {
             result.setCode(201);

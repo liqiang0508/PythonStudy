@@ -69,7 +69,11 @@
             var arg = {email: $(".email").val(), "password": $(".password").val()}
             $.post("/login", arg, function (data) {
                 console.log(JSON.stringify(data))
-                $(".errorTip").css("display","block")
+                if (data.code == 0) {
+                    alert("登录成功")
+                } else {
+                    $(".errorTip").css("display", "block")
+                }
             })
         })
     })
