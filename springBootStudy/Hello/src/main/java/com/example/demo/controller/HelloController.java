@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -33,25 +34,28 @@ public class HelloController {
         MongoOperations mongoOps = new MongoTemplate(new SimpleMongoClientDbFactory(MongoClients.create(), "hello"));
         Person p = new Person();
         p.setName("lee");
-        p.setAge(29);
+        p.setAge((int) counter.incrementAndGet());
         mongoOps.insert(p);
 
         // Find
-        p = mongoOps.findById(p.getId(), Person.class);
-        log.info("Found: " + p);
+//        p = mongoOps.findById(p.getId(), Person.class);
+//        log.info("Found: " + p);
 
         // Update
-        mongoOps.updateFirst(query(where("name").is("lee")), update("age", 35), Person.class);
-        p = mongoOps.findOne(query(where("name").is("lee")), Person.class);
-        log.info("Updated: " + p);
-
+//        mongoOps.updateFirst(query(where("name").is("lee")), update("age", 35), Person.class);
+//         p = mongoOps.findOne(query(where("name").is("lee")), Person.class);
+//        log.info("Updated: " + p);
+//
         // Delete
         //mongoOps.remove(p);
-        List<Person> people =  mongoOps.findAll(Person.class);
-        log.info("Number of people = : " + people.size());
-        return p;//
-//        return String.format("Hello %s!", name);
+//        List<Person> students =  mongoOps.findAllAndRemove(query(where("name").is("lee")),Person.class);
+//        List<Person> people =  mongoOps.findAll(Person.class);
+//        log.info("Number of people = : " + people.size());
+        return p;
+
+//      return String.format("Hello %s!", name);
     }
+
     //用类来接收参数
     @GetMapping("/greeting")
     public Greeting greeting(Person person) {
@@ -66,14 +70,11 @@ public class HelloController {
 
     @PostMapping("/login")
     public LoginResult login(@RequestParam("email") String email, @RequestParam("password") String Pwd) {
-        log.info("login==="+email+":"+Pwd);
-        LoginResult result  = new LoginResult();
-        if(Pwd=="123456")
-        {
+        log.info("login===" + email + ":" + Pwd);
+        LoginResult result = new LoginResult();
+        if (Pwd == "123456") {
             result.setCode(0);
-        }
-        else
-        {
+        } else {
             result.setCode(201);
         }
         return result;
