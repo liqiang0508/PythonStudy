@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.model.IModel;
 
 import java.io.File;
@@ -45,7 +46,7 @@ public class Router {
 
     //    文件上传
     @PostMapping("/uploadFile")
-    public String UpLoadFile(@RequestParam("file") MultipartFile file, Model model) throws IOException {
+    public String UpLoadFile(@RequestParam("file") MultipartFile file, RedirectAttributes attrs) throws IOException {
         if (file.isEmpty()) {
             // return "上传失败，请选择文件";
         }
@@ -59,7 +60,7 @@ public class Router {
         }
         try {
             file.transferTo(dest);
-            model.addAttribute("msg",fileName);
+            attrs.addFlashAttribute("msg",fileName);
             return "redirect:/uploadSuccess";
         } catch (IOException e) {
 
