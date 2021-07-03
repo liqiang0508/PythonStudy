@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -34,6 +36,24 @@ public class HelloController {
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
     public Logger logger = (Logger) LoggerFactory.getLogger(getClass());
+
+    @GetMapping("/666")
+    public void Test(HttpServletRequest req,HttpServletResponse response)  {
+
+        String action = req.getParameter("action");//反射
+        try{
+            Method method = this.getClass().getDeclaredMethod(action,HttpServletRequest.class,HttpServletResponse.class);
+            method.invoke(this,req,response);
+        }catch (Exception e)
+        {
+            log.info("action=="+action+"  not fond");
+        }
+    }
+
+    public void SayHello(HttpServletRequest req,HttpServletResponse response) throws IOException {
+        log.info("SayHello");
+        response.getWriter().write("Hello");
+    }
 
     @GetMapping("/hello")
     public Person hello(@RequestParam(value = "name", defaultValue = "World") String name) {
@@ -60,7 +80,6 @@ public class HelloController {
 //        log.info("Number of people = : " + people.size());
         return p;
 
-//      return String.format("Hello %s!", name);
     }
 
     //用类来接收参数
