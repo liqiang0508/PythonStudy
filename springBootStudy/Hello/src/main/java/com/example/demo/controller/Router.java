@@ -60,11 +60,11 @@ public class Router {
         try {
             file.transferTo(dest);
             model.addAttribute("msg",fileName);
-            return "uploadSuccess";
+            return "redirect:/uploadSuccess";
         } catch (IOException e) {
 
         }
-        return "uploadError";
+        return "redirect:/uploadError";
     }
 
 }
