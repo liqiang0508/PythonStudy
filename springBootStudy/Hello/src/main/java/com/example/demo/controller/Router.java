@@ -1,8 +1,17 @@
 package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.model.IModel;
+
+import java.io.File;
+import java.io.IOException;
 
 @Controller
 public class Router {
@@ -14,19 +23,47 @@ public class Router {
 //        http://localhost:8888/index      返回templates下面的动态html
     }
 
-    // 返回template下面的Login.html
+    //Test
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String login() {
+    public String test(Model model) {
+        model.addAttribute("msg","6666");
         return "test";
     }
 
-    @RequestMapping(value = "/uploadSuccess", method = RequestMethod.GET)
+    //上传成功
+    @RequestMapping(value = "/uploadSuccess")
     public String uploadSuccess() {
+
         return "uploadSuccess";
     }
-
-    @RequestMapping(value = "/uploadError", method = RequestMethod.GET)
+    //上传失败
+    @RequestMapping(value = "/uploadError")
     public String uploadError() {
+
+        return "uploadError";
+    }
+
+    //    文件上传
+    @PostMapping("/uploadFile")
+    public String UpLoadFile(@RequestParam("file") MultipartFile file, Model model) throws IOException {
+        if (file.isEmpty()) {
+            // return "上传失败，请选择文件";
+        }
+
+        String fileName = file.getOriginalFilename();
+        String filePath = ResourceUtils.getURL("classpath:").getPath()+"upload/";
+        File dest = new File(filePath + fileName);
+        if (!dest.exists())
+        {
+            dest.mkdirs();
+        }
+        try {
+            file.transferTo(dest);
+            model.addAttribute("msg",fileName);
+            return "uploadSuccess";
+        } catch (IOException e) {
+
+        }
         return "uploadError";
     }
 

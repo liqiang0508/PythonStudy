@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory;
-import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -87,27 +86,5 @@ public class HelloController {
         }
         return result;
     }
-//    文件上传
-    @PostMapping("/uploadFile")
-    public void UpLoadFile(@RequestParam("file") MultipartFile file, HttpServletResponse response) throws IOException {
-        if (file.isEmpty()) {
-           // return "上传失败，请选择文件";
-        }
 
-        String fileName = file.getOriginalFilename();
-        String filePath = ResourceUtils.getURL("classpath:").getPath()+"upload/";
-        File dest = new File(filePath + fileName);
-        if (!dest.exists())
-        {
-            dest.mkdirs();
-        }
-        try {
-            file.transferTo(dest);
-            response.sendRedirect("uploadSuccess");
-            return;
-        } catch (IOException e) {
-
-        }
-        response.sendRedirect("uploadError");
-    }
 }
