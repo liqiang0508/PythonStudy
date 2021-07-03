@@ -49,3 +49,5 @@ hotMusic/AndroidProject/app/src/main/assets/
 TornadoTest/.idea/
 buildExcle2Lua/.idea/
 springBootStudy/.idea/
+*.log
+*.gz

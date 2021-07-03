@@ -10,8 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -67,7 +72,7 @@ public class HelloController {
         long time = new Date().getTime();
         return time;
     }
-
+//    登录
     @PostMapping("/login")
     public LoginResult login(@RequestParam("email") String email, @RequestParam("password") String Pwd) {
         log.info("login===" + email + ":" + Pwd);
@@ -78,16 +83,30 @@ public class HelloController {
             result.setCode(201);
         }
         return result;
+    }
+//    文件上传
+    @PostMapping("/uploadFile")
+    public String UpLoadFile(@RequestParam("file") MultipartFile file) throws FileNotFoundException {
+        if (file.isEmpty()) {
+            return "上传失败，请选择文件";
+        }
+
+        String fileName = file.getOriginalFilename();
+        String filePath = ResourceUtils.getURL("classpath:").getPath()+"upload/";
+
+        log.info("filePath===" +filePath);
+        File dest = new File(filePath + fileName);
+        if (!dest.exists())
+        {
+            dest.mkdirs();
+        }
+        try {
+            file.transferTo(dest);
+            return "上传成功";
+        } catch (IOException e) {
+
+        }
+        return "上传失败！";
 
     }
-//    @GetMapping("/login")
-//    public LoginResult login() {
-//
-//        LoginResult result  = new LoginResult();
-//
-//        result.setCode(400);
-//
-//        return result;
-//
-//    }
 }

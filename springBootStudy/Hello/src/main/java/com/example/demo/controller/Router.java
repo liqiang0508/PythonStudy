@@ -15,9 +15,9 @@ public class Router {
     }
 
     // 返回template下面的Login.html
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String login() {
-        return "index";
+        return "test";
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
