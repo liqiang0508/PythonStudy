@@ -20,9 +20,14 @@ public class Router {
         return "test";
     }
 
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String home() {
-        return "home";
+    @RequestMapping(value = "/uploadSuccess", method = RequestMethod.GET)
+    public String uploadSuccess() {
+        return "uploadSuccess";
+    }
+
+    @RequestMapping(value = "/uploadError", method = RequestMethod.GET)
+    public String uploadError() {
+        return "uploadError";
     }
 
 }
