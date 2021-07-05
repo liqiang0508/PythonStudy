@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.model.IModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,8 +23,13 @@ public class Router {
 //        http://localhost:8888/index      返回templates下面的动态html
     }
 
+    @RequestMapping(value = "/ws")
+    public String Chat() {
+        return "websocket";
+    }
+
     //Test
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @RequestMapping(value = "/test")
     public String test(Model model) {
         model.addAttribute("msg","6666");
         return "test";

@@ -1,14 +1,13 @@
 package com.example.demo.controller;
 
-import com.example.common.Greeting;
-import com.example.common.LoginResult;
-import com.example.common.Person;
+import com.example.demo.common.Greeting;
+import com.example.demo.common.LoginResult;
+import com.example.demo.common.Person;
 import com.example.utils.PersonDao;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

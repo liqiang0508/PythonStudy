@@ -4,7 +4,7 @@
  * @Date: 2021-06-07 10:44:17
  * @LastEditTime: 2021-06-07 10:44:18
  */
-package com.example.common;
+package com.example.demo.common;
 
 public class Greeting {
 

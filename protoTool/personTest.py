@@ -35,10 +35,10 @@ print("3=====",addressbook_pb2.Person.PhoneType.Value("MOBILE"))
 
 # 序列化
 serializeToString = address_book.SerializeToString()
-print(serializeToString, type(serializeToString))
+print("serializeToString",serializeToString, type(serializeToString))
 
 address_book.ParseFromString(serializeToString)
-print(address_book)
+print("address_book",address_book)
 
 for person in address_book.people:
     for phone_number in person.phones:

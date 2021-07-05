@@ -1,4 +1,4 @@
-package com.example.common;
+package com.example.demo.common;
 
 public class LoginResult {
     private int code;
