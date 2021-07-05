@@ -53,7 +53,7 @@ public class HelloController {
 
         Person p = new Person();
         p.setName("lee");
-        p.setAge((int) new Date().getTime());
+        p.setAge((int) new Date().getTime()/1000);
        //
         PersonDao.getInstance().insertPerson(p);
 

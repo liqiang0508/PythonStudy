@@ -1,12 +1,12 @@
-'''
-Description: 
-Author: li qiang
-Date: 2021-05-12 11:43:47
-LastEditTime: 2021-05-12 12:29:30
-'''
+
 # -*- coding: utf-8 -*-
-import addressbook_pb2
+# import addressbook_pb2
+# from pythonPb.proto import addressbook_pb2
+# import pythonPb.proto.addressbook_pb2
+from pythonPb.mm import test
+from pythonPb.mm import addressbook_pb2
 import os
+ 
 
 address_book = addressbook_pb2.AddressBook()
 person = address_book.people.add()
@@ -44,5 +44,7 @@ for person in address_book.people:
     for phone_number in person.phones:
         print(phone_number.type,phone_number.number)
 
+
+test.Say()
 
 os.system("pause")
