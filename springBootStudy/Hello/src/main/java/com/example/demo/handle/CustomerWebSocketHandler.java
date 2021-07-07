@@ -1,13 +1,14 @@
 package com.example.demo.handle;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-
+@Slf4j
 public class CustomerWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
-        System.out.println("afterConnectionEstablished======"+session.getId());
+//        System.out.println("afterConnectionEstablished======"+session.getId());
     }
 
     @Override
@@ -28,7 +29,7 @@ public class CustomerWebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
-        System.out.println("接受到的数据==>"+payload);
+        log.info("接受到的数据==>"+payload);
         session.sendMessage(new TextMessage(payload));
     }
 

@@ -1,18 +1,18 @@
 package com.example.demo.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
-
+@Slf4j
 @Controller
 public class Router {
     // 返回template下面的Index.html
@@ -56,14 +56,19 @@ public class Router {
         }
 
         String fileName = file.getOriginalFilename();
-        String filePath = ResourceUtils.getURL("classpath:").getPath()+"upload/";
-        File dest = new File(filePath + fileName);
-        if (!dest.exists())
+        String fileDir = "upload/";
+        File filePath = new File(ResourceUtils.getURL("classpath:").getPath());
+        if (!filePath.exists())
         {
-            dest.mkdirs();
+            filePath = new File("");
+        }
+        File upload = new File(filePath.getAbsolutePath(),fileDir);
+        File dstFile = new File(filePath.getAbsolutePath(),fileDir+fileName);
+        if(!upload.exists()) {
+            upload.mkdirs();
         }
         try {
-            file.transferTo(dest);
+            file.transferTo(dstFile);
             attrs.addFlashAttribute("msg",fileName);
             return "redirect:/uploadSuccess";
         } catch (IOException e) {
