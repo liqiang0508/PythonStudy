@@ -4,7 +4,7 @@ import com.example.demo.common.Person;
 import com.mongodb.client.MongoClients;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory;
+import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class PersonDao {
         }
         return instance;
     }
-    private static MongoOperations mongoOps = new MongoTemplate(new SimpleMongoClientDbFactory(MongoClients.create(), "hello"));
+    private static MongoOperations mongoOps = new MongoTemplate(new SimpleMongoClientDatabaseFactory(MongoClients.create(), "hello"));
 
 //Find
 //p = mongoOps.findById(p.getId(), Person.class);
