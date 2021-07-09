@@ -1,14 +1,19 @@
 package com.example.demo.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.common.Greeting;
 import com.example.demo.common.LoginResult;
 import com.example.demo.common.Person;
+import com.example.utils.HttpUtils;
 import com.example.utils.PersonDao;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +45,14 @@ public class HelloController {
         {
             log.info("action=="+action+"  not fond");
         }
+    }
+    @GetMapping("/get")
+    public JSONObject getTest()  {
+
+        String url = "http://httpbin.org/get";
+        JSONObject data = HttpUtils.httpGet(url);
+        return data;
+
     }
 
     public void SayHello(HttpServletRequest req,HttpServletResponse response) throws IOException {
