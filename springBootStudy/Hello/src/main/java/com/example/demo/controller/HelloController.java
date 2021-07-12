@@ -63,7 +63,8 @@ public class HelloController {
     @GetMapping("/redis")
     public String redis() {
         String value = "666";
-        redisUtils.setKey("name", "Heloworld");
+        long age = new Date().getTime()/1000;
+        redisUtils.setKey("name", String.valueOf(age));
         value = redisUtils.getKey("name");
         return value;
 
@@ -80,7 +81,7 @@ public class HelloController {
 //        Person p = new Person();
 //        p.setName("lee");
 //
-//        long age = new Date().getTime()/10000;
+//        long age = new Date().getTime()/1000;
 //        //log.info("age=="+age);
 //        p.setAge((int)age);
 //       //

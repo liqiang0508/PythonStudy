@@ -20,7 +20,7 @@ public class RedisUtils {
     public  String getKey(String key)
     {
         String value = (String) redisTemplate.opsForValue().get(key);
-        log.info("value"+value);
+//        log.info("value=="+value);
         return value;
     }
 }
