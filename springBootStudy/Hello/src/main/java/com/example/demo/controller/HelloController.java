@@ -37,8 +37,12 @@ public class HelloController {
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
     public Logger logger = (Logger) LoggerFactory.getLogger(getClass());
+
+    final RedisUtils redisUtils;
     @Autowired
-    private  RedisUtils redisUtils;
+    public HelloController(RedisUtils redisUtils) {
+        this.redisUtils = redisUtils;
+    }
     @GetMapping("/666")
     public void Test(HttpServletRequest req, HttpServletResponse response) {
 
