@@ -1,12 +1,12 @@
 package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.common.Greeting;
-import com.example.demo.common.LoginResult;
-import com.example.demo.common.Person;
-import com.example.demo.utils.HttpUtils;
-import com.example.demo.utils.PersonDao;
-import com.example.demo.utils.RedisUtils;
+import com.example.demo.model.Greeting;
+import com.example.demo.model.LoginResult;
+import com.example.demo.model.Person;
+import com.example.demo.component.HttpComponent;
+import com.example.demo.common.PersonDao;
+import com.example.demo.component.RedisComponent;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
-//import com.example.demo.utils.PersonDao;
+//import com.example.demo.common.PersonDao;
 
 @Slf4j
 @RestController
@@ -38,10 +38,15 @@ public class HelloController {
     private final AtomicLong counter = new AtomicLong();
     public Logger logger = (Logger) LoggerFactory.getLogger(getClass());
 
-    final RedisUtils redisUtils;
     @Autowired
-    public HelloController(RedisUtils redisUtils) {
-        this.redisUtils = redisUtils;
+    public HttpComponent httpComponent;
+    @Autowired
+    public PersonDao personDao;
+    @Autowired
+    final RedisComponent redisComponent;
+    @Autowired
+    public HelloController(RedisComponent redisComponent) {
+        this.redisComponent = redisComponent;
     }
     @GetMapping("/666")
     public void Test(HttpServletRequest req, HttpServletResponse response) {
@@ -59,7 +64,7 @@ public class HelloController {
     public JSONObject getTest() {
 
         String url = "http://httpbin.org/get";
-        JSONObject data = HttpUtils.httpGet(url);
+        JSONObject data = httpComponent.httpGet(url);
         return data;
 
     }
@@ -68,30 +73,19 @@ public class HelloController {
     public String redis() {
         String value = "666";
         long age = new Date().getTime()/1000;
-        redisUtils.setKey("name", String.valueOf(age));
-        value = redisUtils.getKey("name");
+        redisComponent.setKey("name", String.valueOf(age));
+        value = redisComponent.getKey("name");
         return value;
 
     }
 
     public void SayHello(HttpServletRequest req, HttpServletResponse response) throws IOException {
-        log.info("SayHello");
         response.getWriter().write("Hello");
     }
 
     @GetMapping("/hello")
     public List<Person> hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-
-//        Person p = new Person();
-//        p.setName("lee");
-//
-//        long age = new Date().getTime()/1000;
-//        //log.info("age=="+age);
-//        p.setAge((int)age);
-//       //
-//        PersonDao.getInstance().insertPerson(p);
-
-        List<Person> persons = PersonDao.getInstance().findPerson(query(where("age").gte(0)).with(Sort.by(Sort.Direction.ASC,"age")));
+        List<Person> persons = personDao.findPerson(query(where("age").gte(0)).with(Sort.by(Sort.Direction.ASC,"age")));
         return persons;
     }
 

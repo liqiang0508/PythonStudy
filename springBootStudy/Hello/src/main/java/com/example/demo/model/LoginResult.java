@@ -1,4 +1,4 @@
-package com.example.demo.common;
+package com.example.demo.model;
 
 public class LoginResult {
     private int code;

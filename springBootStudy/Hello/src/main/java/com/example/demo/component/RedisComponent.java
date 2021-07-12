@@ -1,4 +1,4 @@
-package com.example.demo.utils;
+package com.example.demo.component;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class RedisUtils {
+public class RedisComponent {
 
     final   StringRedisTemplate redisTemplate;
     @Autowired
-    public RedisUtils(StringRedisTemplate redisTemplate)
+    public RedisComponent(StringRedisTemplate redisTemplate)
     {
         this.redisTemplate = redisTemplate;
     }
