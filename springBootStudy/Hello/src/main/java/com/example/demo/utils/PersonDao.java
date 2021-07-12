@@ -1,4 +1,4 @@
-package com.example.utils;
+package com.example.demo.utils;
 
 import com.example.demo.common.Person;
 import com.mongodb.client.MongoClients;

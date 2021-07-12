@@ -4,11 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.demo.common.Greeting;
 import com.example.demo.common.LoginResult;
 import com.example.demo.common.Person;
-import com.example.utils.HttpUtils;
-import com.example.utils.PersonDao;
+import com.example.demo.utils.HttpUtils;
+import com.example.demo.utils.PersonDao;
+import com.example.demo.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +28,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+//import com.example.demo.utils.PersonDao;
+
 @Slf4j
 @RestController
 public class HelloController {
@@ -33,21 +37,22 @@ public class HelloController {
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
     public Logger logger = (Logger) LoggerFactory.getLogger(getClass());
-
+    @Autowired
+    private  RedisUtils redisUtils;
     @GetMapping("/666")
-    public void Test(HttpServletRequest req,HttpServletResponse response)  {
+    public void Test(HttpServletRequest req, HttpServletResponse response) {
 
-        String action = req.getParameter("action");//反射
-        try{
-            Method method = this.getClass().getDeclaredMethod(action,HttpServletRequest.class,HttpServletResponse.class);
-            method.invoke(this,req,response);
-        }catch (Exception e)
-        {
-            log.info("action=="+action+"  not fond");
+        String action = req.getParameter("actiond");//反射
+        try {
+            Method method = this.getClass().getDeclaredMethod(action, HttpServletRequest.class, HttpServletResponse.class);
+            method.invoke(this, req, response);
+        } catch (Exception e) {
+            log.info("action==" + action + "  not fond");
         }
     }
+
     @GetMapping("/get")
-    public JSONObject getTest()  {
+    public JSONObject getTest() {
 
         String url = "http://httpbin.org/get";
         JSONObject data = HttpUtils.httpGet(url);
@@ -55,7 +60,16 @@ public class HelloController {
 
     }
 
-    public void SayHello(HttpServletRequest req,HttpServletResponse response) throws IOException {
+    @GetMapping("/redis")
+    public String redis() {
+        String value = "666";
+        redisUtils.setKey("name", "Heloworld");
+        value = redisUtils.getKey("name");
+        return value;
+
+    }
+
+    public void SayHello(HttpServletRequest req, HttpServletResponse response) throws IOException {
         log.info("SayHello");
         response.getWriter().write("Hello");
     }
@@ -87,7 +101,8 @@ public class HelloController {
         long time = new Date().getTime();
         return time;
     }
-//    登录
+
+    //    登录
     @PostMapping("/login")
     public LoginResult login(@RequestParam("email") String email, @RequestParam("password") String Pwd) {
         log.info("login===" + email + ":" + Pwd);
