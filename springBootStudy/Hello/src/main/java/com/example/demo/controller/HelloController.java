@@ -77,16 +77,16 @@ public class HelloController {
     @GetMapping("/hello")
     public List<Person> hello(@RequestParam(value = "name", defaultValue = "World") String name) {
 
-        Person p = new Person();
-        p.setName("lee");
+//        Person p = new Person();
+//        p.setName("lee");
+//
+//        long age = new Date().getTime()/10000;
+//        //log.info("age=="+age);
+//        p.setAge((int)age);
+//       //
+//        PersonDao.getInstance().insertPerson(p);
 
-        long age = new Date().getTime()/10000;
-        //log.info("age=="+age);
-        p.setAge((int)age);
-       //
-        PersonDao.getInstance().insertPerson(p);
-
-        List<Person> persons = PersonDao.getInstance().findPerson(query(where("name").is("lee")).with(Sort.by(Sort.Direction.ASC,"age")));
+        List<Person> persons = PersonDao.getInstance().findPerson(query(where("age").gte(0)).with(Sort.by(Sort.Direction.ASC,"age")));
         return persons;
     }
 
