@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RedisComponent {
 
-    final   StringRedisTemplate redisTemplate;
+    final StringRedisTemplate redisTemplate;
     @Autowired
     public RedisComponent(StringRedisTemplate redisTemplate)
     {
