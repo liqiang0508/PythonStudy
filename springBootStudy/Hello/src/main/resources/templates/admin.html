@@ -60,7 +60,7 @@
                         <dd><a href="javascript:;">menu 1</a></dd>
                         <dd><a href="javascript:;">menu 2</a></dd>
                         <dd><a href="javascript:;">menu 3</a></dd>
-                        <dd><a href="javascript:;">the links</a></dd>
+
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -68,7 +68,7 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">list 1</a></dd>
                         <dd><a href="javascript:;">list 2</a></dd>
-                        <dd><a href="javascript:;">超链接</a></dd>
+
                     </dl>
                 </li>
             </ul>
@@ -93,7 +93,7 @@
         底部固定区域
     </div>
 </div>
-<script src="/webjars/layui/2.5.5/layui.js"></script>
+<script src="layui/layui.js"></script>
 <script>
     //JS
     layui.use(['element', 'layer', 'util'], function () {
@@ -116,9 +116,11 @@
                 element.tabAdd('demo', {
                     title: data.context.innerText
                     , content: data.context.href //支持传入html
-                    , id: data.context.href
+                    , id: data.context.innerText
 
                 });
+
+              element.tabChange("demo", data.context.innerText);
             }
 
         });
