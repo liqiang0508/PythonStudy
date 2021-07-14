@@ -35,6 +35,15 @@ public class Router {
         return "test";
     }
 
+    @RequestMapping(value = "/changelog")
+    public String changelog() {
+        return "changelog";
+    }
+    @RequestMapping(value = "/admin")
+    public String admin() {
+        return "admin";
+    }
+
     //上传成功
     @RequestMapping(value = "/uploadSuccess")
     public String uploadSuccess() {
