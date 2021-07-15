@@ -55,11 +55,11 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree NavTest1" lay-filter="test">
                 <li class="layui-nav-item">
-                    <a>menu group 1</a>
+                    <a href="javascript:;">menu group 1</a>
                     <dl class="layui-nav-child">
-                        <dd><a action="changelog" href="javascript:;">menu 1</a></dd>
-                        <dd><a action="login" href="javascript:;">menu 2</a></dd>
-                        <dd><a action="test" href="javascript:;">menu 3</a></dd>
+                        <dd><a lay-href="changelog">menu 1</a></dd>
+                        <dd><a lay-href="login">menu 2</a></dd>
+                        <dd><a lay-href="test">menu 3</a></dd>
 
                     </dl>
                 </li>
@@ -101,12 +101,10 @@
             // console.log("1", this)
             // console.log("1", data.index); //得到当前Tab的所在下标
             // console.log("1", data.elem); //得到当前的Tab大容器
-
-            var href = Tabs[data.index]
-
-            if(href){
-
-                $(".bodyframe").attr("src", href)
+            var layh_ref = $(this).attr('lay-id');
+            // $(this).css({"background-color": "yellow"})
+            if (layh_ref) {
+                $(".bodyframe").attr("src", layh_ref)
             }
 
         });
@@ -115,31 +113,26 @@
             // console.log("3", this); //当前Tab标题所在的原始DOM元素
             // console.log("3", data.index); //得到当前Tab的所在下标
             // console.log("3", data.elem); //得到当前的Tab大容器
-            Tabs.splice( data.index,1)
-            var end = Tabs.slice(-1);
-            element.tabChange("demo", end);
-            $(".bodyframe").attr("src", end)
+            Tabs.splice(data.index, 1)
+            var layh_ref = Tabs.slice(-1);
+            element.tabChange("demo", layh_ref);
+            $(".bodyframe").attr("src", layh_ref)
 
         });
         //左侧导航栏点击
         element.on('nav(test)', function (data) {
-            var href = data.attr("action")
-            if (href) {
-                console.log("href", href)
-
-                if (Tabs.indexOf(href) == -1) {
-                    Tabs.push(href)
+            var layh_ref = data.attr("lay-href")
+            if (layh_ref) {
+                console.log("href====", layh_ref)
+                if (Tabs.indexOf(layh_ref) == -1) {
+                    Tabs.push(layh_ref)
                     element.tabAdd('demo', {
-                        title: data.context.innerText
-                        , id: href
+                        title: $(this).text()
+                        , id: layh_ref
                     });
                 }
-                element.tabChange("demo", href);
-                // $(".bodyframe").attr("src", href)
-
+                element.tabChange("demo", layh_ref);
             }
-            return false
-
         });
     });
 </script>
