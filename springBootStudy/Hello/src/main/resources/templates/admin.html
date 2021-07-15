@@ -53,24 +53,17 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+            <ul class="layui-nav layui-nav-tree NavTest1" lay-filter="test">
                 <li class="layui-nav-item">
                     <a>menu group 1</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">menu 1</a></dd>
-                        <dd><a href="javascript:;">menu 2</a></dd>
-                        <dd><a href="javascript:;">menu 3</a></dd>
+                        <dd><a action="changelog" href="javascript:;">menu 1</a></dd>
+                        <dd><a action="login" href="javascript:;">menu 2</a></dd>
+                        <dd><a action="test" href="javascript:;">menu 3</a></dd>
 
                     </dl>
                 </li>
-                <li class="layui-nav-item">
-                    <a>menu group 2</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">list 1</a></dd>
-                        <dd><a href="javascript:;">list 2</a></dd>
 
-                    </dl>
-                </li>
             </ul>
         </div>
     </div>
@@ -96,6 +89,7 @@
 <script src="layui/layui.js"></script>
 <script>
     //JS
+    var Tabs = new Array()
     layui.use(['element', 'layer', 'util'], function () {
         var element = layui.element
             , layer = layui.layer
@@ -104,27 +98,49 @@
 
         //选项卡点击
         element.on('tab(demo)', function (data) {
-            console.log(data)
-            // $(".bodyframe").attr("src","https://www.baidu.com/")
-        });
-        //左侧导航栏点击
-        element.on('nav(test)', function (data) {
+            // console.log("1", this)
+            // console.log("1", data.index); //得到当前Tab的所在下标
+            // console.log("1", data.elem); //得到当前的Tab大容器
 
-            var href = data.attr("href")
-            console.log(href)
-            if (href) {
-                element.tabAdd('demo', {
-                    title: data.context.innerText
-                    , content: data.context.href //支持传入html
-                    , id: data.context.innerText
+            var href = Tabs[data.index]
 
-                });
+            if(href){
 
-              element.tabChange("demo", data.context.innerText);
+                $(".bodyframe").attr("src", href)
             }
 
         });
+        //选项卡删除
+        element.on('tabDelete(demo)', function (data) {
+            // console.log("3", this); //当前Tab标题所在的原始DOM元素
+            // console.log("3", data.index); //得到当前Tab的所在下标
+            // console.log("3", data.elem); //得到当前的Tab大容器
+            Tabs.splice( data.index,1)
+            var end = Tabs.slice(-1);
+            element.tabChange("demo", end);
+            $(".bodyframe").attr("src", end)
 
+        });
+        //左侧导航栏点击
+        element.on('nav(test)', function (data) {
+            var href = data.attr("action")
+            if (href) {
+                console.log("href", href)
+
+                if (Tabs.indexOf(href) == -1) {
+                    Tabs.push(href)
+                    element.tabAdd('demo', {
+                        title: data.context.innerText
+                        , id: href
+                    });
+                }
+                element.tabChange("demo", href);
+                // $(".bodyframe").attr("src", href)
+
+            }
+            return false
+
+        });
     });
 </script>
 </body>
