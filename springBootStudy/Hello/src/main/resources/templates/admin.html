@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>admin</title>
     <link rel="stylesheet" href="/webjars/layui/2.5.5/css/layui.css">
+
+
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -60,10 +62,8 @@
                         <dd><a lay-href="changelog">menu 1</a></dd>
                         <dd><a lay-href="login">menu 2</a></dd>
                         <dd><a lay-href="test">menu 3</a></dd>
-
                     </dl>
                 </li>
-
             </ul>
         </div>
     </div>
@@ -74,6 +74,9 @@
         <!--    <iframe src="/changelog" style="width: 100%;height: 100%" frameborder = 0 ></iframe>-->
         <div class="layui-tab" lay-allowClose="true" lay-filter="demo">
             <ul class="layui-tab-title">
+                <li class="layui-this">首页
+                </li>
+
 
             </ul>
         </div>
@@ -86,6 +89,16 @@
         底部固定区域
     </div>
 </div>
+
+<style>
+
+    /*.layui-tab-title li :first-child{*/
+    /*    display: none;*/
+    /*}*/
+
+
+</style>
+
 <script src="layui/layui.js"></script>
 <script>
     //JS
