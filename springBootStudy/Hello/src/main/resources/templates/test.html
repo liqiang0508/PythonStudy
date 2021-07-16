@@ -38,7 +38,7 @@
 
     </div>
     <p th:text="${msg}"></p>
-    <iframe src="changelog" style="width: 100%;height: 1080px" frameBorder="0"></iframe>
+    <iframe src="changelog" style="width: 100%;height: 1080px" frameBorder="0" ></iframe>
 </div>
 
 </body>
@@ -53,6 +53,7 @@
             $.get("./getTime", function (data) {
                 var text = new Date(data).toTimeString()
                 $(".time").text(text)
+
             })
         })
 

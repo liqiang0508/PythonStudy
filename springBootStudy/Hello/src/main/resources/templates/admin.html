@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>admin</title>
-    <link rel="stylesheet" href="/webjars/layui/2.5.5/css/layui.css">
+    <link rel="stylesheet" href="layui/css/layui.css">
 
 
 </head>
@@ -13,43 +13,43 @@
     <div class="layui-header">
         <div class="layui-logo layui-hide-xs">Admin</div>
         <!-- 头部区域（可配合layui 已有的水平导航） -->
-        <ul class="layui-nav layui-layout-left" lay-filter="NavTest">
-            <!-- 移动端显示 -->
-            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
-                <i class="layui-icon layui-icon-spread-left"></i>
-            </li>
+<!--        <ul class="layui-nav layui-layout-left" lay-filter="NavTest">-->
+<!--            &lt;!&ndash; 移动端显示 &ndash;&gt;-->
+<!--            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">-->
+<!--                <i class="layui-icon layui-icon-spread-left"></i>-->
+<!--            </li>-->
 
-            <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">nav 1</a></li>
-            <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">nav 2</a></li>
-            <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">nav 3</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">nav groups</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">menu 11</a></dd>
-                    <dd><a href="javascript:;">menu 22</a></dd>
-                    <dd><a href="javascript:;">menu 33</a></dd>
-                </dl>
-            </li>
-        </ul>
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item layui-hide layui-show-md-inline-block">
-                <a href="javascript:;">
-                    <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-                         class="layui-nav-img">
-                    tester
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">Your Profile</a></dd>
-                    <dd><a href="">Settings</a></dd>
-                    <dd><a href="">Sign out</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
-                <a href="javascript:;">
-                    <i class="layui-icon layui-icon-more-vertical"></i>
-                </a>
-            </li>
-        </ul>
+<!--            <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">nav 1</a></li>-->
+<!--            <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">nav 2</a></li>-->
+<!--            <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">nav 3</a></li>-->
+<!--            <li class="layui-nav-item">-->
+<!--                <a href="javascript:;">nav groups</a>-->
+<!--                <dl class="layui-nav-child">-->
+<!--                    <dd><a href="">menu 11</a></dd>-->
+<!--                    <dd><a href="javascript:;">menu 22</a></dd>-->
+<!--                    <dd><a href="javascript:;">menu 33</a></dd>-->
+<!--                </dl>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--        <ul class="layui-nav layui-layout-right">-->
+<!--            <li class="layui-nav-item layui-hide layui-show-md-inline-block">-->
+<!--                <a href="javascript:;">-->
+<!--                    <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"-->
+<!--                         class="layui-nav-img">-->
+<!--                    tester-->
+<!--                </a>-->
+<!--                <dl class="layui-nav-child">-->
+<!--                    <dd><a href="">Your Profile</a></dd>-->
+<!--                    <dd><a href="">Settings</a></dd>-->
+<!--                    <dd><a href="">Sign out</a></dd>-->
+<!--                </dl>-->
+<!--            </li>-->
+<!--            <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>-->
+<!--                <a href="javascript:;">-->
+<!--                    <i class="layui-icon layui-icon-more-vertical"></i>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--        </ul>-->
     </div>
 
     <div class="layui-side layui-bg-black">
@@ -57,11 +57,13 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree NavTest1" lay-filter="test">
                 <li class="layui-nav-item">
+                    <a lay-href="changelog" ><span class="home">首页</span></a>
+                </li>
+                <li class="layui-nav-item">
                     <a href="javascript:;">menu group 1</a>
                     <dl class="layui-nav-child">
-                        <dd><a lay-href="changelog">menu 1</a></dd>
-                        <dd><a lay-href="login">menu 2</a></dd>
-                        <dd><a lay-href="test">menu 3</a></dd>
+                        <dd><a lay-href="login">login</a></dd>
+                        <dd><a lay-href="test">test</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -70,17 +72,14 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <!--    <div style="padding: 15px;">内容主体区域。记得修改 layui.css 和 js 的路径</div>-->
-        <!--    <iframe src="/changelog" style="width: 100%;height: 100%" frameborder = 0 ></iframe>-->
+
         <div class="layui-tab" lay-allowClose="true" lay-filter="demo">
             <ul class="layui-tab-title">
-                <li class="layui-this">首页
-                </li>
-
 
             </ul>
         </div>
-        <iframe class="bodyframe" src="changelog" style="height: 1080px;width: 100%" frameborder="0"></iframe>
+
+        <iframe class="bodyframe" src="" style="height: 1080px;width: 100%" frameborder="0"></iframe>-->
 
     </div>
 
@@ -91,12 +90,9 @@
 </div>
 
 <style>
-
-    /*.layui-tab-title li :first-child{*/
-    /*    display: none;*/
-    /*}*/
-
-
+    .layui-tab-title li:first-child i{
+        display: none;
+    }
 </style>
 
 <script src="layui/layui.js"></script>
@@ -108,6 +104,7 @@
             , layer = layui.layer
             , util = layui.util
             , $ = layui.$;
+        //
 
         //选项卡点击
         element.on('tab(demo)', function (data) {
@@ -123,30 +120,31 @@
         });
         //选项卡删除
         element.on('tabDelete(demo)', function (data) {
-            // console.log("3", this); //当前Tab标题所在的原始DOM元素
-            // console.log("3", data.index); //得到当前Tab的所在下标
-            // console.log("3", data.elem); //得到当前的Tab大容器
+
             Tabs.splice(data.index, 1)
-            var layh_ref = Tabs.slice(-1);
-            element.tabChange("demo", layh_ref);
-            $(".bodyframe").attr("src", layh_ref)
+            var lay_ref = Tabs.slice(-1);
+            element.tabChange("demo", lay_ref);
+            $(".bodyframe").attr("src", lay_ref)
 
         });
         //左侧导航栏点击
         element.on('nav(test)', function (data) {
-            var layh_ref = data.attr("lay-href")
-            if (layh_ref) {
-                console.log("href====", layh_ref)
-                if (Tabs.indexOf(layh_ref) == -1) {
-                    Tabs.push(layh_ref)
+            var lay_ref = data.attr("lay-href")
+            if (lay_ref) {
+                // console.log("href====", lay_ref)
+                if (Tabs.indexOf(lay_ref) == -1) {
+                    Tabs.push(lay_ref)
                     element.tabAdd('demo', {
                         title: $(this).text()
-                        , id: layh_ref
+                        , id: lay_ref
                     });
                 }
-                element.tabChange("demo", layh_ref);
+                element.tabChange("demo", lay_ref);
             }
         });
+
+        $(".home").trigger("click")
+
     });
 </script>
 </body>
