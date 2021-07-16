@@ -2,11 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <title>Admin</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>admin</title>
-    <link rel="stylesheet" href="layui/css/layui.css">
-
-
+    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -57,7 +57,7 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree NavTest1" lay-filter="test">
                 <li class="layui-nav-item">
-                    <a lay-href="changelog" ><span class="home">首页</span></a>
+                    <a lay-href="changelog"  class="home">首页</a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">menu group 1</a>
@@ -75,6 +75,7 @@
 
         <div class="layui-tab" lay-allowClose="true" lay-filter="demo">
             <ul class="layui-tab-title">
+                <li class="layui-this">首页</li>
 
             </ul>
         </div>
@@ -99,7 +100,7 @@
 <script>
     //JS
     var Tabs = new Array()
-    layui.use(['element', 'layer', 'util'], function () {
+    layui.use( function () {
         var element = layui.element
             , layer = layui.layer
             , util = layui.util
@@ -108,13 +109,9 @@
 
         //选项卡点击
         element.on('tab(demo)', function (data) {
-            // console.log("1", this)
-            // console.log("1", data.index); //得到当前Tab的所在下标
-            // console.log("1", data.elem); //得到当前的Tab大容器
-            var layh_ref = $(this).attr('lay-id');
-            // $(this).css({"background-color": "yellow"})
-            if (layh_ref) {
-                $(".bodyframe").attr("src", layh_ref)
+            var lay_ref = $(this).attr('lay-id');
+            if (lay_ref) {
+                $(".bodyframe").attr("src", lay_ref)
             }
 
         });
@@ -143,7 +140,9 @@
             }
         });
 
-        $(".home").trigger("click")
+        //第一次自动进入首页
+        var homeHref = $(".home").attr("lay-href")
+        Tabs.push(homeHref)
 
     });
 </script>
