@@ -9,17 +9,85 @@
     <link rel="stylesheet" href="layui/css/layui.css" media="all">
 
 </head>
-<body>
-
+<body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
+    <!--    header-->
     <div class="layui-header">
-        <div class="layui-logo layui-hide-xs">Admin</div>
-    </div>
+        <!-- 头部区域 -->
+        <!--        <ul class="layui-nav layui-layout-left">-->
+        <!--            <li class="layui-nav-item layadmin-flexible" lay-unselect="">-->
+        <!--                <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">-->
+        <!--                    <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>-->
+        <!--                </a>-->
+        <!--            </li>-->
+        <!--            <li class="layui-nav-item layui-hide-xs" lay-unselect="">-->
+        <!--                <a href="http://www.baidu.com/" target="_blank" title="前台">-->
+        <!--                    <i class="layui-icon layui-icon-website"></i>-->
+        <!--                </a>-->
+        <!--            </li>-->
+        <!--            <li class="layui-nav-item" lay-unselect="">-->
+        <!--                <a href="javascript:;" layadmin-event="refresh" title="刷新">-->
+        <!--                    <i class="layui-icon layui-icon-refresh-3"></i>-->
+        <!--                </a>-->
+        <!--            </li>-->
+        <!--            <li class="layui-nav-item layui-hide-xs" lay-unselect="">-->
+        <!--                <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search"-->
+        <!--                       layadmin-event="serach" lay-action="template/search.html?keywords=">-->
+        <!--            </li>-->
+        <!--            <span class="layui-nav-bar" style="left: 192px; top: 48px; width: 0px; opacity: 0;"></span></ul>-->
+        <!--        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">-->
 
-    <div class="layui-side layui-bg-black">
+        <!--            <li class="layui-nav-item" lay-unselect="">-->
+        <!--                <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">-->
+        <!--                    <i class="layui-icon layui-icon-notice"></i>-->
+
+        <!--                    &lt;!&ndash; 如果有新消息，则显示小圆点 &ndash;&gt;-->
+        <!--                    <span class="layui-badge-dot"></span>-->
+        <!--                </a>-->
+        <!--            </li>-->
+        <!--            <li class="layui-nav-item layui-hide-xs" lay-unselect="">-->
+        <!--                <a href="javascript:;" layadmin-event="theme">-->
+        <!--                    <i class="layui-icon layui-icon-theme"></i>-->
+        <!--                </a>-->
+        <!--            </li>-->
+        <!--            <li class="layui-nav-item layui-hide-xs" lay-unselect="">-->
+        <!--                <a href="javascript:;" layadmin-event="note">-->
+        <!--                    <i class="layui-icon layui-icon-note"></i>-->
+        <!--                </a>-->
+        <!--            </li>-->
+        <!--            <li class="layui-nav-item layui-hide-xs" lay-unselect="">-->
+        <!--                <a href="javascript:;" layadmin-event="fullscreen">-->
+        <!--                    <i class="layui-icon layui-icon-screen-full"></i>-->
+        <!--                </a>-->
+        <!--            </li>-->
+        <!--            <li class="layui-nav-item" lay-unselect="">-->
+        <!--                <a href="javascript:;">-->
+        <!--                    <cite>tester</cite>-->
+        <!--                    <i class="layui-icon layui-icon-down layui-nav-more"></i></a>-->
+        <!--                <dl class="layui-nav-child layui-anim layui-anim-upbit">-->
+        <!--                    <dd><a lay-href="set/user/info.html">基本资料</a></dd>-->
+        <!--                    <dd><a lay-href="set/user/password.html">修改密码</a></dd>-->
+        <!--                    <hr>-->
+        <!--                    <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>-->
+        <!--                </dl>-->
+        <!--            </li>-->
+
+        <!--            <li class="layui-nav-item layui-hide-xs" lay-unselect="">-->
+        <!--                <a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>-->
+        <!--            </li>-->
+        <!--            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect="">-->
+        <!--                <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>-->
+        <!--            </li>-->
+        <!--            <span class="layui-nav-bar" style="left: 135px; top: 48px; width: 0px; opacity: 0;"></span></ul>-->
+    </div>
+    <!--side-->
+    <div class="layui-side layui-side-menu">
         <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree NavTest1" lay-filter="test">
+            <div class="logo">
+                <span>Admin</span>
+            </div>
+            <ul class="layui-nav layui-nav-tree" lay-shrink="all"
+                lay-filter="test">
                 <li class="layui-nav-item layui-this">
                     <a lay-href="changelog" class="home">首页</a>
                 </li>
@@ -33,43 +101,32 @@
             </ul>
         </div>
     </div>
-
-    <!-- 内容主体区域 -->
-    <div class="layui-body">
+    <!--    tab-->
+    <div class="layadmin-pagetabs">
         <div class="layadmin-pagetabs layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="demo">
             <ul class="layui-tab-title">
             </ul>
         </div>
 
-
-            <iframe class="bodyframe" src="changelog" style="height: 100%;width: 100%" frameborder="0" ></iframe>
-
-
-<!--        <div class="bodyframe"></div>-->
-
     </div>
-
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        底部固定区域
+    <!--    body-->
+    <div class="layui-body">
+        <iframe class="bodyframe" src="changelog" style="height: 100%;width: 100%" frameborder="0"></iframe>
     </div>
 </div>
 
 
 <style>
-    .layui-tab-title li:first-child i {
-        display: none;
+    .logo {
+        height: 50px;
+        width: 200px;
+        text-align: center;
+        color: white;
+        line-height: 50px;
+        font-size: 16px;
     }
-    .bodyframe{
-        position: absolute;
-        /*width: 100%;*/
-        /*height: 100%;*/
-        /*left: 0;*/
-        /*top: 55px;*/
-        /*right: 0;*/
-        /*bottom: 0;*/
-    }
-    .layui-header{
+
+    .layui-header {
         border-bottom: 1px solid #f6f6f6;
         box-sizing: border-box;
         background-color: #fff;
@@ -78,19 +135,59 @@
         left: 0;
         width: 100%;
         height: 50px;
-        z-index: 1000;
     }
-    .layadmin-pagetabs{
-        padding: 0 80px 0 40px;
+
+    .layui-side {
+        width: 220px;
+        z-index: 1001;
+        top: 0px !important;
+
+    }
+
+    .layui-side-menu {
+        background-color: #20222A !important;
+
+    }
+
+    .layui-side-scroll {
+        width: 240px;
+        position: relative;
+        height: 100%;
+
+    }
+
+    .layadmin-pagetabs {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 80px 0 10px;
         background-color: #fff;
         box-sizing: border-box;
-        box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
         position: fixed;
         top: 50px;
+        right: 0;
         z-index: 999;
-        transition: all .3s;
+        left: 200px !important;
+    }
+
+    .layui-body {
+        position: fixed !important;
+        top: 120px !important;
+        bottom: 0 !important;
+    }
+
+    iframe {
+        position: absolute;
         width: 100%;
-        -webkit-transition: all .3s;
+        height: 100%;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .layui-tab-title li:first-child i {
+        display: none;
     }
 </style>
 
@@ -147,7 +244,7 @@
         });
         element.tabChange("demo", homeHref);
         var iframe = document.querySelector('iframe');
-        iframe.onload = function() {
+        iframe.onload = function () {
             iframe.height = Math.max(
                 iframe.contentDocument.body.scrollHeight || 0,
                 iframe.contentDocument.body.offsetHeight || 0)
