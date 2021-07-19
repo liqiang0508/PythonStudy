@@ -43,9 +43,8 @@ public class HelloController {
     public HttpComponent httpComponent;
     @Autowired
     public PersonDao personDao;
-    @Autowired
-    final RedisComponent redisComponent;
 
+    final RedisComponent redisComponent;
     @Autowired
     public HelloController(RedisComponent redisComponent) {
         this.redisComponent = redisComponent;
