@@ -1,4 +1,4 @@
-package com.example.demo.common;
+package com.example.demo.dao;
 
 import com.example.demo.model.Person;
 import com.mongodb.client.MongoClients;
@@ -6,11 +6,11 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Service
+@Repository
 public class PersonDao {
 //    private static PersonDao instance;
 //    private PersonDao(){}

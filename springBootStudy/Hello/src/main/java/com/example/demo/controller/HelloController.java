@@ -5,13 +5,14 @@ import com.example.demo.model.Greeting;
 import com.example.demo.model.LoginResult;
 import com.example.demo.model.Person;
 import com.example.demo.component.HttpComponent;
-import com.example.demo.common.PersonDao;
+import com.example.demo.dao.PersonDao;
 import com.example.demo.component.RedisComponent;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,10 +45,12 @@ public class HelloController {
     public PersonDao personDao;
     @Autowired
     final RedisComponent redisComponent;
+
     @Autowired
     public HelloController(RedisComponent redisComponent) {
         this.redisComponent = redisComponent;
     }
+
     @GetMapping("/666")
     public void Test(HttpServletRequest req, HttpServletResponse response) {
 
@@ -72,7 +75,7 @@ public class HelloController {
     @GetMapping("/redis")
     public String redis() {
         String value = "666";
-        long age = new Date().getTime()/1000;
+        long age = new Date().getTime() / 1000;
         redisComponent.setKey("name", String.valueOf(age));
         value = redisComponent.getKey("name");
         return value;
@@ -83,9 +86,10 @@ public class HelloController {
         response.getWriter().write("Hello");
     }
 
-    @GetMapping("/hello")
+    //返回json
+    @GetMapping(value = "/hello", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Person> hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-        List<Person> persons = personDao.findPerson(query(where("age").gte(0)).with(Sort.by(Sort.Direction.ASC,"age")));
+        List<Person> persons = personDao.findPerson(query(where("age").gte(0)).with(Sort.by(Sort.Direction.ASC, "age")));
         return persons;
     }
 
