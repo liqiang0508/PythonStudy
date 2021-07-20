@@ -23,8 +23,8 @@ public class PersonDao {
     private final MongoOperations mongoOps = new MongoTemplate(new SimpleMongoClientDatabaseFactory(MongoClients.create(), "hello"));
 
     //插入Person
-    public void insertPerson(Person p){
-        mongoOps.insert(p);
+    public Person insertPerson(Person p){
+        return mongoOps.insert(p);
     }
     //查找
     public List<Person> findPerson(Query query)

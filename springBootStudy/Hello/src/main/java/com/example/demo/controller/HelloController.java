@@ -13,10 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +59,7 @@ public class HelloController {
         }
     }
 
-    @GetMapping("/get")
+    @GetMapping(value = "/get",produces = MediaType.APPLICATION_JSON_VALUE)
     public JSONObject getTest() {
 
         String url = "http://httpbin.org/get";
@@ -90,6 +87,14 @@ public class HelloController {
     public List<Person> hello(@RequestParam(value = "name", defaultValue = "World") String name) {
         List<Person> persons = personDao.findPerson(query(where("age").gte(0)).with(Sort.by(Sort.Direction.ASC, "age")));
         return persons;
+    }
+
+    @GetMapping(value = "/getPerson/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Person getPerson(@PathVariable(value = "id") String id) {
+        Person person= new Person(new Date().getTime(),"王麻子",29);
+        Person p = personDao.insertPerson(person);
+        System.out.println(p.toString());
+        return person  ;
     }
 
     //用类来接收参数
