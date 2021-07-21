@@ -1,10 +1,8 @@
 package com.example.demo.dao;
 
 import com.example.demo.model.Person;
-import com.mongodb.client.MongoClients;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -12,30 +10,23 @@ import java.util.List;
 
 @Repository
 public class PersonDao {
-//    private static PersonDao instance;
-//    private PersonDao(){}
-//    public static synchronized PersonDao getInstance() {
-//        if (instance == null) {
-//            instance = new PersonDao();
-//        }
-//        return instance;
-//    }
-    private final MongoOperations mongoOps = new MongoTemplate(new SimpleMongoClientDatabaseFactory(MongoClients.create(), "hello"));
+    @Autowired
+    MongoOperations mongoOperations;
 
     //插入Person
     public Person insertPerson(Person p){
-        return mongoOps.insert(p);
+        return mongoOperations.insert(p);
     }
     //查找
     public List<Person> findPerson(Query query)
     {
-        List<Person> persons = mongoOps.find(query,Person.class);
+        List<Person> persons = mongoOperations.find(query,Person.class);
         return persons;
     }
 
     public List<Person> findAllAndRemove(Query query)
     {
-        List<Person> persons = mongoOps.findAllAndRemove(query,Person.class);
+        List<Person> persons = mongoOperations.findAllAndRemove(query,Person.class);
         return persons;
     }
 }

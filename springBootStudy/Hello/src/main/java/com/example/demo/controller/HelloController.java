@@ -91,9 +91,9 @@ public class HelloController {
 
     @GetMapping(value = "/getPerson/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Person getPerson(@PathVariable(value = "id") long id) {
-        Person person= new Person(id,"王麻子",29);
+        Person person= new Person(new Date().getTime(),"王麻子",(int)id);
         Person p = personDao.insertPerson(person);
-        System.out.println(p.toString());
+//        System.out.println(p.toString());
         return person  ;
     }
 
