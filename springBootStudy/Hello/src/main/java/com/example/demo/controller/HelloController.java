@@ -110,16 +110,16 @@ public class HelloController {
     }
 
     //    登录
-    @PostMapping("/login")
-    public LoginResult login(@RequestParam("email") String email, @RequestParam("password") String Pwd) {
-        log.info("login===" + email + ":" + Pwd);
-        LoginResult result = new LoginResult();
-        if (Pwd.equals("123456")) {
-            result.setCode(0);
-        } else {
-            result.setCode(201);
-        }
-        return result;
-    }
+//    @PostMapping("/login")
+//    public LoginResult login(@RequestParam("email") String email, @RequestParam("password") String Pwd) {
+//        log.info("login===" + email + ":" + Pwd);
+//        LoginResult result = new LoginResult();
+//        if (Pwd.equals("123456")) {
+//            result.setCode(0);
+//        } else {
+//            result.setCode(201);
+//        }
+//        return result;
+//    }
 
 }
