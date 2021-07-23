@@ -1,19 +1,22 @@
 package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.model.Greeting;
-import com.example.demo.model.LoginResult;
-import com.example.demo.model.Person;
 import com.example.demo.component.HttpComponent;
-import com.example.demo.dao.PersonDao;
 import com.example.demo.component.RedisComponent;
+import com.example.demo.dao.PersonDao;
+import com.example.demo.dao.UserDao;
+import com.example.demo.model.Greeting;
+import com.example.demo.model.Person;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,6 +44,9 @@ public class HelloController {
     @Autowired
     public PersonDao personDao;
 
+    @Autowired
+    public UserDao userDao;
+
     final RedisComponent redisComponent;
     @Autowired
     public HelloController(RedisComponent redisComponent) {
@@ -64,6 +70,7 @@ public class HelloController {
 
         String url = "http://httpbin.org/get";
         JSONObject data = httpComponent.httpGet(url);
+
         return data;
 
     }
