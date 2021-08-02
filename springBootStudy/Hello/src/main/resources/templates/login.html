@@ -11,6 +11,7 @@
     <!-- Bootstrap core CSS -->
     <link href="/webjars/bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script src="JqureyCookie/jqureycookie.js"></script>
 
     <style>
         .bd-placeholder-img {
@@ -52,7 +53,7 @@
 
             <div class="checkbox mb-3">
                 <label>
-                    <input type="checkbox" value="remember-me"> Remember me
+                    <input type="checkbox"  id = "remember"> Remember me
                 </label>
             </div>
             <button class="w-100 btn btn-lg btn-primary btn-login" type="submit">Sign in</button>
@@ -64,23 +65,63 @@
 </main>
 
 
-<!--<script>-->
-<!--    $(function () {-->
+<script>
+    $(function () {
 
-<!--        $(".btn-login").click(function () {-->
-<!--            var arg = {username: $(".email").val(), "password": $(".password").val()}-->
-<!--            $.post("/login", arg, function (data) {-->
-<!--                console.log(JSON.stringify(data))-->
-<!--                if (data.code == 0) {-->
-<!--                    alert("登录成功")-->
-<!--                } else {-->
-<!--                    $(".errorTip").css("display", "block")-->
-<!--                }-->
-<!--            })-->
-<!--        })-->
-<!--    })-->
+        // $(".btn-login").click(function () {
+        //     var arg = {username: $(".email").val(), "password": $(".password").val()}
+        //     $.post("/login", arg, function (data) {
+        //         console.log(JSON.stringify(data))
+        //         if (data.code == 0) {
+        //             alert("登录成功")
+        //         } else {
+        //             $(".errorTip").css("display", "block")
+        //         }
+        //     })
+        // })
+        function set_cookie(key,value)
+        {
+            $.cookie(key,value)
+        }
+        function get_cookie(key)
+        {
+           return  $.cookie(key)
+        }
+        function remove_cookie(key)
+        {
+            $.removeCookie(key)
+        }
 
-<!--</script>-->
+        console.log("remember",get_cookie("remember"))
+        if (get_cookie("remember"))
+        {
+            $("#floatingInput").val(get_cookie("username"))
+            $("#floatingPassword").val(get_cookie("password"))
+            $("#remember").prop("checked",true)
+        }
+
+
+        $("#remember").click(function(){
+
+            let b = $(this).prop("checked")
+            console.log(b)
+            if (b){
+                set_cookie("remember",true)
+                set_cookie("username",$("#floatingInput").val())
+                set_cookie("password",$("#floatingPassword").val())
+            }else
+            {
+                $("#floatingInput").val("")
+                $("#floatingPassword").val("")
+                remove_cookie("username")
+                remove_cookie("password")
+                remove_cookie("remember")
+            }
+        })
+
+    })
+
+</script>
 
 </body>
 </html>
