@@ -82,10 +82,10 @@
 			this.getSoundData()
 		},
 		onShow() {
-			var  url = "http://music.163.com/api/song/media?id=" + 6666
-			console.log("url=",url);
-			var id = url.match("id=(\\d+)")
-			console.log("id1=",id);
+			// var  url = "http://music.163.com/api/song/media?id=" + 6666
+			// console.log("url=",url);
+			// var id = url.match("id=(\\d+)")
+			// console.log("id1=",id);
 		
 		},
 
@@ -158,13 +158,16 @@
 			},
 			getMusiclyric(musicid) {
 				var url = "http://music.163.com/api/song/media?id=" + musicid
-				// console.log(url);
+				console.log("getMusiclyric",url);
 				HttpHelper.HttpGet(url, (res) => {
-					// console.log("歌词",res);
-
-					var lyricsArray = res.data.lyric.split("\n")
-					this.lyrics = lyricsArray
-					this.makeTime()
+					console.log("歌词",res);
+					if(res)
+					{
+						var lyricsArray = res.lyric.split("\n")
+						this.lyrics = lyricsArray
+						this.makeTime()
+					}
+					
 
 				})
 			},
@@ -177,8 +180,8 @@
 
 						this.soundData = res.data.data
 						console.log(this.innerAudioContext);
-						// this.innerAudioContext.src = this.soundData.url
-						// this.innerAudioContext.play()
+						this.innerAudioContext.src = this.soundData.url
+						this.innerAudioContext.play()
 						this.isplaying = true
 						var id = this.getMusicId(this.soundData.url)
 						if (id > 0) {
