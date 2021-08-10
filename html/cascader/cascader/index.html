@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="hsiangleev,layui扩展">
+    <title>layui扩展无限级联选择器</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="cascader.css" media="all">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon.ico">
+</head>
+<body>
+    <button class="layui-btn">reload</button>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择框</label>
+        <div class="layui-input-block">
+            <input type="text" id="a" class="layui-input" readonly="readonly">
+        </div>
+    </div>
+    
+    
+
+    <script src="../layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: "../layui/lay/mymodules/"
+        }).use(['form',"jquery","cascader","form"], function(){
+            var $ = layui.jquery;
+            var cascader = layui.cascader;
+            
+            var data = [
+                {
+                    value: 'A',
+                    label: 'a',
+                    children: [
+                        {
+                            value: 'AA1',
+                            label: 'aa1',
+                        },
+                        {
+                            value: 'BB1',
+                            label: 'bb1'
+                        }
+                    ]
+                },
+                {
+                    value: 'B',
+                    label: 'b',
+                    children: [
+                        {
+                            value: 'AA2',
+                            label: 'aa2',
+                            children: [
+                                {
+                                    value: 'AAA3',
+                                    label: 'aaa3',
+                                    children: [
+                                        {
+                                            value: 'AAA3',
+                                            label: 'aaa3',
+                                            children: [
+                                                {
+                                                    value: 'AAA3',
+                                                    label: 'aaa3',
+                                                },
+                                                {
+                                                    value: 'BBB3',
+                                                    label: 'bbb3'
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    value: 'BBB3',
+                                    label: 'bbb3'
+                                }
+                            ]
+                        },
+                        {
+                            value: 'BB2',
+                            label: 'bb2',
+                            children: [
+                                {
+                                    value: 'AAA4',
+                                    label: 'aaa4',
+                                },
+                                {
+                                    value: 'BBB4',
+                                    label: 'bbb4'
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    value: 'C',
+                    label: 'c',
+                }
+            ]
+            data =[
+    {
+        "children": [
+            {
+                "children": [
+                    {
+                        "value": "110101000000", 
+                        "label": "东城区"
+                    }, 
+                    {
+                        "value": "110102000000", 
+                        "label": "西城区"
+                    }, 
+                    {
+                        "value": "110105000000", 
+                        "label": "朝阳区"
+                    }, 
+                    {
+                        "value": "110106000000", 
+                        "label": "丰台区"
+                    }, 
+                    {
+                        "value": "110107000000", 
+                        "label": "石景山区"
+                    }, 
+                    {
+                        "value": "110108000000", 
+                        "label": "海淀区"
+                    }, 
+                    {
+                        "value": "110109000000", 
+                        "label": "门头沟区"
+                    }, 
+                    {
+                        "value": "110111000000", 
+                        "label": "房山区"
+                    }, 
+                    {
+                        "value": "110112000000", 
+                        "label": "通州区"
+                    }, 
+                    {
+                        "value": "110113000000", 
+                        "label": "顺义区"
+                    }, 
+                    {
+                        "value": "110114000000", 
+                        "label": "昌平区"
+                    }, 
+                    {
+                        "value": "110115000000", 
+                        "label": "大兴区"
+                    }, 
+                    {
+                        "value": "110116000000", 
+                        "label": "怀柔区"
+                    }, 
+                    {
+                        "value": "110117000000", 
+                        "label": "平谷区"
+                    }, 
+                    {
+                        "value": "110118000000", 
+                        "label": "密云区"
+                    }, 
+                    {
+                        "value": "110119000000", 
+                        "label": "延庆区"
+                    }
+                ], 
+                "value": "110100000000", 
+                "label": "市辖区"
+            }
+        ], 
+        "value": "110100000000", 
+        "label": "北京市"
+    }, 
+    {
+        "children": [
+            {
+                "children": [
+                    {
+                        "value": "120101000000", 
+                        "label": "和平区"
+                    }, 
+                    {
+                        "value": "120102000000", 
+                        "label": "河东区"
+                    }, 
+                    {
+                        "value": "120103000000", 
+                        "label": "河西区"
+                    }, 
+                    {
+                        "value": "120104000000", 
+                        "label": "南开区"
+                    }, 
+                    {
+                        "value": "120105000000", 
+                        "label": "河北区"
+                    }, 
+                    {
+                        "value": "120106000000", 
+                        "label": "红桥区"
+                    }, 
+                    {
+                        "value": "120110000000", 
+                        "label": "东丽区"
+                    }, 
+                    {
+                        "value": "120111000000", 
+                        "label": "西青区"
+                    }, 
+                    {
+                        "value": "120112000000", 
+                        "label": "津南区"
+                    }, 
+                    {
+                        "value": "120113000000", 
+                        "label": "北辰区"
+                    }, 
+                    {
+                        "value": "120114000000", 
+                        "label": "武清区"
+                    }, 
+                    {
+                        "value": "120115000000", 
+                        "label": "宝坻区"
+                    }, 
+                    {
+                        "value": "120116000000", 
+                        "label": "滨海新区"
+                    }, 
+                    {
+                        "value": "120117000000", 
+                        "label": "宁河区"
+                    }, 
+                    {
+                        "value": "120118000000", 
+                        "label": "静海区"
+                    }, 
+                    {
+                        "value": "120119000000", 
+                        "label": "蓟州区"
+                    }
+                ], 
+                "value": "120100000000", 
+                "label": "市辖区"
+            }
+        ], 
+        "value": "120100000000", 
+        "label": "天津市"
+    }
+]
+            var cas=cascader({
+                elem: "#a",
+                data: data,
+                // url: "/aa",
+                // type: "post",
+                // triggerType: "change",
+                // showLastLevels: true,
+                // where: {
+                //     a: "aaa"
+                // },
+                // value: ["B", "BB2", "BBB4"],
+                // changeOnSelect: true,
+                success: function (valData,labelData) {
+                    console.log(valData,labelData);
+                }
+            });
+
+            var reloadData=[
+                {
+                    value: 'A',
+                    label: 'a',
+                    children: [
+                        {
+                            value: 'AA1',
+                            label: 'aa1',
+                        },
+                        {
+                            value: 'BB1',
+                            label: 'bb1'
+                        }
+                    ]
+                }
+            ]
+            $(".layui-btn").on("click",function() {
+                cas.reload({
+                    data: reloadData,
+                    value:['A','BB1']
+                })
+            })
+            
+        });
+    </script>
+        
+</body>
+</html>

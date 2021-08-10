@@ -1,7 +1,5 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
-
 import requests
 from lxml import etree
 import re
@@ -10,8 +8,8 @@ from collections import OrderedDict
 import os
 import sys
 import time
-reload(sys)
-sys.setdefaultencoding('utf-8')
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
 
 headers = {'User-Agent':'Mozilla/8.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6'} 
 
@@ -22,7 +20,7 @@ def GetHtmlData(url):
 	response.close()
 	return response.text
 
-def GetArea(href,index):
+def GetArea(href,index,cityData):
 	# print "GetArea",len(AreaData),index
 	# if len(AreaData)<=index:
 	AreaData.append([])
@@ -31,27 +29,24 @@ def GetArea(href,index):
 	url = baseurl.format(href)
 	data = GetHtmlData(url)
 	selector = etree.HTML(data)
-	print "获取区域****" ,index
+	print "GetArea****" ,index
 	countytrs = selector.xpath("//tr[@class='countytr']/td/a")
 
 	tempdata = []
   	if len(countytrs)==0:
   		countytrs = selector.xpath("//tr[@class='towntr']/td/a")
-  		# print "获取区域失败**************************************************************************************",url
-  		# time.sleep(1)
-  		# GetArea(href,index)
-  		# return
 
+	cityData["children"] = []
 	for x in xrange(len(countytrs)):
 		href = countytrs[x].get("href")
 		citycode = countytrs[x].xpath("string(.)")
 		if citycode.isdigit():
-			cityname = countytrs[x+1].xpath("string(.)").encode('utf-8')
-			print "写入区域--",citycode,cityname
+			cityname = countytrs[x+1].xpath("string(.)")
+			print "GetArea 2--",citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
+			cityData["children"].append({"label":cityname,"value":citycode})
 	
 	if len(tempdata)>0:
-		# print "write==",index
 		AreaData[index].append(tempdata)
 
 	# print "区域长度======",len(AreaData)
@@ -67,16 +62,19 @@ def GetCity(code,index):
 	cityinfos = selector.xpath("//tr[@class='citytr']/td/a")
 	
 	tempdata = []
+	JsonData[index]["children"] = []
 	for x in xrange(len(cityinfos)):
 		href = cityinfos[x].get("href")
 		citycode = cityinfos[x].xpath("string(.)")
 		if citycode.isdigit():
-			cityname = cityinfos[x+1].xpath("string(.)").encode('utf-8')
-			print "获取城市----------",citycode,cityname
+			cityname = cityinfos[x+1].xpath("string(.)")
+			print "GetCity----------",citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
+			cityData = {"value":citycode,"label":cityname}
 			# time.sleep(1)
 			time.sleep(1.5)
-			GetArea(href,index)
+			GetArea(href,index,cityData)
+			JsonData[index]["children"].append(cityData)
 
 	CityData.append(tempdata)
 	
@@ -95,17 +93,20 @@ def GetPronces():
 	privonces = selector.xpath("//tr[@class='provincetr']/td/a")
 
 	# i = 0
-	print "省份len",len(privonces)
+	print "GetPronces len",len(privonces)
 	for i in xrange(len(privonces)):
 		href = privonces[i].get("href")
 		provicesName = privonces[i].xpath("string(.)")
 		provicescode = re.search("\d+",href).group()
 		provicescode = provicescode+"0100000000"
-		provicesName = provicesName.encode('utf-8')
-		print "获取省份-------------------",provicesName,provicescode
+		provicesName = provicesName
+		print "GetPronces-------------------",provicesName,provicescode
 		ProviceData.append({"name":provicesName,"Value":provicescode})
+		JsonData.append({"value":provicescode,"label":provicesName})
 		time.sleep(2)
 		GetCity(href,i)
+		# if i>=1:
+		# 	break
 	# GetCity("50.html",21)
 
 
@@ -121,6 +122,10 @@ def GetPronces():
 	with open("area.json","w") as f:
 		f.write(json.dumps(AreaData1,ensure_ascii=False,indent = 4))
 		f.close()
+	
+	with open("jsondata.json","w") as f:
+		f.write(json.dumps(JsonData,ensure_ascii=False,indent = 4))
+		f.close()
 
 
 
@@ -128,7 +133,8 @@ def GetPronces():
 ProviceData = []
 CityData = []
 AreaData = []
-# GetPronces()
+JsonData = []
+GetPronces()
 
 privonces = None
 citys = None
@@ -150,9 +156,9 @@ with open("area.json","r") as f:
 	f.close()
 
 
-print "data--",privonces[21]["name"],citys[21][0]["name"],area[21][0][0]['name']
+# print "data--",privonces[21]["name"],citys[21][0]["name"],area[21][0][0]['name']
 
-print (json.dumps(area[21][0],ensure_ascii=False,indent = 4))
+# print (json.dumps(area[21][0],ensure_ascii=False,indent = 4))
 
 # os.system('pause')
 # provicescode = re.match("\d+",name)
