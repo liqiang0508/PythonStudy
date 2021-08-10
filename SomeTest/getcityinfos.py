@@ -8,8 +8,8 @@ from collections import OrderedDict
 import os
 import sys
 import time
-# reload(sys)
-# sys.setdefaultencoding('utf-8')
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 headers = {'User-Agent':'Mozilla/8.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6'} 
 
@@ -29,7 +29,7 @@ def GetArea(href,index,cityData):
 	url = baseurl.format(href)
 	data = GetHtmlData(url)
 	selector = etree.HTML(data)
-	print "GetArea****" ,index
+	# print "GetArea****" ,index
 	countytrs = selector.xpath("//tr[@class='countytr']/td/a")
 
 	tempdata = []
@@ -41,8 +41,8 @@ def GetArea(href,index,cityData):
 		href = countytrs[x].get("href")
 		citycode = countytrs[x].xpath("string(.)")
 		if citycode.isdigit():
-			cityname = countytrs[x+1].xpath("string(.)")
-			print "GetArea 2--",citycode,cityname
+			cityname = countytrs[x+1].xpath("string(.)").encode("utf-8")
+			print "GetArea===========",citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
 			cityData["children"].append({"label":cityname,"value":citycode})
 	
@@ -67,8 +67,8 @@ def GetCity(code,index):
 		href = cityinfos[x].get("href")
 		citycode = cityinfos[x].xpath("string(.)")
 		if citycode.isdigit():
-			cityname = cityinfos[x+1].xpath("string(.)")
-			print "GetCity----------",citycode,cityname
+			cityname = cityinfos[x+1].xpath("string(.)").encode("utf-8")
+			print "GetCity***************",citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
 			cityData = {"value":citycode,"label":cityname}
 			# time.sleep(1)
@@ -99,7 +99,7 @@ def GetPronces():
 		provicesName = privonces[i].xpath("string(.)")
 		provicescode = re.search("\d+",href).group()
 		provicescode = provicescode+"0100000000"
-		provicesName = provicesName
+		provicesName = provicesName.encode("utf-8")
 		print "GetPronces-------------------",provicesName,provicescode
 		ProviceData.append({"name":provicesName,"Value":provicescode})
 		JsonData.append({"value":provicescode,"label":provicesName})

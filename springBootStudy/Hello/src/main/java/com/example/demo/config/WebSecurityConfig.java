@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/index", "/**/*.ico","/**/*.html","/**/*.css", "/**/*.js","/**/*.svg").permitAll()
+                .antMatchers("/", "/index", "/**/*.ico","/**/*.html","/**/*.css", "/**/*.json","/**/*.js","/**/*.svg").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -40,11 +40,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
-            System.out.println("username======"+username);
-
+//            System.out.println("username======"+username);
             UserInfo user = userDao.findUser(query(where("username").is(username)));
             if (user == null ) {
-                System.out.println("username======2"+username);
+//                System.out.println("username======2"+username);
                 throw new UsernameNotFoundException("用户名未找到");
             }
             String password = user.getPassword();
