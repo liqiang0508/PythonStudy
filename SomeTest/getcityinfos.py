@@ -16,16 +16,17 @@ headers = {'User-Agent':'Mozilla/8.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9
 httpsession = requests.session()
 def GetHtmlData(url):
 	response = httpsession.get(url,headers = headers )
-	response.encoding = 'gb2312'
+	response.encoding = 'gbk'
+	resText = response.text
 	response.close()
-	return response.text
+	return resText
 
 def GetArea(href,index,cityData):
 	# print "GetArea",len(AreaData),index
 	# if len(AreaData)<=index:
 	AreaData.append([])
 
-	baseurl = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2019/{}"
+	baseurl = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2020/{}"
 	url = baseurl.format(href)
 	data = GetHtmlData(url)
 	selector = etree.HTML(data)
@@ -41,8 +42,9 @@ def GetArea(href,index,cityData):
 		href = countytrs[x].get("href")
 		citycode = countytrs[x].xpath("string(.)")
 		if citycode.isdigit():
-			cityname = countytrs[x+1].xpath("string(.)").encode("utf-8")
-			print "GetArea===========",citycode,cityname
+			cityname = countytrs[x+1].xpath("string(.)")
+			# cityname = cityname.encode("unicode-escape")
+			print"GetArea===========",citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
 			cityData["children"].append({"label":cityname,"value":citycode})
 	
@@ -54,7 +56,7 @@ def GetArea(href,index,cityData):
 
 
 def GetCity(code,index):
-	baseurl = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2019/{}"
+	baseurl = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2020/{}"
 	# print baseurl
 	data = GetHtmlData(baseurl.format(code))
 	# print "GetCity===",baseurl.format(code)
@@ -67,12 +69,13 @@ def GetCity(code,index):
 		href = cityinfos[x].get("href")
 		citycode = cityinfos[x].xpath("string(.)")
 		if citycode.isdigit():
-			cityname = cityinfos[x+1].xpath("string(.)").encode("utf-8")
-			print "GetCity***************",citycode,cityname
+			cityname = cityinfos[x+1].xpath("string(.)")
+			# cityname = cityname.encode("unicode-escape")
+			print"GetCity***************",citycode,cityname
 			tempdata.append({"name":cityname,"Value":citycode})
 			cityData = {"value":citycode,"label":cityname}
 			# time.sleep(1)
-			time.sleep(1.5)
+			time.sleep(0.5)
 			GetArea(href,index,cityData)
 			JsonData[index]["children"].append(cityData)
 
@@ -85,7 +88,7 @@ def GetCity(code,index):
 # 获取省份信息
 def GetPronces():
 		  
-	url = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2019/index.html"
+	url = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2020/index.html"
 	response = httpsession.get(url,headers = headers)
 	response.encoding = 'gb2312'
 	response.close()
@@ -93,17 +96,17 @@ def GetPronces():
 	privonces = selector.xpath("//tr[@class='provincetr']/td/a")
 
 	# i = 0
-	print "GetPronces len",len(privonces)
+	print("GetPronces len",len(privonces))
 	for i in xrange(len(privonces)):
 		href = privonces[i].get("href")
 		provicesName = privonces[i].xpath("string(.)")
 		provicescode = re.search("\d+",href).group()
 		provicescode = provicescode+"0100000000"
-		provicesName = provicesName.encode("utf-8")
-		print "GetPronces-------------------",provicesName,provicescode
+		# provicesName = provicesName.encode("unicode-escape")
+		print"GetPronces-------------------",provicesName,provicescode
 		ProviceData.append({"name":provicesName,"Value":provicescode})
 		JsonData.append({"value":provicescode,"label":provicesName})
-		time.sleep(2)
+		time.sleep(0.5)
 		GetCity(href,i)
 		# if i>=1:
 		# 	break
@@ -160,6 +163,6 @@ with open("area.json","r") as f:
 
 # print (json.dumps(area[21][0],ensure_ascii=False,indent = 4))
 
-# os.system('pause')
+os.system('pause')
 # provicescode = re.match("\d+",name)
 # print provicescode.group()
