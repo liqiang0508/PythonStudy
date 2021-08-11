@@ -30,17 +30,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/toLogin")
+                .loginProcessingUrl("/login")
                 .permitAll()
                 .and()
                 .logout()
-                .permitAll();
+                .permitAll()
+                .and().csrf().disable();
+
+
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
-//            System.out.println("username======"+username);
+            System.out.println("username======"+username);
             UserInfo user = userDao.findUser(query(where("username").is(username)));
             if (user == null ) {
 //                System.out.println("username======2"+username);
