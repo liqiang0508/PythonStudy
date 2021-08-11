@@ -14,18 +14,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sun.misc.IOUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +37,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Slf4j
 @RestController
-public class HelloController {
+public class RequestController {
 
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
@@ -57,7 +56,7 @@ public class HelloController {
 
     final RedisComponent redisComponent;
     @Autowired
-    public HelloController(RedisComponent redisComponent) {
+    public RequestController(RedisComponent redisComponent) {
         this.redisComponent = redisComponent;
     }
 
@@ -97,6 +96,22 @@ public class HelloController {
         }
         return res;
     }
+
+    @GetMapping(value = "/getFile")
+    public String getFile(){
+        String Data = null;
+        ClassPathResource classPathResource = new ClassPathResource("66.txt");
+        try {
+            InputStream inputStream =classPathResource.getInputStream();
+            Data = new String(IOUtils.readFully(inputStream, -1, true));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return Data;
+    }
+
+
 
     @GetMapping("/redis")
     public String redis() {

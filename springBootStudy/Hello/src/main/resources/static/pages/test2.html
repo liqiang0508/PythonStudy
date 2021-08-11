@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../cascader/cascader.css" media="all">
+<!--    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>-->
+</head>
+<body>
+<div class="layui-container">
+    <div class="layui-row">
+
+        <div class="layui-col-lg4 layui-col-sm4 layui-col-md4" style="height: 50px;background-color: #6d6d6a">
+
+        </div>
+        <div class="layui-col-lg4 layui-col-sm4 layui-col-md4" style="height: 50px; background-color: #bf017d">
+
+        </div>
+        <div class="layui-col-lg4 layui-col-sm4 layui-col-md4" style="height: 50px;background-color: #665337">
+
+        </div>
+    </div>
+
+    <hr class="layui-border-red">
+    <div class="layui-row" style="display: flex;flex-direction: row; justify-content: center;width: 100%;">
+        <button type="button" class="layui-btn btnTest">获取服务器时间</button>
+    </div>
+    <hr class="layui-border-red">
+    <div class="layui-row" style="display: flex;flex-direction: row; justify-content: center;width: 100%;">
+        <p class="time"></p>
+    </div>
+
+    <div class="container">
+        <form action = "/uploadFile" method = "POST" enctype = "multipart/form-data">
+            <input type = "file" name = "file" id = "upfile" />
+            <input  type = "submit" value="提交"  id = "upfilebtn" />
+        </form>
+
+    </div>
+    <p th:text="${msg}"></p>
+
+<!--    地区三级选择-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">地区选择</label>
+        <div class="layui-input-block">
+            <input type="text" id="cascader" class="layui-input" readonly="readonly">
+        </div>
+    </div>
+
+    <div id="layer-photos-demo" class="layer-photos-demo">
+        <img src="https://img2.baidu.com/it/u=3590833289,2218389121&fm=11&fmt=auto&gp=0.jpg"  layer-index="0">
+        <img src="https://img0.baidu.com/it/u=679339135,2559072635&fm=11&fmt=auto&gp=0.jpg"  layer-index="1">
+    </div>
+
+</div>
+
+</body>
+
+
+<script src="../layui/layui.js"></script>
+<script>
+
+    layui.config({
+        base: "cascader/"
+    }).extend({ //设定模块别名
+        cascader: 'cascader'
+    });
+
+    layui.use(["cascader"],function () {
+        var element = layui.element
+            , layer = layui.layer
+            , util = layui.util
+            , $ = layui.$;
+
+        $(".btnTest").click(function () {
+            $.get("./getTime", function (data) {
+                var text = new Date(data).toTimeString()
+                $(".time").text(text)
+                layer.msg(text)
+
+            })
+        })
+
+
+        var cas=layui.cascader({
+            elem: "#cascader",
+            // data: data,
+            url: "/cityData",
+            // type: "get",
+            // triggerType: "change",
+            // showLastLevels: true,
+            // where: {
+            //     a: "aaa"
+            // },
+            // value: ["B", "BB2", "BBB4"],
+            // changeOnSelect: true,
+            success: function (valData,labelData) {
+                console.log(valData,labelData);
+            }
+        });
+
+        layer.photos({
+            photos: '#layer-photos-demo'
+            ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+        });
+
+    })
+
+
+</script>
+</html>

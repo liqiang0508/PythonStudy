@@ -35,6 +35,11 @@ public class Router {
         return "test";
     }
 
+    @RequestMapping(value = "/test2")
+    public String Test2() {
+        return  "test2";
+    }
+
     @RequestMapping(value = "/changelog")
     public String changelog() {
         return "changelog";
@@ -61,7 +66,7 @@ public class Router {
     @PostMapping("/uploadFile")
     public String UpLoadFile(@RequestParam("file") MultipartFile file, RedirectAttributes attrs) throws IOException {
         if (file.isEmpty()) {
-            // return "上传失败，请选择文件";
+            return "redirect:/uploadError";
         }
 
         String fileName = file.getOriginalFilename();
