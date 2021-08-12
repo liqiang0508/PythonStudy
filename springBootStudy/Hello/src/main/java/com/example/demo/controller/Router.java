@@ -16,7 +16,7 @@ import java.io.IOException;
 @Controller
 public class Router {
     // 返回template下面的Index.html
-    @RequestMapping({"/toLogin"})
+    @RequestMapping({"/toLogin","/"})
     public String Index() {
         return "login"; //
 //        http://localhost:8888/Hello.html 返回static下面的静态html
