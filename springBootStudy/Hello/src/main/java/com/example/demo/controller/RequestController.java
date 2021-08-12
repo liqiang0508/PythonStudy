@@ -18,11 +18,15 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sun.misc.IOUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
@@ -149,6 +153,35 @@ public class RequestController {
     public long getTime() {
         long time = new Date().getTime();
         return time;
+    }
+
+    //    文件上传
+    @PostMapping("/uploadFile")
+    public String UpLoadFile(@RequestParam("file") MultipartFile file, RedirectAttributes attrs) throws IOException {
+        if (file.isEmpty()) {
+            return "uploadError";
+        }
+
+        String fileName = file.getOriginalFilename();
+        String fileDir = "upload/";
+        File filePath = new File(ResourceUtils.getURL("classpath:").getPath());
+        if (!filePath.exists())
+        {
+            filePath = new File("");
+        }
+        File upload = new File(filePath.getAbsolutePath(),fileDir);
+        File dstFile = new File(filePath.getAbsolutePath(),fileDir+fileName);
+        if(!upload.exists()) {
+            upload.mkdirs();
+        }
+        try {
+            file.transferTo(dstFile);
+            attrs.addFlashAttribute("msg",fileName);
+            return "uploadSuccess";
+        } catch (IOException e) {
+
+        }
+        return "uploadError";
     }
 
     //    登录

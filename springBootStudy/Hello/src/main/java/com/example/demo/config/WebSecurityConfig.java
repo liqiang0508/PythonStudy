@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/index", "/**/*.ico","/**/*.html","/**/*.css", "/**/*.json","/**/*.js","/**/*.svg").permitAll()
+                .antMatchers("/", "/index", "/**/*.png","/**/*.jpg","/**/*.ico","/**/*.html","/**/*.css", "/**/*.json","/**/*.js","/**/*.svg").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -37,6 +37,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll()
                 .and().csrf().disable();
+
+        //防止iframe不能访问
+        http.headers().frameOptions().disable();
+
 
 
     }

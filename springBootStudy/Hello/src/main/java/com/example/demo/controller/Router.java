@@ -58,33 +58,33 @@ public class Router {
         return "uploadError";
     }
 
-    //    文件上传
-    @PostMapping("/uploadFile")
-    public String UpLoadFile(@RequestParam("file") MultipartFile file, RedirectAttributes attrs) throws IOException {
-        if (file.isEmpty()) {
-            return "redirect:/uploadError";
-        }
-
-        String fileName = file.getOriginalFilename();
-        String fileDir = "upload/";
-        File filePath = new File(ResourceUtils.getURL("classpath:").getPath());
-        if (!filePath.exists())
-        {
-            filePath = new File("");
-        }
-        File upload = new File(filePath.getAbsolutePath(),fileDir);
-        File dstFile = new File(filePath.getAbsolutePath(),fileDir+fileName);
-        if(!upload.exists()) {
-            upload.mkdirs();
-        }
-        try {
-            file.transferTo(dstFile);
-            attrs.addFlashAttribute("msg",fileName);
-            return "redirect:/uploadSuccess";
-        } catch (IOException e) {
-
-        }
-        return "redirect:/uploadError";
-    }
+//    //    文件上传
+//    @PostMapping("/uploadFile")
+//    public String UpLoadFile(@RequestParam("file") MultipartFile file, RedirectAttributes attrs) throws IOException {
+//        if (file.isEmpty()) {
+//            return "redirect:/uploadError";
+//        }
+//
+//        String fileName = file.getOriginalFilename();
+//        String fileDir = "upload/";
+//        File filePath = new File(ResourceUtils.getURL("classpath:").getPath());
+//        if (!filePath.exists())
+//        {
+//            filePath = new File("");
+//        }
+//        File upload = new File(filePath.getAbsolutePath(),fileDir);
+//        File dstFile = new File(filePath.getAbsolutePath(),fileDir+fileName);
+//        if(!upload.exists()) {
+//            upload.mkdirs();
+//        }
+//        try {
+//            file.transferTo(dstFile);
+//            attrs.addFlashAttribute("msg",fileName);
+//            return "redirect:/uploadSuccess";
+//        } catch (IOException e) {
+//
+//        }
+//        return "redirect:/uploadError";
+//    }
 
 }
