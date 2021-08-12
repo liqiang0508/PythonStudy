@@ -3,15 +3,7 @@ package com.example.demo.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.io.File;
-import java.io.IOException;
 @Slf4j
 @Controller
 public class Router {
@@ -21,6 +13,10 @@ public class Router {
         return "login"; //
 //        http://localhost:8888/Hello.html 返回static下面的静态html
 //        http://localhost:8888/index      返回templates下面的动态html
+    }
+    @RequestMapping({"/index"})
+    public String Home() {
+        return "index";
     }
 
     @RequestMapping(value = "/ws")
