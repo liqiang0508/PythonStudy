@@ -107,11 +107,8 @@ public class RequestController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return Data;
     }
-
-
 
     @GetMapping("/redis")
     public String redis() {

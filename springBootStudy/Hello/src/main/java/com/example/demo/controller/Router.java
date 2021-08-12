@@ -35,10 +35,6 @@ public class Router {
         return "test";
     }
 
-    @RequestMapping(value = "/test2")
-    public String Test2() {
-        return  "test2";
-    }
 
     @RequestMapping(value = "/changelog")
     public String changelog() {
