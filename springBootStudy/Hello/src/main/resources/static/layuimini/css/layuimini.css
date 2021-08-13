@@ -795,7 +795,7 @@
 
     /**菜单缩放*/
     .layuimini-mini .layuimini-menu-left .layui-nav-more,.layuimini-mini .layuimini-menu-left .layui-nav-child{
-        display: none;!important;
+        display: none !important;
     }
 }
 
