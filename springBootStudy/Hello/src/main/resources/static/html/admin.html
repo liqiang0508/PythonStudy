@@ -13,72 +13,7 @@
 <div class="layui-layout layui-layout-admin">
     <!--    header-->
     <div class="layui-header">
-        <!-- 头部区域 -->
-        <!--        <ul class="layui-nav layui-layout-left">-->
-        <!--            <li class="layui-nav-item layadmin-flexible" lay-unselect="">-->
-        <!--                <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">-->
-        <!--                    <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>-->
-        <!--                </a>-->
-        <!--            </li>-->
-        <!--            <li class="layui-nav-item layui-hide-xs" lay-unselect="">-->
-        <!--                <a href="http://www.baidu.com/" target="_blank" title="前台">-->
-        <!--                    <i class="layui-icon layui-icon-website"></i>-->
-        <!--                </a>-->
-        <!--            </li>-->
-        <!--            <li class="layui-nav-item" lay-unselect="">-->
-        <!--                <a href="javascript:;" layadmin-event="refresh" title="刷新">-->
-        <!--                    <i class="layui-icon layui-icon-refresh-3"></i>-->
-        <!--                </a>-->
-        <!--            </li>-->
-        <!--            <li class="layui-nav-item layui-hide-xs" lay-unselect="">-->
-        <!--                <input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search"-->
-        <!--                       layadmin-event="serach" lay-action="template/search.html?keywords=">-->
-        <!--            </li>-->
-        <!--            <span class="layui-nav-bar" style="left: 192px; top: 48px; width: 0px; opacity: 0;"></span></ul>-->
-        <!--        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">-->
 
-        <!--            <li class="layui-nav-item" lay-unselect="">-->
-        <!--                <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">-->
-        <!--                    <i class="layui-icon layui-icon-notice"></i>-->
-
-        <!--                    &lt;!&ndash; 如果有新消息，则显示小圆点 &ndash;&gt;-->
-        <!--                    <span class="layui-badge-dot"></span>-->
-        <!--                </a>-->
-        <!--            </li>-->
-        <!--            <li class="layui-nav-item layui-hide-xs" lay-unselect="">-->
-        <!--                <a href="javascript:;" layadmin-event="theme">-->
-        <!--                    <i class="layui-icon layui-icon-theme"></i>-->
-        <!--                </a>-->
-        <!--            </li>-->
-        <!--            <li class="layui-nav-item layui-hide-xs" lay-unselect="">-->
-        <!--                <a href="javascript:;" layadmin-event="note">-->
-        <!--                    <i class="layui-icon layui-icon-note"></i>-->
-        <!--                </a>-->
-        <!--            </li>-->
-        <!--            <li class="layui-nav-item layui-hide-xs" lay-unselect="">-->
-        <!--                <a href="javascript:;" layadmin-event="fullscreen">-->
-        <!--                    <i class="layui-icon layui-icon-screen-full"></i>-->
-        <!--                </a>-->
-        <!--            </li>-->
-        <!--            <li class="layui-nav-item" lay-unselect="">-->
-        <!--                <a href="javascript:;">-->
-        <!--                    <cite>tester</cite>-->
-        <!--                    <i class="layui-icon layui-icon-down layui-nav-more"></i></a>-->
-        <!--                <dl class="layui-nav-child layui-anim layui-anim-upbit">-->
-        <!--                    <dd><a lay-href="set/user/info.html">基本资料</a></dd>-->
-        <!--                    <dd><a lay-href="set/user/password.html">修改密码</a></dd>-->
-        <!--                    <hr>-->
-        <!--                    <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>-->
-        <!--                </dl>-->
-        <!--            </li>-->
-
-        <!--            <li class="layui-nav-item layui-hide-xs" lay-unselect="">-->
-        <!--                <a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>-->
-        <!--            </li>-->
-        <!--            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect="">-->
-        <!--                <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>-->
-        <!--            </li>-->
-        <!--            <span class="layui-nav-bar" style="left: 135px; top: 48px; width: 0px; opacity: 0;"></span></ul>-->
     </div>
     <!--side-->
     <div class="layui-side layui-side-menu">
@@ -94,7 +29,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">选项</a>
                     <dl class="layui-nav-child">
-                        <dd><a lay-href="toLogin">登录</a></dd>
+                        <dd><a lay-href="changelog">登录</a></dd>
                         <dd><a lay-href="test">测试</a></dd>
                     </dl>
                 </li>
@@ -102,10 +37,14 @@
         </div>
     </div>
     <!--    tab-->
-    <div class="layadmin-pagetabs">
+    <div class="layui-body">
         <div class="layadmin-pagetabs layui-tab layui-tab-brief" lay-allowClose="true" lay-filter="demo">
             <ul class="layui-tab-title">
             </ul>
+
+            <div class="layui-tab-content">
+
+            </div>
         </div>
 
     </div>
@@ -113,15 +52,25 @@
 <!--    <div style="position:fixed;left: 200px;right: 0;top: 100px;bottom: 20px;">-->
 <!--        <iframe class="bodyframe" src="changelog"  frameborder="0"></iframe>-->
 <!--    </div>-->
-    <div class="layui-body">
-        <iframe class="bodyframe" src="changelog"  frameborder="0"></iframe>
-    </div>
+<!--    <div class="layui-body">-->
+<!--        <iframe class="bodyframe" src="changelog"  frameborder="0"></iframe>-->
+<!--    </div>-->
 
 
 </div>
 
 
 <style>
+    .layui-tab-item{
+        height: 100%;
+    }
+    .layui-body{
+        padding-bottom:0px !important;
+    }
+    .layui-tab-content {
+        width: 100%;
+        height: 100% !important;
+    }
     .logo {
         height: 50px;
         width: 200px;
@@ -162,21 +111,13 @@
     }
 
     .layadmin-pagetabs {
-        height: 40px;
-        line-height: 40px;
-        padding: 0 80px 0 10px;
-        background-color: #fff;
-        box-sizing: border-box;
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
-        position: fixed;
-        top: 50px;
-        right: 0;
-        z-index: 999;
-        left: 200px !important;
+        margin: 0px;
+        overflow: hidden;
+        height: 100% !important;
     }
 
     .layui-body {
-        top: 100px !important;
+        top: 50px !important;
     }
 
     .bodyframe {
@@ -193,6 +134,8 @@
 <script src="layui/layui.js"></script>
 <script>
     //JS
+
+
     var Tabs = new Array()
     layui.use(function () {
         var element = layui.element
@@ -201,32 +144,54 @@
             , $ = layui.$;
         //
 
-        //选项卡点击
-        element.on('tab(demo)', function (data) {
-            var lay_ref = $(this).attr('lay-id');
-            if (lay_ref) {
-                $(".bodyframe").attr("src", lay_ref)
+        function check(tabId, isIframe) {
+            // 判断选项卡上是否有
+            var checkTab = false;
+            if (isIframe === undefined || isIframe === false) {
+                $(".layui-tab-title li").each(function () {
+                    var checkTabId = $(this).attr('lay-id');
+                    if (checkTabId != null && checkTabId === tabId) {
+                        checkTab = true;
+                    }
+                });
+            } else {
+                parent.layui.$(".layui-tab-title li").each(function () {
+                    var checkTabId = $(this).attr('lay-id');
+                    if (checkTabId != null && checkTabId === tabId) {
+                        checkTab = true;
+                    }
+                });
             }
-
-        });
-        //选项卡删除
-        element.on('tabDelete(demo)', function (data) {
-
-            Tabs.splice(data.index, 1)
-            var lay_ref = Tabs.slice(-1);
-            element.tabChange("demo", lay_ref);
-            $(".bodyframe").attr("src", lay_ref)
-
-        });
+            return checkTab;
+        }
+        // //选项卡点击
+        // element.on('tab(demo)', function (data) {
+        //     var lay_ref = $(this).attr('lay-id');
+        //     if (lay_ref) {
+        //         $(".bodyframe").attr("src", lay_ref)
+        //     }
+        //
+        // });
+        // //选项卡删除
+        // element.on('tabDelete(demo)', function (data) {
+        //
+        //     Tabs.splice(data.index, 1)
+        //     var lay_ref = Tabs.slice(-1);
+        //     element.tabChange("demo", lay_ref);
+        //     $(".bodyframe").attr("src", lay_ref)
+        //
+        // });
         //左侧导航栏点击
         element.on('nav(test)', function (data) {
             var lay_ref = data.attr("lay-href")
             if (lay_ref) {
-                if (Tabs.indexOf(lay_ref) == -1) { //没有找到就加在数组里面
-                    Tabs.push(lay_ref)
+                var checkTab = check(lay_ref);
+                if (!checkTab)
+                {
                     element.tabAdd('demo', {
                         title: $(this).text()
-                        , id: lay_ref
+                        , id: lay_ref,
+                        content:'<iframe class="bodyframe" src='+lay_ref+' frameborder="0"></iframe>'
                     });
                 }
                 element.tabChange("demo", lay_ref);
@@ -238,7 +203,8 @@
         Tabs.push(homeHref)
         element.tabAdd('demo', {
             title: $(".home").text()
-            , id: homeHref
+            , id: homeHref,
+            content:'<iframe class="bodyframe" src='+homeHref+' frameborder="0"></iframe>'
         });
         element.tabChange("demo", homeHref);
 
