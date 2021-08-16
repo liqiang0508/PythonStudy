@@ -157,9 +157,11 @@ public class RequestController {
 
     //    文件上传
     @PostMapping("/uploadFile")
-    public String UpLoadFile(@RequestParam("file") MultipartFile file, RedirectAttributes attrs) throws IOException {
+    public JSONObject UpLoadFile(@RequestParam("file") MultipartFile file, RedirectAttributes attrs) throws IOException {
+        JSONObject res = new JSONObject();
         if (file.isEmpty()) {
-            return "uploadError";
+            res.put("code",1);
+            return res;
         }
 
         String fileName = file.getOriginalFilename();
@@ -175,13 +177,17 @@ public class RequestController {
             upload.mkdirs();
         }
         try {
+
+            res.put("code",0);
+            res.put("path",fileName);
             file.transferTo(dstFile);
             attrs.addFlashAttribute("msg",fileName);
-            return "uploadSuccess";
+            return res;
         } catch (IOException e) {
 
         }
-        return "uploadError";
+        res.put("code",2);
+        return res;
     }
 
     //    登录

@@ -5,7 +5,7 @@
     <title>Test</title>
     <link rel="stylesheet" href="layui/css/layui.css" media="all">
     <link rel="stylesheet" href="cascader/cascader.css" media="all">
-<!--    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>-->
+    <!--    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>-->
 </head>
 <body>
 <div class="layui-container">
@@ -32,15 +32,23 @@
     </div>
 
     <div class="container">
-        <form action = "/uploadFile" method = "POST" enctype = "multipart/form-data">
-            <input type = "file" name = "file" id = "upfile" />
-            <input  type = "submit" value="提交"  id = "upfilebtn" />
-        </form>
+        <!--        <form action = "/uploadFile" method = "POST" enctype = "multipart/form-data">-->
+        <!--            <input type = "file" name = "file" id = "upfile" />-->
+        <!--            <input  type = "submit" value="提交"  id = "upfilebtn" />-->
+        <!--        </form>-->
+
+        <button type="button" class="layui-btn" id="uploadFile">
+            <i class="layui-icon">&#xe67c;</i>上传图片
+        </button>
+        <div style="width: 95px;">
+            <div class="layui-progress layui-progress-big" lay-showpercent="yes" lay-filter="demo">
+                <div class="layui-progress-bar" lay-percent=""></div>
+            </div>
+        </div>
 
     </div>
-    <p th:text="${msg}"></p>
 
-<!--    地区三级选择-->
+    <!--    地区三级选择-->
     <div class="layui-form-item">
         <label class="layui-form-label">地区选择</label>
         <div class="layui-input-block">
@@ -49,8 +57,8 @@
     </div>
 
     <div id="layer-photos-demo" class="layer-photos-demo">
-        <img src="https://img2.baidu.com/it/u=3590833289,2218389121&fm=11&fmt=auto&gp=0.jpg"  layer-index="0">
-        <img src="https://img0.baidu.com/it/u=679339135,2559072635&fm=11&fmt=auto&gp=0.jpg"  layer-index="1">
+        <img src="https://img2.baidu.com/it/u=3590833289,2218389121&fm=11&fmt=auto&gp=0.jpg" layer-index="0">
+        <img src="https://img0.baidu.com/it/u=679339135,2559072635&fm=11&fmt=auto&gp=0.jpg" layer-index="1">
     </div>
 
 </div>
@@ -67,10 +75,11 @@
         cascader: 'cascader'
     });
 
-    layui.use(["cascader"],function () {
+    layui.use(["cascader"], function () {
         var element = layui.element
             , layer = layui.layer
             , util = layui.util
+            , upload = layui.upload
             , $ = layui.$;
 
         $(".btnTest").click(function () {
@@ -82,8 +91,32 @@
             })
         })
 
-
-        var cas=layui.cascader({
+        //上传
+        var uploadInst = upload.render({
+            elem: '#uploadFile' //绑定元素
+            , url: '/uploadFile' //上传接口
+            , progress: function (n, elem, e) {
+                element.progress('demo', n + '%'); //可配合 layui 进度条元素使用
+                if (n == 100) {
+                    layer.msg('上传完毕', {icon: 1});
+                }
+            }
+            , done: function (res) {
+                //上传完毕回调
+                console.log("1", res)
+                if (res.code == 0) {
+                    window.location.href = res.path
+                } else {
+                    layer.msg("upload error" + res.code)
+                }
+            }
+            , error: function () {
+                //请求异常回调
+                console.log("2")
+            }
+        });
+        //城市选择
+        var cas = layui.cascader({
             elem: "#cascader",
             // data: data,
             url: "/cityData",
@@ -95,15 +128,19 @@
             // },
             // value: ["B", "BB2", "BBB4"],
             // changeOnSelect: true,
-            success: function (valData,labelData) {
-                console.log(valData,labelData);
+            success: function (valData, labelData) {
+                console.log(valData, labelData);
             }
         });
 
         layer.photos({
             photos: '#layer-photos-demo'
-            ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+            , anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
         });
+        $("#upfilebtn").click(function (e) {
+
+
+        })
 
     })
     // $(function () {
