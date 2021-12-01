@@ -123,7 +123,31 @@
             }
             
         }
-    ],
+    ,{
+    "path": "pages/opendb-contacts/add",
+    "style": {
+        "navigationBarTitleText": "新增"
+    }
+}
+,{
+    "path": "pages/opendb-contacts/edit",
+    "style": {
+        "navigationBarTitleText": "编辑"
+    }
+}
+,{
+    "path": "pages/opendb-contacts/list",
+    "style": {
+        "navigationBarTitleText": "列表"
+    }
+}
+,{
+    "path": "pages/opendb-contacts/detail",
+    "style": {
+        "navigationBarTitleText": "详情"
+    }
+}
+],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		// "navigationBarTitleText": "uni-app",

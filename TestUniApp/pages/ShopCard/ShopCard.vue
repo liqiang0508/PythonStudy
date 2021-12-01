@@ -56,13 +56,13 @@
 		const modal = uni.requireNativePlugin('modal');
 	// #endif
 	
-	import uniPopup from '@/components/uni-popup/uni-popup.vue'
+	//import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import alert from "@/components/alert/alert.vue"
 	import test1 from "@/components/Test1/test.vue"
 	let UiManager = require("../../common/UiManager.js")
 	export default {
 		components: {
-			uniPopup,
+			//uniPopup,
 			alert,
 			test1
 		},
