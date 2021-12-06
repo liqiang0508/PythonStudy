@@ -61,13 +61,14 @@ if config:
 else:
     print ("CONFIG.json is  error")
     os.system("pause")
-    
+
 if os.path.exists(excelFile) == False:
     print ("excelFile is not exist")
     os.system("pause")
 else:
     workbook = xlrd.open_workbook(excelFile)  # 读取excel文件
     sheets = workbook.sheets()
+    
     for booksheet in sheets:  # 循环每个表单
         for row in xrange(1, booksheet.nrows):
             sheetName = booksheet.name
@@ -78,7 +79,6 @@ else:
             for i in xrange(0, booksheet.ncols):
                 value = booksheet.cell(row, i).value
                 key = booksheet.cell(0, i).value
-                print "key--",key,value
                 text = ""
                 if value == "":
                     text = "{} <br>".format(key)
