@@ -20,7 +20,7 @@ CONFIG_FILE = "CONFIG.json"  # 配置文件
 sendEmail = '发件人邮箱账号'     # 发件人邮箱账号
 sendKey = '发件人邮箱密码'     # 发件人邮箱密码
 sendTitle = "发件人显示"  # 发件人显示
-
+htmlDir = "html"  # 生成测试html文件目录
 
 def sendMail(touserMail, content, title):
     ret = True
@@ -51,52 +51,55 @@ def parseConfig():
     else:
         return None
 
+if os.path.exists(htmlDir) == False:
+    os.mkdir(htmlDir)
 
 config = parseConfig()
 if config:
     sendEmail = config["sendEmail"]
     sendKey = config["sendKey"]
     sendTitle = config["sendTitle"]
-    excelFile = config["excelFile"]
+    excelFile = sys.argv[1]
+    isTest = False if len(sys.argv) > 2 else True
+
+    if os.path.exists(excelFile) == False:
+        print ("excelFile is not exist")
+        os.system("pause")
+    else:
+        workbook = xlrd.open_workbook(excelFile)  # 读取excel文件
+        sheets = workbook.sheets()
+
+        for booksheet in sheets:  # 循环每个表单
+            for row in xrange(1, booksheet.nrows):
+                sheetName = booksheet.name
+                sendHtml = ""
+                name = booksheet.cell(row, 0).value
+                email = booksheet.cell(row, 1).value
+
+                for i in xrange(0, booksheet.ncols):
+                    value = booksheet.cell(row, i).value
+                    key = booksheet.cell(0, i).value
+                    text = ""
+                    if value == "":
+                        text = "{} <br>".format(key)
+                    else:
+                        if key.startswith("<b>"):
+                            value = "<b>{}</b>".format(value)
+                        text = "{}: {} <br>".format(key, value)
+                    # print "text:",text
+                    sendHtml = sendHtml + text
+                    fileName = '{}.html'.format(name).decode("utf-8")
+                    with open(htmlDir+"/"+fileName, 'w') as f:
+                        f.write(sendHtml)
+                if isTest == False:
+                    print ("send mail to {} {}".format(email, name).decode("utf-8"))
+                    sendMail(email, sendHtml, sheetName)
+                else:
+                    print ("generate {}.html".format(name).decode("utf-8"))
 else:
     print ("CONFIG.json is  error")
     os.system("pause")
 
-if os.path.exists(excelFile) == False:
-    print ("excelFile is not exist")
-    os.system("pause")
-else:
-    workbook = xlrd.open_workbook(excelFile)  # 读取excel文件
-    sheets = workbook.sheets()
-    
-    for booksheet in sheets:  # 循环每个表单
-        for row in xrange(1, booksheet.nrows):
-            sheetName = booksheet.name
-            sendHtml = ""
-            name = booksheet.cell(row, 0).value
-            email = booksheet.cell(row, 1).value
-           
-            for i in xrange(0, booksheet.ncols):
-                value = booksheet.cell(row, i).value
-                key = booksheet.cell(0, i).value
-                text = ""
-                if value == "":
-                    text = "{} <br>".format(key)
-                else:
-                    if key.startswith("<b>"):
-                        value = "<b>{}</b>".format(value)
-                    text = "{}: {} <br>".format(key, value)
-                # print "text:",text
-                sendHtml = sendHtml + text
-                fileName = '{}.html'.format(name).decode("utf-8")
-                with open(fileName, 'w') as f:
-                    f.write(sendHtml)
-            print ("send mail to {} {}".format(email, name).decode("utf-8"))
-            # b = sendMail(email,sendHtml,sheetName)
-            # if b:
-            #     print "success"
-            # else:
-            #     print "fail"
 
 # table = workbook.sheets()[0]
 # Nrows =  table.nrows  #获取该sheet中的有效行数
