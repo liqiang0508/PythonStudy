@@ -72,7 +72,7 @@ if config:
         for booksheet in sheets:  # 循环每个表单
             for row in xrange(1, booksheet.nrows):
                 sheetName = booksheet.name
-                sendHtml = ""
+                sendHtml = "<meta charset='UTF-8'>"
                 name = booksheet.cell(row, 0).value
                 email = booksheet.cell(row, 1).value
 
@@ -91,6 +91,7 @@ if config:
                     fileName = '{}.html'.format(name).decode("utf-8")
                     with open(htmlDir+"/"+fileName, 'w') as f:
                         f.write(sendHtml)
+                        f.close()
                 if isTest == False:
                     print ("send mail to {} {}".format(email, name).decode("utf-8"))
                     sendMail(email, sendHtml, sheetName)
