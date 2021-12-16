@@ -14,13 +14,13 @@ import sys
 # reload(sys)
 # sys.setdefaultencoding('utf8')
 
-
 CONFIG_FILE = "CONFIG.json"  # 配置文件
 
-sendEmail = '发件人邮箱账号'     # 发件人邮箱账号
-sendKey = '发件人邮箱密码'     # 发件人邮箱密码
+sendEmail = '发件人邮箱账号'  # 发件人邮箱账号
+sendKey = '发件人邮箱密码'  # 发件人邮箱密码
 sendTitle = "发件人显示"  # 发件人显示
 htmlDir = "html"  # 生成测试html文件目录
+
 
 def sendMail(touserMail, content, title):
     ret = True
@@ -30,12 +30,14 @@ def sendMail(touserMail, content, title):
         msg['From'] = formataddr([sendTitle, sendEmail])
         # 括号里的对应收件人邮箱昵称、收件人邮箱账号
         msg['To'] = formataddr(["FK", touserMail])
-        msg['Subject'] = title                # 邮件的主题，也可以说是标题
+        msg['Subject'] = title  # 邮件的主题，也可以说是标题
 
         server = smtplib.SMTP_SSL("smtp.qq.com", 465)  # 发件人邮箱中的SMTP服务器，端口是25
         server.login(sendEmail, sendKey)  # 括号中对应的是发件人邮箱账号、邮箱密码
         # 括号中对应的是发件人邮箱账号、收件人邮箱账号、发送邮件
-        server.sendmail(sendEmail, [touserMail, ], msg.as_string())
+        server.sendmail(sendEmail, [
+            touserMail,
+        ], msg.as_string())
         server.quit()  # 关闭连接
     except Exception:  # 如果 try 中的语句没有执行，则会执行下面的 ret=False
         ret = False
@@ -51,6 +53,7 @@ def parseConfig():
     else:
         return None
 
+
 if os.path.exists(htmlDir) == False:
     os.mkdir(htmlDir)
 
@@ -60,10 +63,12 @@ if config:
     sendKey = config["sendKey"]
     sendTitle = config["sendTitle"]
     excelFile = sys.argv[1]
-    isTest = False if len(sys.argv) > 2 else True
-
+    isTest = True  # 是否是测试模式
+    print(len(sys.argv))
+    if len(sys.argv) > 2:
+        isTest = bool(int(sys.argv[2]))
     if os.path.exists(excelFile) == False:
-        print ("excelFile is not exist")
+        print("excelFile is not exist")
         os.system("pause")
     else:
         workbook = xlrd.open_workbook(excelFile)  # 读取excel文件
@@ -86,26 +91,25 @@ if config:
                         if key.startswith("<b>"):
                             value = "<b>{}</b>".format(value)
                         text = "{}:{} <br>".format(key, value)
-                    sendHtml = sendHtml + text +"\n"
+                    sendHtml = sendHtml + text + "\n"
                     fileName = '{}.html'.format(name)
                     # print(sendHtml)
-                    with open(htmlDir+"/"+fileName, 'w',encoding = "utf-8") as f:
+                    with open(htmlDir + "/" + fileName, 'w',
+                              encoding="utf-8") as f:
                         f.write(sendHtml)
                         f.close()
                 if isTest == False:
-                    print ("send mail to {} {}".format(email, name))
+                    print("send mail to {} {}".format(email, name))
                     sendMail(email, sendHtml, sheetName)
                 else:
-                    print ("generate {}.html".format(name))
+                    print("generate {}.html".format(name))
 else:
-    print ("CONFIG.json is  error")
+    print("CONFIG.json is  error")
     os.system("pause")
-
 
 # table = workbook.sheets()[0]
 # Nrows =  table.nrows  #获取该sheet中的有效行数
 # Ncols =  table.ncols  #获取列表的有效列数
 # sheetNames = workbook.sheet_names()#sheet name[]
-
 
 os.system("pause")
