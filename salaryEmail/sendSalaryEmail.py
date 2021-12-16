@@ -62,13 +62,16 @@ if config:
     sendEmail = config["sendEmail"]
     sendKey = config["sendKey"]
     sendTitle = config["sendTitle"]
-    excelFile = sys.argv[1]
+    if len(sys.argv) >1:
+        excelFile = sys.argv[1]
+    else:
+        print("please input excel file==============")
+        os.system("pause")
     isTest = True  # 是否是测试模式
-    print(len(sys.argv))
     if len(sys.argv) > 2:
         isTest = bool(int(sys.argv[2]))
     if os.path.exists(excelFile) == False:
-        print("excelFile is not exist")
+        print("excelFile is not exist===============")
         os.system("pause")
     else:
         workbook = xlrd.open_workbook(excelFile)  # 读取excel文件
