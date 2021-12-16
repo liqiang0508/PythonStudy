@@ -11,8 +11,8 @@ import xml.dom.minidom as Dom
 import os
 import json
 import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
+# reload(sys)
+# sys.setdefaultencoding('utf8')
 
 
 CONFIG_FILE = "CONFIG.json"  # 配置文件
@@ -70,13 +70,13 @@ if config:
         sheets = workbook.sheets()
 
         for booksheet in sheets:  # 循环每个表单
-            for row in xrange(1, booksheet.nrows):
+            for row in range(1, booksheet.nrows):
                 sheetName = booksheet.name
-                sendHtml = "<meta charset='UTF-8'>\n"
+                sendHtml = ""
                 name = booksheet.cell(row, 0).value
                 email = booksheet.cell(row, 1).value
 
-                for i in xrange(0, booksheet.ncols):
+                for i in range(0, booksheet.ncols):
                     value = booksheet.cell(row, i).value
                     key = booksheet.cell(0, i).value
                     text = ""
@@ -85,18 +85,18 @@ if config:
                     else:
                         if key.startswith("<b>"):
                             value = "<b>{}</b>".format(value)
-                        text = "{}: {} <br>".format(key, value)
-                    # print "text:",text
+                        text = "{}:{} <br>".format(key, value)
                     sendHtml = sendHtml + text +"\n"
-                    fileName = '{}.html'.format(name).decode("utf-8")
-                    with open(htmlDir+"/"+fileName, 'w') as f:
+                    fileName = '{}.html'.format(name)
+                    # print(sendHtml)
+                    with open(htmlDir+"/"+fileName, 'w',encoding = "utf-8") as f:
                         f.write(sendHtml)
                         f.close()
                 if isTest == False:
-                    print ("send mail to {} {}".format(email, name).decode("utf-8"))
+                    print ("send mail to {} {}".format(email, name))
                     sendMail(email, sendHtml, sheetName)
                 else:
-                    print ("generate {}.html".format(name).decode("utf-8"))
+                    print ("generate {}.html".format(name))
 else:
     print ("CONFIG.json is  error")
     os.system("pause")

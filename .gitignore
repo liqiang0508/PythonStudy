@@ -51,3 +51,6 @@ buildExcle2Lua/.idea/
 springBootStudy/.idea/
 *.log
 *.gz
+salaryEmail/build/
+salaryEmail/dist/sendSalaryEmail.exe
+salaryEmail/sendSalaryEmail.spec
