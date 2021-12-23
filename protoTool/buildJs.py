@@ -4,7 +4,7 @@ version:
 Author: liqiang
 email: 497232807@qq.com
 Date: 2021-12-22 19:48:11
-LastEditTime: 2021-12-22 21:18:47
+LastEditTime: 2021-12-23 15:56:46
 '''
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
@@ -24,12 +24,24 @@ def moveFile(srcfile, dstfile):
         shutil.move(srcfile, dstfile)
 # protoc --js_out=library=allPb,binary:. message.proto body.proto
 # protoc.exe --js_out=import_style=commonjs,binary:. ZH_IM.proto
-CMD = "protoc.exe  --js_out=library=allPb,binary:.  proto/*.proto" 
+# pbjs -t static-module -w commonjs -o proto.js *.proto
+# CMD = "protoc.exe  --js_out=library=allPb,binary:.  proto/*.proto" 
+pbFile = "Proto.js"
+CMD = "pbjs -t static-module -w commonjs -o "+pbFile+" proto/*.proto"
+CMD2 = "pbts -o Proto.d.ts " + pbFile
 os.system(CMD)
+os.system(CMD2)
 
-srcFile = "allPb.js"
-dstFile = "js/allPb.js"
-moveFile(srcFile, dstFile)
+with open(pbFile,"r") as f:
+    data = f.read()
+    data = data.replace("protobufjs/minimal","./protobuf")
+    f.close()
+    with open(pbFile,"w") as f:
+        f.write(data)
+        f.close()
+
+dstFile = "js/"+pbFile
+moveFile(pbFile, dstFile)
 
 print("buildJs   success================================")
 os.system("pause")

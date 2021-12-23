@@ -1,1 +1,8 @@
-cocos lua�� pb����
+buildJs.py
+编译proto文件夹下面的proto文件到js文件下面
+
+
+buildLua.py
+编译proto文件夹下面的proto文件到lua文件下面
+buildCMD.py
+编译cmd.cfg 到cmd.lua

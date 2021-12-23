@@ -119,7 +119,7 @@ def export2Lua(path):
 
     # commonFunction
     commFunStr = ""
-    with open("commonFun.txt", "r") as F:
+    with open("commonFun", "r") as F:
         commFunStr = F.read()
         F.close()
     commFunStr = commFunStr % (length, luaModuleName, luaModuleName)
