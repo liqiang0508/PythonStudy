@@ -4,7 +4,7 @@ version:
 Author: liqiang
 email: 497232807@qq.com
 Date: 2021-12-22 19:48:11
-LastEditTime: 2021-12-23 15:56:46
+LastEditTime: 2021-12-24 15:54:07
 '''
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
@@ -26,7 +26,7 @@ def moveFile(srcfile, dstfile):
 # protoc.exe --js_out=import_style=commonjs,binary:. ZH_IM.proto
 # pbjs -t static-module -w commonjs -o proto.js *.proto
 # CMD = "protoc.exe  --js_out=library=allPb,binary:.  proto/*.proto" 
-pbFile = "Proto.js"
+pbFile = "gameProto.js"
 CMD = "pbjs -t static-module -w commonjs -o "+pbFile+" proto/*.proto"
 CMD2 = "pbts -o Proto.d.ts " + pbFile
 os.system(CMD)

@@ -4,7 +4,7 @@ version:
 Author: liqiang
 email: 497232807@qq.com
 Date: 2021-12-22 19:48:46
-LastEditTime: 2021-12-24 14:59:57
+LastEditTime: 2021-12-24 15:52:07
 '''
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
@@ -47,13 +47,13 @@ with open(cmdFile,"r+") as f:
 
 writeStr = writeStr + "\nglobalThis.CMD = CMD\n"
 writeStr = writeStr + "globalThis.CMD2PB = CMD2PB\n"
-with open("cmd.ts","w") as f:
+with open("cmdDef.ts","w") as f:
     f.write(writeStr)
     f.close()
 
-srcFile = "cmd.lua"
-dstFile = "lua/cmd.lua"
-# moveFile(srcFile, dstFile)
+srcFile = "cmdDef.ts"
+dstFile = "ts/cmdDef.ts"
+moveFile(srcFile, dstFile)
 
-print("build cmd ts success================")
+print("build cmdDef.ts success================")
 os.system("pause")
