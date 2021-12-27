@@ -37,4 +37,9 @@ message Person {
 message AddressBook {
   repeated Person people = 1;
 }
+
+message Package {
+  uint32 id = 1;       //这个就是你说的消息号
+  bytes data  = 2;     //这是个二进制，放你的UserLogin_CL 序列化后的二进制数据。
+}
 // [END messages]

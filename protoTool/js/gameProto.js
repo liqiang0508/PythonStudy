@@ -746,6 +746,225 @@ $root.tutorial = (function() {
         return AddressBook;
     })();
 
+    tutorial.Package = (function() {
+
+        /**
+         * Properties of a Package.
+         * @memberof tutorial
+         * @interface IPackage
+         * @property {number|null} [id] Package id
+         * @property {Uint8Array|null} [data] Package data
+         */
+
+        /**
+         * Constructs a new Package.
+         * @memberof tutorial
+         * @classdesc Represents a Package.
+         * @implements IPackage
+         * @constructor
+         * @param {tutorial.IPackage=} [properties] Properties to set
+         */
+        function Package(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Package id.
+         * @member {number} id
+         * @memberof tutorial.Package
+         * @instance
+         */
+        Package.prototype.id = 0;
+
+        /**
+         * Package data.
+         * @member {Uint8Array} data
+         * @memberof tutorial.Package
+         * @instance
+         */
+        Package.prototype.data = $util.newBuffer([]);
+
+        /**
+         * Creates a new Package instance using the specified properties.
+         * @function create
+         * @memberof tutorial.Package
+         * @static
+         * @param {tutorial.IPackage=} [properties] Properties to set
+         * @returns {tutorial.Package} Package instance
+         */
+        Package.create = function create(properties) {
+            return new Package(properties);
+        };
+
+        /**
+         * Encodes the specified Package message. Does not implicitly {@link tutorial.Package.verify|verify} messages.
+         * @function encode
+         * @memberof tutorial.Package
+         * @static
+         * @param {tutorial.IPackage} message Package message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Package.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.id);
+            if (message.data != null && Object.hasOwnProperty.call(message, "data"))
+                writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.data);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Package message, length delimited. Does not implicitly {@link tutorial.Package.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof tutorial.Package
+         * @static
+         * @param {tutorial.IPackage} message Package message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Package.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Package message from the specified reader or buffer.
+         * @function decode
+         * @memberof tutorial.Package
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {tutorial.Package} Package
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Package.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.tutorial.Package();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.id = reader.uint32();
+                    break;
+                case 2:
+                    message.data = reader.bytes();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Package message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof tutorial.Package
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {tutorial.Package} Package
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Package.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Package message.
+         * @function verify
+         * @memberof tutorial.Package
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Package.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isInteger(message.id))
+                    return "id: integer expected";
+            if (message.data != null && message.hasOwnProperty("data"))
+                if (!(message.data && typeof message.data.length === "number" || $util.isString(message.data)))
+                    return "data: buffer expected";
+            return null;
+        };
+
+        /**
+         * Creates a Package message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof tutorial.Package
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {tutorial.Package} Package
+         */
+        Package.fromObject = function fromObject(object) {
+            if (object instanceof $root.tutorial.Package)
+                return object;
+            var message = new $root.tutorial.Package();
+            if (object.id != null)
+                message.id = object.id >>> 0;
+            if (object.data != null)
+                if (typeof object.data === "string")
+                    $util.base64.decode(object.data, message.data = $util.newBuffer($util.base64.length(object.data)), 0);
+                else if (object.data.length)
+                    message.data = object.data;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Package message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof tutorial.Package
+         * @static
+         * @param {tutorial.Package} message Package
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Package.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.id = 0;
+                if (options.bytes === String)
+                    object.data = "";
+                else {
+                    object.data = [];
+                    if (options.bytes !== Array)
+                        object.data = $util.newBuffer(object.data);
+                }
+            }
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            if (message.data != null && message.hasOwnProperty("data"))
+                object.data = options.bytes === String ? $util.base64.encode(message.data, 0, message.data.length) : options.bytes === Array ? Array.prototype.slice.call(message.data) : message.data;
+            return object;
+        };
+
+        /**
+         * Converts this Package to JSON.
+         * @function toJSON
+         * @memberof tutorial.Package
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Package.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Package;
+    })();
+
     return tutorial;
 })();
 
