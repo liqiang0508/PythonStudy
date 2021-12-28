@@ -3,8 +3,8 @@
 # import addressbook_pb2
 # from pythonPb.proto import addressbook_pb2
 # import pythonPb.proto.addressbook_pb2
-from pythonPb.mm import test
-from pythonPb.mm import addressbook_pb2
+# from pythonPb.proto import test
+from pythonPb.proto import addressbook_pb2
 import os
  
 
@@ -28,23 +28,33 @@ phone_number3.type = addressbook_pb2.Person.PhoneType.WORK
 phone_number3.number = "6666666"
 
 
-print("1=====",addressbook_pb2.Person.PhoneType.MOBILE)
-print("2=====",addressbook_pb2.Person.MOBILE)
-print("3=====",addressbook_pb2.Person.PhoneType.Value("MOBILE"))
+# print("1=====",addressbook_pb2.Person.PhoneType.MOBILE)
+# print("2=====",addressbook_pb2.Person.MOBILE)
+# print("3=====",addressbook_pb2.Person.PhoneType.Value("MOBILE"))
 
 
 # 序列化
-serializeToString = address_book.SerializeToString()
-print("serializeToString",serializeToString, type(serializeToString))
+serializeToString1 = address_book.SerializeToString()
+print("serializeToString1===",serializeToString1, type(serializeToString1))
 
-address_book.ParseFromString(serializeToString)
-print("address_book",address_book)
+address_book.ParseFromString(serializeToString1)
+print("address_book===",address_book)
 
-for person in address_book.people:
-    for phone_number in person.phones:
-        print(phone_number.type,phone_number.number)
+person = addressbook_pb2.Person()
 
 
-test.Say()
+
+with open("test2.txt","rb") as f:
+    data = f.read()
+    f.close()
+    person = addressbook_pb2.Person()
+    person.ParseFromString(data)
+    print("decodeData=",person)
+
+# for person in address_book.people:
+#     for phone_number in person.phones:
+#         print(phone_number.type,phone_number.number)
+
+
 
 os.system("pause")

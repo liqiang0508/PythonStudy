@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='tutorial',
   syntax='proto3',
   serialized_options=b'\n\024com.example.tutorialB\021AddressBookProtos\252\002$Google.Protobuf.Examples.AddressBook',
-  serialized_pb=b'\n\x17proto/addressbook.proto\x12\x08tutorial\"\xd5\x01\n\x06Person\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x05\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12,\n\x06phones\x18\x04 \x03(\x0b\x32\x1c.tutorial.Person.PhoneNumber\x1aG\n\x0bPhoneNumber\x12\x0e\n\x06number\x18\x01 \x01(\t\x12(\n\x04type\x18\x02 \x01(\x0e\x32\x1a.tutorial.Person.PhoneType\"+\n\tPhoneType\x12\n\n\x06MOBILE\x10\x00\x12\x08\n\x04HOME\x10\x01\x12\x08\n\x04WORK\x10\x02\"/\n\x0b\x41\x64\x64ressBook\x12 \n\x06people\x18\x01 \x03(\x0b\x32\x10.tutorial.PersonBP\n\x14\x63om.example.tutorialB\x11\x41\x64\x64ressBookProtos\xaa\x02$Google.Protobuf.Examples.AddressBookb\x06proto3'
+  serialized_pb=b'\n\x17proto/addressbook.proto\x12\x08tutorial\"\xd5\x01\n\x06Person\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x05\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12,\n\x06phones\x18\x04 \x03(\x0b\x32\x1c.tutorial.Person.PhoneNumber\x1aG\n\x0bPhoneNumber\x12\x0e\n\x06number\x18\x01 \x01(\t\x12(\n\x04type\x18\x02 \x01(\x0e\x32\x1a.tutorial.Person.PhoneType\"+\n\tPhoneType\x12\n\n\x06MOBILE\x10\x00\x12\x08\n\x04HOME\x10\x01\x12\x08\n\x04WORK\x10\x02\"/\n\x0b\x41\x64\x64ressBook\x12 \n\x06people\x18\x01 \x03(\x0b\x32\x10.tutorial.Person\"#\n\x07Package\x12\n\n\x02id\x18\x01 \x01(\r\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c\x42P\n\x14\x63om.example.tutorialB\x11\x41\x64\x64ressBookProtos\xaa\x02$Google.Protobuf.Examples.AddressBookb\x06proto3'
 )
 
 
@@ -170,6 +170,44 @@ _ADDRESSBOOK = _descriptor.Descriptor(
   serialized_end=300,
 )
 
+
+_PACKAGE = _descriptor.Descriptor(
+  name='Package',
+  full_name='tutorial.Package',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='tutorial.Package.id', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='data', full_name='tutorial.Package.data', index=1,
+      number=2, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=302,
+  serialized_end=337,
+)
+
 _PERSON_PHONENUMBER.fields_by_name['type'].enum_type = _PERSON_PHONETYPE
 _PERSON_PHONENUMBER.containing_type = _PERSON
 _PERSON.fields_by_name['phones'].message_type = _PERSON_PHONENUMBER
@@ -177,6 +215,7 @@ _PERSON_PHONETYPE.containing_type = _PERSON
 _ADDRESSBOOK.fields_by_name['people'].message_type = _PERSON
 DESCRIPTOR.message_types_by_name['Person'] = _PERSON
 DESCRIPTOR.message_types_by_name['AddressBook'] = _ADDRESSBOOK
+DESCRIPTOR.message_types_by_name['Package'] = _PACKAGE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Person = _reflection.GeneratedProtocolMessageType('Person', (_message.Message,), {
@@ -200,6 +239,13 @@ AddressBook = _reflection.GeneratedProtocolMessageType('AddressBook', (_message.
   # @@protoc_insertion_point(class_scope:tutorial.AddressBook)
   })
 _sym_db.RegisterMessage(AddressBook)
+
+Package = _reflection.GeneratedProtocolMessageType('Package', (_message.Message,), {
+  'DESCRIPTOR' : _PACKAGE,
+  '__module__' : 'proto.addressbook_pb2'
+  # @@protoc_insertion_point(class_scope:tutorial.Package)
+  })
+_sym_db.RegisterMessage(Package)
 
 
 DESCRIPTOR._options = None
