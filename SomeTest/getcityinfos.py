@@ -8,8 +8,8 @@ from collections import OrderedDict
 import os
 import sys
 import time
-reload(sys)
-sys.setdefaultencoding('utf-8')
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
 
 headers = {'User-Agent':'Mozilla/8.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6'} 
 
@@ -34,17 +34,17 @@ def GetArea(href,index,cityData):
 	countytrs = selector.xpath("//tr[@class='countytr']/td/a")
 
 	tempdata = []
-  	if len(countytrs)==0:
-  		countytrs = selector.xpath("//tr[@class='towntr']/td/a")
+	if len(countytrs)==0:
+		countytrs = selector.xpath("//tr[@class='towntr']/td/a")
 
 	cityData["children"] = []
-	for x in xrange(len(countytrs)):
+	for x in range(len(countytrs)):
 		href = countytrs[x].get("href")
 		citycode = countytrs[x].xpath("string(.)")
 		if citycode.isdigit():
 			cityname = countytrs[x+1].xpath("string(.)")
 			# cityname = cityname.encode("unicode-escape")
-			print"GetArea===========",citycode,cityname
+			print("GetArea===========",citycode,cityname)
 			tempdata.append({"name":cityname,"Value":citycode})
 			cityData["children"].append({"label":cityname,"value":citycode})
 	
@@ -65,13 +65,13 @@ def GetCity(code,index):
 	
 	tempdata = []
 	JsonData[index]["children"] = []
-	for x in xrange(len(cityinfos)):
+	for x in range(len(cityinfos)):
 		href = cityinfos[x].get("href")
 		citycode = cityinfos[x].xpath("string(.)")
 		if citycode.isdigit():
 			cityname = cityinfos[x+1].xpath("string(.)")
 			# cityname = cityname.encode("unicode-escape")
-			print"GetCity***************",citycode,cityname
+			print("GetCity***************",citycode,cityname)
 			tempdata.append({"name":cityname,"Value":citycode})
 			cityData = {"value":citycode,"label":cityname}
 			# time.sleep(1)
@@ -97,13 +97,13 @@ def GetPronces():
 
 	# i = 0
 	print("GetPronces len",len(privonces))
-	for i in xrange(len(privonces)):
+	for i in range(len(privonces)):
 		href = privonces[i].get("href")
 		provicesName = privonces[i].xpath("string(.)")
 		provicescode = re.search("\d+",href).group()
 		provicescode = provicescode+"0100000000"
 		# provicesName = provicesName.encode("unicode-escape")
-		print"GetPronces-------------------",provicesName,provicescode
+		print("GetPronces-------------------",provicesName,provicescode)
 		ProviceData.append({"name":provicesName,"Value":provicescode})
 		JsonData.append({"value":provicescode,"label":provicesName})
 		time.sleep(0.5)
