@@ -1,11 +1,17 @@
 import datetime
 import chinese_calendar
 import os
-def get_countDay(date,name):
-    d2 = datetime.datetime(date.year, date.month, date.day)   
+
+
+def get_countDay(date, name):
+    d2 = datetime.datetime(date.year, date.month, date.day)
     d1 = datetime.datetime.now()
     interval = d2 - d1  # 两日期差距
-    return "离{}年{}还剩{}天".format(date.year,name,interval.days) 
+    if interval.days < 0:
+        return None
+    else:
+        return "离{}年{}还剩{}天".format(date.year, name, interval.days)
+
 
 def get_holidays(year=None, include_weekends=True):
     """
@@ -23,7 +29,8 @@ def get_holidays(year=None, include_weekends=True):
     holidays = chinese_calendar.get_holidays(start, end, include_weekends)
     return holidays
 
-b = get_holidays(2022,False)
+
+b = get_holidays(2022, False)
 days = {}
 for i in b:
     on_holiday, english_name = chinese_calendar.get_holiday_detail(i)
@@ -34,7 +41,8 @@ for i in b:
 
 print("你好，摸鱼人，工作再累，一定不要忘记摸鱼哦 ! 有事没事起身去茶水间去廊道去天台走走，别老在工位上坐着。多喝点水，钱是老板的，但命是自己的!\n")
 for i in days:
-    b = get_countDay(days[i],i)
-    print(b)
+    b = get_countDay(days[i], i)
+    if b:
+        print(b)
 
 os.system("pause")
