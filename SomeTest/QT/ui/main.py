@@ -13,7 +13,7 @@ class window(QDialog, Ui_Dialog):  # 继承类
         self.pushButton.clicked.connect(self.hello)
 
     def hello(self, ):
-
+        # self.label.setText("666")
         reply = QMessageBox.question(self, 'info',
                                      "你要确定退出吗？", QMessageBox.Yes |
                                      QMessageBox.No,
