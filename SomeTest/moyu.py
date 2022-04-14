@@ -1,4 +1,15 @@
+'''
+Author: LiQiang
+Date: 2022-04-14 09:32:19
+LastEditors: LiQiang
+LastEditTime: 2022-04-14 09:40:46
+FilePath: \srce:\github\PythonStudy\SomeTest\moyu.py
+Description: 
+
+Copyright (c) 2022 by 用户/公司名, All Rights Reserved. 
+'''
 import datetime
+import sys
 import chinese_calendar
 import os
 
@@ -30,12 +41,16 @@ def get_holidays(year=None, include_weekends=True):
     return holidays
 
 
-b = get_holidays(2022, False)
+year = datetime.datetime.now().year
+if len(sys.argv) == 2:
+    year = int(sys.argv[1])
+
+b = get_holidays(year, False)
 days = {}
 for i in b:
     on_holiday, english_name = chinese_calendar.get_holiday_detail(i)
     holiday_name = chinese_calendar.Holiday(english_name).chinese  # 劳动节
-    # print(i,on_holiday,holiday_name)
+   
     if holiday_name not in days:
         days[holiday_name] = i
 
