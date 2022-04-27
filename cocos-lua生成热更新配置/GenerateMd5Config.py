@@ -2,8 +2,8 @@
 Author: LiQiang
 Date: 2022-04-27 09:20:11
 LastEditors: LiQiang
-LastEditTime: 2022-04-27 09:24:05
-FilePath: \srcd:\mogaclient\trunk\client_core\GenerateLocalConfig.py
+LastEditTime: 2022-04-27 09:43:10
+FilePath: \srcd:\mogaclient\trunk\client_core\GenerateMd5Config.py
 Description: 
 
 Copyright (c) 2022 by 用户/公司名, All Rights Reserved. 
@@ -46,13 +46,14 @@ def walk(path):
 			if file in IgnorFile:
 				continue
 
-			path = os.path.join(dirpath, file)
-			# print "walk......",path,getFileMd5(path).upper()
-			path = path.replace("\\","/")
+			filePath = os.path.join(dirpath, file)
+			filePath = filePath.replace("\\","/")
+			# path = os.path.normpath(path)
+			print("walk path====>",filePath)
 			filedata = OrderedDict()
-			filedata["filename"]= path
-			filedata["md5"]= getFileMd5(path).upper()
-			filedata["size"]= getFileSize(path)
+			filedata["filename"]= filePath
+			filedata["md5"]= getFileMd5(filePath).upper()
+			filedata["size"]= getFileSize(filePath)
 			
 			data["files"].append(filedata)
 
@@ -70,7 +71,7 @@ data = OrderedDict()
 data["scriptVersion"] = int(scriptVersion)+1
 data["files"] = []
 
-walk("srcc")
+walk("src")
 walk("res")
 
 with open("appinfoiii.json","w") as f:
@@ -81,3 +82,4 @@ with open("appinfoiii.json","w") as f:
 
 
 print("generateLocalConfig End==========================")
+os.system("pause")
