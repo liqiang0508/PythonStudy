@@ -2,7 +2,7 @@
 Author: LiQiang
 Date: 2022-04-27 09:20:11
 LastEditors: LiQiang
-LastEditTime: 2022-04-27 09:43:10
+LastEditTime: 2022-04-27 11:17:18
 FilePath: \srcd:\mogaclient\trunk\client_core\GenerateMd5Config.py
 Description: 
 
@@ -37,7 +37,7 @@ def getFileMd5(filename):
 def getFileSize(filePath):
 	return os.path.getsize(filePath)
 
-def walk(path):
+def walk(path,filesMd5):
 	for dirpath,dirnames,filenames in os.walk(path):#
 		# print dirpath
 		for file in filenames:
@@ -55,7 +55,7 @@ def walk(path):
 			filedata["md5"]= getFileMd5(filePath).upper()
 			filedata["size"]= getFileSize(filePath)
 			
-			data["files"].append(filedata)
+			filesMd5.append(filedata)
 
 scriptVersion = 0
 configPath = "src/app/gameii/appinfoiii.json"
@@ -71,8 +71,8 @@ data = OrderedDict()
 data["scriptVersion"] = int(scriptVersion)+1
 data["files"] = []
 
-walk("src")
-walk("res")
+walk("src",data["files"])
+walk("res",data["files"])
 
 with open("appinfoiii.json","w") as f:
 	f.write(json.dumps(data,indent=4))
