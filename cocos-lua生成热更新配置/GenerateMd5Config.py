@@ -1,3 +1,13 @@
+'''
+Author: LiQiang
+Date: 2022-04-27 09:20:11
+LastEditors: LiQiang
+LastEditTime: 2022-04-27 09:24:05
+FilePath: \srcd:\mogaclient\trunk\client_core\GenerateLocalConfig.py
+Description: 
+
+Copyright (c) 2022 by 用户/公司名, All Rights Reserved. 
+'''
 print("generateLocalConfig Start==========================")
 
 
@@ -14,7 +24,7 @@ def getFileMd5(filename):
     if not os.path.isfile(filename):
         return
     myhash = hashlib.md5()# create a md5 object
-    f = file(filename,'rb')
+    f = open(filename,'rb')
     
     while True:
         b = f.read(8096)# get file content.
@@ -47,11 +57,13 @@ def walk(path):
 			data["files"].append(filedata)
 
 scriptVersion = 0
-with open("src/app/gameii/appinfoiii.json","r") as f:
-	filedata = f.read()
-	jsondata = json.loads(filedata)
-	scriptVersion = jsondata['scriptVersion']
-	print scriptVersion
+configPath = "src/app/gameii/appinfoiii.json"
+if os.path.exists(configPath):
+	with open(configPath,"r") as f:
+		filedata = f.read()
+		jsondata = json.loads(filedata)
+		scriptVersion = jsondata['scriptVersion']
+		print(scriptVersion)
 	
 
 data = OrderedDict()
