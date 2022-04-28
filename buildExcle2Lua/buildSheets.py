@@ -53,20 +53,18 @@ def export2Lua(path):
             for i in range(0, MaxCol):
                 key_type = sheet.cell(10, i).value  # 字段类型
                 value = sheet.cell(row, i).value  # 字段值
-
                 if key_type != "_" and value != "":  # 字段有值并且不是注释
                     valueType = key_type[0]  # 字段类型
-                    if valueType in ["i", "s", "f", "#"] and key_type[1] != "[":  # 不是数组
-
+                    if valueType in ["i", "s", "f", "#"
+                                     ] and key_type[1] != "[":  # 不是数组
                         if value != "":  # int数据转成int
                             value = convertValueByType(valueType, value)
-
                         if valueType == "#" and value != "":  # 是对象
-                            data = key_type[1:].split(".")  # #ItemOnline.{iID:iNum}
+                            data = key_type[1:].split(
+                                ".")  # #ItemOnline.{iID:iNum}
                             values = value.split(":")
                             key = data[0]
                             keys = data[1][1:-1].split(":")
-
                             rowData[key] = {}
                             for i in values:
                                 index = values.index(i)
@@ -98,7 +96,8 @@ def export2Lua(path):
                                     _key = keys[index][1:]  # key
                                     keyValue = valueA[index]  # keyValue
                                     key_type = keys[index][0]  # 值的类型
-                                    keyValue = convertValueByType(key_type, keyValue)
+                                    keyValue = convertValueByType(
+                                        key_type, keyValue)
                                     # print("keyValue==", keyValue)
                                     dataArray[_key] = keyValue
                                 rowData[keyName].append(dataArray)
@@ -117,21 +116,21 @@ def export2Lua(path):
             rowStr = "[" + str(rowData["ID"]) + "]=" + rowStr1 + ","
             writeStr = writeStr + rowStr + "\n"
 
-    writeStr = writeStr + "}\n"
+        writeStr = writeStr + "}\n"
 
-    # commonFunction
-    commFunStr = ""
-    with open("commonFun.txt", "r") as F:
-        commFunStr = F.read()
-        F.close()
-    commFunStr = commFunStr % (length, luaModuleName, luaModuleName)
-    writeStr = writeStr + commFunStr
-    # write
-    writeStr = writeStr + "\nreturn " + "Config;"
-    outFilename = luaDir + "/" + outFilename
-    with open(outFilename, "w") as f:
-        f.write(writeStr)
-        f.close()
+        # commonFunction
+        commFunStr = ""
+        with open("commonFun.txt", "r") as F:
+            commFunStr = F.read()
+            F.close()
+        commFunStr = commFunStr % (length, luaModuleName, luaModuleName)
+        writeStr = writeStr + commFunStr
+        # write
+        writeStr = writeStr + "\nreturn " + "Config;"
+        outFilename = luaDir + "/" + outFilename
+        with open(outFilename, "w") as f:
+            f.write(writeStr)
+            f.close()
 
 
 print("Build start****************************************************")
@@ -155,12 +154,14 @@ luaConifg = "local Config = {}\n"
 for dirPath, dirNames, filenames in os.walk(luaDir):  # 遍历目录下的所有lua文件
     for file in filenames:
         # print("file==", file,os.path.splitext(file))
-        config = "Config.{} = require(\"app.config.{}\")\n".format(os.path.splitext(file)[0], os.path.splitext(file)[0])
+        config = "Config.{} = require(\"app.config.{}\")\n".format(
+            os.path.splitext(file)[0],
+            os.path.splitext(file)[0])
         luaConifg = luaConifg + config
 
 luaConifg = luaConifg + "return Config"
 
-with open(luaDir+"/config.lua", "w") as f:
+with open(luaDir + "/Config.lua", "w") as f:
     f.write(luaConifg)
     f.close()
 
