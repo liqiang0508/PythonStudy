@@ -37,7 +37,7 @@ def export2Lua(path):
         if os.path.exists(outFilename):
             os.remove(outFilename)
 
-        writeStr = "local {}={{}}\n".format("DJConfig")
+        writeStr = "local {}={{}}\n".format("Config")
         writeStr = writeStr + "local _Config = {\n"
 
         workbook = xlrd.open_workbook(path)  # 读取excel文件
@@ -113,6 +113,7 @@ def export2Lua(path):
             rowStr1 = rowStr1.replace(":", "=")
             rowStr1 = rowStr1.replace(" ", "")
             rowStr1 = rowStr1.replace("///", "\"")
+            rowStr1 = rowStr1.replace("\\", "\"")
             rowStr = "[" + str(rowData["ID"]) + "]=" + rowStr1 + ","
             writeStr = writeStr + rowStr + "\n"
 
@@ -126,29 +127,42 @@ def export2Lua(path):
     commFunStr = commFunStr % (length, luaModuleName, luaModuleName)
     writeStr = writeStr + commFunStr
     # write
-    writeStr = writeStr + "\nreturn " + "DJConfig;"
-    outFilename = saveDir + "/" + outFilename
+    writeStr = writeStr + "\nreturn " + "Config;"
+    outFilename = luaDir + "/" + outFilename
     with open(outFilename, "w") as f:
         f.write(writeStr)
         f.close()
 
 
 print("Build start****************************************************")
-targetDir = "sheets"  # 目标文件夹
-saveDir = "sheetsLua"  # 导出lua的目录
-if os.path.exists(saveDir):
-    shutil.rmtree(saveDir)
+xlsDir = "sheets"  # 目标文件夹
+luaDir = "sheetsLua"  # 导出lua的目录
+if os.path.exists(luaDir):
+    shutil.rmtree(luaDir)
 
-os.makedirs(saveDir)
+os.makedirs(luaDir)
 
-for dirPath, dirNames, filenames in os.walk(targetDir):  # 遍历目录下的所有文件
+for dirPath, dirNames, filenames in os.walk(xlsDir):  # 遍历目录下的所有xls文件
     for file in filenames:
-        path = os.path.join(targetDir, file)
+        path = os.path.join(xlsDir, file)
         if file.endswith("xls"):  # 是xlsx后缀的文件
             export2Lua(path)
             print("Export2Lua========>" + path)
         else:
             print("Error %s is not .xls" % (path))
+
+luaConifg = "local Config = {}\n"
+for dirPath, dirNames, filenames in os.walk(luaDir):  # 遍历目录下的所有lua文件
+    for file in filenames:
+        # print("file==", file,os.path.splitext(file))
+        config = "Config.{} = require(\"app.config.{}\")\n".format(os.path.splitext(file)[0], os.path.splitext(file)[0])
+        luaConifg = luaConifg + config
+
+luaConifg = luaConifg + "return Config"
+
+with open(luaDir+"/config.lua", "w") as f:
+    f.write(luaConifg)
+    f.close()
 
 print("Build success**************************************************")
 os.system("pause")

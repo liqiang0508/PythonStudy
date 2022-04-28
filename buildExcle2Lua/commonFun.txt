@@ -1,6 +1,6 @@
 local _length = %s
 
-function DJConfig.getData(Id,ingore)
+function Config.getData(Id,ingore)
 	local result = nil
 	if Id then
 		result = _Config[Id]
@@ -11,13 +11,13 @@ function DJConfig.getData(Id,ingore)
     return result
 end
 
-function DJConfig.getItem(Id, Key)
-	local _data = DJConfig.getData(Id)
+function Config.getItem(Id, Key)
+	local _data = Config.getData(Id)
 	if _data then return _data[Key] end
 	return nil
 end
 
-function DJConfig.getDataWithKey(Key, Value)
+function Config.getDataWithKey(Key, Value)
 	local _dataList = {}
 	for k,_data in pairs(_Config) do
 		if type(_data) == "table" and _data[Key] == Value then
@@ -27,7 +27,7 @@ function DJConfig.getDataWithKey(Key, Value)
 	return _dataList
 end
 
-function DJConfig.Data()
+function Config.Data()
 	local _dataList = {}
  --The following traversal is unordered, and different platforms have different orders. Special attention should be paid when using
 	for k,_data in pairs(_Config) do
@@ -35,9 +35,9 @@ function DJConfig.Data()
 	end
 	return _dataList
 end
-function DJConfig.getDataCfg()
+function Config.getDataCfg()
 	return _Config
 end
-function DJConfig.getDataLength()
+function Config.getDataLength()
 	 return _length
 end
