@@ -1,6 +1,6 @@
 local Config={}
 local _Config = {
-[1001]={ID=1001,Name="Lee",Hobby={"movie","music"}},
+[1001]={ID=1001,Name="Lee",Hobby={"movie","music"},Salary=32.1,Pets={PetName="cat",PetAge=22}},
 }
 local _length = 1
 
