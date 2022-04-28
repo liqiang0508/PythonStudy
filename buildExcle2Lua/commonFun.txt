@@ -3,7 +3,7 @@ local _length = %s
 function DJConfig.getData(Id,ingore)
 	local result = nil
 	if Id then
-		result = _Config["id_"..Id]
+		result = _Config[Id]
 		if not result and not ingore then print("could not find Data config : %s ID:"..Id) end
 	else
 		print("the id can not be nil : %s ")
