@@ -5,6 +5,8 @@ buildJs.py
 
 
 buildLua.py
-编译proto文件夹下面的proto文件到lua文件下面
-buildCMD.py
 编译cmd.cfg 到cmd.lua
+
+
+buildCmdTs
+编译cmd.cfg 到cmdDef.ts
