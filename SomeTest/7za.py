@@ -3,24 +3,26 @@
 import os
 
 
-def zipFolder(savefile,zipFolder,pwd):#压缩文件
+def zipFolder(savefile, zipFolder, pwd):  #压缩文件
 
-	cmd = "7za.exe a -r   "+savefile+" "+zipFolder +"  -mx=9 -mm=LZMA"
-	if pwd:
-		cmd = cmd +" -p"+pwd
-	print cmd
-	os.system(cmd)
+    cmd = "7za.exe a -r   " + savefile + " " + zipFolder + "  -mx=9 -mm=LZMA"
+    if pwd:
+        cmd = cmd + " -p" + pwd
+    print cmd
+    os.system(cmd)
 
-def extralFolder(zippath,savefoler,pwd):#解压zip
-	
-	# savefoler = os.path.join( os.getcwd(),savefoler)
-	
-	cmd = "7za.exe x -o"+savefoler+" "+zippath
 
-	if pwd:
-		cmd = cmd +" -p"+pwd
-	print cmd
-	os.system(cmd)
+def extralFolder(zippath, savefoler, pwd):  #解压zip
+
+    # savefoler = os.path.join( os.getcwd(),savefoler)
+
+    cmd = "7za.exe x -o" + savefoler + " " + zippath
+
+    if pwd:
+        cmd = cmd + " -p" + pwd
+    print cmd
+    os.system(cmd)
+
 
 # zipFolder("test7.zip","../html/easyui","123")
 # zipFolder("test7.7z","../html/easyui","123")
@@ -29,4 +31,4 @@ def extralFolder(zippath,savefoler,pwd):#解压zip
 
 path1 = "test7.zip"
 
-extralFolder(path1,"abc","123")
+extralFolder(path1, "abc", "123")

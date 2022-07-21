@@ -102,11 +102,11 @@ $root.tutorial = (function() {
         Person.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+            if (message.name != null && message.hasOwnProperty("name"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
-            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+            if (message.id != null && message.hasOwnProperty("id"))
                 writer.uint32(/* id 2, wireType 0 =*/16).int32(message.id);
-            if (message.email != null && Object.hasOwnProperty.call(message, "email"))
+            if (message.email != null && message.hasOwnProperty("email"))
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.email);
             if (message.phones != null && message.phones.length)
                 for (var i = 0; i < message.phones.length; ++i)
@@ -294,7 +294,7 @@ $root.tutorial = (function() {
         /**
          * PhoneType enum.
          * @name tutorial.Person.PhoneType
-         * @enum {number}
+         * @enum {string}
          * @property {number} MOBILE=0 MOBILE value
          * @property {number} HOME=1 HOME value
          * @property {number} WORK=2 WORK value
@@ -372,9 +372,9 @@ $root.tutorial = (function() {
             PhoneNumber.encode = function encode(message, writer) {
                 if (!writer)
                     writer = $Writer.create();
-                if (message.number != null && Object.hasOwnProperty.call(message, "number"))
+                if (message.number != null && message.hasOwnProperty("number"))
                     writer.uint32(/* id 1, wireType 2 =*/10).string(message.number);
-                if (message.type != null && Object.hasOwnProperty.call(message, "type"))
+                if (message.type != null && message.hasOwnProperty("type"))
                     writer.uint32(/* id 2, wireType 0 =*/16).int32(message.type);
                 return writer;
             };
@@ -752,7 +752,7 @@ $root.tutorial = (function() {
          * Properties of a Package.
          * @memberof tutorial
          * @interface IPackage
-         * @property {number|null} [id] Package id
+         * @property {number|null} [cmd] Package cmd
          * @property {Uint8Array|null} [data] Package data
          */
 
@@ -772,12 +772,12 @@ $root.tutorial = (function() {
         }
 
         /**
-         * Package id.
-         * @member {number} id
+         * Package cmd.
+         * @member {number} cmd
          * @memberof tutorial.Package
          * @instance
          */
-        Package.prototype.id = 0;
+        Package.prototype.cmd = 0;
 
         /**
          * Package data.
@@ -811,9 +811,9 @@ $root.tutorial = (function() {
         Package.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.id);
-            if (message.data != null && Object.hasOwnProperty.call(message, "data"))
+            if (message.cmd != null && message.hasOwnProperty("cmd"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.cmd);
+            if (message.data != null && message.hasOwnProperty("data"))
                 writer.uint32(/* id 2, wireType 2 =*/18).bytes(message.data);
             return writer;
         };
@@ -850,7 +850,7 @@ $root.tutorial = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.id = reader.uint32();
+                    message.cmd = reader.uint32();
                     break;
                 case 2:
                     message.data = reader.bytes();
@@ -890,9 +890,9 @@ $root.tutorial = (function() {
         Package.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.id != null && message.hasOwnProperty("id"))
-                if (!$util.isInteger(message.id))
-                    return "id: integer expected";
+            if (message.cmd != null && message.hasOwnProperty("cmd"))
+                if (!$util.isInteger(message.cmd))
+                    return "cmd: integer expected";
             if (message.data != null && message.hasOwnProperty("data"))
                 if (!(message.data && typeof message.data.length === "number" || $util.isString(message.data)))
                     return "data: buffer expected";
@@ -911,8 +911,8 @@ $root.tutorial = (function() {
             if (object instanceof $root.tutorial.Package)
                 return object;
             var message = new $root.tutorial.Package();
-            if (object.id != null)
-                message.id = object.id >>> 0;
+            if (object.cmd != null)
+                message.cmd = object.cmd >>> 0;
             if (object.data != null)
                 if (typeof object.data === "string")
                     $util.base64.decode(object.data, message.data = $util.newBuffer($util.base64.length(object.data)), 0);
@@ -935,7 +935,7 @@ $root.tutorial = (function() {
                 options = {};
             var object = {};
             if (options.defaults) {
-                object.id = 0;
+                object.cmd = 0;
                 if (options.bytes === String)
                     object.data = "";
                 else {
@@ -944,8 +944,8 @@ $root.tutorial = (function() {
                         object.data = $util.newBuffer(object.data);
                 }
             }
-            if (message.id != null && message.hasOwnProperty("id"))
-                object.id = message.id;
+            if (message.cmd != null && message.hasOwnProperty("cmd"))
+                object.cmd = message.cmd;
             if (message.data != null && message.hasOwnProperty("data"))
                 object.data = options.bytes === String ? $util.base64.encode(message.data, 0, message.data.length) : options.bytes === Array ? Array.prototype.slice.call(message.data) : message.data;
             return object;
@@ -1061,11 +1061,11 @@ $root.test = (function() {
         Hero.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.name != null && Object.hasOwnProperty.call(message, "name"))
+            if (message.name != null && message.hasOwnProperty("name"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.name);
-            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+            if (message.id != null && message.hasOwnProperty("id"))
                 writer.uint32(/* id 2, wireType 0 =*/16).int32(message.id);
-            if (message.age != null && Object.hasOwnProperty.call(message, "age"))
+            if (message.age != null && message.hasOwnProperty("age"))
                 writer.uint32(/* id 3, wireType 0 =*/24).int32(message.age);
             if (message.skills != null && message.skills.length)
                 for (var i = 0; i < message.skills.length; ++i)

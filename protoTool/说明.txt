@@ -1,5 +1,7 @@
+安装protobufjs  命令：npm install protobufjs@6.8.8 -g
+
 buildJs.py
-编译proto文件夹下面的proto文件到js文件下面
+编译proto文件夹下面的proto文件到js文件下面  复制gameProto.js  protobuf.js 到creater里面使用
 
 
 buildLua.py
