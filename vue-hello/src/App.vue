@@ -17,7 +17,7 @@ export default {
   },
   data() {
     return {
-      "key": process.env.VUE_APP_TEST
+      "key": process.env.VUE_APP_NAME
     }
   },
 }
