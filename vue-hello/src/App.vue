@@ -1,20 +1,23 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-    <p> {{ key }}</p>
-    <p> {{ test_data }}</p>
+    <p>
+      <!-- 使用 router-link 组件来导航. -->
+      <!-- 通过传入 `to` 属性指定链接. -->
+      <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+      <router-link to="/home">home</router-link>
+      <router-link to="/about">about</router-link>
+    </p>
+    <router-view />
   </div>
 
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
 import { request2Sever } from './utils/request'
 export default {
   name: 'App',
   components: {
-    HelloWorld
   },
   data() {
     return {
@@ -22,11 +25,11 @@ export default {
       test_data: "test_data"
     }
   },
-  mounted () {
+  mounted() {
     request2Sever("/testData").then((res) => {
       console.log(res)
       this.test_data = JSON.stringify(res.list)
-  
+
     })
   },
 }
