@@ -7,6 +7,7 @@
       <router-link to="/home">home</router-link>
       <router-link to="/about">about</router-link>
     </p>
+    <p> {{ test_data }}</p>
     <router-view />
   </div>
 
@@ -22,7 +23,7 @@ export default {
   data() {
     return {
       key: process.env.VUE_APP_NAME,
-      test_data: "test_data"
+      test_data: ""
     }
   },
   mounted() {

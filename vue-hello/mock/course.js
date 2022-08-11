@@ -2,7 +2,7 @@
  * @Author: liqiang
  * @Date: 2022-08-10 10:24:52
  * @LastEditors: liqiang
- * @LastEditTime: 2022-08-10 10:32:45
+ * @LastEditTime: 2022-08-11 09:34:34
  * @FilePath: \vue-hello\mock\course.js
  * @Description: 
  * 
@@ -12,7 +12,7 @@
 // /mock/course.js(模块中的模拟数据的创建)
 const Mock = require('mockjs')
 const list = []
-const count = 200 // 定义创建的数据个数
+const count = 2 // 定义创建的数据个数
 for (let i = 0; i < count; i++) {
   list.push(Mock.mock({
     // 商品Id
