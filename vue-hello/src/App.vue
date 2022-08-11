@@ -28,9 +28,9 @@ export default {
   },
   mounted() {
     request2Sever("/testData").then((res) => {
-      console.log(res)
       this.test_data = JSON.stringify(res.list)
-
+    }).catch((error)=>{
+      console.log(error)
     })
   },
 }
