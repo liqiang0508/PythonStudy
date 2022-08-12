@@ -18,6 +18,7 @@
 <script>
 
 import { getGoods } from '@/api/api_goods'
+import { mapState,mapMutations} from 'vuex'
 import { COUNT_ADD } from '@/store/mutations_type.js'
 export default {
   name: 'App',
@@ -29,24 +30,24 @@ export default {
       test_data: ""
     }
   },
-  computed: {
-    count() {
-      return this.$store.state.moduleA.count
-    }
-  },
+  computed: mapState({
+    count: state => state.moduleA.count
+  }),
   mounted() {
     getGoods().then((res) => {
       this.test_data = JSON.stringify(res.list)
       console.log(res)
-    }).catch((error)=>{
+    }).catch((error) => {
       console.log(error)
     })
-    console.log(this.$store)
   },
   methods: {
-    add() {
-      this.$store.commit(COUNT_ADD)
-    }
+    // add() {
+    //   this.$store.commit(COUNT_ADD)
+    // }
+    ...mapMutations({
+      add:COUNT_ADD
+    })
   },
 }
 </script>
