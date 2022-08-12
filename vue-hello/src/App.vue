@@ -8,6 +8,8 @@
       <router-link to="/about">about</router-link>
     </p>
     <p> {{ test_data }}</p>
+    <p> {{ count }}</p>
+    <button @click="add">click</button>
     <router-view />
   </div>
 
@@ -16,6 +18,7 @@
 <script>
 
 import { getGoods } from '@/api/api_goods'
+import { COUNT_ADD } from '@/store/mutations_type.js'
 export default {
   name: 'App',
   components: {
@@ -26,6 +29,11 @@ export default {
       test_data: ""
     }
   },
+  computed: {
+    count() {
+      return this.$store.state.moduleA.count
+    }
+  },
   mounted() {
     getGoods().then((res) => {
       this.test_data = JSON.stringify(res.list)
@@ -33,6 +41,12 @@ export default {
     }).catch((error)=>{
       console.log(error)
     })
+    console.log(this.$store)
+  },
+  methods: {
+    add() {
+      this.$store.commit(COUNT_ADD)
+    }
   },
 }
 </script>
