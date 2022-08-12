@@ -2,7 +2,7 @@
  * @Author: liqiang
  * @Date: 2022-08-10 10:26:21
  * @LastEditors: liqiang
- * @LastEditTime: 2022-08-10 10:29:12
+ * @LastEditTime: 2022-08-12 09:22:04
  * @FilePath: \vue-hello\src\utils\request.js
  * @Description: 
  * 

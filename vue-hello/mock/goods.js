@@ -2,8 +2,8 @@
  * @Author: liqiang
  * @Date: 2022-08-10 10:24:52
  * @LastEditors: liqiang
- * @LastEditTime: 2022-08-11 20:12:12
- * @FilePath: \vue-hello\mock\course.js
+ * @LastEditTime: 2022-08-12 09:24:37
+ * @FilePath: \vue-hello\mock\goods.js
  * @Description: 
  * 
  * Copyright (c) 2022 by superZ, All Rights Reserved. 
@@ -32,7 +32,7 @@ for (let i = 0; i < count; i++) {
 
 module.exports = [
   {
-    url: '/testData',
+    url: '/getGoods',
     type: 'get',
     response: () => {
       return {

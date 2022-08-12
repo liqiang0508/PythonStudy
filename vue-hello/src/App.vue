@@ -15,7 +15,7 @@
 
 <script>
 
-import { request2Sever } from './utils/request'
+import { getGoods } from '@/api/api_goods'
 export default {
   name: 'App',
   components: {
@@ -27,8 +27,9 @@ export default {
     }
   },
   mounted() {
-    request2Sever("/testData").then((res) => {
+    getGoods().then((res) => {
       this.test_data = JSON.stringify(res.list)
+      console.log(res)
     }).catch((error)=>{
       console.log(error)
     })
