@@ -1,15 +1,23 @@
 <template>
   <div id="app">
-    <p>
-      <!-- 使用 router-link 组件来导航. -->
-      <!-- 通过传入 `to` 属性指定链接. -->
-      <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+    <div>
       <router-link to="/home">home</router-link>
+    </div>
+    <!-- 使用 router-link 组件来导航. -->
+    <!-- 通过传入 `to` 属性指定链接. -->
+    <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+
+    <div>
       <router-link to="/about">about</router-link>
-    </p>
+    </div>
+
+
     <p> {{ test_data }}</p>
     <p> {{ count }}</p>
     <button @click="add">click</button>
+
+    <p> {{ info }}</p>
+    <button @click="add_Age">click</button>
     <router-view />
   </div>
 
@@ -18,8 +26,8 @@
 <script>
 
 import { getGoods } from '@/api/api_goods'
-import { mapState,mapMutations} from 'vuex'
-import { COUNT_ADD } from '@/store/mutations_type.js'
+import { mapState, mapMutations } from 'vuex'
+import { COUNT_ADD, COUNT_TEST } from '@/store/mutations_type.js'
 export default {
   name: 'App',
   components: {
@@ -31,7 +39,8 @@ export default {
     }
   },
   computed: mapState({
-    count: state => state.moduleA.count
+    count: state => state.moduleA.count,
+    info: state => state.moduleA.info
   }),
   mounted() {
     getGoods().then((res) => {
@@ -46,8 +55,14 @@ export default {
     //   this.$store.commit(COUNT_ADD)
     // }
     ...mapMutations({
-      add:COUNT_ADD
-    })
+      add: COUNT_ADD,
+      addAge: COUNT_TEST
+    }),
+    add_Age() {
+      // this.$store.commit(COUNT_TEST, { age: 5 })
+      this.addAge({ age: 5 })
+    },
+
   },
 }
 </script>
