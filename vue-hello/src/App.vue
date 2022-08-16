@@ -43,12 +43,7 @@ export default {
     info: state => state.moduleA.info
   }),
   mounted() {
-    getGoods().then((res) => {
-      this.test_data = JSON.stringify(res.list)
-      console.log(res)
-    }).catch((error) => {
-      console.log(error)
-    })
+    this.get_Goods()
   },
   methods: {
     // add() {
@@ -58,11 +53,19 @@ export default {
       add: COUNT_ADD,
       addAge: COUNT_TEST
     }),
+    get_Goods() {
+      getGoods().then((res) => {
+        this.test_data = JSON.stringify(res.list)
+        console.log(res)
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
     add_Age() {
       // this.$store.commit(COUNT_TEST, { age: 5 })
       this.addAge({ age: 5 })
-    },
-
+      this.get_Goods()
+    }
   },
 }
 </script>
