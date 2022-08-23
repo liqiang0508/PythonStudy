@@ -1,7 +1,7 @@
 import os
 
 
-os.system("nginx.exe")
+os.system("start nginx")
 
 print("Start*********************end")
 

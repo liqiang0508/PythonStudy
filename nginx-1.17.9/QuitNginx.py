@@ -1,7 +1,7 @@
 import os
 
 
-os.system("nginx.exe  -s stop")
+os.system("nginx -s quit")
 
 
 print("Quit*********************end")
