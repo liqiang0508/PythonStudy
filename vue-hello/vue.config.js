@@ -6,8 +6,8 @@ module.exports = defineConfig({
     host: "localhost",
     port: 8001,
     https: {
-      key: fs.readFileSync("ssl/localhost+2-key.pem"),
-      cert: fs.readFileSync("ssl/localhost+2.pem")
+      key: fs.readFileSync("ssl/key.pem"),
+      cert: fs.readFileSync("ssl/cert.pem")
     }
   }
 })
