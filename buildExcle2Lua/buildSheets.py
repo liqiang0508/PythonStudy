@@ -25,7 +25,7 @@ def convertValueByType(type, value):
         value = int(value)
 
     if type == "s":
-        value = "///" + value + "///"
+        value =  "///" + str(value) + "///"
     return value
 
 
@@ -113,7 +113,9 @@ def export2Lua(path):
             rowStr1 = rowStr1.replace(" ", "")
             rowStr1 = rowStr1.replace("///", "\"")
             rowStr1 = rowStr1.replace("\\", "\"")
-            rowStr = "[" + str(rowData["ID"]) + "]=" + rowStr1 + ","
+            key = str(rowData["ID"])
+            key = key.replace("///", "\"")
+            rowStr = "[" + key + "]=" + rowStr1 + ","
             writeStr = writeStr + rowStr + "\n"
 
         writeStr = writeStr + "}\n"
