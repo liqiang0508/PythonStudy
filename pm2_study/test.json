@@ -1,0 +1,15 @@
+{
+	apps:[
+		{
+			"name": "jenkens",      
+			"script": "java",
+			        "args":[
+                "-XX:+UseG1GC",
+                "-jar",
+                "jenkins2.361.2.war",
+			],
+			"watch":true,
+			"cwd":"./",          
+		}
+	]
+}
