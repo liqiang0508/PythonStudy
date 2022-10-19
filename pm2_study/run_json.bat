@@ -1,2 +1,2 @@
-call pm2 start test.json
+call pm2 start config.json
 pause:
