@@ -27,9 +27,9 @@ def downFile(Url,SaveName):
             responce.close()
             s = requests.session()
             s.keep_alive = False
-            print "Save Success---"+Url
+            print("Save Success---"+Url)
         except Exception as e:
-            print "downFile error",Url
+            print("downFile error",Url)
             time.sleep(1)
             downFile(Url,SaveName)
         
@@ -53,7 +53,7 @@ def getOnePageImage(url):
         images = selector.xpath('//div[@class = "content"]/img')
 
         dirName = re.search("\d+",os.path.basename(url))
-        print "dirname",dirName.group()
+        print("dirname",dirName.group())
         dirName = HomeDir+"/"+ dirName.group()
         if os.path.exists(dirName):#存在文件夹
             pass
@@ -72,7 +72,7 @@ def getOnePageImage(url):
                 
         htmldata.close()
     except Exception as e:
-        print "getOnePageImage error",url
+        print("getOnePageImage error",url)
         getOnePageImage(url)
    
    
@@ -97,11 +97,11 @@ def getPages(url):
             if page.get("href")!=None:
            
                 url = os.path.dirname(url)+"/"+page.get("href")
-                print  "page",url
+                print ("page",url)
                 getOnePageImage(url)
         htmldata.close()
     except Exception as e:
-        print "getPages error",url
+        print ("getPages error",url)
         getPages(url)
     
     
@@ -123,7 +123,7 @@ def getPages(url):
 def Getmain(startindex,endindex):
     for i in range(startindex,endindex):
         url = "https://www.keke234.com/gaoqing/list_5_"+str(i)+".html"
-        print url
+        print (url)
         # with open("CurPage","w") as f:
         #     f.write(url)
         HomeUrl = url
@@ -132,15 +132,15 @@ def Getmain(startindex,endindex):
             htmldata.encoding = "gb2312"
             selector = etree.HTML(htmldata.text)
             girls = selector.xpath('//div[@class ="t"]')
-            print "girls",len(girls)
+            print ("girls",len(girls))
             for girl in girls:
                 if len(girl.xpath("a"))>0:
                     fisturl = girl.xpath("a")[0].get("href")
-                    print "fisturl", fisturl
+                    print ("fisturl", fisturl)
                     getPages(fisturl)
             htmldata.close()
         except Exception as e:
-            print "get HomeUrl error",HomeUrl
+            print ("get HomeUrl error",HomeUrl)
            
            
            
