@@ -10,12 +10,11 @@
 			],
 			"watch": true,
 			"cwd": "./"
-		}
-		,
+		},
 		{
 			"name": "redis",
 			"script": "redis-server",
-			"args":[
+			"args": [
 				"e:/redis/redis.windows.conf"
 			],
 			"watch": true

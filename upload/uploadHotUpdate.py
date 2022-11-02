@@ -17,13 +17,14 @@ from gevent import pywsgi
 
 is_https = False
 up_password = "Casino888"
-
+up_file_folder = "uploadfiles" 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = os.getcwd() + "/uploadfiles"
-# print(len(sys.argv), sys.argv[1]  )
+UPLOAD_FOLDER = os.getcwd() + "/"+ up_file_folder
+print(len(sys.argv), sys.argv)
 if len(sys.argv) > 1:
-    UPLOAD_FOLDER = sys.argv[1]  
+    UPLOAD_FOLDER = sys.argv[1] + "/"+ up_file_folder
+
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

@@ -1,0 +1,32 @@
+{
+	"apps": [
+		{
+			"name": "flaskhello",
+			"script": "python3",
+			"args": [
+				"/home/dev/flaskhello.py"
+			],
+			"autorestart": true,
+			"watch": true,
+			"cwd": "./"
+		},
+		{
+			"name": "redis",
+			"script": "redis-server",
+			"args": [],
+			"watch": true,
+			"cwd": "./"
+		},
+		{
+			"name": "uploadFile",
+			"script": "python3",
+			"args": [
+				"/home/uploadhot/uploadHotUpdate.py",
+				"/home/uploadhot/"
+			],
+			"autorestart": true,
+			"watch": true,
+			"cwd": "/home/uploadhot/"
+		}
+	]
+}
