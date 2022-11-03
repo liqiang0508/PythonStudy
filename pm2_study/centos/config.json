@@ -2,31 +2,34 @@
 	"apps": [
 		{
 			"name": "flaskhello",
-			"script": "python3",
-			"args": [
-				"/home/dev/flaskhello.py"
-			],
-			"autorestart": true,
+			"exec_interpreter": "python3",
+			"script": "./flaskhello.py",
+			"args": [],
 			"watch": true,
-			"cwd": "./"
+			"watch_options": {
+				"usePolling": true
+			},
+			"cwd": "/home/dev"
 		},
 		{
 			"name": "redis",
-			"script": "redis-server",
+			"script": "/usr/local/bin/redis-server",
 			"args": [],
 			"watch": true,
-			"cwd": "./"
+			"cwd": "/usr/local/bin"
 		},
 		{
 			"name": "uploadFile",
-			"script": "python3",
+			"script": "/home/uploadhot/uploadHotUpdate.py",
+			"exec_interpreter": "python3",
 			"args": [
-				"/home/uploadhot/uploadHotUpdate.py",
-				"/home/uploadhot/"
+				"/home/uploadhot"
 			],
-			"autorestart": true,
 			"watch": true,
-			"cwd": "/home/uploadhot/"
+			"watch_options": {
+				"usePolling": true
+			},
+			"cwd": "/home/uploadhot"
 		}
 	]
 }

@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from flask import Flask, redirect, url_for,request,session
 from flask import render_template
 from flask import jsonify
@@ -7,10 +8,10 @@ import sqlite3
 from gevent import pywsgi
 app = Flask(__name__)
 # app.secret_key='123456789'
-
+#你好
 @app.route('/')
 def hello_world():
-    return "hello world"
+    return "你好"
 
 @app.route('/hello',methods=['GET'])
 def hello():
