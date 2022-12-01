@@ -6,7 +6,7 @@
 			"args": [
 				"-XX:+UseG1GC",
 				"-jar",
-				"jenkins2.361.4.war"
+				"jenkins2.375.1.war"
 			],
 			"watch": true,
 			"cwd": "./"
