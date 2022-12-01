@@ -8,7 +8,6 @@
 				"-jar",
 				"jenkins2.375.1.war"
 			],
-			"watch": true,
 			"cwd": "./"
 		},
 		{
@@ -17,7 +16,6 @@
 			"args": [
 				"e:/redis/redis.windows.conf"
 			],
-			"watch": true
 		}
 	]
 }
