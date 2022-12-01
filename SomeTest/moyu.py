@@ -1,13 +1,5 @@
-'''
-Author: LiQiang
-Date: 2022-04-14 09:32:19
-LastEditors: LiQiang
-LastEditTime: 2022-04-14 09:40:46
-FilePath: \srce:\github\PythonStudy\SomeTest\moyu.py
-Description: 
-
-Copyright (c) 2022 by 用户/公司名, All Rights Reserved. 
-'''
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 import datetime
 import sys
 import chinese_calendar
