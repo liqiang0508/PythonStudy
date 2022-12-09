@@ -42,11 +42,13 @@ def getValidHoliday(year):
         if chinses_name not in holiday:
             holiday[chinses_name] = time
     num = 0
-    resTxt = "你好，摸鱼人，工作再累，一定不要忘记摸鱼哦 ! 有事没事起身去茶水间去廊道去天台走走，别老在工位上坐着。多喝点水，钱是老板的，但命是自己的!<br/>"
+    resTxt = {}
+    resTxt["days"] = []
+    resTxt["title"] = "你好，摸鱼人，工作再累，一定不要忘记摸鱼哦 ! 有事没事起身去茶水间去廊道去天台走走，别老在工位上坐着。多喝点水，钱是老板的，但命是自己的!"
     for name in holiday:
         text = get_countDay(holiday[name], name)
         if text:
-            resTxt = resTxt +text+"<br/>"
+            resTxt["days"].append(text)
             num = num + 1
     if num==0:
         return getValidHoliday(year+1)
