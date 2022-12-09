@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import datetime
 from flask import Flask, redirect, url_for,request,session
 from flask import render_template
 from flask import jsonify
@@ -6,12 +7,15 @@ from flask_cors import CORS
 import json
 import sqlite3
 from gevent import pywsgi
+import moyu
 app = Flask(__name__)
 # app.secret_key='123456789'
 #你好
 @app.route('/')
 def hello_world():
-    return "你好"
+	year = datetime.datetime.now().year
+	txt = moyu.getValidHoliday(year)
+	return txt
 
 @app.route('/hello',methods=['GET'])
 def hello():
@@ -30,6 +34,6 @@ def page_not_found(error):
 
 if __name__ == '__main__':
 	# CORS(app, supports_credentials=True)
-	# app.run(host='0.0.0.0',port=8080,debug = True)
-	server = pywsgi.WSGIServer(('0.0.0.0', 8080), app)
+	# app.run(host='0.0.0.0',port=8089,debug = True)
+	server = pywsgi.WSGIServer(('0.0.0.0', 8089), app)
 	server.serve_forever()
