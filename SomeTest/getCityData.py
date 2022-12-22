@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: UTF-8 -*-
+#coding=UTF-8
 import requests
 from lxml import etree
 import re
@@ -92,28 +92,25 @@ def GetPronces():
 
     url = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2020/index.html"
     response = httpsession.get(url, headers=headers)
-    response.encoding = 'gb2312'
+    response.encoding = 'utf-8'
     response.close()
+    
     selector = etree.HTML(response.text)
     privonces = selector.xpath("//tr[@class='provincetr']/td/a")
 
-    # i = 0
     print("GetPronces len", len(privonces))
     for i in range(len(privonces)):
         href = privonces[i].get("href")
         provicesName = privonces[i].xpath("string(.)")
         provicescode = re.search("\d+", href).group()
         provicescode = provicescode + "0100000000"
-        # provicesName = provicesName.encode("unicode-escape")
+        # provicesName = provicesName.decode("gbk")
         print("GetPronces=============", provicesName, provicescode)
         ProviceData.append({"name": provicesName, "value": provicescode})
         JsonData.append({"value": provicescode, "name": provicesName})
         time.sleep(0.5)
-        GetCity(href, i)
-        # if i>=1:
-        # 	break
-    # GetCity("50.html",21)
-    print(ProviceData)
+
+    # print(ProviceData)
     AreaData1 = [x for x in AreaData if x]
     with open("Provice.json", "w") as f:
         f.write(json.dumps(ProviceData, ensure_ascii=False,indent=4))
