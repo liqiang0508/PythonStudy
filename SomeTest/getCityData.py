@@ -11,6 +11,7 @@ import time
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+
 headers = {
     'User-Agent':
     'Mozilla/8.0 (Windows; U; Windows NT 6.12; en-US; rv:1.9.1.7) Gecko/20091202 Firefox/3.5.6'
@@ -50,7 +51,7 @@ def GetArea(href, index, cityData):
         if citycode.isdigit():
             cityname = countytrs[x + 1].xpath("string(.)")
             # cityname = cityname.encode("unicode-escape")
-            print("GetArea=============", citycode, cityname)
+            print("GetArea==="+cityname)
             tempdata.append({"name": cityname, "value": citycode})
             cityData["children"].append({"name": cityname, "value": citycode})
 
@@ -76,7 +77,7 @@ def GetCity(code, index):
         if citycode.isdigit():
             cityname = cityinfos[x + 1].xpath("string(.)")
             # cityname = cityname.encode("unicode-escape")
-            print("GetCity=============", citycode, cityname)
+            print("GetCity=="+cityname)
             tempdata.append({"name": cityname, "value": citycode})
             cityData = {"value": citycode, "name": cityname}
             # time.sleep(1)
@@ -92,9 +93,9 @@ def GetPronces():
 
     url = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2020/index.html"
     response = httpsession.get(url, headers=headers)
-    response.encoding = 'utf-8'
+    response.encoding = 'gbk'
     response.close()
-    
+
     selector = etree.HTML(response.text)
     privonces = selector.xpath("//tr[@class='provincetr']/td/a")
 
@@ -104,11 +105,12 @@ def GetPronces():
         provicesName = privonces[i].xpath("string(.)")
         provicescode = re.search("\d+", href).group()
         provicescode = provicescode + "0100000000"
-        # provicesName = provicesName.decode("gbk")
-        print("GetPronces=============", provicesName, provicescode)
+        print("provicesName="+provicesName)
         ProviceData.append({"name": provicesName, "value": provicescode})
         JsonData.append({"value": provicescode, "name": provicesName})
+        GetCity(href,i)
         time.sleep(0.5)
+       
 
     # print(ProviceData)
     AreaData1 = [x for x in AreaData if x]
