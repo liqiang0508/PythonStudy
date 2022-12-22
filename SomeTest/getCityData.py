@@ -8,8 +8,8 @@ from collections import OrderedDict
 import os
 import sys
 import time
-# reload(sys)
-# sys.setdefaultencoding('utf-8')
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 headers = {
     'User-Agent':
@@ -50,9 +50,9 @@ def GetArea(href, index, cityData):
         if citycode.isdigit():
             cityname = countytrs[x + 1].xpath("string(.)")
             # cityname = cityname.encode("unicode-escape")
-            print("GetArea===========", citycode, cityname)
-            tempdata.append({"name": cityname, "Value": citycode})
-            cityData["children"].append({"label": cityname, "value": citycode})
+            print("GetArea=============", citycode, cityname)
+            tempdata.append({"name": cityname, "value": citycode})
+            cityData["children"].append({"name": cityname, "value": citycode})
 
     if len(tempdata) > 0:
         AreaData[index].append(tempdata)
@@ -76,9 +76,9 @@ def GetCity(code, index):
         if citycode.isdigit():
             cityname = cityinfos[x + 1].xpath("string(.)")
             # cityname = cityname.encode("unicode-escape")
-            print("GetCity***************", citycode, cityname)
-            tempdata.append({"name": cityname, "Value": citycode})
-            cityData = {"value": citycode, "label": cityname}
+            print("GetCity=============", citycode, cityname)
+            tempdata.append({"name": cityname, "value": citycode})
+            cityData = {"value": citycode, "name": cityname}
             # time.sleep(1)
             time.sleep(0.5)
             GetArea(href, index, cityData)
@@ -105,29 +105,29 @@ def GetPronces():
         provicescode = re.search("\d+", href).group()
         provicescode = provicescode + "0100000000"
         # provicesName = provicesName.encode("unicode-escape")
-        print("GetPronces-------------------", provicesName, provicescode)
-        ProviceData.append({"name": provicesName, "Value": provicescode})
-        JsonData.append({"value": provicescode, "label": provicesName})
+        print("GetPronces=============", provicesName, provicescode)
+        ProviceData.append({"name": provicesName, "value": provicescode})
+        JsonData.append({"value": provicescode, "name": provicesName})
         time.sleep(0.5)
         GetCity(href, i)
         # if i>=1:
         # 	break
     # GetCity("50.html",21)
-
+    print(ProviceData)
     AreaData1 = [x for x in AreaData if x]
-    with open("Provice.json", "w", encoding="utf-8") as f:
-        f.write(json.dumps(ProviceData, ensure_ascii=False, indent=4))
+    with open("Provice.json", "w") as f:
+        f.write(json.dumps(ProviceData, ensure_ascii=False,indent=4))
         f.close()
 
-    with open("city.json", "w", encoding="utf-8") as f:
-        f.write(json.dumps(CityData, ensure_ascii=False, indent=4))
+    with open("city.json", "w") as f:
+        f.write(json.dumps(CityData, ensure_ascii=False,indent=4))
         f.close()
 
-    with open("area.json", "w", encoding="utf-8") as f:
-        f.write(json.dumps(AreaData1, ensure_ascii=False, indent=4))
+    with open("area.json", "w") as f:
+        f.write(json.dumps(AreaData1,ensure_ascii=False, indent=4))
         f.close()
 
-    with open("jsondata.json", "w", encoding="utf-8") as f:
+    with open("jsondata.json", "w") as f:
         f.write(json.dumps(JsonData, ensure_ascii=False, indent=4))
         f.close()
 
@@ -138,29 +138,5 @@ AreaData = []
 JsonData = []
 GetPronces()
 
-privonces = None
-citys = None
-area = None
-
-with open("Provice.json", "r") as f:
-    privonces = f.read()
-    privonces = json.loads(privonces)
-    f.close()
-
-with open("city.json", "r") as f:
-    citys = f.read()
-    citys = json.loads(citys)
-    f.close()
-
-with open("area.json", "r") as f:
-    area = f.read()
-    area = json.loads(area)
-    f.close()
-
-# print "data--",privonces[21]["name"],citys[21][0]["name"],area[21][0][0]['name']
-
-# print (json.dumps(area[21][0],ensure_ascii=False,indent = 4))
 
 os.system('pause')
-# provicescode = re.match("\d+",name)
-# print provicescode.group()
