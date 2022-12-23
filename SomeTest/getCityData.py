@@ -29,15 +29,14 @@ def GetHtmlData(url):
 
 
 def GetArea(href, index, cityData):
-    # print "GetArea",len(AreaData),index
-    # if len(AreaData)<=index:
+
     AreaData.append([])
 
     baseurl = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2020/{}"
     url = baseurl.format(href)
     data = GetHtmlData(url)
     selector = etree.HTML(data)
-    # print "GetArea****" ,index
+    # print(url)
     countytrs = selector.xpath("//tr[@class='countytr']/td/a")
 
     tempdata = []
@@ -50,8 +49,7 @@ def GetArea(href, index, cityData):
         citycode = countytrs[x].xpath("string(.)")
         if citycode.isdigit():
             cityname = countytrs[x + 1].xpath("string(.)")
-            # cityname = cityname.encode("unicode-escape")
-            print("GetArea==="+cityname)
+            # print("GetArea==="+cityname)
             tempdata.append({"name": cityname, "value": citycode})
             cityData["children"].append({"name": cityname, "value": citycode})
 
@@ -76,11 +74,9 @@ def GetCity(code, index):
         citycode = cityinfos[x].xpath("string(.)")
         if citycode.isdigit():
             cityname = cityinfos[x + 1].xpath("string(.)")
-            # cityname = cityname.encode("unicode-escape")
-            print("GetCity=="+cityname)
+            # print("GetCity=="+cityname)
             tempdata.append({"name": cityname, "value": citycode})
             cityData = {"value": citycode, "name": cityname}
-            # time.sleep(1)
             time.sleep(0.5)
             GetArea(href, index, cityData)
             JsonData[index]["children"].append(cityData)
