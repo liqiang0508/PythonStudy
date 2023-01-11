@@ -2,3 +2,11 @@ python build.py
 git add -A
 git commit -m "jks commit"
 git push origin master
+
+
+
+*********************************************************************************
+Additional Behaviours
+Check out to specific local branch 
+
+要填master
