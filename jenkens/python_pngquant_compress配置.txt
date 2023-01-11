@@ -1,0 +1,4 @@
+python build.py
+git add -A
+git commit -m "jks commit"
+git push origin master
