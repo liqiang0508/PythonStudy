@@ -1,11 +1,3 @@
-'''
-Descripttion: 
-version: 
-Author: liqiang
-email: 497232807@qq.com
-Date: 2021-12-22 19:48:46
-LastEditTime: 2021-12-24 15:52:07
-'''
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
