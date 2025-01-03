@@ -4,8 +4,8 @@ import translators as ts
 
 # https://github.com/UlionTse/translators
 
-def translate(text, lan):
-    res = ts.translate_text(text, translator='google',from_language="zh",to_language=lan)
+def translate(text, fromLan,toLan):
+    res = ts.translate_text(text,from_language=fromLan,to_language=toLan)
     return res
 
 #翻译语言映射
