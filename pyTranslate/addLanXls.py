@@ -12,7 +12,7 @@ import pandas as pd
 
 #翻译文本
 def translate(text, fromLan,toLan):
-    res = ts.translate_text(text,from_language=fromLan,to_language=toLan)
+    res = ts.translate_text(text,translator='bing',from_language=fromLan,to_language=toLan)
     return res
 
 #翻译xls 默认从en到addLan
