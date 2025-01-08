@@ -27,7 +27,10 @@ def translateXls(addLan,xlsFile):
         print(f"translate {en_value}==>{addLan}:",f"{translate_value}")
         lanData.append(translate_value)
   
-  
+    #重复列名修改 不要.1的后缀
+    column_mapping = {col: col.split('.')[0] for col in df.columns}
+    df.rename(columns=column_mapping, inplace=True)
+    
     #判断是否有对应addlan的列,没有就添加
     if addLan not in colName:  
         # colName.append(addLan)
