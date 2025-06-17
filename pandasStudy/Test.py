@@ -6,24 +6,19 @@ df = pd.DataFrame(data)
 
 print (df)
 print ("********************************************")
-df.to_excel("data.xlsx")
+
 #获取site等于Google的行
+# googleRow = df.query("Site == 'Google'")
 index = df["Site"] == "Google"
 googleRow = df[index]
-print(googleRow)
+#修改某个值
 df.at[index, "网址"] = 'https://www.Google.com'  # 新增一列 网址
 print(df)
-df.to_excel("data.xlsx")
 
 print ("********************************************")
-googleRow = df.query("Site == 'Google'")
-print(googleRow)
+#找打age大于12的行 并把age+2
+df.loc[df["Age"] > 12, "Age"] = df["Age"] + 2
+print(df)
 
-# print ("********************************************")
-# df.loc[index, "Site"] = "Baidu"
-# print(df)
-# # print(df["Site"])
+df.to_excel("data.xlsx")
 
-# for col in df.columns:
-    # print("col:", col, type(df[col]), df[col].sum())
-    # print(df[col])
