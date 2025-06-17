@@ -13,6 +13,8 @@ index = df["Site"] == "Google"
 googleRow = df[index]
 #修改某个值
 df.at[index, "网址"] = 'https://www.Google.com'  # 新增一列 网址
+# df.loc[3, "网址"] = 'https://www.Google.com'  # 新增一列 网址
+
 print(df)
 
 print ("********************************************")
