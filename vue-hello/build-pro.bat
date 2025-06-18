@@ -1,1 +1,2 @@
-start npm run build
+start npm run build-prod
+pause

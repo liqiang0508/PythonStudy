@@ -11,6 +11,7 @@
       <router-link to="/about">about</router-link>
     </div>
 
+    <p> {{ key }}</p>
 
     <p> {{ test_data }}</p>
     <p> {{ count }}</p>
