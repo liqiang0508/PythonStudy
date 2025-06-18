@@ -4,7 +4,7 @@ module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
     host: "localhost",
-    port: 8001,
+    port: 9001,
     https: {
       key: fs.readFileSync("ssl/key.pem"),
       cert: fs.readFileSync("ssl/cert.pem")
