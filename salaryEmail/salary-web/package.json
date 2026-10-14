@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently -n server,web -c cyan,green \"npm:dev:server\" \"npm:dev:web\"",
     "dev:server": "tsx watch server/src/index.ts",
-    "dev:web": "vite",
+    "dev:web": "vite --mode development --open",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "cross-env NODE_ENV=production tsx server/src/index.ts",
     "start": "cross-env NODE_ENV=production tsx server/src/index.ts",
