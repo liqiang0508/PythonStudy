@@ -1,0 +1,90 @@
+{
+  "employees": [
+    {
+      "id": "6fe3119a-1318-43dd-8cbf-2920faaec037",
+      "sheet": "2026年10月",
+      "name": "技术部",
+      "email": "497232807@qq.com",
+      "valid": true,
+      "items": [
+        {
+          "key": "工号",
+          "value": "E001",
+          "bold": false
+        },
+        {
+          "key": "姓名",
+          "value": "李强",
+          "bold": false
+        },
+        {
+          "key": "基本工资",
+          "value": "12,000",
+          "bold": false
+        },
+        {
+          "key": "实发总计",
+          "value": "15,160",
+          "bold": true
+        }
+      ],
+      "sheetEmail": "",
+      "empNo": "",
+      "emailSource": "contact"
+    },
+    {
+      "id": "0e79ab77-3b65-408e-afff-d505891f67c1",
+      "sheet": "2026年10月",
+      "name": "技术部",
+      "email": "",
+      "valid": false,
+      "items": [
+        {
+          "key": "工号",
+          "value": "E009",
+          "bold": false
+        },
+        {
+          "key": "姓名",
+          "value": "孙悦",
+          "bold": false
+        },
+        {
+          "key": "基本工资",
+          "value": "5,000",
+          "bold": false
+        },
+        {
+          "key": "实发总计",
+          "value": "5,500",
+          "bold": true
+        }
+      ],
+      "sheetEmail": "",
+      "empNo": "",
+      "emailSource": "none"
+    }
+  ],
+  "logs": [],
+  "contacts": [
+    {
+      "name": "李强",
+      "email": "497232807@qq.com",
+      "empNo": "E001",
+      "department": "技术部",
+      "active": true,
+      "note": "",
+      "extra": {},
+      "id": "eab84c87-076c-43b2-802c-6f62130a9f73"
+    }
+  ],
+  "contactColumns": [
+    "工号",
+    "姓名",
+    "邮箱",
+    "部门",
+    "备注"
+  ],
+  "source": "n.xlsx",
+  "importedAt": "2026-10-14T07:45:51.321Z"
+}
