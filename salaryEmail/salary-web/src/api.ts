@@ -73,7 +73,9 @@ export const api = {
     ),
 
   contacts: () =>
-    req<{ contacts: Contact[]; columns: string[]; file: string }>('/api/contacts'),
+    req<{ contacts: Contact[]; columns: string[]; file: string; source: string | null; importedAt: string | null }>(
+      '/api/contacts',
+    ),
   addContact: (body: ContactInput) =>
     req<{ contact: Contact; sync: SyncState }>('/api/contacts', {
       method: 'POST',
@@ -101,6 +103,8 @@ export const api = {
       contacts: Contact[]
       columns: string[]
       sync: SyncState
+      source: string | null
+      importedAt: string | null
     }>('/api/contacts/import', { method: 'POST', body: fd })
   },
   /** 绑定本机的通讯录 Excel：之后界面上的改动就写回这个文件 */

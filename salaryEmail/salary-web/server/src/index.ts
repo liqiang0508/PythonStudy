@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser'
 import multer from 'multer'
 import { DEFAULT_CONTACTS_FILE, loadSettings, saveSettings, toView, MASK } from './config'
 import { syncContactsFile } from './contactSync'
-import { store, statusKey } from './store'
+import { store, statusKey, empNoKey, type LastStatus } from './store'
 import {
   buildContactsWorkbook,
   buildTemplate,
@@ -54,10 +54,29 @@ interface Job extends JobStatus {
 }
 const jobs = new Map<string, Job>()
 
+/** 从表名里提取月份（2026年10月 / 2026-10 → 2026-10），识别不出来返回 '' */
+function monthOf(sheet: string) {
+  const m = sheet.match(/(\d{4})\s*[年\-/]\s*(\d{1,2})/)
+  return m ? `${m[1]}-${Number(m[2])}` : ''
+}
+
+/**
+ * 查某人上次发送结果：按工号 → 姓名+邮箱。
+ * 表名改了、重新导入、重启都能对上；但跨月（10月 → 11月）不继承，避免误以为已发过。
+ */
+function lastStatusOf(map: Map<string, LastStatus>, e: Employee): LastStatus | undefined {
+  const hit = (e.empNo ? map.get(empNoKey(e.empNo)) : undefined) ?? map.get(statusKey(e))
+  if (!hit) return undefined
+  const a = monthOf(e.sheet)
+  const b = monthOf(hit.sheet)
+  if (a && b && a !== b) return undefined
+  return hit
+}
+
 function summaries(): EmployeeSummary[] {
   const map = store.lastStatusMap()
   return store.employees.map((e) => {
-    const st = map.get(statusKey(e))
+    const st = lastStatusOf(map, e)
     return {
       id: e.id,
       sheet: e.sheet,
@@ -67,6 +86,7 @@ function summaries(): EmployeeSummary[] {
       total: mainValue(e),
       lastStatus: st?.status ?? null,
       lastError: st?.error,
+      lastTime: st?.time,
       emailSource: e.emailSource ?? (e.email ? 'sheet' : 'none'),
     }
   })
@@ -174,7 +194,7 @@ async function runJob(job: Job, ids: string[], force: boolean) {
         push({ id: emp.id, name: emp.name, email: emp.email, ok: false, error: '邮箱格式不正确，已跳过' })
         continue
       }
-      const last = statusMap.get(statusKey(emp))
+      const last = lastStatusOf(statusMap, emp)
       if (!force && last?.status === 'success') {
         job.skipped++
         push({ id: emp.id, name: emp.name, email: emp.email, ok: false, skipped: true })
@@ -205,6 +225,7 @@ async function runJob(job: Job, ids: string[], force: boolean) {
         sheet: emp.sheet,
         name: emp.name,
         email: emp.email,
+        empNo: emp.empNo ?? '',
         status: err ? 'failed' : 'success',
         error: err || undefined,
       })
@@ -297,6 +318,11 @@ app.post(
   }),
 )
 
+/** 还原上传文件的中文名：busboy 把 UTF-8 字节按 latin1 解码了 */
+function decodeUploadName(name: string) {
+  return Buffer.from(name, 'latin1').toString('utf8')
+}
+
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 },
@@ -343,8 +369,9 @@ app.post(
     const file = req.file
     if (!file) throw new Error('没有收到文件')
     const ext = path.extname(file.originalname).toLowerCase().slice(1)
-    lastUpload = { buffer: file.buffer, ext, file: file.originalname }
-    res.json(await doImport(file.buffer, ext, file.originalname))
+    const name = decodeUploadName(file.originalname)
+    lastUpload = { buffer: file.buffer, ext, file: name }
+    res.json(await doImport(file.buffer, ext, name))
   }),
 )
 
@@ -476,6 +503,8 @@ app.get('/api/contacts', (_req, res) =>
     contacts: store.contacts,
     columns: store.contactColumns,
     file: store.contactsFile,
+    source: store.contactsMeta.source,
+    importedAt: store.contactsMeta.importedAt,
   }),
 )
 
@@ -615,6 +644,7 @@ app.post(
     const ext = path.extname(file.originalname).toLowerCase().slice(1)
     const { rows, warnings, columns } = await parseContacts(file.buffer, ext)
     if (columns.length) store.setContactColumns(columns) // 列顺序跟着表格走
+    store.setContactsMeta(decodeUploadName(file.originalname)) // 记住这次导入的是哪个表
 
     // 导入方式：merge=增量（保留表格外的人）
     //           sync-disable=以表格为准，表格里没有的停用
@@ -706,6 +736,8 @@ app.post(
       warnings,
       contacts: store.contacts,
       columns: store.contactColumns,
+      source: store.contactsMeta.source,
+      importedAt: store.contactsMeta.importedAt,
       sync: await syncContacts(),
     })
   }),

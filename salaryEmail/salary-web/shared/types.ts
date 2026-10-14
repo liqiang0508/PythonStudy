@@ -37,6 +37,8 @@ export interface EmployeeSummary {
   total: string
   lastStatus: SendStatus
   lastError?: string
+  /** 上次发送时间（用于提示） */
+  lastTime?: string
   emailSource: EmailSource
 }
 
@@ -74,6 +76,8 @@ export interface LogEntry {
   sheet: string
   name: string
   email: string
+  /** 工号，改名/换邮箱后也能认出同一个人 */
+  empNo?: string
   status: 'success' | 'failed'
   error?: string
 }

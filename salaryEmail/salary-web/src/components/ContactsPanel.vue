@@ -21,6 +21,10 @@ function blank(): ContactInput {
 /** 通讯录表格里的表头顺序，展示与导出都沿用，和 Excel 里看到的列顺序一致 */
 const fileColumns = ref<string[]>([])
 
+/** 最近一次导入的通讯录是哪个表格 */
+const source = ref<string | null>(null)
+const importedAt = ref<string | null>(null)
+
 /** 同步的本地 Excel 路径 + 输入框 + 同步结果提示 */
 const filePath = ref('')
 const pathInput = ref('')
@@ -90,6 +94,8 @@ async function load() {
   contacts.value = r.contacts
   if (r.columns?.length) fileColumns.value = r.columns
   if (r.file) filePath.value = r.file
+  source.value = r.source ?? null
+  importedAt.value = r.importedAt ?? null
 }
 
 onMounted(load)
@@ -195,6 +201,8 @@ async function onFile(e: Event) {
     localStorage.setItem(MODE_KEY, importMode.value)
     contacts.value = r.contacts
     if (r.columns?.length) fileColumns.value = r.columns
+    source.value = r.source ?? null
+    importedAt.value = r.importedAt ?? null
     message.value = `导入完成：新增 ${r.added} 人，更新 ${r.updated} 人，跳过 ${r.skipped} 行`
     if (r.disabled) message.value += `，停用 ${r.disabled} 人（表格里已不存在）`
     if (r.removed) message.value += `，删除 ${r.removed} 人（表格里已不存在）`
@@ -215,7 +223,15 @@ function exportContacts() {
 
 <template>
   <div class="card">
-    <h3>员工通讯录</h3>
+    <h3>
+      员工通讯录
+      <span class="mini muted" style="font-weight: 400">
+        · 当前通讯录：<b>{{ source || '未导入' }}</b>
+        <span v-if="importedAt">
+          （{{ new Date(importedAt).toLocaleString('zh-CN') }} 导入）
+        </span>
+      </span>
+    </h3>
     <div class="toolbar">
       <input v-model="keyword" type="text" placeholder="搜索姓名 / 邮箱 / 工号 / 部门" style="width: 220px" />
       <button class="btn primary sm" @click="openNew">新增员工</button>

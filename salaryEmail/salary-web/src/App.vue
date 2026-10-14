@@ -109,10 +109,7 @@ async function doLogout() {
     <div class="app-header">
       <div>
         <h1>工资条发送系统</h1>
-        <div class="sub">
-          当前表格：<b>{{ source || '未导入' }}</b>
-          <span v-if="importedAt"> · 导入时间 {{ new Date(importedAt).toLocaleString('zh-CN') }}</span>
-        </div>
+        <div class="sub">按工资表批量发送工资条</div>
       </div>
       <button v-if="needPassword" class="btn sm" @click="doLogout">退出登录</button>
     </div>
@@ -125,6 +122,13 @@ async function doLogout() {
     </div>
 
     <template v-if="tab === 'send'">
+      <!-- 当前导入的工资表只在这里展示，其它 Tab 不出现 -->
+      <div class="source-bar">
+        当前表格：<b>{{ source || '未导入' }}</b>
+        <span v-if="importedAt" class="mini muted">
+          · 导入时间 {{ new Date(importedAt).toLocaleString('zh-CN') }}
+        </span>
+      </div>
       <ImportPanel :source="source" @imported="onImported" @cleared="onCleared" @error="notify($event, 'err')" />
       <EmployeeTable
         v-model:selected="selected"

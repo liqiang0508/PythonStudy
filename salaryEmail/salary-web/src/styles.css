@@ -51,6 +51,16 @@ button {
   font-size: 12px;
 }
 
+/* 工资发送页顶部：当前导入的工资表 */
+.source-bar {
+  margin: -4px 0 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.source-bar b {
+  color: var(--text);
+}
+
 .tabs {
   display: flex;
   gap: 4px;

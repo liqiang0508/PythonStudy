@@ -32,6 +32,8 @@ export function mainValue(e: Employee) {
 }
 
 export function renderHtml(e: Employee, subject: string) {
+  // 主题里已经带了月份/表名（如「2026年10月 工资条」），副标题就不再重复
+  const sub = e.sheet && !subject.includes(e.sheet) ? `${e.sheet} · ${e.name}` : e.name
   const rows = e.items
     .map((it) => {
       if (it.bold && !it.value) {
@@ -43,7 +45,7 @@ export function renderHtml(e: Employee, subject: string) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>${CSS}</style></head>
 <body><div class="card">
   <h2>${esc(subject)}</h2>
-  <div class="sub">${esc(e.sheet)} · ${esc(e.name)}</div>
+  <div class="sub">${esc(sub)}</div>
   <table>\n${rows}\n</table>
   <div class="foot">${FOOTER}</div>
 </div></body></html>`

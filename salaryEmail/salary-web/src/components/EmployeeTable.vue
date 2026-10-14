@@ -131,8 +131,23 @@ const selectedCount = computed(() => props.selected.length)
             <td class="num">{{ e.total || '—' }}</td>
             <td>
               <span v-if="!e.valid" class="badge warn">待处理</span>
-              <span v-else-if="e.lastStatus === 'success'" class="badge success">已发送</span>
-              <span v-else-if="e.lastStatus === 'failed'" class="badge failed" :title="e.lastError">失败</span>
+              <span
+                v-else-if="e.lastStatus === 'success'"
+                class="badge success"
+                :title="e.lastTime ? '发送时间 ' + new Date(e.lastTime).toLocaleString('zh-CN') : ''"
+              >
+                已发送
+              </span>
+              <span
+                v-else-if="e.lastStatus === 'failed'"
+                class="badge failed"
+                :title="
+                  (e.lastError || '') +
+                  (e.lastTime ? '（' + new Date(e.lastTime).toLocaleString('zh-CN') + '）' : '')
+                "
+              >
+                失败
+              </span>
               <span v-else class="badge pending">未发送</span>
             </td>
             <td>
