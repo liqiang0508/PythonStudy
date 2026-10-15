@@ -112,5 +112,4 @@ export const api = {
   logs: () => req<{ logs: LogEntry[] }>('/api/logs'),
 }
 
-export const templateUrl = '/api/template'
 export const exportLogUrl = '/api/logs/export'

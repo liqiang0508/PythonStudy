@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { api } from '../api'
 import type { Contact } from '../../shared/types'
+import { headerField } from '../../shared/columns'
 
 const emit = defineEmits<{ (e: 'error', v: string): void; (e: 'changed'): void }>()
 
@@ -65,32 +66,37 @@ async function onFile(e: Event) {
   }
 }
 
-const COL_MAP: Array<{ re: RegExp; get: (c: Contact) => string }> = [
-  { re: /工号|员工号|编号/, get: (c) => c.empNo },
-  { re: /姓名|名字/, get: (c) => c.name },
-  { re: /邮箱|邮件|e-?mail/i, get: (c) => c.email },
-  { re: /部门/, get: (c) => c.department },
-  { re: /备注|说明|note/i, get: (c) => c.note },
-]
-
+/** 「在职 / 状态」是系统内部字段（active），不显示 */
 function isStatusCol(col: string) {
-  return /在职|状态/.test(col)
+  return headerField(col) === 'active'
 }
 
+/** 取某一列的值：先按共享的表头规则映射到字段，认不出来就去 extra（自定义列）里找 */
 function cell(c: Contact, col: string): string {
-  if (isStatusCol(col)) return ''
-  const f = COL_MAP.find((x) => x.re.test(col))
-  if (f) return f.get(c)
-  return c.extra?.[col] ?? ''
+  switch (headerField(col)) {
+    case 'name':
+      return c.name
+    case 'email':
+      return c.email
+    case 'empNo':
+      return c.empNo
+    case 'department':
+      return c.department
+    case 'note':
+      return c.note
+    case 'active':
+      return '' // 内部状态，界面不展示
+    default:
+      return c.extra?.[col] ?? ''
+  }
 }
 
 /** 展示的列：表格里的列（按原顺序）+ 自定义列 */
 const viewColumns = computed(() => {
   // 列完全来自表格：导入时后端把表头顺序记在 contactColumns 里，这里直接用它
-  // 「在职 / 状态」是系统内部字段（active），不显示，表格里有这列也不显示
   const cols = [...fileColumns.value].filter((c) => !isStatusCol(c))
   // 备注：表里有这列就按表格顺序显示，否则只在有人填了备注时才补
-  if (!cols.some((c) => /备注|说明/.test(c)) && contacts.value.some((c) => c.note))
+  if (!cols.some((c) => headerField(c) === 'note') && contacts.value.some((c) => c.note))
     cols.push('备注')
   const extras = new Set<string>()
   contacts.value.forEach((c) => Object.keys(c.extra ?? {}).forEach((k) => extras.add(k)))

@@ -2,6 +2,7 @@ import crypto from 'node:crypto'
 import { Readable } from 'node:stream'
 import ExcelJS from 'exceljs'
 import type { Contact, Employee, SalaryItem } from '../../shared/types'
+import { HEADER_RULES, type HeaderField } from '../../shared/columns'
 
 /** 除表头 <b> 标记外，这些关键字也自动加粗 */
 const BOLD_KEYWORDS = /合计|实发|应发|总计/
@@ -55,28 +56,20 @@ function findColumn(headers: string[], wanted: string) {
 }
 
 /**
- * 通讯录表头 → 字段的列分配规则。
- * 关键词别写太宽泛（例如只用「员工」会把「员工编号」误认成姓名列）。
- */
-const CONTACT_HEADER_RULES: Array<{ field: string; names: string[] }> = [
-  { field: 'name', names: ['姓名', '名字', '员工姓名', '人员姓名'] },
-  { field: 'email', names: ['邮箱', '邮件', '邮箱地址', '邮件地址', 'e-mail', 'email'] },
-  { field: 'empNo', names: ['工号', '员工号', '员工编号', '编号'] },
-  { field: 'department', names: ['部门', '部门名称', '所属部门', '所在部门'] },
-  { field: 'note', names: ['备注', '说明', '备注说明'] },
-  { field: 'active', names: ['在职', '是否在职', '在职状态', '状态'] },
-]
-
-/**
- * 给通讯录表头分配字段列：先精确匹配，再包含匹配；一列只归一个字段。
+ * 给表头分配字段列：先精确匹配，再包含匹配；一列只归一个字段。
  * 这样「员工编号」只当工号，「姓名」不会被工号列抢走。
+ * @param fields 只关心这些字段（不传 = 全部），已分配的列不会再分给别的字段。
  */
-function assignContactColumns(headers: string[]): Record<string, number> {
+export function assignHeaderColumns(
+  headers: string[],
+  fields?: HeaderField[],
+): Partial<Record<HeaderField, number>> {
+  const rules = fields?.length ? HEADER_RULES.filter((r) => fields.includes(r.field)) : HEADER_RULES
   const lower = headers.map((h) => h.trim().toLowerCase())
   const taken = new Set<number>()
-  const out: Record<string, number> = {}
+  const out: Partial<Record<HeaderField, number>> = {}
 
-  for (const rule of CONTACT_HEADER_RULES) {
+  for (const rule of rules) {
     const i = lower.findIndex(
       (h, idx) => !taken.has(idx) && !!h && rule.names.some((n) => h === n.toLowerCase()),
     )
@@ -86,7 +79,7 @@ function assignContactColumns(headers: string[]): Record<string, number> {
     }
   }
 
-  for (const rule of CONTACT_HEADER_RULES) {
+  for (const rule of rules) {
     if (out[rule.field] !== undefined) continue
     const i = lower.findIndex((h, idx) => {
       if (taken.has(idx) || !h) return false
@@ -101,18 +94,6 @@ function assignContactColumns(headers: string[]): Record<string, number> {
     }
   }
   return out
-}
-
-/** 自动识别列名用的规则（按顺序匹配） */
-export const NAME_RE = /姓名|名字|员工姓名|人员姓名/
-export const EMPNO_RE = /工号|员工号|员工编号|编号/
-export const EMAIL_COL_RE = /邮箱|邮件|e-?mail/i
-export const DEPT_RE = /部门/
-export const NOTE_RE = /备注|说明|note/i
-export const STATUS_RE = /在职|状态/
-
-function detectColumn(headers: string[], re: RegExp) {
-  return headers.findIndex((h) => re.test(h))
 }
 
 export interface ParseOptions {
@@ -178,9 +159,11 @@ export async function parseWorkbook(
     let eIdx = -1
     let noIdx = -1
     if (auto) {
-      nIdx = detectColumn(headers, NAME_RE)
-      noIdx = detectColumn(headers, EMPNO_RE)
-      eIdx = detectColumn(headers, EMAIL_COL_RE)
+      // 与通讯录共用同一套表头规则：先精确、再包含，一列只归一个字段
+      const col = assignHeaderColumns(headers, ['name', 'empNo', 'email'])
+      nIdx = col.name ?? -1
+      noIdx = col.empNo ?? -1
+      eIdx = col.email ?? -1
       // 设置里的列名作为兜底
       if (nIdx < 0) nIdx = findColumn(headers, opts.nameColumn ?? '')
       if (noIdx < 0) noIdx = findColumn(headers, opts.empNoColumn ?? '')
@@ -295,7 +278,7 @@ export async function parseContacts(buffer: Buffer, ext: string): Promise<{
     if (!columns.length) headers.forEach((h) => h && !columns.includes(h) && columns.push(h))
 
     // 表头 → 字段（精确优先、一列只归一个字段，避免「员工编号」被当成姓名列）
-    const col = assignContactColumns(headers)
+    const col = assignHeaderColumns(headers)
     const nIdx = col.name ?? -1
     const eIdx = col.email ?? -1
     if (nIdx < 0 || eIdx < 0) {
@@ -335,73 +318,6 @@ export async function parseContacts(buffer: Buffer, ext: string): Promise<{
   return { rows, headers: [...headerSet], columns, warnings }
 }
 
-const CONTACT_FIELDS: Array<{ test: RegExp; get: (c: Contact) => string }> = [
-  { test: /工号|员工号|编号|工号$/, get: (c) => c.empNo },
-  { test: /姓名|名字/, get: (c) => c.name },
-  { test: /邮箱|邮件|e-?mail/i, get: (c) => c.email },
-  { test: /部门/, get: (c) => c.department },
-  { test: /备注|说明|note/i, get: (c) => c.note },
-  { test: /在职|状态/, get: (c) => (c.active ? '是' : '否') },
-]
 
-const DEFAULT_CONTACT_COLUMNS = ['工号', '姓名', '邮箱', '部门', '在职', '备注']
 
-/** 导出通讯录：列顺序与导入时的表头一致，可改完直接重新导入 */
-export async function buildContactsWorkbook(
-  contacts: Contact[],
-  columns: string[],
-): Promise<Buffer> {
-  // 表里有、但不在列清单里的自定义列，追加到末尾，避免丢数据
-  const extraKeys: string[] = []
-  for (const c of contacts) {
-    for (const k of Object.keys(c.extra ?? {})) {
-      if (!columns.includes(k) && !extraKeys.includes(k)) extraKeys.push(k)
-    }
-  }
-  const cols = [...(columns.length ? columns : DEFAULT_CONTACT_COLUMNS), ...extraKeys]
 
-  const wb = new ExcelJS.Workbook()
-  const ws = wb.addWorksheet('通讯录')
-  ws.columns = cols.map((c) => ({
-    header: c,
-    width: c.length > 4 ? 24 : 12,
-  }))
-  for (const c of contacts) {
-    ws.addRow(
-      cols.map((col) => {
-        const f = CONTACT_FIELDS.find((x) => x.test.test(col))
-        return f ? f.get(c) : (c.extra?.[col] ?? '')
-      }),
-    )
-  }
-  ws.getRow(1).font = { bold: true }
-  ws.views = [{ state: 'frozen', ySplit: 1 }]
-  return Buffer.from(await wb.xlsx.writeBuffer())
-}
-
-/** 生成导入模板 */
-export async function buildTemplate(): Promise<Buffer> {
-  const wb = new ExcelJS.Workbook()
-  const ws = wb.addWorksheet('11月工资')
-  ws.columns = [
-    { header: '工号', width: 10 },
-    { header: '姓名', width: 12 },
-    { header: '邮箱', width: 26 },
-    { header: '基本工资', width: 12 },
-    { header: '加班工资', width: 12 },
-    { header: '全勤奖励', width: 12 },
-    { header: '<b>减</b>', width: 10 },
-    { header: '迟到扣款', width: 12 },
-    { header: '缺勤扣款', width: 12 },
-    { header: '<b>税前合计</b>', width: 14 },
-    { header: '代扣-社保', width: 12 },
-    { header: '代扣-公积金', width: 12 },
-    { header: '<b>本月实发总计</b>', width: 16 },
-    { header: '特殊情况说明', width: 24 },
-  ]
-  ws.getRow(1).font = { bold: true }
-  ws.addRow(['E001', '张三', 'zhangsan@example.com', 8000, 500, 200, '', 0, 0, 8700, 800, 600, 7300, ''])
-  ws.addRow(['E002', '李四', 'lisi@example.com', 7500, 0, 200, '', 50, 0, 7650, 800, 600, 6250, '事假1天'])
-  const buf = await wb.xlsx.writeBuffer()
-  return Buffer.from(buf)
-}

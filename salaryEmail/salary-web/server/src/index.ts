@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser'
 import multer from 'multer'
 import { loadSettings, saveSettings, toView, MASK } from './config'
 import { store, statusKey, empNoKey, type LastStatus } from './store'
-import { buildTemplate, parseContacts, parseWorkbook, type ParseOptions } from './excel'
+import { parseContacts, parseWorkbook, type ParseOptions } from './excel'
 import { mainValue, renderHtml, renderSubject, renderText } from './render'
 import { checkEmployees, toNumber } from './check'
 import { initScheduler, runScheduled, saveSchedule, scheduleState } from './scheduler'
@@ -505,23 +505,6 @@ app.get('/api/logs/export', (_req, res) => {
   )
   res.send(head + body)
 })
-
-app.get(
-  '/api/template',
-  wrap(async (_req, res) => {
-    const buf = await buildTemplate()
-    res.setHeader(
-      'Content-Type',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    )
-    // HTTP 头不能放中文，用 RFC 5987 编码
-    res.setHeader(
-      'Content-Disposition',
-      `attachment; filename="salary-template.xlsx"; filename*=UTF-8''${encodeURIComponent('工资表模板.xlsx')}`,
-    )
-    res.send(buf)
-  }),
-)
 
 // ------------------------------------------------------------------ 员工通讯录
 app.get('/api/contacts', (_req, res) =>

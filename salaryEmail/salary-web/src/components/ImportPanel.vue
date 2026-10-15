@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { api, templateUrl } from '../api'
+import { api } from '../api'
 import type { ImportResult } from '../../shared/types'
 
 const props = defineProps<{ source: string | null }>()
@@ -91,7 +91,6 @@ async function clearData() {
     </div>
 
     <div class="toolbar" style="margin-top: 12px">
-      <a :href="templateUrl"><button class="btn sm">下载导入模板</button></a>
       <button v-if="props.source" class="btn sm danger" @click="clearData">清空已导入数据</button>
       <span class="spacer" />
       <span class="mini muted">当前文件：{{ props.source || '无' }}</span>
