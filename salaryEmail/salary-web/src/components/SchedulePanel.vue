@@ -49,7 +49,7 @@ async function save() {
   saving.value = true
   try {
     const day = form.value.day === 'last' ? 'last' : Number(form.value.day)
-    st.value = await api.saveSchedule({
+    const r = await api.saveSchedule({
       enabled: form.value.enabled,
       day,
       hour: Number(form.value.hour),
@@ -57,12 +57,29 @@ async function save() {
       skipSent: form.value.skipSent,
       onError: form.value.onError as 'abort' | 'send',
     })
-    apply(st.value)
+    st.value = r
+    apply(r)
+    if (!r.enabled) {
+      tip('已保存：定时发送已关闭，到点不会再自动发送')
+    } else {
+      const when = r.day === 'last' ? '每月最后一天' : `每月 ${r.day} 号`
+      const hm = `${String(r.hour).padStart(2, '0')}:${String(r.minute).padStart(2, '0')}`
+      const next = r.nextRun ? new Date(r.nextRun).toLocaleString('zh-CN') : '—'
+      tip(`已保存并启用：${when} ${hm} 自动发送，下次运行 ${next}`)
+    }
   } catch (e: any) {
-    emit('error', e.message)
+    tip(e.message, false)
   } finally {
     saving.value = false
   }
+}
+
+/** 保存/操作结果提示（绿字成功，红字失败） */
+const msg = ref('')
+const msgOk = ref(true)
+function tip(text: string, ok = true) {
+  msgOk.value = ok
+  msg.value = text
 }
 
 /** 立即按当前配置跑一次（等价于定时任务到点） */
@@ -72,6 +89,7 @@ async function runNow() {
     const r = await api.runSchedule()
     st.value = r
     emit('done')
+    tip(r.result || '已触发一次发送', !/取消|失败/.test(r.result ?? ''))
     timer.value = window.setInterval(async () => {
       st.value = await api.schedule()
       if (!st.value.running) stopTimer()
@@ -132,6 +150,8 @@ const lastText = computed(() =>
       </select>
     </div>
 
+    <p v-if="msg" class="mini" :class="msgOk ? 'res-ok' : 'res-err'">{{ msg }}</p>
+
     <p class="mini muted">
       下次运行：<b>{{ nextText }}</b> · 上次运行：{{ lastText }}
     </p>
@@ -158,5 +178,8 @@ const lastText = computed(() =>
 }
 .res-err {
   color: var(--danger);
+}
+.res-ok {
+  color: var(--success);
 }
 </style>
