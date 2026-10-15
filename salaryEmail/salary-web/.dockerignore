@@ -1,0 +1,19 @@
+node_modules
+dist
+
+# 运行期数据、本地环境变量（含 SMTP 授权码）不进镜像
+server/data
+.env
+.env.*
+!.env.example
+
+.git
+.gitignore
+*.log
+npm-debug.log*
+
+# Docker 相关文件自身
+Dockerfile
+.dockerignore
+docker-compose.yml
+*.bat

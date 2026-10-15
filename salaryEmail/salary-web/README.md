@@ -33,6 +33,25 @@ npm run start        # 后端 3001 同时托管前端
 
 浏览器访问 `http://localhost:8000`（开发）或 `http://localhost:3001`（生产）。
 
+## Docker 一键运行
+
+Windows：双击 **`一键Docker启动.bat`**（自动检测 Docker、构建镜像、起容器、打开浏览器）。
+
+命令行：
+
+```bash
+cd salary-web
+docker compose up -d --build     # 构建并后台启动
+docker compose logs -f           # 看日志
+docker compose down              # 停止并删除容器
+```
+
+- 访问 `http://localhost:3001`（宿主端口由 `.env` 里的 `WEB_PUBLISH_PORT` 决定）
+- 单容器同时提供后端接口与前端页面（生产模式：后端 3001 托管 `dist/`）
+- 想改配置：在本目录建 `.env`（`docker compose` 会自动读取）——`WEB_PASSWORD`、`SMTP_HOST/PORT/SECURE/USER/PASS`；页面「系统设置」里改的仍然生效，`.env` 优先级更高
+- 数据持久化：`./server/data` 挂进容器，`settings.json` / `db.json` 删容器不丢；换数据卷见 `docker-compose.yml` 注释
+- 定时发送：容器时区已固定为 `Asia/Shanghai`，配置存 `db.json`，只要容器 `restart: unless-stopped` 就会持续运行
+
 ## 使用流程
 
 1. **系统设置**：填 SMTP（服务器/端口/SSL/发件邮箱/授权码），发一封测试邮件确认可用

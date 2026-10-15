@@ -1,0 +1,52 @@
+services:
+  salary-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: salary-web:latest
+    container_name: salary-web
+    restart: unless-stopped
+
+    ports:
+      # 左边是宿主机端口，想换端口就改 WEB_PUBLISH_PORT（写在本目录 .env 里）
+      - "${WEB_PUBLISH_PORT:-3001}:3001"
+
+    environment:
+      TZ: Asia/Shanghai
+      PORT: "3001"
+      NODE_ENV: production
+      APP_ENV: production
+      # 下面这些留空就用镜像里/页面「系统设置」里的值；填了就优先用这里的
+      WEB_PASSWORD: "${WEB_PASSWORD:-}"
+      SESSION_SECRET: "${SESSION_SECRET:-}"
+      SMTP_HOST: "${SMTP_HOST:-}"
+      SMTP_PORT: "${SMTP_PORT:-}"
+      SMTP_SECURE: "${SMTP_SECURE:-}"
+      SMTP_USER: "${SMTP_USER:-}"
+      SMTP_PASS: "${SMTP_PASS:-}"
+
+    volumes:
+      # 设置、员工、发送日志、定时任务配置都在这，删容器不丢数据
+      - ./server/data:/app/server/data
+      # 想用 Docker 托管数据卷（Windows 下更省心）就改成下面这行：
+      # - salary-data:/app/server/data
+
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3001/api/auth/state').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+# volumes:
+#   salary-data:
+
+# 环境变量：本目录放一个 .env（docker compose 自动读取），例如
+#   WEB_PUBLISH_PORT=3001
+#   WEB_PASSWORD=你的访问密码
+#   SMTP_USER=xxx@qq.com
+#   SMTP_PASS=邮箱授权码
