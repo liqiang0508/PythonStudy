@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import { APP_ENV, loadedEnvFiles } from './env' // 必须第一个导入：先加载 .env / .env.{环境} / .env.local
 import { spawn } from 'node:child_process'
 import crypto from 'node:crypto'
 import fs from 'node:fs'
@@ -787,5 +787,6 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 
 app.listen(PORT, () => {
   console.log(`工资条发送系统已启动: http://localhost:${PORT}`)
+  console.log(`运行环境: ${APP_ENV}（环境变量文件: ${loadedEnvFiles.join(' → ') || '无，用 server/data/settings.json 里的设置'}）`)
   if (!authEnabled()) console.log('提示: 未设置 WEB_PASSWORD，当前无需登录即可访问')
 })
