@@ -2,7 +2,15 @@ import fs from 'node:fs'
 import path from 'node:path'
 import crypto from 'node:crypto'
 import { DATA_DIR, DEFAULT_CONTACTS_FILE } from './config'
-import type { Contact, ContactInput, Employee, LogEntry, SendStatus } from '../../shared/types'
+import type {
+  Contact,
+  ContactInput,
+  Employee,
+  LogEntry,
+  MonthSnapshot,
+  Schedule,
+  SendStatus,
+} from '../../shared/types'
 
 const DB_FILE = path.join(DATA_DIR, 'db.json')
 
@@ -19,13 +27,29 @@ interface DB {
   contacts: Contact[]
   /** 通讯录导入时的表头顺序，展示与导出都沿用 */
   contactColumns: string[]
-  /** 通讯录同步的本地 Excel 路径；null = 用默认位置 */
-  contactsFile: string | null
+
   /** 最近一次导入的通讯录文件名 */
   contactsSource: string | null
   contactsImportedAt: string | null
   source: string | null
   importedAt: string | null
+  /** 定时发送配置 */
+  schedule: Schedule | null
+  scheduleLastRun: string | null
+  scheduleLastResult: string | null
+  /** 已执行过的定时时间点（ISO），防止重启后重复发 */
+  scheduleRunKey: string | null
+  /** 每月快照：{ '2026-10': {...} }，用于体检时和上一期对比 */
+  snapshots: Record<string, MonthSnapshot>
+}
+
+export const DEFAULT_SCHEDULE: Schedule = {
+  enabled: false,
+  day: 10,
+  hour: 9,
+  minute: 0,
+  skipSent: true,
+  onError: 'abort',
 }
 
 const empty = (): DB => ({
@@ -33,11 +57,15 @@ const empty = (): DB => ({
   logs: [],
   contacts: [],
   contactColumns: [],
-  contactsFile: null,
   contactsSource: null,
   contactsImportedAt: null,
   source: null,
   importedAt: null,
+  schedule: null,
+  scheduleLastRun: null,
+  scheduleLastResult: null,
+  scheduleRunKey: null,
+  snapshots: {},
 })
 
 let db: DB = empty()
@@ -90,10 +118,6 @@ export const store = {
     db.contactColumns = cols
     persist()
   },
-  /** 通讯录同步的 Excel 绝对路径 */
-  get contactsFile() {
-    return db.contactsFile ?? DEFAULT_CONTACTS_FILE
-  },
   /** 最近一次导入的通讯录来源（文件名 + 时间） */
   get contactsMeta() {
     return { source: db.contactsSource, importedAt: db.contactsImportedAt }
@@ -101,10 +125,6 @@ export const store = {
   setContactsMeta(source: string) {
     db.contactsSource = source
     db.contactsImportedAt = new Date().toISOString()
-    persist()
-  },
-  setContactsFile(file: string | null) {
-    db.contactsFile = file && file !== DEFAULT_CONTACTS_FILE ? file : null
     persist()
   },
   get meta() {
@@ -123,6 +143,56 @@ export const store = {
     db.source = null
     db.importedAt = null
     persist()
+  },
+
+  // ---------------- 定时发送 ----------------
+  get schedule(): Schedule {
+    return { ...DEFAULT_SCHEDULE, ...(db.schedule ?? {}) }
+  },
+  setSchedule(patch: Partial<Schedule>) {
+    db.schedule = { ...this.schedule, ...patch }
+    persist()
+    return db.schedule as Schedule
+  },
+  get scheduleLastRun() {
+    return db.scheduleLastRun
+  },
+  get scheduleLastResult() {
+    return db.scheduleLastResult
+  },
+  get scheduleRunKey() {
+    return db.scheduleRunKey
+  },
+  /** 记录一次定时执行结果；key 相同的时间点不会重复执行 */
+  setScheduleRun(p: { key?: string; result: string }) {
+    if (p.key) db.scheduleRunKey = p.key
+    db.scheduleLastRun = new Date().toISOString()
+    db.scheduleLastResult = p.result
+    persist()
+  },
+
+  // ---------------- 每月快照（体检对比用） ----------------
+  addSnapshot(month: string, count: number, amount: number) {
+    if (!month) return
+    db.snapshots[month] = { month, count, amount, at: new Date().toISOString() }
+    // 只保留最近 24 期
+    const keys = Object.keys(db.snapshots).sort(monthKey).reverse()
+    if (keys.length > 24) {
+      db.snapshots = Object.fromEntries(keys.slice(0, 24).map((k) => [k, db.snapshots[k]]))
+    }
+    persist()
+  },
+  /** 上一个月的快照 */
+  prevSnapshot(month: string): MonthSnapshot | null {
+    if (!month) return null
+    const cur = monthKey(month)
+    let best: MonthSnapshot | null = null
+    for (const s of Object.values(db.snapshots)) {
+      const k = monthKey(s.month)
+      if (k >= cur) continue
+      if (!best || k > monthKey(best.month)) best = s
+    }
+    return best
   },
 
   find(id: string) {
@@ -178,6 +248,13 @@ export const store = {
     db.contacts = list
     persist()
   },
+}
+
+/** '2026-10' → 2026*12+10，用于比较月份先后 */
+function monthKey(m: string) {
+  const [y, mo] = String(m).split('-').map(Number)
+  if (!y || !mo) return 0
+  return y * 12 + mo
 }
 
 /** 主键：姓名 + 邮箱（与工作表名无关，重新导入/重启都能对上） */

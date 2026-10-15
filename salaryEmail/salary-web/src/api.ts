@@ -1,10 +1,12 @@
 import type {
+  CheckReport,
   Contact,
-  ContactInput,
   EmployeeSummary,
   ImportResult,
   JobStatus,
   LogEntry,
+  Schedule,
+  ScheduleState,
   SettingsView,
   SyncState,
 } from '../shared/types'
@@ -73,21 +75,12 @@ export const api = {
     ),
 
   contacts: () =>
-    req<{ contacts: Contact[]; columns: string[]; file: string; source: string | null; importedAt: string | null }>(
-      '/api/contacts',
-    ),
-  addContact: (body: ContactInput) =>
-    req<{ contact: Contact; sync: SyncState }>('/api/contacts', {
-      method: 'POST',
-      body: JSON.stringify(body),
-    }),
-  updateContact: (id: string, body: ContactInput) =>
-    req<{ contact: Contact; sync: SyncState }>(`/api/contacts/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(body),
-    }),
-  removeContact: (id: string) =>
-    req<{ ok: boolean; sync: SyncState }>(`/api/contacts/${id}`, { method: 'DELETE' }),
+    req<{
+      contacts: Contact[]
+      columns: string[]
+      source: string | null
+      importedAt: string | null
+    }>('/api/contacts'),
   importContacts: (file: File, mode: string) => {
     const fd = new FormData()
     fd.append('mode', mode) // 字段要在文件之前，multer 才能读到
@@ -102,28 +95,27 @@ export const api = {
       warnings: string[]
       contacts: Contact[]
       columns: string[]
-      sync: SyncState
       source: string | null
       importedAt: string | null
     }>('/api/contacts/import', { method: 'POST', body: fd })
   },
-  /** 绑定本机的通讯录 Excel：之后界面上的改动就写回这个文件 */
-  setContactsFile: (p: string) =>
-    req<{ file: string; sync: SyncState }>('/api/contacts/file', {
-      method: 'PUT',
-      body: JSON.stringify({ path: p }),
-    }),
-  syncContacts: () => req<{ file: string; sync: SyncState }>('/api/contacts/sync', { method: 'POST' }),
-  revealContactsFile: () => req<{ ok: boolean; file: string }>('/api/contacts/reveal', { method: 'POST' }),
 
   send: (ids: string[], force: boolean) =>
     req<{ jobId: string }>('/api/send', { method: 'POST', body: JSON.stringify({ ids, force }) }),
   job: (id: string) => req<JobStatus>(`/api/job/${id}`),
   cancelJob: (id: string) => req<{ ok: boolean }>(`/api/job/${id}/cancel`, { method: 'POST' }),
 
+  /** 发送前体检 */
+  check: () => req<CheckReport>('/api/check'),
+
+  schedule: () => req<ScheduleState>('/api/schedule'),
+  saveSchedule: (body: Partial<Schedule>) =>
+    req<ScheduleState>('/api/schedule', { method: 'PUT', body: JSON.stringify(body) }),
+  runSchedule: () =>
+    req<ScheduleState & { result?: string }>('/api/schedule/run', { method: 'POST' }),
+
   logs: () => req<{ logs: LogEntry[] }>('/api/logs'),
 }
 
 export const templateUrl = '/api/template'
 export const exportLogUrl = '/api/logs/export'
-export const exportContactsUrl = '/api/contacts/export'

@@ -11,6 +11,8 @@ import LogPanel from './components/LogPanel.vue'
 import SettingsPanel from './components/SettingsPanel.vue'
 import ContactsPanel from './components/ContactsPanel.vue'
 import BindEmailModal from './components/BindEmailModal.vue'
+import CheckPanel from './components/CheckPanel.vue'
+import SchedulePanel from './components/SchedulePanel.vue'
 
 type Tab = 'send' | 'logs' | 'contacts' | 'settings'
 
@@ -26,6 +28,8 @@ const selected = ref<string[]>([])
 const previewId = ref<string | null>(null)
 const bindId = ref<string | null>(null)
 const sendIds = ref<string[]>([])
+/** 递增即触发体检面板重新检查（导入 / 清空 / 发送后） */
+const checkVersion = ref(0)
 const toasts = ref<{ id: number; text: string; kind: 'ok' | 'err' }[]>([])
 
 function notify(text: string, kind: 'ok' | 'err' = 'ok') {
@@ -66,6 +70,7 @@ function onImported(res: ImportResult) {
   source.value = res.file
   importedAt.value = new Date().toISOString()
   selected.value = []
+  checkVersion.value++
   notify(`已导入 ${res.employees.length} 人`)
 }
 
@@ -74,6 +79,7 @@ function onCleared() {
   selected.value = []
   source.value = null
   importedAt.value = null
+  checkVersion.value++
 }
 
 async function onResolve() {
@@ -92,6 +98,7 @@ const bindTarget = computed(() => employees.value.find((e) => e.id === bindId.va
 async function onSent() {
   await Promise.all([loadEmployees(), loadLogs()])
   sendIds.value = []
+  checkVersion.value++
 }
 
 async function doLogout() {
@@ -130,6 +137,7 @@ async function doLogout() {
         </span>
       </div>
       <ImportPanel :source="source" @imported="onImported" @cleared="onCleared" @error="notify($event, 'err')" />
+      <CheckPanel :version="checkVersion" @error="notify($event, 'err')" />
       <EmployeeTable
         v-model:selected="selected"
         :employees="employees"
@@ -139,6 +147,7 @@ async function doLogout() {
         @bind="bindId = $event"
         @resolve="onResolve"
       />
+      <SchedulePanel @done="onSent" @error="notify($event, 'err')" />
     </template>
 
     <LogPanel v-else-if="tab === 'logs'" :logs="logs" @refresh="loadLogs" @error="notify($event, 'err')" />

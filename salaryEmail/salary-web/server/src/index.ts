@@ -6,17 +6,12 @@ import path from 'node:path'
 import express, { type NextFunction, type Request, type Response } from 'express'
 import cookieParser from 'cookie-parser'
 import multer from 'multer'
-import { DEFAULT_CONTACTS_FILE, loadSettings, saveSettings, toView, MASK } from './config'
-import { syncContactsFile } from './contactSync'
+import { loadSettings, saveSettings, toView, MASK } from './config'
 import { store, statusKey, empNoKey, type LastStatus } from './store'
-import {
-  buildContactsWorkbook,
-  buildTemplate,
-  parseContacts,
-  parseWorkbook,
-  type ParseOptions,
-} from './excel'
+import { buildTemplate, parseContacts, parseWorkbook, type ParseOptions } from './excel'
 import { mainValue, renderHtml, renderSubject, renderText } from './render'
+import { checkEmployees, toNumber } from './check'
+import { initScheduler, runScheduled, saveSchedule, scheduleState } from './scheduler'
 import {
   createTransport,
   normalizeError,
@@ -27,7 +22,6 @@ import {
 import { authEnabled, isLoggedIn, login, logout, requireAuth } from './auth'
 import type {
   Contact,
-  ContactInput,
   Employee,
   EmployeeSummary,
   ImportResult,
@@ -90,6 +84,11 @@ function summaries(): EmployeeSummary[] {
       emailSource: e.emailSource ?? (e.email ? 'sheet' : 'none'),
     }
   })
+}
+
+/** 主数值合计（用于每月快照与体检对比） */
+function sumAmount(list: Employee[]) {
+  return list.reduce((acc, e) => acc + (toNumber(mainValue(e)) ?? 0), 0)
 }
 
 /** 取工资表中某列的值（用于按工号匹配） */
@@ -348,6 +347,9 @@ async function doImport(buffer: Buffer, ext: string, file: string, opts: ParseOp
   const s = loadSettings()
   const { warnings, unmatched } = resolveEmails(result.employees, s)
   store.setEmployees(result.employees, file)
+  // 记一份本月快照，下次导入时体检可对比人数/金额是否异常
+  const month = result.employees.length ? monthOf(result.employees[0].sheet) : ''
+  store.addSnapshot(month, result.employees.length, sumAmount(result.employees))
   const payload: ImportResult = {
     file,
     sheetCount: result.sheetCount,
@@ -409,6 +411,34 @@ app.delete('/api/employees', (_req, res) => {
   res.json({ ok: true })
 })
 
+function makeJob(ids: string[]): Job {
+  const job: Job = {
+    id: crypto.randomUUID(),
+    state: 'running',
+    total: ids.length,
+    done: 0,
+    success: 0,
+    failed: 0,
+    skipped: 0,
+    startedAt: Date.now(),
+    results: [],
+    cancel: false,
+  }
+  jobs.set(job.id, job)
+  return job
+}
+
+/** 定时任务用：发给当前表里所有人，返回任务结果 */
+async function sendAll(force: boolean): Promise<JobStatus> {
+  const s = loadSettings()
+  if (!s.smtpUser || !s.smtpPass) throw new Error('请先在「设置」中填写邮箱账号与授权码')
+  const ids = store.employees.map((e) => e.id)
+  if (!ids.length) throw new Error('尚未导入工资表')
+  const job = makeJob(ids)
+  await runJob(job, ids, force)
+  return job
+}
+
 app.post(
   '/api/send',
   wrap(async (req, res) => {
@@ -417,24 +447,39 @@ app.post(
     const ids: string[] = Array.isArray(req.body?.ids) ? req.body.ids : []
     if (!ids.length) throw new Error('没有选中任何人员')
     const force = !!req.body?.force
-    const id = crypto.randomUUID()
-    const job: Job = {
-      id,
-      state: 'running',
-      total: ids.length,
-      done: 0,
-      success: 0,
-      failed: 0,
-      skipped: 0,
-      startedAt: Date.now(),
-      results: [],
-      cancel: false,
-    }
-    jobs.set(id, job)
+    const job = makeJob(ids)
     runJob(job, ids, force).catch(() => {
       job.state = 'done'
     })
-    res.json({ jobId: id })
+    res.json({ jobId: job.id })
+  }),
+)
+
+// ------------------------------------------------------------------ 发送前体检
+function checkReport() {
+  const list = store.employees
+  const month = list.length ? monthOf(list[0].sheet) : ''
+  return checkEmployees(list, store.prevSnapshot(month))
+}
+
+app.get('/api/check', (_req, res) => res.json(checkReport()))
+
+// ------------------------------------------------------------------ 定时发送
+app.get('/api/schedule', (_req, res) => res.json(scheduleState()))
+
+app.put('/api/schedule', (req, res) => {
+  try {
+    res.json(saveSchedule(req.body ?? {}))
+  } catch (e: any) {
+    res.status(400).json({ error: e?.message ?? String(e) })
+  }
+})
+
+app.post(
+  '/api/schedule/run',
+  wrap(async (_req, res) => {
+    const result = await runScheduled('手动')
+    res.json({ ...scheduleState(), result })
   }),
 )
 
@@ -502,138 +547,13 @@ app.get('/api/contacts', (_req, res) =>
   res.json({
     contacts: store.contacts,
     columns: store.contactColumns,
-    file: store.contactsFile,
     source: store.contactsMeta.source,
     importedAt: store.contactsMeta.importedAt,
   }),
 )
 
-/** 把通讯录写回本地 Excel（界面上任何改动都会触发） */
-async function syncContacts() {
-  return syncContactsFile(store.contactsFile, store.contacts, store.contactColumns)
-}
-
-/** 手动触发一次同步 */
-app.post(
-  '/api/contacts/sync',
-  wrap(async (_req, res) => {
-    const sync = await syncContacts()
-    res.json({ file: store.contactsFile, sync })
-  }),
-)
-
-/** 绑定/改成本机上的某个 Excel（之后改动就写这个文件） */
-app.put('/api/contacts/file', (req, res) => {
-  const raw = String(req.body?.path ?? '').trim()
-  const file = raw ? path.resolve(raw) : DEFAULT_CONTACTS_FILE
-  const ext = path.extname(file).toLowerCase()
-  if (!['.xlsx', '.xlsm', '.csv'].includes(ext))
-    return res.status(400).json({ error: '通讯录文件必须是 .xlsx / .xlsm / .csv' })
-  if (!fs.existsSync(path.dirname(file)))
-    return res.status(400).json({ error: `目录不存在：${path.dirname(file)}` })
-  store.setContactsFile(file)
-  syncContacts().then((sync) => res.json({ file: store.contactsFile, sync }))
-})
-
-/** 在文件管理器里打开通讯录文件所在目录 */
-app.post('/api/contacts/reveal', (_req, res) => {
-  const file = store.contactsFile
-  try {
-    if (process.platform === 'win32')
-      spawn('explorer', ['/select,', file], { detached: true, stdio: 'ignore' }).unref()
-    else if (process.platform === 'darwin')
-      spawn('open', ['-R', file], { detached: true, stdio: 'ignore' }).unref()
-    else spawn('xdg-open', [path.dirname(file)], { detached: true, stdio: 'ignore' }).unref()
-    res.json({ ok: true, file })
-  } catch (err: any) {
-    res.status(500).json({ error: err?.message ?? String(err) })
-  }
-})
-
-/** 导出通讯录为 Excel：改完可以直接重新导入覆盖 */
-app.get(
-  '/api/contacts/export',
-  wrap(async (_req, res) => {
-    const buf = await buildContactsWorkbook(store.contacts, store.contactColumns)
-    res.setHeader(
-      'Content-Type',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    )
-    res.setHeader(
-      'Content-Disposition',
-      `attachment; filename="contacts.xlsx"; filename*=UTF-8''${encodeURIComponent('通讯录.xlsx')}`,
-    )
-    res.send(buf)
-  }),
-)
-
-function contactInput(body: any): ContactInput {
-  return {
-    name: String(body?.name ?? '').trim(),
-    email: String(body?.email ?? '').trim(),
-    empNo: String(body?.empNo ?? '').trim(),
-    department: String(body?.department ?? '').trim(),
-    active: body?.active === undefined ? true : !!body.active,
-    note: String(body?.note ?? '').trim(),
-    extra:
-      body?.extra && typeof body.extra === 'object'
-        ? Object.fromEntries(
-            Object.entries(body.extra as Record<string, unknown>).map(([k, v]) => [
-              String(k),
-              String(v ?? ''),
-            ]),
-          )
-        : undefined,
-  }
-}
-
-function validateContact(input: ContactInput, excludeId?: string) {
-  if (!input.name) return '姓名不能为空'
-  if (!input.email) return '邮箱不能为空'
-  if (!EMAIL_RE.test(input.email)) return '邮箱格式不正确'
-  const others = store.contacts.filter((c) => c.id !== excludeId)
-  // 允许同名：只要工号不同就能区分；都没有工号则拒绝
-  const sameName = others.filter((c) => c.name === input.name)
-  if (sameName.length) {
-    if (!input.empNo || sameName.some((c) => !c.empNo || c.empNo === input.empNo)) {
-      return `已存在同名员工「${input.name}」，需要给他填一个不同的工号才能区分（否则无法自动匹配）`
-    }
-  }
-  if (input.empNo && others.some((c) => c.empNo && c.empNo === input.empNo))
-    return `工号 ${input.empNo} 已被占用`
-  return null
-}
-
-app.post(
-  '/api/contacts',
-  wrap(async (req, res) => {
-    const input = contactInput(req.body)
-    const err = validateContact(input)
-    if (err) return res.status(400).json({ error: err })
-    const contact = store.addContact(input)
-    res.json({ contact, sync: await syncContacts() })
-  }),
-)
-
-app.put(
-  '/api/contacts/:id',
-  wrap(async (req, res) => {
-    const input = contactInput(req.body)
-    const err = validateContact(input, req.params.id)
-    if (err) return res.status(400).json({ error: err })
-    const c = store.updateContact(req.params.id, input)
-    if (!c) return res.status(404).json({ error: '员工不存在' })
-    res.json({ contact: c, sync: await syncContacts() })
-  }),
-)
-
-app.delete(
-  '/api/contacts/:id',
-  wrap(async (req, res) => {
-    store.removeContact(req.params.id)
-    res.json({ ok: true, sync: await syncContacts() })
-  }),
-)
+// 通讯录是只读的：财务在 Excel 里维护好，人员变动直接重新导入。
+// 所以这里只保留「列表查看」和「导入」，不提供增删改 / 导出 / 同步回写。
 
 app.post(
   '/api/contacts/import',
@@ -738,7 +658,6 @@ app.post(
       columns: store.contactColumns,
       source: store.contactsMeta.source,
       importedAt: store.contactsMeta.importedAt,
-      sync: await syncContacts(),
     })
   }),
 )
@@ -784,6 +703,14 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   console.error('[error]', err?.message || err)
   res.status(status).json({ error: err?.message || '服务器内部错误' })
 })
+
+// 启动定时发送（到点自动发给当前工资表里的所有人）
+initScheduler(sendAll)
+const st0 = scheduleState()
+if (st0.enabled)
+  console.log(
+    `定时发送已启用：每月 ${st0.day === 'last' ? '最后一天' : st0.day + ' 号'} ${String(st0.hour).padStart(2, '0')}:${String(st0.minute).padStart(2, '0')}，下次 ${st0.nextRun ? new Date(st0.nextRun).toLocaleString('zh-CN') : '—'}`,
+  )
 
 app.listen(PORT, () => {
   console.log(`工资条发送系统已启动: http://localhost:${PORT}`)

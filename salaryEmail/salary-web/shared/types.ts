@@ -128,6 +128,82 @@ export interface JobResultItem {
   error?: string
 }
 
+// ------------------------------------------------------------------ 发送前体检
+export type CheckLevel = 'error' | 'warn'
+
+export interface CheckIssue {
+  level: CheckLevel
+  /** 问题类型，便于界面/程序区分 */
+  kind:
+    | 'no-data'
+    | 'no-email'
+    | 'invalid-email'
+    | 'dup-email'
+    | 'dup-person'
+    | 'zero-total'
+    | 'negative'
+    | 'count-diff'
+    | 'amount-diff'
+  text: string
+  /** 相关人员 id，界面可据此定位 */
+  ids?: string[]
+}
+
+/** 每月快照：用于与上一期对比 */
+export interface MonthSnapshot {
+  month: string
+  count: number
+  amount: number
+  at: string
+}
+
+export interface CheckReport {
+  /** 没有 error 级问题 */
+  ok: boolean
+  issues: CheckIssue[]
+  stats: {
+    total: number
+    noEmail: number
+    invalidEmail: number
+    dupEmail: number
+    dupPerson: number
+    zeroTotal: number
+    negative: number
+    /** 主数值合计 */
+    amount: number
+    month: string
+  }
+  /** 与上一期快照的对比（有历史数据时才给） */
+  compare?: {
+    prevMonth: string
+    prevCount: number
+    prevAmount: number
+  }
+}
+
+// ------------------------------------------------------------------ 定时发送
+export interface Schedule {
+  enabled: boolean
+  /** 每月几号执行；'last' = 每月最后一天 */
+  day: number | 'last'
+  hour: number
+  minute: number
+  /** 跳过已发送成功的人（避免重复打扰） */
+  skipSent: boolean
+  /** 体检不通过时：abort=取消发送，send=照常发送 */
+  onError: 'abort' | 'send'
+}
+
+export interface ScheduleState extends Schedule {
+  /** 下次运行时间（ISO），未启用为 null */
+  nextRun: string | null
+  lastRun: string | null
+  lastResult: string | null
+  running: boolean
+  /** 最近一次定时任务对应的发送任务 id，可用于查进度 */
+  jobId: string | null
+}
+
 export interface JobStatus {
   id: string
   state: 'running' | 'done' | 'cancelled'

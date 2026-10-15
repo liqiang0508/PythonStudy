@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { api } from '../api'
-import type { EmployeeSummary, JobStatus } from '../../shared/types'
+import type { CheckReport, EmployeeSummary, JobStatus } from '../../shared/types'
 
 const props = defineProps<{ ids: string[]; employees: EmployeeSummary[] }>()
 const emit = defineEmits<{
@@ -14,6 +14,27 @@ const force = ref(false)
 const started = ref(false)
 const job = ref<JobStatus | null>(null)
 const timer = ref<number | null>(null)
+/** 发送前体检：有必须处理的问题时需先勾选确认 */
+const report = ref<CheckReport | null>(null)
+const ack = ref(false)
+
+onMounted(async () => {
+  try {
+    report.value = await api.check()
+  } catch {
+    /* 体检失败不阻断发送 */
+  }
+})
+
+/** 与本次发送相关的问题：全局问题（无 ids）+ 命中选中人员的问题 */
+const relatedIssues = computed(() => {
+  const r = report.value
+  if (!r) return []
+  const sel = new Set(props.ids)
+  return r.issues.filter((i) => !i.ids || i.ids.some((id) => sel.has(id)))
+})
+const blocking = computed(() => relatedIssues.value.filter((i) => i.level === 'error'))
+const canStart = computed(() => !blocking.value.length || ack.value)
 
 const targets = computed(() => props.employees.filter((e) => props.ids.includes(e.id)))
 const invalidCount = computed(() => targets.value.filter((e) => !e.valid).length)
@@ -96,6 +117,21 @@ async function cancel() {
           <div v-if="!force && sentCount" class="alerts">
             有 {{ sentCount }} 人已发送成功，默认会跳过；需要重发请勾选“强制重发”。
           </div>
+
+          <div v-if="relatedIssues.length" class="alerts">
+            <b>发送前体检：{{ blocking.length ? '有必须处理的问题' : '有需要留意的地方' }}</b>
+            <ul>
+              <li v-for="(i, k) in relatedIssues" :key="k">
+                <span :style="{ color: i.level === 'error' ? 'var(--danger)' : undefined }">
+                  {{ i.level === 'error' ? '【必须处理】' : '【留意】' }}{{ i.text }}
+                </span>
+              </li>
+            </ul>
+            <label v-if="blocking.length" class="check" style="margin-top: 6px">
+              <input v-model="ack" type="checkbox" />
+              我已知悉上述问题，仍要发送
+            </label>
+          </div>
         </template>
 
         <template v-else-if="job">
@@ -123,7 +159,7 @@ async function cancel() {
       <footer>
         <template v-if="!started">
           <button class="btn" @click="emit('close')">取消</button>
-          <button class="btn primary" @click="start">确认发送</button>
+          <button class="btn primary" :disabled="!canStart" @click="start">确认发送</button>
         </template>
         <template v-else>
           <button v-if="job?.state === 'running'" class="btn danger" @click="cancel">中止发送</button>
