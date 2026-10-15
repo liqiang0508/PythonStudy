@@ -54,6 +54,55 @@ function findColumn(headers: string[], wanted: string) {
   return headers.findIndex((h) => h.includes(wanted))
 }
 
+/**
+ * 通讯录表头 → 字段的列分配规则。
+ * 关键词别写太宽泛（例如只用「员工」会把「员工编号」误认成姓名列）。
+ */
+const CONTACT_HEADER_RULES: Array<{ field: string; names: string[] }> = [
+  { field: 'name', names: ['姓名', '名字', '员工姓名', '人员姓名'] },
+  { field: 'email', names: ['邮箱', '邮件', '邮箱地址', '邮件地址', 'e-mail', 'email'] },
+  { field: 'empNo', names: ['工号', '员工号', '员工编号', '编号'] },
+  { field: 'department', names: ['部门', '部门名称', '所属部门', '所在部门'] },
+  { field: 'note', names: ['备注', '说明', '备注说明'] },
+  { field: 'active', names: ['在职', '是否在职', '在职状态', '状态'] },
+]
+
+/**
+ * 给通讯录表头分配字段列：先精确匹配，再包含匹配；一列只归一个字段。
+ * 这样「员工编号」只当工号，「姓名」不会被工号列抢走。
+ */
+function assignContactColumns(headers: string[]): Record<string, number> {
+  const lower = headers.map((h) => h.trim().toLowerCase())
+  const taken = new Set<number>()
+  const out: Record<string, number> = {}
+
+  for (const rule of CONTACT_HEADER_RULES) {
+    const i = lower.findIndex(
+      (h, idx) => !taken.has(idx) && !!h && rule.names.some((n) => h === n.toLowerCase()),
+    )
+    if (i >= 0) {
+      out[rule.field] = i
+      taken.add(i)
+    }
+  }
+
+  for (const rule of CONTACT_HEADER_RULES) {
+    if (out[rule.field] !== undefined) continue
+    const i = lower.findIndex((h, idx) => {
+      if (taken.has(idx) || !h) return false
+      return rule.names.some((n) => {
+        const k = n.toLowerCase()
+        return k.length >= 2 && (h.includes(k) || k.includes(h))
+      })
+    })
+    if (i >= 0) {
+      out[rule.field] = i
+      taken.add(i)
+    }
+  }
+  return out
+}
+
 /** 自动识别列名用的规则（按顺序匹配） */
 export const NAME_RE = /姓名|名字|员工姓名|人员姓名/
 export const EMPNO_RE = /工号|员工号|员工编号|编号/
@@ -245,20 +294,19 @@ export async function parseContacts(buffer: Buffer, ext: string): Promise<{
     // 记录表头顺序：展示与导出都按这个顺序，和你在 Excel 里看到的一致
     if (!columns.length) headers.forEach((h) => h && !columns.includes(h) && columns.push(h))
 
-    const pick = (...names: string[]) =>
-      headers.findIndex((h) => names.some((n) => h === n || h.includes(n)))
-
-    const nIdx = pick('姓名', '名字', '员工')
-    const eIdx = pick('邮箱', '邮件', 'Email', 'email')
+    // 表头 → 字段（精确优先、一列只归一个字段，避免「员工编号」被当成姓名列）
+    const col = assignContactColumns(headers)
+    const nIdx = col.name ?? -1
+    const eIdx = col.email ?? -1
     if (nIdx < 0 || eIdx < 0) {
       warnings.push(`工作表[${ws.name}]缺少姓名或邮箱列，已跳过`)
       continue
     }
-    const noIdx = pick('工号', '员工号', '编号')
-    const dIdx = pick('部门', '部门名称')
-    const noteIdx = pick('备注', '说明')
-    const activeIdx = pick('在职', '状态', '是否在职')
-    const used = new Set([nIdx, eIdx, noIdx, dIdx, noteIdx, activeIdx])
+    const noIdx = col.empNo ?? -1
+    const dIdx = col.department ?? -1
+    const noteIdx = col.note ?? -1
+    const activeIdx = col.active ?? -1
+    const used = new Set([nIdx, eIdx, noIdx, dIdx, noteIdx, activeIdx].filter((i) => i >= 0))
 
     for (const r of grid.slice(headerIdx + 1)) {
       const name = (r[nIdx] ?? '').trim()

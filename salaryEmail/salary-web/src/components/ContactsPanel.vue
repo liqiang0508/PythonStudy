@@ -29,7 +29,6 @@ const importMode = ref<string>(
     ? String(localStorage.getItem(MODE_KEY))
     : 'sync-delete',
 )
-const onlyActive = ref(false)
 
 async function load() {
   const r = await api.contacts()
@@ -87,11 +86,9 @@ function cell(c: Contact, col: string): string {
 
 /** 展示的列：表格里的列（按原顺序）+ 自定义列 */
 const viewColumns = computed(() => {
-  // 「在职 / 状态」是系统内部字段（active），不在界面上显示，表格里有这列也不显示
-  const cols = (fileColumns.value.length
-    ? [...fileColumns.value]
-    : ['工号', '姓名', '邮箱', '部门']
-  ).filter((c) => !isStatusCol(c))
+  // 列完全来自表格：导入时后端把表头顺序记在 contactColumns 里，这里直接用它
+  // 「在职 / 状态」是系统内部字段（active），不显示，表格里有这列也不显示
+  const cols = [...fileColumns.value].filter((c) => !isStatusCol(c))
   // 备注：表里有这列就按表格顺序显示，否则只在有人填了备注时才补
   if (!cols.some((c) => /备注|说明/.test(c)) && contacts.value.some((c) => c.note))
     cols.push('备注')
@@ -106,13 +103,10 @@ const viewColumns = computed(() => {
 const filtered = computed(() => {
   const kw = keyword.value.trim().toLowerCase()
   return contacts.value.filter((c) => {
-    if (onlyActive.value && !c.active) return false
     if (!kw) return true
     return `${c.name} ${c.email} ${c.empNo} ${c.department}`.toLowerCase().includes(kw)
   })
 })
-
-const activeCount = computed(() => contacts.value.filter((c) => c.active).length)
 </script>
 
 <template>
@@ -140,7 +134,7 @@ const activeCount = computed(() => contacts.value.filter((c) => c.active).length
         @change="onFile"
       />
       <span class="spacer" />
-      <span class="mini muted">共 {{ contacts.length }} 人，在职 {{ activeCount }} 人</span>
+      <span class="mini muted">共 {{ contacts.length }} 人</span>
     </div>
 
     <div class="toolbar">
@@ -148,7 +142,6 @@ const activeCount = computed(() => contacts.value.filter((c) => c.active).length
       <select v-model="importMode" style="width: auto; min-width: 260px">
         <option v-for="m in IMPORT_MODES" :key="m.value" :value="m.value">{{ m.label }}</option>
       </select>
-      <label class="check"><input v-model="onlyActive" type="checkbox" /> 只看在职</label>
     </div>
 
     <p v-if="message" class="mini" style="color: var(--success)">{{ message }}</p>
@@ -159,6 +152,7 @@ const activeCount = computed(() => contacts.value.filter((c) => c.active).length
     </p>
 
     <div v-if="!contacts.length" class="empty">还没有通讯录，点「导入通讯录表格」</div>
+    <div v-else-if="!viewColumns.length" class="empty">这份表格里没有可显示的列</div>
     <div v-else-if="!filtered.length" class="empty">没有符合搜索条件的人</div>
     <div v-else class="table-wrap">
       <table class="grid">

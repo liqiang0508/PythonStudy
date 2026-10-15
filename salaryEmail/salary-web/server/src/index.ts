@@ -612,7 +612,8 @@ app.post(
           department: r.department,
           note: r.note,
           active: r.active ?? exist.active,
-          extra: { ...(exist.extra ?? {}), ...r.extra },
+          // 自定义列以表格为准（表格里清空就清空），不残留上一次导入的旧值
+          extra: r.extra,
         })
         touched.add(exist.id)
         updated++
