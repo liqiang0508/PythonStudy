@@ -22,8 +22,17 @@ const form = reactive({
   useContacts: true,
   empNoColumn: '工号',
 })
+/** 与后端 server/src/config.ts 的 MASK 一致：用于回显「已设置」，保存时后端不会把它当新密码 */
+const MASK = '••••••••'
 const passSet = ref(false)
+const passFromEnv = ref(false)
 const loading = ref(false)
+
+/** 已设置时框里显示掩码；点进框直接全选，避免把掩码和新授权码拼在一起 */
+function selectMask(e: FocusEvent) {
+  const el = e.target as HTMLInputElement
+  if (el.value === MASK) el.select()
+}
 const testTo = ref('')
 const testing = ref(false)
 const testMsg = ref('')
@@ -47,7 +56,8 @@ onMounted(async () => {
     empNoColumn: s.empNoColumn,
   })
   passSet.value = s.smtpPassSet
-  form.smtpPass = ''
+  passFromEnv.value = s.smtpPassFromEnv
+  form.smtpPass = s.smtpPassSet ? MASK : ''
   testTo.value = s.smtpUser
 })
 
@@ -56,7 +66,8 @@ async function save() {
   try {
     const s = await api.saveSettings({ ...form })
     passSet.value = s.smtpPassSet
-    form.smtpPass = ''
+    passFromEnv.value = s.smtpPassFromEnv
+    form.smtpPass = s.smtpPassSet ? MASK : ''
     emit('saved')
   } catch (e: any) {
     emit('error', e.message)
@@ -96,8 +107,14 @@ async function test() {
         <input v-model="form.smtpUser" type="text" placeholder="hr@company.com" />
       </div>
       <div class="field">
-        <span>授权码 / 密码{{ passSet ? '（已保存，留空则不修改）' : '' }}</span>
-        <input v-model="form.smtpPass" type="password" autocomplete="new-password" />
+        <span>授权码 / 密码{{ passSet ? '（已设置）' : '' }}</span>
+        <input
+          v-model="form.smtpPass"
+          type="password"
+          autocomplete="new-password"
+          :placeholder="passSet ? '' : '请填写邮箱授权码'"
+          @focus="selectMask"
+        />
       </div>
       <div class="field">
         <span>发件人显示名</span>
@@ -128,6 +145,17 @@ async function test() {
         <input v-model="form.emailColumn" type="text" placeholder="留空则完全用通讯录" />
       </div>
     </div>
+
+    <p
+      v-if="passSet"
+      class="mini"
+      :style="passFromEnv ? { color: 'var(--danger)' } : undefined"
+      :class="passFromEnv ? '' : 'muted'"
+    >
+      授权码已设置<span v-if="passFromEnv"
+        >，但它来自环境变量 <code>SMTP_PASS</code>（优先级最高），在此处修改不会生效 —— 要改请去掉环境变量后重启服务，再在这里保存</span
+      >。输入框里的 •••••••• 只是回显：<b>不动它 = 保留原授权码</b>，要换就直接在框里输入新的。
+    </p>
 
     <div style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center">
       <label class="check"><input v-model="form.secure" type="checkbox" /> 使用 SSL（465 端口选，25/587 取消）</label>

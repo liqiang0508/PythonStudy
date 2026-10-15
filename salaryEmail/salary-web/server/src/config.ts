@@ -66,7 +66,11 @@ export function saveSettings(next: Settings) {
 
 export function toView(s: Settings): SettingsView {
   const { smtpPass, ...rest } = s
-  return { ...rest, smtpPassSet: !!smtpPass }
+  return {
+    ...rest,
+    smtpPassSet: !!smtpPass,
+    smtpPassFromEnv: !!process.env.SMTP_PASS,
+  }
 }
 
 export function getWebPassword(): string {

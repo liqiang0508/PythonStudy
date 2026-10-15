@@ -103,7 +103,12 @@ export interface Settings {
   empNoColumn: string
 }
 
-export type SettingsView = Omit<Settings, 'smtpPass'> & { smtpPassSet: boolean }
+export type SettingsView = Omit<Settings, 'smtpPass'> & {
+  /** 是否已设置授权码 */
+  smtpPassSet: boolean
+  /** 授权码来自环境变量 SMTP_PASS（网页上改不会生效） */
+  smtpPassFromEnv: boolean
+}
 
 export interface ImportResult {
   file: string
