@@ -41,7 +41,6 @@ const now = () => new Date().toISOString()
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/
 
 /** 最近一次上传的原始文件，用于调整列映射后免重传重新解析 */
-let lastUpload: { buffer: Buffer; ext: string; file: string } | null = null
 
 interface Job extends JobStatus {
   cancel: boolean
@@ -372,24 +371,7 @@ app.post(
     if (!file) throw new Error('没有收到文件')
     const ext = path.extname(file.originalname).toLowerCase().slice(1)
     const name = decodeUploadName(file.originalname)
-    lastUpload = { buffer: file.buffer, ext, file: name }
     res.json(await doImport(file.buffer, ext, name))
-  }),
-)
-
-/** 手动指定列后重新解析（auto=false） */
-app.post(
-  '/api/import/reparse',
-  wrap(async (req, res) => {
-    if (!lastUpload) throw new Error('没有可重新解析的文件，请重新上传')
-    const body = req.body ?? {}
-    const opts: ParseOptions = {
-      auto: false,
-      nameColumn: String(body.nameColumn ?? '姓名'),
-      emailColumn: String(body.emailColumn ?? ''),
-      empNoColumn: String(body.empNoColumn ?? ''),
-    }
-    res.json(await doImport(lastUpload.buffer, lastUpload.ext, lastUpload.file, opts))
   }),
 )
 
@@ -407,7 +389,6 @@ app.get('/api/employees/:id/render', (req, res) => {
 
 app.delete('/api/employees', (_req, res) => {
   store.clearEmployees()
-  lastUpload = null
   res.json({ ok: true })
 })
 

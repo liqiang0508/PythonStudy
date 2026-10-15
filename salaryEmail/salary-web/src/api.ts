@@ -53,11 +53,6 @@ export const api = {
     fd.append('file', file)
     return req<ImportResult>('/api/import', { method: 'POST', body: fd })
   },
-  reparse: (cols: { nameColumn: string; emailColumn: string; empNoColumn: string }) =>
-    req<ImportResult>('/api/import/reparse', {
-      method: 'POST',
-      body: JSON.stringify(cols),
-    }),
 
   employees: () => req<{ employees: EmployeeSummary[]; meta: Meta }>('/api/employees'),
   render: (id: string) =>

@@ -14,9 +14,6 @@ const fileInput = ref<HTMLInputElement | null>(null)
 const over = ref(false)
 const loading = ref(false)
 const headers = ref<string[]>([])
-const nameColumn = ref('姓名')
-const emailColumn = ref('')
-const empNoColumn = ref('')
 const warnings = ref<string[]>([])
 /** 识别结果（前端展示用） */
 const detected = ref<{ name: string; email: string; empNo: string }>({
@@ -24,7 +21,14 @@ const detected = ref<{ name: string; email: string; empNo: string }>({
   email: '',
   empNo: '',
 })
-const manual = ref(false)
+
+/** 这一列被识别成了什么，用于在列清单里标出来 */
+function roleOf(h: string) {
+  if (h === detected.value.name) return '姓名列'
+  if (h === detected.value.empNo) return '工号列'
+  if (h === detected.value.email) return '邮箱列'
+  return ''
+}
 
 function apply(res: ImportResult) {
   headers.value = res.headers
@@ -33,10 +37,6 @@ function apply(res: ImportResult) {
     email: res.emailColumn,
     empNo: res.empNoColumn,
   }
-  // 手动模式下回显「实际用到的列」
-  if (!nameColumn.value) nameColumn.value = res.nameColumn || res.headers[0] || '姓名'
-  if (!empNoColumn.value) empNoColumn.value = res.empNoColumn || ''
-  emailColumn.value = res.emailColumn && res.headers.includes(res.emailColumn) ? res.emailColumn : ''
   warnings.value = res.warnings
   emit('imported', res)
 }
@@ -63,23 +63,6 @@ function onPick(e: Event) {
   const f = el.files?.[0]
   if (f) upload(f)
   el.value = ''
-}
-
-async function reparse() {
-  loading.value = true
-  try {
-    apply(
-      await api.reparse({
-        nameColumn: nameColumn.value,
-        emailColumn: emailColumn.value,
-        empNoColumn: empNoColumn.value,
-      }),
-    )
-  } catch (e: any) {
-    emit('error', e.message)
-  } finally {
-    loading.value = false
-  }
 }
 
 async function clearData() {
@@ -115,39 +98,21 @@ async function clearData() {
     </div>
 
     <div v-if="headers.length" style="margin-top: 12px">
-      <div class="mini muted">
-        已自动识别：姓名列「<b>{{ detected.name || '—' }}</b>」· 工号列「<b>{{
-          detected.empNo || '—'
-        }}</b>」· 邮箱列「<b>{{ detected.email || '无 → 全部按通讯录匹配' }}</b>」
-        <button class="btn sm" style="margin-left: 8px" @click="manual = !manual">
-          {{ manual ? '收起' : '手动指定列' }}
-        </button>
+      <div class="mini muted" style="margin-bottom: 6px">
+        表格里的列（{{ headers.length }}）：
+        <span v-for="(h, i) in headers" :key="h"
+          ><span :style="roleOf(h) ? { color: 'var(--success)', fontWeight: 600 } : undefined">{{
+            h
+          }}</span
+          ><span v-if="roleOf(h)" class="mini muted">「{{ roleOf(h) }}」</span
+          ><span v-if="i < headers.length - 1"> · </span></span
+        >
       </div>
 
-      <div v-if="manual" class="grid-2" style="margin-top: 10px">
-        <div class="field">
-          <span>姓名所在列</span>
-          <select v-model="nameColumn">
-            <option v-for="h in headers" :key="h" :value="h">{{ h }}</option>
-          </select>
-        </div>
-        <div class="field">
-          <span>工号所在列（同名时区分）</span>
-          <select v-model="empNoColumn">
-            <option value="">（无）</option>
-            <option v-for="h in headers" :key="h" :value="h">{{ h }}</option>
-          </select>
-        </div>
-        <div class="field">
-          <span>邮箱所在列</span>
-          <select v-model="emailColumn">
-            <option value="">（不使用，全部用通讯录匹配）</option>
-            <option v-for="h in headers" :key="h" :value="h">{{ h }}</option>
-          </select>
-        </div>
-        <div style="align-self: end">
-          <button class="btn sm" :disabled="loading" @click="reparse">按所选列重新解析</button>
-        </div>
+      <div class="mini muted">
+        用于匹配：姓名列「<b>{{ detected.name || '—' }}</b>」· 工号列「<b>{{
+          detected.empNo || '—'
+        }}</b>」· 邮箱列「<b>{{ detected.email || '无 → 全部按通讯录匹配' }}</b>」
       </div>
     </div>
 
