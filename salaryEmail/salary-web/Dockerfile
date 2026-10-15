@@ -35,10 +35,12 @@ COPY shared ./shared
 # 运行期数据：settings.json / db.json / .session-secret
 VOLUME ["/app/server/data"]
 
-EXPOSE 3001
+# 仅作默认值文档；实际端口由运行时环境变量 PORT 决定（docker-compose 传 APP_PORT）
+EXPOSE ${PORT}
 
 # 健康检查：/api/auth/state 无需登录，返回 200 即视为健康
+# 端口读 process.env.PORT，所以改 APP_PORT 后这里不用动
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-  CMD node -e "fetch('http://127.0.0.1:3001/api/auth/state').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+  CMD node -e "fetch('http://127.0.0.1:'+(process.env.PORT||3001)+'/api/auth/state').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
 CMD ["npx", "tsx", "server/src/index.ts"]

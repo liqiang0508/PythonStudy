@@ -11,12 +11,18 @@ if errorlevel 1 (
   exit /b 1
 )
 
-set "HOSTPORT=3001"
+rem 端口来源与 docker-compose 一致：APP_PORT（默认 3001）→ WEB_PUBLISH_PORT 覆盖
+set "APPPORT="
+set "WEBPORT="
 if exist ".env" (
   for /f "usebackq eol=# tokens=1,* delims==" %%a in (".env") do (
-    if /i "%%a"=="WEB_PUBLISH_PORT" set "HOSTPORT=%%b"
+    if /i "%%a"=="APP_PORT" set "APPPORT=%%b"
+    if /i "%%a"=="WEB_PUBLISH_PORT" set "WEBPORT=%%b"
   )
 )
+set "HOSTPORT=3001"
+if defined APPPORT set "HOSTPORT=%APPPORT%"
+if defined WEBPORT set "HOSTPORT=%WEBPORT%"
 
 echo [2/3] 构建并启动容器（首次构建需要几分钟）...
 docker compose up -d --build
